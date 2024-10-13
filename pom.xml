@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>kotlin-template-v2</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <kotlin.version>1.9.0</kotlin.version>
+        <jar.finalName>custom-jar-name</jar.finalName>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>maven-repo.atexpose.com</id>
+            <url>https://s3-eu-west-1.amazonaws.com/maven-repo.schinzel.io/release</url>
+        </repository>
+        <repository>
+            <id>io.schinzel.release</id>
+            <url>https://s3-eu-west-1.amazonaws.com/maven-repo.atexpose.com/release</url>
+        </repository>
+        <repository>
+            <!-- Repo for -->
+            <id>maven-repo.refur.se</id>
+            <url>https://s3-eu-west-1.amazonaws.com/maven-repo.refur.se/release</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <!-- Web server -->
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+        <dependency>
+            <!-- Annotations for Javalin -->
+            <groupId>se.refur</groupId>
+            <artifactId>javalin</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <!-- Basic utilities for Java (and Kotlin to some degree).
+            Most commonly the utilities are less verbose versions of common code snippets.-->
+            <groupId>io.schinzel</groupId>
+            <artifactId>basic-utils</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.schinzel</groupId>
+            <artifactId>crypto</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+        <dependency>
+            <!-- Basic utilities. Most commonly less verbose versions of
+            common code snippets -->
+            <groupId>io.schinzel</groupId>
+            <artifactId>basic-utils-kotlin</artifactId>
+            <version>0.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <!-- A Kotlin toolkit for Mongo -->
+            <groupId>org.litote.kmongo</groupId>
+            <artifactId>kmongo</artifactId>
+            <version>4.7.1</version>
+            <exclusions>
+                <!-- This is here to prevent a warning that log4j har multiple
+                bindings -->
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <!-- Logging -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.6</version>
+        </dependency>
+
+        <!-- TEST -->
+        <dependency>
+            <!-- Fluent assertions for more readable tests
+            http://joel-costigliola.github.io/assertj/-->
+            <artifactId>assertj-core</artifactId>
+            <groupId>org.assertj</groupId>
+            <version>3.24.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- Unit tests-->
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <finalName>${jar.finalName}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven JAR Plugin -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Title</title>
+    <!-- jQuery -->
+    <script src="libs/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script type="module">
+        import {ServerCaller} from "/libs/ServerCaller.js";
+
+        $(document).ready(function() {
+            $("#submitButton").click(function() {
+                var personName = $("#personName").val();
+                var personAge = $("#personAge").val();
+                new ServerCaller()
+                    .setPath('/api/createPersonJsonResponse')
+                    .addArg('personName', personName)
+                    .addArg('personAge', personAge)
+                    .setSuccessCallback((response) => {
+                        alert('Created a person named ' + response.name + ' that is ' + response.age + ' years old.')
+                    }).call()
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>My Heading</h2>
+    <div class="mb-3">
+        <label for="personName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="personName" placeholder="Enter something...">
+    </div>
+    <div class="mb-3">
+        <label for="personAge" class="form-label">Age</label>
+        <input type="text" class="form-control" id="personAge" placeholder="Enter something...">
+    </div>
+    <button type="button" id="submitButton" class="btn btn-primary">Create Person</button>
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>
