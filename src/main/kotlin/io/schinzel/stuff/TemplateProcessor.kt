@@ -13,6 +13,7 @@ import java.io.File
  */
 class TemplateProcessor(private val fileName: String, private val caller: Any) {
     val data: MutableMap<String, String> = mutableMapOf()
+
     fun addData(key: String, value: String): TemplateProcessor {
         data[key] = value
         return this
@@ -20,7 +21,7 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
 
     fun getProcessedTemplate(): String {
         val fileContent = when {
-            isRunningFromJar(caller) -> readFileInJar(fileName, caller)
+            isRunningFromJar() -> readFileInJar(fileName, caller)
             else -> readFileInSrc(fileName, caller)
         }
         return applyData(fileContent, data)
@@ -95,9 +96,9 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
         /**
          * @return True if the caller is running from a jar file.
          */
-        private fun isRunningFromJar(caller: Any): Boolean {
+        private fun isRunningFromJar(): Boolean {
             val location = this::class.java.protectionDomain.codeSource.location.toString()
-            return location.endsWith(".jar").printlnWithPrefix("Running from jar")
+            return location.endsWith(".jar")
         }
     }
 }
