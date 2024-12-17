@@ -1,5 +1,3 @@
 
-- Just nu letar den igenom alla kataloger, vilket göra att filnamnet måste vara unikt
-- Kunna bygga och starta JAR
-- Få med HTML filer i jag
+- Document that need to change the pom to include html and js files in the jar
 - subscribe
