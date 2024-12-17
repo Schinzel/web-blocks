@@ -1,2 +1,0 @@
-- få upp en grundmodell för att skapa en sida
-- subscribe

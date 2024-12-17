@@ -1,12 +1,11 @@
 package io.schinzel.page_elements_kotlin.page.greeting_pe
 
-import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.page_elements_kotlin.IPageElement
 import io.schinzel.stuff.TemplateProcessor
 
 class GreetingPe : IPageElement {
     override fun getHtml(): String {
-        return TemplateProcessor("GreetingPe.html")
+        return TemplateProcessor("GreetingPe.html", this)
             .addData("firstName", "Pelle")
             .getProcessedTemplate()
     }
@@ -14,5 +13,5 @@ class GreetingPe : IPageElement {
 }
 
 fun main() {
-    GreetingPe().getHtml().println()
+    GreetingPe().getHtml()
 }
