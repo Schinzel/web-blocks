@@ -72,8 +72,10 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
             val projectDir = File("")
             // For example: io/schinzel/page_elements_kotlin/page/greeting_pe
             val pathToCallerClass = getPathToCallerClass(caller)
-            // For example: /Users/schinzel/code/page-elements-kotlin/src/main/kotlin/io/schinzel/page_elements_kotlin/page/greeting_pe/GreetingPe.html
-            val pathToFile = projectDir.absolutePath + "/src/main/kotlin/" + pathToCallerClass + "/" + fileName
+            // For example: /Users/schinzel/code/page-elements-kotlin/
+            // src/main/kotlin/io/schinzel/page_elements_kotlin/page/greeting_pe/GreetingPe.html
+            val pathToFile = projectDir.absolutePath + "/src/main/kotlin/" +
+                    pathToCallerClass + "/" + fileName
             // Create file
             val file = File(pathToFile)
             return when {
