@@ -3,7 +3,6 @@ package io.schinzel.my_package.web_server
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
 import io.schinzel.page_elements_kotlin.page.LandingPage
-import io.schinzel.page_elements_kotlin.page.greeting_pe.GreetingPe
 import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.exposeClassEndpoints
 
