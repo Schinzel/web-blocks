@@ -1,6 +1,5 @@
 package io.schinzel.stuff
 
-import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements_kotlin.IPageElement
 import org.apache.commons.io.FileUtils
@@ -15,7 +14,7 @@ interface ITemplateProcessor {
     fun getFile(): String
 }
 
-interface ITemplateProcessorDeep  {
+interface ITemplateProcessorDeep {
     val data: MutableMap<String, String>
 
     fun addData(key: String, value: String): ITemplateProcessorDeep {
@@ -57,15 +56,15 @@ interface ITemplateProcessorDeep  {
     }
 }
 
-class TemplateProcessorDeep  {
+class TemplateProcessor(private val fileName: String) {
     val data: MutableMap<String, String> = mutableMapOf()
 
-    fun addData(key: String, value: String): TemplateProcessorDeep {
+    fun addData(key: String, value: String): TemplateProcessor {
         data[key] = value
         return this
     }
 
-    fun getFile(fileName: String): String {
+    fun getProcessedTemplate(): String {
         val fileContent = readFile(fileName)
         return applyData(fileContent, data)
     }
@@ -80,10 +79,9 @@ class TemplateProcessorDeep  {
         }
 
         private fun readFile(fileName: String): String {
-            // Current directory
+            // Base directory
             val directory = File(".")
-            directory.absolutePath.printlnWithPrefix("Current directory")
-            // Get all HTML files in the current directory
+            // Get all HTML files in all directories below the current directory
             val htmlFiles = FileUtils.listFiles(directory, arrayOf("html"), true)
             // Loop through all HTML files
             htmlFiles.forEach { file ->
@@ -98,7 +96,6 @@ class TemplateProcessorDeep  {
         }
     }
 }
-
 
 
 fun main() {
