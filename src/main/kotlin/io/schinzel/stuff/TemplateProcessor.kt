@@ -35,7 +35,8 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
             val pathToCallerClass = getPathToCallerClass(caller)
             // For example: /io/schinzel/page_elements_kotlin/page/greeting_pe/GreetingPe.html
             val pathToFile = "/$pathToCallerClass/$fileName"
-            return object {}.javaClass.getResource(pathToFile).readText()
+            return object {}.javaClass.getResource(pathToFile)?.readText()
+                ?: throw Exception("File not found '$pathToFile'")
         }
 
 
