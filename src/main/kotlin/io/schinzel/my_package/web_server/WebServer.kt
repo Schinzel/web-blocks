@@ -2,6 +2,8 @@ package io.schinzel.my_package.web_server
 
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
+import io.schinzel.page_elements_kotlin.page.LandingPage
+import io.schinzel.page_elements_kotlin.page.greeting_pe.GreetingPe
 import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.exposeClassEndpoints
 
@@ -14,8 +16,18 @@ class WebServer {
             config.staticFiles.add("/site", Location.CLASSPATH)
             config.accessManager { handler, ctx, _ -> handler.handle(ctx) }
         }
-                .get("/") { ctx -> ctx.result("Hello Public World") }
-                .exposeClassEndpoints(MyApi::class)
-                .start(5555)
+            .get("/hello") { ctx -> ctx.result("Hello Public World") }
+            .get("/") { ctx ->
+                // Dynamically generate the HTML using your LandingPage logic
+                val htmlContent = LandingPage().getHtml()
+                // Respond with the generated HTML
+                ctx.html(htmlContent)
+            }
+            .exposeClassEndpoints(MyApi::class)
+            .start(5555)
     }
+}
+
+fun main() {
+    WebServer()
 }

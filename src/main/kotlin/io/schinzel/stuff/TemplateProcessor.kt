@@ -87,7 +87,6 @@ class TemplateProcessor(private val fileName: String) {
             htmlFiles.forEach { file ->
                 // If the file name matches the file name we are looking for
                 if (file.name == fileName) {
-                    println("Found HTML file: ${file.absolutePath}")
                     // Return the content of the file
                     return file.readText()
                 }
