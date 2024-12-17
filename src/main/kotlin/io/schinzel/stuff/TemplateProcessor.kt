@@ -65,6 +65,9 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
         }
 
 
+        /**
+         * @return True if the caller is running from a jar file.
+         */
         private fun isRunningFromJar(caller: Any): Boolean {
             val location = caller::class.java.protectionDomain.codeSource.location.toString()
             return location.endsWith(".jar")
