@@ -14,23 +14,11 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
     }
 
     fun getProcessedTemplate(): String {
-        val callerDirectory = getCallerDirectory(caller)
-
         val fileContent = readFile(fileName, caller)
         return applyData(fileContent, data)
     }
 
     companion object {
-        private fun getCallerDirectory(caller: Any): File {
-            val url = caller::class.java.protectionDomain.codeSource.location
-            val directory = File(url.toURI())
-            return if (directory.isDirectory) {
-                directory
-            } else {
-                // If it's a file (like a JAR), get the parent directory
-                directory.parentFile
-            }
-        }
 
         private fun applyData(fileContent: String, data: Map<String, String>): String {
             var content = fileContent
@@ -62,8 +50,4 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
             throw Exception("File not found '$fileName'")
         }
     }
-}
-
-
-fun main() {
 }
