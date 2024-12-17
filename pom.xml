@@ -114,7 +114,8 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <finalName>${jar.finalName}</finalName>
+        <!-- Will generate bapp.jar in the root directory -->
+        <finalName>../bapp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
