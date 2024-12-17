@@ -1,6 +1,7 @@
 package io.schinzel.page_elements_kotlin.account
 
 import io.schinzel.page_elements_kotlin.account.my_pe.MyPe
+import io.schinzel.page_elements_kotlin.account.name_pe.NamePe
 import io.schinzel.stuff.bootstrap_page.BootstrapPage
 
 class AccountPage {
@@ -24,7 +25,7 @@ class AccountPage {
             .addPageElement(MyPe("Row 2 Column 2"))
             .addPageElement(MyPe("Row 2 Column 2"))
             .addColumn(5)
-            .addPageElement(MyPe("Row 2 Column 3"))
+            .addPageElement(NamePe(1))
             .getHtml()
     }
 }
