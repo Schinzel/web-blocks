@@ -1,5 +1,4 @@
 
 - Document that need to change the pom to include html and js files in the jar
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
-- Get bootstrap in place and add rows and columns
 - subscribe
