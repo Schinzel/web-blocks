@@ -2,7 +2,8 @@ package io.schinzel.my_package.web_server
 
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
-import io.schinzel.page_elements_kotlin.landing_page.LandingPage
+import io.schinzel.page_elements_kotlin.account.AccountPage
+import io.schinzel.page_elements_kotlin.landing.LandingPage
 import se.refur.javalin.JavalinAnnotation
 import se.refur.javalin.exposeClassEndpoints
 
@@ -19,6 +20,13 @@ class WebServer {
             .get("/") { ctx ->
                 // Dynamically generate the HTML using your LandingPage logic
                 val htmlContent = LandingPage().getHtml()
+                // Respond with the generated HTML
+                ctx.html(htmlContent)
+            }
+            .get("/account") { ctx ->
+                // Dynamically generate the HTML using your LandingPage logic
+                val htmlContent = AccountPage()
+                    .getHtml()
                 // Respond with the generated HTML
                 ctx.html(htmlContent)
             }

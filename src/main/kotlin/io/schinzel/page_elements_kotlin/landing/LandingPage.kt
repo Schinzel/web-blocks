@@ -1,8 +1,8 @@
-package io.schinzel.page_elements_kotlin.landing_page
+package io.schinzel.page_elements_kotlin.landing
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.stuff.basic_page.BasicPage
-import io.schinzel.page_elements_kotlin.landing_page.greeting_pe.GreetingPe
+import io.schinzel.page_elements_kotlin.landing.greeting_pe.GreetingPe
 
 class LandingPage {
     fun getHtml(): String {

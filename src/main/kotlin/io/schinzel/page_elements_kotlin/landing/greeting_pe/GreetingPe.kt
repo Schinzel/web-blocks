@@ -1,4 +1,4 @@
-package io.schinzel.page_elements_kotlin.landing_page.greeting_pe
+package io.schinzel.page_elements_kotlin.landing.greeting_pe
 
 import io.schinzel.stuff.IPageElement
 import io.schinzel.stuff.TemplateProcessor
