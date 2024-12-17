@@ -2,3 +2,17 @@
 - Document that need to change the pom to include html and js files in the jar
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
 - subscribe
+
+
+
+PageElements kan ha en data sparare
+
+Det finns en map<PageName,Page>
+Sidor har en map<PageElementName,PageElement>
+
+Det finns ett api save-data/{pageName}/{pageElementName}
+innehåller kanske JSON för data att spara
+
+Hitta sidan i mapen
+Hitta elementet i sidan
+Spara data i elementet
