@@ -1,7 +1,6 @@
 package io.schinzel.stuff
 
 import io.schinzel.basic_utils_kotlin.printlnWithPrefix
-import org.apache.commons.io.FileUtils
 import java.io.File
 
 
@@ -14,7 +13,11 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
     }
 
     fun getProcessedTemplate(): String {
-        val fileContent = readFile(fileName, caller)
+        val isJar = isRunningFromJar(caller)
+        val fileContent = when {
+            isJar -> readFileInJar(fileName, caller)
+            else -> readFileInSrc(fileName, caller)
+        }
         return applyData(fileContent, data)
     }
 
@@ -28,26 +31,34 @@ class TemplateProcessor(private val fileName: String, private val caller: Any) {
             return content
         }
 
-        private fun readFile(fileName: String, caller: Any): String {
+        private fun isRunningFromJar(caller: Any): Boolean {
+            val location = caller::class.java.protectionDomain.codeSource.location.toString()
+            return location.endsWith(".jar")
+        }
+
+        private fun readFileInJar(fileName: String, caller: Any): String {
             // Get the package path of the caller
             val packagePath = caller::class.java.packageName.replace('.', File.separatorChar)
+            val path = "/$packagePath/$fileName"
+            return object {}.javaClass.getResource(path).readText()
+        }
 
-            val baseDirectory = File("")
-            val newPath = baseDirectory.absolutePath + "/src/main/kotlin/" + packagePath
-            val newPathFile = File (newPath)
 
-            // Get all HTML files in all directories below the current directory
-            val htmlFiles = FileUtils.listFiles(newPathFile, arrayOf("html"), true)
-            // Loop through all HTML files
-            htmlFiles.forEach { file ->
-                // If the file name matches the file name we are looking for
-                if (file.name == fileName) {
-                    file.absolutePath.printlnWithPrefix("File abs path")
-                    // Return the content of the file
-                    return file.readText()
-                }
+        private fun readFileInSrc(fileName: String, caller: Any): String {
+            // For example: Users/schinzel/code/page-elements-kotlin
+            val projectDir = File("")
+            // For example: io/schinzel/page_elements_kotlin/page/greeting_pe
+            val pathToCallerClass = caller::class.java.packageName.replace('.', File.separatorChar)
+            // For example: /Users/schinzel/code/page-elements-kotlin/src/main/kotlin/io/schinzel/page_elements_kotlin/page/greeting_pe/GreetingPe.html
+            val pathToFile = projectDir.absolutePath + "/src/main/kotlin/" + pathToCallerClass + "/" + fileName
+            // Create file
+            val file = File(pathToFile)
+            return when {
+                // If file exists, read it
+                file.exists() -> file.readText()
+                // If file does not exist, throw exception
+                else -> throw Exception("File not found '$pathToFile'")
             }
-            throw Exception("File not found '$fileName'")
         }
     }
 }
