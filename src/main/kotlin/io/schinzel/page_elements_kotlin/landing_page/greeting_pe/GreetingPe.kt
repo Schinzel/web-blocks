@@ -1,6 +1,6 @@
-package io.schinzel.page_elements_kotlin.page.greeting_pe
+package io.schinzel.page_elements_kotlin.landing_page.greeting_pe
 
-import io.schinzel.page_elements_kotlin.IPageElement
+import io.schinzel.stuff.IPageElement
 import io.schinzel.stuff.TemplateProcessor
 
 class GreetingPe : IPageElement {

@@ -1,12 +1,13 @@
-package io.schinzel.page_elements_kotlin.page
+package io.schinzel.page_elements_kotlin.landing_page
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements_kotlin.BasicPage
-import io.schinzel.page_elements_kotlin.page.greeting_pe.GreetingPe
+import io.schinzel.stuff.basic_page.BasicPage
+import io.schinzel.page_elements_kotlin.landing_page.greeting_pe.GreetingPe
 
 class LandingPage {
     fun getHtml(): String {
         return BasicPage()
+            .setTitle("Welcome")
             .addPageElement(GreetingPe())
             .getHtml()
     }
