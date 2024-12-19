@@ -32,6 +32,7 @@ class WebServer {
             }
             .exposeClassEndpoints(MyApi::class)
             .start(5555)
+            .get("/hello") { ctx -> ctx.result("Hello Public World") }
     }
 }
 

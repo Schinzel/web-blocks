@@ -5,6 +5,7 @@
 
 
 
+##### DATASPARARE 1 #####
 PageElements kan ha en data sparare
 
 Det finns en map<PageName,Page>
@@ -16,3 +17,18 @@ innehåller kanske JSON för data att spara
 Hitta sidan i mapen
 Hitta elementet i sidan
 Spara data i elementet
+
+
+##### DATASPARARE 2 #####
+
+Man registrerar sin datasparare i en singleton som håller datasparare
+
+En map för datasparare
+map<GUID, IDataSaver>
+
+interface IDataSaver {
+    fun save(data: String)
+}
+
+api/save-data/{guid}
+Postar json med data, behöver inte vara json antar jag.
