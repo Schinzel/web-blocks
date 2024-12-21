@@ -1,8 +1,21 @@
 
 To do
 - Set it up so that path "/landing" is set to "/"
-- Sätt upp API
+- Set up API
+  - Path prefix "/api" 
+  - IResponse
+    - fun getResponse(): String   
+  - IApi: IResponse 
+  - IPage: IResponse 
+  - 
 - Logging
+  - Exec time
+  - Call time (UTC, Local)
+  - Path
+  - Type: GET, POST, PUT, DELETE
+  - Type: API PAGE
+  - Arguments
+  - Response if API
 - Test gradle?
 - Document that need to change the pom to include html and js files in the jar
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
