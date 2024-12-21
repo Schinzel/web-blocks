@@ -3,10 +3,8 @@ package io.schinzel.page_elements_kotlin.pages.account
 import io.schinzel.page_elements_kotlin.pages.account.my_pe.MyPe
 import io.schinzel.page_elements_kotlin.pages.account.name_pe.NamePe
 import io.schinzel.page_elements_kotlin.stuff.IPage
-import io.schinzel.page_elements_kotlin.stuff.find_pages.annotations.Page
 import io.schinzel.page_elements_kotlin.stuff.bootstrap_page.BootstrapPage
 
-@Page
 class AccountPage: IPage {
 
     override fun getResponse(): String {

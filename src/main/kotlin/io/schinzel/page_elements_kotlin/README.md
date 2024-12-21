@@ -7,7 +7,7 @@ To do
     - fun getResponse(): String   
   - IApi: IResponse 
   - IPage: IResponse 
-  - 
+- Change from PascalCase to kebab-case for pages and api calls
 - Logging
   - Exec time
   - Call time (UTC, Local)

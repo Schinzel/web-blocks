@@ -1,9 +1,6 @@
-package io.schinzel.page_elements_kotlin.stuff.find_pages.find_ipages
+package io.schinzel.page_elements_kotlin.stuff
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements_kotlin.stuff.IApi
-import io.schinzel.page_elements_kotlin.stuff.IPage
-import io.schinzel.page_elements_kotlin.stuff.IResponse
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder

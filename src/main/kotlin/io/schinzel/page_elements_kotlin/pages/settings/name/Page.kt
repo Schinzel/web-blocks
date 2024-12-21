@@ -1,9 +1,8 @@
 package io.schinzel.page_elements_kotlin.pages.settings.name
 
 import io.schinzel.page_elements_kotlin.stuff.IPage
-import io.schinzel.page_elements_kotlin.stuff.find_pages.annotations.Page
 
-@Page
+@Suppress("unused")
 class Page: IPage {
     override fun getResponse(): String {
         return "<h1>Name</h1>"

@@ -5,9 +5,9 @@ import io.javalin.http.Context
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.page_elements_kotlin.stuff.IPage
-import io.schinzel.page_elements_kotlin.stuff.find_pages.find_ipages.Parameter
-import io.schinzel.page_elements_kotlin.stuff.find_pages.find_ipages.Route
-import io.schinzel.page_elements_kotlin.stuff.find_pages.find_ipages.findIResponseClasses
+import io.schinzel.page_elements_kotlin.stuff.Parameter
+import io.schinzel.page_elements_kotlin.stuff.Route
+import io.schinzel.page_elements_kotlin.stuff.findIResponseClasses
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
@@ -17,34 +17,36 @@ fun main() {
         config.staticFiles.add("/site", Location.CLASSPATH)
     }
 
-    findIResponseClasses("io.schinzel.page_elements_kotlin.pages")
-        .forEach { route: Route ->
-            route.toString().println()
-            javalin.get(route.path) { ctx: Context ->
+    val pageRoutes = findIResponseClasses("io.schinzel.page_elements_kotlin.pages")
+    val apiRoutes = findIResponseClasses("io.schinzel.page_elements_kotlin.apis")
 
-                // If no arguments, use default constructor
-                val page = if (route.parameters.isEmpty()) {
-                    route.clazz.createInstance()
-                } else {
-                    // If arguments, use constructor with arguments
-                    val arguments: Map<String, String> = getArguments(route.parameters, ctx)
-                    // Get constructor
-                    val constructor = route.clazz.primaryConstructor
-                        ?: throw IllegalStateException("No primary constructor found for ${route.clazz.simpleName}")
-                    // Create instance with parameters
-                    constructor.callBy(
-                        constructor.parameters.associateWith { param ->
-                            arguments[param.name]
-                        }
-                    )
-                }
+    (pageRoutes + apiRoutes).forEach { route: Route ->
+        route.toString().println()
+        javalin.get(route.path) { ctx: Context ->
 
-                if (page is IPage) {
-                    val response = page.getResponse()
-                    ctx.html(response)
-                }
+            // If no arguments, use default constructor
+            val page = if (route.parameters.isEmpty()) {
+                route.clazz.createInstance()
+            } else {
+                // If arguments, use constructor with arguments
+                val arguments: Map<String, String> = getArguments(route.parameters, ctx)
+                // Get constructor
+                val constructor = route.clazz.primaryConstructor
+                    ?: throw IllegalStateException("No primary constructor found for ${route.clazz.simpleName}")
+                // Create instance with parameters
+                constructor.callBy(
+                    constructor.parameters.associateWith { param ->
+                        arguments[param.name]
+                    }
+                )
+            }
+
+            if (page is IPage) {
+                val response = page.getResponse()
+                ctx.html(response)
             }
         }
+    }
     javalin.start(5555)
 
     "*".repeat(30).println()
