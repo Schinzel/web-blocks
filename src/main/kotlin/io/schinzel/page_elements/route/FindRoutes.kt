@@ -31,11 +31,9 @@ fun findRoutes(basePackage: String): List<Route> {
                 )
             }
 
+
             Route(
-                path = clazz.packageName
-                    .removePrefix(basePackage)
-                    .removePrefix(".")
-                    .replace(".", "/"),
+                basePackage,
                 clazz = clazz.kotlin,
                 parameters = parameters ?: emptyList()
             )
@@ -45,9 +43,15 @@ fun findRoutes(basePackage: String): List<Route> {
 
 // Usage
 fun main() {
-    "Find all classes that implement IResponse".println()
-    findRoutes("io.schinzel.page_elements_kotlin.pages")
+    "Find all page routes".println()
+    findRoutes("io.schinzel.sample.pages")
         .forEach { route ->
             route.toString().println()
         }
+    "Find all api routes".println()
+    findRoutes("io.schinzel.sample.apis")
+        .forEach { route ->
+            route.toString().println()
+        }
+
 }
