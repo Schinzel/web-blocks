@@ -1,5 +1,7 @@
-package io.schinzel.page_elements_kotlin.stuff.annotations
+package io.schinzel.page_elements_kotlin.stuff.find_pages.find_ipages
 
+import io.schinzel.basic_utils_kotlin.println
+import io.schinzel.page_elements_kotlin.stuff.IPage
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
@@ -10,15 +12,15 @@ data class PageRoute(
     val pageClass: KClass<*>
 )
 
-fun findPageClasses(basePackage: String): List<PageRoute> {
+fun findIPageClasses(basePackage: String): List<PageRoute> {
     val reflections = Reflections(
         ConfigurationBuilder()
             .forPackage(basePackage)
-            .setScanners(Scanners.TypesAnnotated)
+            .setScanners(Scanners.SubTypes)
     )
 
     return reflections
-        .getTypesAnnotatedWith(Page::class.java)
+        .getSubTypesOf(IPage::class.java)
         .map { clazz ->
             PageRoute(
                 path = clazz.packageName
@@ -33,11 +35,10 @@ fun findPageClasses(basePackage: String): List<PageRoute> {
 
 // Usage
 fun main() {
-    val pages = findPageClasses("io.schinzel.page_elements_kotlin")
+    "Find all classes that implement IPage".println()
+    val pages = findIPageClasses("io.schinzel.page_elements_kotlin")
     pages.forEach { route ->
         println("Route: ${route.path}")
         //println("Class: ${route.pageClass}")
-        // You can create an instance like this:
-        // val instance = route.pageClass.createInstance()
     }
 }

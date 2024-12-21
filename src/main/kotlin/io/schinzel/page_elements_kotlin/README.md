@@ -1,4 +1,6 @@
 
+To do
+- Test gradle?
 - Document that need to change the pom to include html and js files in the jar
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
 - subscribe
@@ -9,6 +11,7 @@ Build a JAR
 mvn clean package
 
 Run the JAR
+java -jar myJar.jar
 
 # Routing 
 Skall man göra om med Next med routing

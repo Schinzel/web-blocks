@@ -1,4 +1,4 @@
-package io.schinzel.page_elements_kotlin.stuff.annotations
+package io.schinzel.page_elements_kotlin.stuff.find_pages.annotations
 
 import kotlin.annotation.AnnotationRetention
 import kotlin.annotation.AnnotationTarget
