@@ -7,7 +7,7 @@ import io.schinzel.page_elements_kotlin.stuff.find_pages.annotations.Page
 import io.schinzel.page_elements_kotlin.stuff.bootstrap_page.BootstrapPage
 
 @Page
-class Page: IPage {
+class AccountPage: IPage {
 
     override fun getHtml(): String {
         return BootstrapPage()

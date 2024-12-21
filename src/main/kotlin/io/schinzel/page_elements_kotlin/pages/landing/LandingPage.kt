@@ -7,7 +7,7 @@ import io.schinzel.page_elements_kotlin.stuff.IPage
 import io.schinzel.page_elements_kotlin.stuff.find_pages.annotations.Page
 
 @Page
-class LandingPage: IPage {
+class LandingPage(val userId: String = ""): IPage {
     override fun getHtml(): String {
         return BasicPage()
             .setTitle("Welcome")
