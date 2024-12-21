@@ -4,7 +4,9 @@ import io.javalin.Javalin
 import io.javalin.http.Context
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.stuff.*
+import io.schinzel.page_elements.route.Parameter
+import io.schinzel.page_elements.route.Route
+import io.schinzel.page_elements.route.findRoutes
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
@@ -19,7 +21,7 @@ class InitWeb(pagePackage: String, apiPackage: String) {
 
         (pageRoutes + apiRoutes).forEach { route: Route ->
             route.toString().println()
-            javalin.get(route.path) { ctx: Context ->
+            javalin.get(route.getPath()) { ctx: Context ->
 
                 // If no arguments, use default constructor
                 val routeInstance = if (route.parameters.isEmpty()) {

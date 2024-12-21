@@ -1,6 +1,6 @@
 package io.schinzel.sample.apis.v1
 
-import io.schinzel.page_elements.stuff.IApi
+import io.schinzel.page_elements.IApi
 
 @Suppress("unused")
 class UserInformationApi: IApi {

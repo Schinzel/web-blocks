@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.settings.address
 
-import io.schinzel.page_elements.stuff.IPage
+import io.schinzel.page_elements.IPage
 
 @Suppress("unused")
 class Page: IPage {

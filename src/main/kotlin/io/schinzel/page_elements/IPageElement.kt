@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.stuff
+package io.schinzel.page_elements
 
 
 interface IPageElement {

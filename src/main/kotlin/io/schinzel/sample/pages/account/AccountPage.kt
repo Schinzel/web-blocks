@@ -1,7 +1,7 @@
 package io.schinzel.sample.pages.account
 
-import io.schinzel.page_elements.stuff.IPage
-import io.schinzel.page_elements.stuff.bootstrap_page.BootstrapPage
+import io.schinzel.page_elements.IPage
+import io.schinzel.pages.bootstrap_page.BootstrapPage
 import io.schinzel.sample.pages.account.my_pe.MyPe
 import io.schinzel.sample.pages.account.name_pe.NamePe
 

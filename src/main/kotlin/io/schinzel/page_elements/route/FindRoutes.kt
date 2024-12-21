@@ -1,31 +1,11 @@
-package io.schinzel.page_elements.stuff
+package io.schinzel.page_elements.route
 
 import io.schinzel.basic_utils_kotlin.println
+import io.schinzel.page_elements.IResponse
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
-import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
-
-data class Route(
-    val path: String,
-    val clazz: KClass<*>,
-    val parameters: List<Parameter>
-) {
-    override fun toString(): String {
-        val type = when {
-            IApi::class.java.isAssignableFrom(clazz.java) -> "API"
-            IPage::class.java.isAssignableFrom(clazz.java) -> "Page"
-            else -> "Unknown"
-        }
-        return "Type: $type, Path: $path, Class: ${clazz.simpleName}, Parameters: $parameters"
-    }
-}
-
-data class Parameter(
-    val name: String,
-    val type: String
-)
 
 fun findRoutes(basePackage: String): List<Route> {
     val reflections = Reflections(

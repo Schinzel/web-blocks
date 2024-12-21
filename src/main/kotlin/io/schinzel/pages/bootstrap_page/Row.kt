@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.stuff.bootstrap_page
+package io.schinzel.pages.bootstrap_page
 
 class Row {
     val columns: MutableList<Column> = mutableListOf()
