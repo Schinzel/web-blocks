@@ -2,7 +2,9 @@ package io.schinzel.page_elements.route
 
 import io.schinzel.page_elements.IApi
 import io.schinzel.page_elements.IPage
-import io.schinzel.sample.pages.settings.name.Page
+import io.schinzel.page_elements.route.path.ApiPath
+import io.schinzel.page_elements.route.path.IPath
+import io.schinzel.page_elements.route.path.PagePath
 import kotlin.reflect.KClass
 
 data class Route(
@@ -40,22 +42,3 @@ data class Route(
     }
 }
 
-interface IPath {
-    val path: String
-}
-
-class PagePath(relativePath: String) : IPath {
-    override val path: String
-
-    init {
-        path = if (relativePath == "landing") {
-            "/"
-        } else {
-            relativePath
-        }
-    }
-}
-
-class ApiPath(relativePath: String) : IPath {
-    override val path: String = relativePath
-}
