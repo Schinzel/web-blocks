@@ -4,10 +4,7 @@ import io.javalin.Javalin
 import io.javalin.http.Context
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements_kotlin.stuff.IPage
-import io.schinzel.page_elements_kotlin.stuff.Parameter
-import io.schinzel.page_elements_kotlin.stuff.Route
-import io.schinzel.page_elements_kotlin.stuff.findIResponseClasses
+import io.schinzel.page_elements_kotlin.stuff.*
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
@@ -25,7 +22,7 @@ fun main() {
         javalin.get(route.path) { ctx: Context ->
 
             // If no arguments, use default constructor
-            val page = if (route.parameters.isEmpty()) {
+            val routeInstance = if (route.parameters.isEmpty()) {
                 route.clazz.createInstance()
             } else {
                 // If arguments, use constructor with arguments
@@ -41,9 +38,13 @@ fun main() {
                 )
             }
 
-            if (page is IPage) {
-                val response = page.getResponse()
+            if (routeInstance is IPage) {
+                val response = routeInstance.getHtml()
                 ctx.html(response)
+            }
+            if (routeInstance is IApi) {
+                val response = routeInstance.getData()
+                ctx.json(response)
             }
         }
     }

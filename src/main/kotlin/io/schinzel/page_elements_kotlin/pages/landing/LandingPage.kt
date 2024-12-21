@@ -10,17 +10,17 @@ class LandingPage(userId: String = ""): IPage {
         "LandingPage created with userId: $userId".println()
     }
 
-    override fun getResponse(): String {
+    override fun getHtml(): String {
         return BasicPage()
             .setTitle("Welcome")
             .addPageElement(GreetingPe())
-            .getResponse()
+            .getHtml()
     }
 }
 
 fun main() {
     BasicPage()
         .addPageElement(GreetingPe())
-        .getResponse()
+        .getHtml()
         .println()
 }

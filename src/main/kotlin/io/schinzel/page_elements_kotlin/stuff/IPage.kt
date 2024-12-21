@@ -1,9 +1,11 @@
 package io.schinzel.page_elements_kotlin.stuff
 
-interface IPage : IResponse
-
-interface IApi : IResponse
-
-interface IResponse {
-    fun getResponse(): String
+interface IPage : IResponse {
+    fun getHtml(): String
 }
+
+interface IApi : IResponse {
+    fun getData(): Any
+}
+
+interface IResponse
