@@ -14,10 +14,9 @@ Run the JAR
 java -jar myJar.jar
 
 # Routing 
-Skall man göra om med Next med routing
-Anger en root katalog.
-In this root folder on findes all files named Page. 
-The folder of the Page file is the route
+Go with the IPage solution. 
+Find all IPages. 
+For each IPage, create a route.
 
 
 # Data savers
