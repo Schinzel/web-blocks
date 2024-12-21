@@ -11,14 +11,14 @@ import kotlin.reflect.full.primaryConstructor
 data class PageRoute(
     val path: String,
     val pageClass: KClass<*>,
-    val arguments: List<Argument>
+    val parameters: List<Parameter>
 ) {
     override fun toString(): String {
-        return "Path: $path, PageClass: ${pageClass.simpleName}, Arguments: $arguments"
+        return "Path: $path, PageClass: ${pageClass.simpleName}, Parameters: $parameters"
     }
 }
 
-data class Argument(
+data class Parameter(
     val name: String,
     val type: String
 )
@@ -40,8 +40,8 @@ fun findIPageClasses(basePackage: String): List<PageRoute> {
         .map { clazz ->
             // Get constructor parameters using Kotlin reflection
             val constructorParams = clazz.kotlin.primaryConstructor?.parameters
-            val arguments = constructorParams?.map { param ->
-                Argument(
+            val parameters = constructorParams?.map { param ->
+                Parameter(
                     name = param.name ?: "",
                     type = param.type.toString()
                 )
@@ -53,7 +53,7 @@ fun findIPageClasses(basePackage: String): List<PageRoute> {
                     .removePrefix(".")
                     .replace(".", "/"),
                 pageClass = clazz.kotlin,
-                arguments = arguments ?: emptyList()
+                parameters = parameters ?: emptyList()
             )
         }
         .toList()
