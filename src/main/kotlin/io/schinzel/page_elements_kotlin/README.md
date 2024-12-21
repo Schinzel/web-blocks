@@ -1,7 +1,6 @@
 
 To do
 - Set it up so that path "/landing" is set to "/"
-- should I set it so that variables can get set in the path also? Like /[pageName]/{userId}
 - Logging
 - Test gradle?
 - Document that need to change the pom to include html and js files in the jar
