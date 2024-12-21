@@ -1,9 +1,8 @@
 
 To do
-- How do I get variables to the page such as UserId
-  - Get constructor arguments
-  - Set these in route, but query and post
-- It should ot find basic page. Why???
+- Set it up so that path "/landing" is set to "/"
+- should I set it so that variables can get set in the path also? Like /[pageName]/{userId}
+- Logging
 - Test gradle?
 - Document that need to change the pom to include html and js files in the jar
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
