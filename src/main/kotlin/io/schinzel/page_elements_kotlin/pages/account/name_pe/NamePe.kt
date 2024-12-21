@@ -1,7 +1,7 @@
-package io.schinzel.page_elements_kotlin.account.name_pe
+package io.schinzel.page_elements_kotlin.pages.account.name_pe
 
-import io.schinzel.stuff.IPageElement
-import io.schinzel.stuff.TemplateProcessor
+import io.schinzel.page_elements_kotlin.stuff.IPageElement
+import io.schinzel.page_elements_kotlin.stuff.TemplateProcessor
 
 class NamePe(userId: Int): IPageElement {
     private val nameDao = NameDao(userId)

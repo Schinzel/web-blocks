@@ -1,7 +1,7 @@
-package io.schinzel.page_elements_kotlin.landing.greeting_pe
+package io.schinzel.page_elements_kotlin.pages.landing.greeting_pe
 
-import io.schinzel.stuff.IPageElement
-import io.schinzel.stuff.TemplateProcessor
+import io.schinzel.page_elements_kotlin.stuff.IPageElement
+import io.schinzel.page_elements_kotlin.stuff.TemplateProcessor
 
 class GreetingPe : IPageElement {
     override fun getHtml(): String {

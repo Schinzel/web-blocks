@@ -1,12 +1,15 @@
-package io.schinzel.page_elements_kotlin.account
+package io.schinzel.page_elements_kotlin.pages.account
 
-import io.schinzel.page_elements_kotlin.account.my_pe.MyPe
-import io.schinzel.page_elements_kotlin.account.name_pe.NamePe
-import io.schinzel.stuff.bootstrap_page.BootstrapPage
+import io.schinzel.page_elements_kotlin.pages.account.my_pe.MyPe
+import io.schinzel.page_elements_kotlin.pages.account.name_pe.NamePe
+import io.schinzel.page_elements_kotlin.stuff.IPage
+import io.schinzel.page_elements_kotlin.stuff.annotations.Page
+import io.schinzel.page_elements_kotlin.stuff.bootstrap_page.BootstrapPage
 
-class AccountPage {
+@Page
+class Page: IPage {
 
-    fun getHtml(): String {
+    override fun getHtml(): String {
         return BootstrapPage()
             .setTitle("Account")
 

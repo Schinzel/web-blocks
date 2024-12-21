@@ -1,8 +1,8 @@
-package io.schinzel.stuff.basic_page
+package io.schinzel.page_elements_kotlin.stuff.basic_page
 
-import io.schinzel.stuff.IPage
-import io.schinzel.stuff.IPageElement
-import io.schinzel.stuff.TemplateProcessor
+import io.schinzel.page_elements_kotlin.stuff.IPage
+import io.schinzel.page_elements_kotlin.stuff.IPageElement
+import io.schinzel.page_elements_kotlin.stuff.TemplateProcessor
 
 class BasicPage : IPage {
     private val pageElements = mutableListOf<IPageElement>()
@@ -13,7 +13,7 @@ class BasicPage : IPage {
         return this
     }
 
-    override fun addPageElement(pageElement: IPageElement): IPage {
+    fun addPageElement(pageElement: IPageElement): IPage {
         pageElements.add(pageElement)
         return this
     }

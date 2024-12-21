@@ -1,4 +1,4 @@
-package io.schinzel.page_elements_kotlin.account.name_pe
+package io.schinzel.page_elements_kotlin.pages.account.name_pe
 
 class NameDao(private val userId: Int) {
     fun getFirstName(): String {

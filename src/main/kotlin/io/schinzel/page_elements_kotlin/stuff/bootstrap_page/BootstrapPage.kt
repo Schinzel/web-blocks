@@ -1,10 +1,9 @@
-package io.schinzel.stuff.bootstrap_page
+package io.schinzel.page_elements_kotlin.stuff.bootstrap_page
 
-import io.schinzel.stuff.IPage
-import io.schinzel.stuff.IPageElement
-import io.schinzel.stuff.TemplateProcessor
+import io.schinzel.page_elements_kotlin.stuff.IPageElement
+import io.schinzel.page_elements_kotlin.stuff.TemplateProcessor
 
-class BootstrapPage: IPage {
+class BootstrapPage {
     private var title = ""
     val rows = mutableListOf<Row>()
 
@@ -23,12 +22,12 @@ class BootstrapPage: IPage {
         return this
     }
 
-    override fun addPageElement(pageElement: IPageElement): BootstrapPage {
+    fun addPageElement(pageElement: IPageElement): BootstrapPage {
         rows.last().columns.last().elements.add(pageElement)
         return this
     }
 
-    override fun getHtml(): String {
+    fun getHtml(): String {
         val content = rows.joinToString("\n") { it.getHtml() }
 
         return TemplateProcessor("template.html", this)

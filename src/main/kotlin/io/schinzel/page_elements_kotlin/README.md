@@ -4,8 +4,21 @@
 - subscribe
 
 
+# JAR
+Build a JAR
+mvn clean package
 
-##### DATASPARARE 1 #####
+Run the JAR
+
+# Routing 
+Skall man göra om med Next med routing
+Anger en root katalog.
+In this root folder on findes all files named Page. 
+The folder of the Page file is the route
+
+
+# Data savers
+## Path 1
 PageElements kan ha en data sparare
 
 Det finns en map<PageName,Page>
@@ -19,7 +32,7 @@ Hitta elementet i sidan
 Spara data i elementet
 
 
-##### DATASPARARE 2 #####
+## Path 2
 
 Man registrerar sin datasparare i en singleton som håller datasparare
 

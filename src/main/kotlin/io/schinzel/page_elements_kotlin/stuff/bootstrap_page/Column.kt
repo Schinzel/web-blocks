@@ -1,6 +1,6 @@
-package io.schinzel.stuff.bootstrap_page
+package io.schinzel.page_elements_kotlin.stuff.bootstrap_page
 
-import io.schinzel.stuff.IPageElement
+import io.schinzel.page_elements_kotlin.stuff.IPageElement
 
 class Column(val span: Int) {
     val elements: MutableList<IPageElement> = mutableListOf()
