@@ -1,6 +1,7 @@
 
 To do
 - Set it up so that path "/landing" is set to "/"
+- Sätt upp API
 - Logging
 - Test gradle?
 - Document that need to change the pom to include html and js files in the jar
