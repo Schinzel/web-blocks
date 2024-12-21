@@ -36,7 +36,7 @@ fun findIPageClasses(basePackage: String): List<PageRoute> {
 // Usage
 fun main() {
     "Find all classes that implement IPage".println()
-    val pages = findIPageClasses("io.schinzel.page_elements_kotlin")
+    val pages = findIPageClasses("io.schinzel.page_elements_kotlin.pages")
     pages.forEach { route ->
         println("Route: ${route.path}")
         //println("Class: ${route.pageClass}")

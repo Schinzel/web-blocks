@@ -13,6 +13,11 @@ mvn clean package
 Run the JAR
 java -jar myJar.jar
 
+# Gradle
+## Installation
+brew install gradle
+gradle wrapper
+
 # Routing 
 Go with the IPage solution. 
 Find all IPages. 
