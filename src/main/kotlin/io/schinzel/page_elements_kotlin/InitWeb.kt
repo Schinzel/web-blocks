@@ -17,7 +17,7 @@ fun main() {
 
     findIPageClasses("io.schinzel.page_elements_kotlin.pages")
         .forEach { route: PageRoute ->
-            println("Created route: $route" )
+            println("Created route: $route")
             javalin.get(route.path) { ctx ->
                 val page = route.pageClass.createInstance()
                 if (page is IPage) {

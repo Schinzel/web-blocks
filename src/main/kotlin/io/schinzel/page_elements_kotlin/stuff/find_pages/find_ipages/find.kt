@@ -17,6 +17,7 @@ data class PageRoute(
         return "Path: $path, PageClass: ${pageClass.simpleName}, Arguments: $arguments"
     }
 }
+
 data class Argument(
     val name: String,
     val type: String
