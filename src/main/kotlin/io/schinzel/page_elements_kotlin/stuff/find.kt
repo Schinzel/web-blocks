@@ -27,7 +27,7 @@ data class Parameter(
     val type: String
 )
 
-fun findIResponseClasses(basePackage: String): List<Route> {
+fun findRoutes(basePackage: String): List<Route> {
     val reflections = Reflections(
         ConfigurationBuilder()
             .forPackage(basePackage)
@@ -66,7 +66,7 @@ fun findIResponseClasses(basePackage: String): List<Route> {
 // Usage
 fun main() {
     "Find all classes that implement IResponse".println()
-    findIResponseClasses("io.schinzel.page_elements_kotlin.pages")
+    findRoutes("io.schinzel.page_elements_kotlin.pages")
         .forEach { route ->
             route.toString().println()
         }

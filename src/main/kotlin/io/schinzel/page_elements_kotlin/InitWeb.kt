@@ -14,8 +14,8 @@ fun main() {
         config.staticFiles.add("/site", Location.CLASSPATH)
     }
 
-    val pageRoutes = findIResponseClasses("io.schinzel.page_elements_kotlin.pages")
-    val apiRoutes = findIResponseClasses("io.schinzel.page_elements_kotlin.apis")
+    val pageRoutes = findRoutes("io.schinzel.page_elements_kotlin.pages")
+    val apiRoutes = findRoutes("io.schinzel.page_elements_kotlin.apis")
 
     (pageRoutes + apiRoutes).forEach { route: Route ->
         route.toString().println()

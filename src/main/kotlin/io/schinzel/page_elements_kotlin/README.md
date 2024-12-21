@@ -1,13 +1,11 @@
 
 To do
-- Set it up so that path "/landing" is set to "/"
 - Set up API
   - Path prefix "/api" 
-  - IResponse
-    - fun getResponse(): String   
-  - IApi: IResponse 
-  - IPage: IResponse 
+    - Should I add that you can have Api folder?
+  - include the class name ex Api suffix if there is one
 - Change from PascalCase to kebab-case for pages and api calls
+- Set it up so that path "/landing" is set to "/"
 - Logging
   - Exec time
   - Call time (UTC, Local)
