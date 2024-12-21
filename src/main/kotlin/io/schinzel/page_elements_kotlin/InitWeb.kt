@@ -19,6 +19,18 @@ fun main() {
         .forEach { route: PageRoute ->
             println("Created route: $route")
             javalin.get(route.path) { ctx ->
+
+                // Map query parameters to constructor arguments
+                val params: Map<String, String> = route.arguments.associate { arg ->
+                    // Try to get from POST body first
+                    val postValue = ctx.formParam(arg.name)
+                    // If not in POST, try query parameter
+                    val value = postValue ?: ctx.queryParam(arg.name) ?: ""
+                    "Value for ${arg.name} is $value".println()
+                    arg.name to value
+                }
+
+
                 val page = route.pageClass.createInstance()
                 if (page is IPage) {
                     val htmlContent = page.getHtml()
@@ -27,6 +39,7 @@ fun main() {
             }
         }
     javalin.start(5555)
+
     "*".repeat(30).println()
     "Project started".println()
     "*".repeat(30).println()
