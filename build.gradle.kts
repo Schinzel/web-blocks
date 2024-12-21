@@ -29,7 +29,7 @@ repositories {
 
 // Configure the main class for the application
 application {
-    mainClass.set("io.schinzel.page_elements_kotlin.InitWebKt")
+    mainClass.set("io.schinzel.sample.MainKt")
 }
 
 // Declare all project dependencies
