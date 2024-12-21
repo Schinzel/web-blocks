@@ -9,7 +9,7 @@ import io.schinzel.page_elements_kotlin.stuff.bootstrap_page.BootstrapPage
 @Page
 class AccountPage: IPage {
 
-    override fun getHtml(): String {
+    override fun getResponse(): String {
         return BootstrapPage()
             .setTitle("Account")
 

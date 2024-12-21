@@ -18,7 +18,7 @@ class BasicPage : IPage {
         return this
     }
 
-    override fun getHtml(): String {
+    override fun getResponse(): String {
         val content = pageElements.joinToString(separator = "") { it.getHtml() }
         return TemplateProcessor("template.html", this)
             .addData("title", title)

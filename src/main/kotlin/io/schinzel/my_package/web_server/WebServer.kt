@@ -19,14 +19,14 @@ class WebServer {
             .get("/hello") { ctx -> ctx.result("Hello Public World") }
             .get("/") { ctx ->
                 // Dynamically generate the HTML using your LandingPage logic
-                val htmlContent = LandingPage().getHtml()
+                val htmlContent = LandingPage().getResponse()
                 // Respond with the generated HTML
                 ctx.html(htmlContent)
             }
             .get("/account") { ctx ->
                 // Dynamically generate the HTML using your LandingPage logic
                 val htmlContent = AccountPage()
-                    .getHtml()
+                    .getResponse()
                 // Respond with the generated HTML
                 ctx.html(htmlContent)
             }

@@ -5,7 +5,7 @@ import io.schinzel.page_elements_kotlin.stuff.find_pages.annotations.Page
 
 @Page
 class Page: IPage {
-    override fun getHtml(): String {
+    override fun getResponse(): String {
         return "<h1>Name</h1>"
     }
 }
