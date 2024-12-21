@@ -12,7 +12,7 @@ data class Route(
 ) {
     private val isApi = IApi::class.java.isAssignableFrom(clazz.java)
     private val isPage = IPage::class.java.isAssignableFrom(clazz.java)
-    val path: IPath
+    private val path: IPath
 
 
     init {
@@ -24,9 +24,11 @@ data class Route(
             isPage -> PagePath(relativePath)
             isApi -> ApiPath(relativePath)
             else -> throw Exception("Class ${clazz.simpleName} does not implement IPage or IApi")
-
         }
     }
+
+    fun getPath(): String = path.path
+
 
     override fun toString(): String {
         val type = when {
@@ -34,7 +36,7 @@ data class Route(
             isPage -> "Page"
             else -> "Unknown"
         }
-        return "Type: $type, Path: ${path.path}, Class: ${clazz.simpleName}, Parameters: $parameters"
+        return "Type: $type, Path: ${getPath()}, Class: ${clazz.simpleName}, Parameters: $parameters"
     }
 }
 

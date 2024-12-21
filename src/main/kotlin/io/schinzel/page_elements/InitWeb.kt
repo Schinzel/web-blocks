@@ -21,7 +21,7 @@ class InitWeb(pagePackage: String, apiPackage: String) {
 
         (pageRoutes + apiRoutes).forEach { route: Route ->
             route.toString().println()
-            javalin.get(route.path.path) { ctx: Context ->
+            javalin.get(route.getPath()) { ctx: Context ->
 
                 // If no arguments, use default constructor
                 val routeInstance = if (route.parameters.isEmpty()) {
