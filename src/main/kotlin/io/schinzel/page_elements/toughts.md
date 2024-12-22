@@ -24,9 +24,10 @@ user_account/my_pe
 
 IPageElement
 IDataSaver
-Skall man ha API:er inna i page elements dirs?
+
+((kall man ha API:er inna i page elements dirs?
   Om vi kör fullt ut FBA så är det fallet. Men behövs det??
-     Inte lösa det om det inte är ett problem 
+     Inte lösa det om det inte är ett problem)) 
 
 ## IPageElement routing??
 Göra IPage aware att består av PageElements och lägga upp router till page elements automatiskt?
@@ -60,18 +61,3 @@ fun save(data: String)
 api/save-data/{guid}
 Postar json med data, behöver inte vara json antar jag.
 
-
-
-# Backup
-            // Check if route has arguments
-           /* val hasArguments = route.parameters.isNotEmpty()
-            // If has arguments
-            if (hasArguments) {
-                // Create path with parameters
-                val pathWithParams = route.parameters.fold(route.getPath()) { path, param ->
-                    "$path/{${param.name}}"
-                }
-                // Register both GET and POST handlers for the same path
-                javalin.get(pathWithParams, handler)
-                javalin.post(pathWithParams, handler)
-            }*/
