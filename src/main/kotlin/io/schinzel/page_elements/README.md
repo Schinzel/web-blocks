@@ -20,10 +20,9 @@ The framework encourages building pages from small, independent Page Elements. E
 - Contains all its necessary components, logic, and resources
 - Functions as a self-contained feature module
 - Can be developed, tested, and maintained independently
-- Promotes code reusability across different pages
 
 ### Feature-Based Architecture
-The project structure follows feature-based design principles, where related code is 
+The project structure encourages feature-based design principles, where related code is 
 grouped by feature rather than technical function. This approach:
 - Makes code more discoverable and easier to understand
 - Reduces cognitive load when working on specific features
