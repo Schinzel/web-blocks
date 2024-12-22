@@ -4,19 +4,20 @@
   - have a page with path "api"
   - have an api with path "page"
   - cannot have a page nor an api with path "static"
-- Data savers. Can I give page elements the ability to save data? 
-- Tester
+- Data savers
+  - Can I give page elements the ability to save data? 
 - subscribe
+- Tester & doc
 
 # How to build and run a JAR
-Build a JAR
-mvn clean package
-
-Run the JAR
-java -jar myJar.jar
+- Build a JAR: mvn clean package 
+- Run the JAR: java -jar myJar.jar
 
 
 # Thoughts on data savers
+Should use the same thoughts on routing. I.e. routes to data savers
+is defined by and mirrors the file structure.
+
 ## IPageElement routing??
 Göra IPage aware att består av PageElements och lägga upp router till page elements automatiskt?
 Och att PageElements kan ha en data saver?
