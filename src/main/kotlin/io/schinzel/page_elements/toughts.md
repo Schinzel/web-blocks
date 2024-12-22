@@ -8,6 +8,7 @@
     - Type: API PAGE
     - Arguments
     - Response if API. No response if page
+- Data savers. Can I give page elements the ability to save data? 
 - Tester
 - subscribe
 
@@ -20,6 +21,10 @@ java -jar myJar.jar
 
 
 # Thoughts on data savers
+## IPageElement routing??
+Göra IPage aware att består av PageElements och lägga upp router till dem autoamtiskt?
+
+
 ## Path 1
 PageElements kan ha en data sparare
 
