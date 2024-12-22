@@ -29,11 +29,15 @@ class InitWeb(pagePackage: String, apiPackage: String) {
             // Register both GET and POST handlers for the same path
             javalin.get(route.getPath(), handler)
             javalin.post(route.getPath(), handler)
+            // Check if route has arguments
             val hasArguments = route.parameters.isNotEmpty()
+            // If has arguments
             if (hasArguments) {
+                // Create path with parameters
                 val pathWithParams = route.parameters.fold(route.getPath()) { path, param ->
                     "$path/{${param.name}}"
                 }
+                // Register both GET and POST handlers for the same path
                 javalin.get(pathWithParams, handler)
                 javalin.post(pathWithParams, handler)
             }
