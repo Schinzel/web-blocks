@@ -1,7 +1,7 @@
 package io.schinzel.page_elements.route
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.IResponse
+import io.schinzel.page_elements.IWebResponse
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
@@ -15,7 +15,7 @@ fun findRoutes(basePackage: String): List<Route> {
     )
 
     return reflections
-        .getSubTypesOf(IResponse::class.java)
+        .getSubTypesOf(IWebResponse::class.java)
         // Filter only classes in the base package and subpackages. This is needed because
         // Reflections will scan all classes in the classpath by default.
         .filter { clazz ->

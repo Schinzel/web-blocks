@@ -2,7 +2,7 @@ package io.schinzel.page_elements.route
 
 import io.schinzel.page_elements.IApi
 import io.schinzel.page_elements.IPage
-import io.schinzel.page_elements.IResponse
+import io.schinzel.page_elements.IWebResponse
 import io.schinzel.page_elements.route.path.ApiPath
 import io.schinzel.page_elements.route.path.IPath
 import io.schinzel.page_elements.route.path.PagePath
@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
 
 data class Route(
     private val basePackage: String,
-    val clazz: KClass<out IResponse>,
+    val clazz: KClass<out IWebResponse>,
     val parameters: List<Parameter>
 ) {
     private val isPage = IPage::class.java.isAssignableFrom(clazz.java)

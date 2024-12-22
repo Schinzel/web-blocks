@@ -1,11 +1,11 @@
 package io.schinzel.page_elements
 
-interface IPage : IResponse {
+interface IPage : IWebResponse {
     fun getHtml(): String
 }
 
-interface IApi : IResponse {
+interface IApi : IWebResponse {
     fun getData(): Any
 }
 
-interface IResponse
+interface IWebResponse

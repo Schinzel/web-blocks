@@ -56,7 +56,7 @@ class InitWeb(pagePackage: String, apiPackage: String) {
         return { ctx: Context ->
             val hasNoArguments = route.parameters.isEmpty()
             // Create instance of route class
-            val routeClassInstance = when {
+            val routeClassInstance: IWebResponse = when {
                 // If no arguments, use no-argument constructor
                 hasNoArguments -> route.clazz.createInstance()
                 else -> {
@@ -73,25 +73,28 @@ class InitWeb(pagePackage: String, apiPackage: String) {
                     )
                 }
             }
-
-            when (routeClassInstance) {
-                is IPage -> {
-                    val response = routeClassInstance.getHtml()
-                    ctx.html(response)
-                }
-
-                is IApi -> {
-                    val response = routeClassInstance.getData()
-                    ctx.json(response)
-                }
-
-                else -> {
-                    throw IllegalStateException("Class ${route.clazz.simpleName} must implement IPage or IApi")
-                }
-            }
+            sendResponse(ctx, routeClassInstance)
         }
     }
 
+
+    private fun sendResponse(ctx: Context, routeClassInstance: IWebResponse) {
+        when (routeClassInstance) {
+            is IPage -> {
+                val response = routeClassInstance.getHtml()
+                ctx.html(response)
+            }
+
+            is IApi -> {
+                val response = routeClassInstance.getData()
+                ctx.json(response)
+            }
+
+            else -> {
+                throw IllegalStateException("Class ${routeClassInstance.javaClass.simpleName} must implement IPage or IApi")
+            }
+        }
+    }
 
     private fun getArguments(parameters: List<Parameter>, ctx: Context): Map<String, String> {
         return parameters.associate { arg ->
