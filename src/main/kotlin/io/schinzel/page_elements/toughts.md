@@ -9,7 +9,7 @@
     - Arguments
     - Response if API
 - subscribe
--
+
 # How to build and run a JAR
 Build a JAR
 mvn clean package

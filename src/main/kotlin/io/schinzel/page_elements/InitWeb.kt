@@ -13,23 +13,39 @@ import kotlin.reflect.full.primaryConstructor
 class InitWeb(pagePackage: String, apiPackage: String) {
     init {
         val javalin = Javalin.create { config ->
+            // Serve static files from the classpath
             config.staticFiles.add("/site", Location.CLASSPATH)
         }
-
         // Find all page routes
         val pageRoutes = findRoutes(pagePackage)
         // Find all api routes
         val apiRoutes = findRoutes(apiPackage)
-
         // Add all routes to Javalin
         (pageRoutes + apiRoutes).forEach { route: Route ->
             // Print route
             route.toString().println()
-            val handler = { ctx: Context ->
-                // If no arguments, use default constructor
-                val routeInstance = if (route.parameters.isEmpty()) {
-                    route.clazz.createInstance()
-                } else {
+            // Create handler
+            val handler = createRouteHandler(route)
+            // Register both GET and POST handlers for the same path
+            javalin.get(route.getPath(), handler)
+            javalin.post(route.getPath(), handler)
+        }
+        // Start server
+        javalin.start(5555)
+
+        "*".repeat(30).println()
+        "Project started".println()
+        "*".repeat(30).println()
+    }
+
+
+    private fun createRouteHandler(route: Route): (Context) -> Unit {
+        return { ctx: Context ->
+            val hasNoArguments = route.parameters.isEmpty()
+            // Create instance of route class
+            val routeClassInstance = when {
+                hasNoArguments -> route.clazz.createInstance()
+                else -> {
                     // If arguments, use constructor with arguments
                     val arguments: Map<String, String> = getArguments(route.parameters, ctx)
                     // Get constructor
@@ -42,25 +58,24 @@ class InitWeb(pagePackage: String, apiPackage: String) {
                         }
                     )
                 }
-                if (routeInstance is IPage) {
-                    val response = routeInstance.getHtml()
-                    ctx.html(response)
-                }
-                if (routeInstance is IApi) {
-                    val response = routeInstance.getData()
-                    ctx.json(response)
-                }
             }
 
-            // Register both GET and POST handlers for the same path
-            javalin.get(route.getPath(), handler)
-            javalin.post(route.getPath(), handler)
-        }
-        javalin.start(5555)
+            when (routeClassInstance) {
+                is IPage -> {
+                    val response = routeClassInstance.getHtml()
+                    ctx.html(response)
+                }
 
-        "*".repeat(30).println()
-        "Project started".println()
-        "*".repeat(30).println()
+                is IApi -> {
+                    val response = routeClassInstance.getData()
+                    ctx.json(response)
+                }
+
+                else -> {
+                    throw IllegalStateException("Class ${route.clazz.simpleName} must implement IPage or IApi")
+                }
+            }
+        }
     }
 
 
