@@ -1,5 +1,6 @@
 package io.schinzel.page_elements.route
 
+import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.IApi
 import io.schinzel.page_elements.IPage
 import io.schinzel.page_elements.route.path.ApiPath
@@ -12,8 +13,8 @@ data class Route(
     val clazz: KClass<*>,
     val parameters: List<Parameter>
 ) {
-    private val isApi = IApi::class.java.isAssignableFrom(clazz.java)
     private val isPage = IPage::class.java.isAssignableFrom(clazz.java)
+    private val isApi = IApi::class.java.isAssignableFrom(clazz.java)
     private val path: IPath
 
 
@@ -23,6 +24,8 @@ data class Route(
             .removePrefix(basePackage)
             .removePrefix(".")
             .replace(".", "/")
+            // Convert from snake case to kebab case
+            .replace("_", "-")
         path = when {
             isPage -> PagePath(relativePath)
             isApi -> ApiPath(relativePath, clazz)
@@ -35,8 +38,8 @@ data class Route(
 
     override fun toString(): String {
         val type = when {
-            isApi -> "Api"
             isPage -> "Page"
+            isApi -> "Api"
             else -> "Unknown"
         }
         return "Type: $type, Path: ${getPath()}, Class: ${clazz.simpleName}, Parameters: $parameters"

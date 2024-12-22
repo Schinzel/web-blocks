@@ -5,6 +5,7 @@ import io.schinzel.pages.basic_page.BasicPage
 import io.schinzel.page_elements.IPage
 import io.schinzel.sample.pages.landing.greeting_pe.GreetingPe
 
+@Suppress("unused")
 class LandingPage(userId: String = ""): IPage {
     init {
         "LandingPage created with userId: $userId".println()

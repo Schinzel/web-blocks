@@ -9,8 +9,10 @@ class ApiPath(relativePath: String, clazz: KClass<*>) : IPath {
     init {
         // Remove the optional  "Api" suffix from the class name
         val nameWithOutApiSuffix = clazz.simpleName!!.removeSuffix("Api")
+        // Convert the class name from pascal case to kebab case
         val classNameKebabCase = StandardTextCases.PASCAL_CASE
             .convertTo(StandardTextCases.KEBAB_CASE, nameWithOutApiSuffix)
+        // Create the path with the prefix "api" and the relative path and the class name
         path = "api/$relativePath/$classNameKebabCase"
     }
 
