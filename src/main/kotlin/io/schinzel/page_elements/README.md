@@ -1,10 +1,5 @@
 
 To do
-- Set up API
-  - Path prefix "/api" 
-    - Should I add that you can have Api folder?
-  - include the class name ex Api suffix if there is one
-- Change from PascalCase to kebab-case for pages and api calls
 - Logging
   - Exec time
   - Call time (UTC, Local)
@@ -21,6 +16,7 @@ To do
 # Documentation
 ## Page path
 The path to the directory in which a page is located. 
+If the page is located in the directory "landing" then the path to the page is "/"
 
 ## Api path
 Prefix: /api
