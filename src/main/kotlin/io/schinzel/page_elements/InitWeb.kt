@@ -7,10 +7,19 @@ import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.page_elements.route.Parameter
 import io.schinzel.page_elements.route.Route
 import io.schinzel.page_elements.route.findRoutes
+import io.schinzel.page_elements.route.log.ILogger
+import io.schinzel.page_elements.route.log.Log
+import io.schinzel.page_elements.route.log.PrettyConsoleLogger
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
-class InitWeb(pagePackage: String, apiPackage: String) {
+class InitWeb(
+    pagePackage: String,
+    apiPackage: String,
+    private val localTimezone: String = "Europe/Stockholm",
+    private val logger: ILogger = PrettyConsoleLogger(),
+) {
+
     init {
         val javalin = Javalin.create { config ->
             // Serve static files from the classpath
@@ -54,6 +63,9 @@ class InitWeb(pagePackage: String, apiPackage: String) {
 
     private fun createRouteHandler(route: Route): (Context) -> Unit {
         return { ctx: Context ->
+            val log = Log(localTimeZone = localTimezone)
+            val startTime = System.currentTimeMillis()
+            log.requestLog.path = route.getPath()
             val hasNoArguments = route.parameters.isEmpty()
             // Create instance of route class
             val routeClassInstance: IWebResponse = when {
@@ -62,6 +74,7 @@ class InitWeb(pagePackage: String, apiPackage: String) {
                 else -> {
                     // If arguments, use constructor with arguments
                     val arguments: Map<String, String> = getArguments(route.parameters, ctx)
+                    log.requestLog.arguments = arguments
                     // Get constructor
                     val constructor = route.clazz.primaryConstructor
                         ?: throw IllegalStateException("No primary constructor found for ${route.clazz.simpleName}")
@@ -73,18 +86,24 @@ class InitWeb(pagePackage: String, apiPackage: String) {
                     )
                 }
             }
-            sendResponse(ctx, routeClassInstance)
+            sendResponse(ctx, routeClassInstance, log)
+            val executionTime = System.currentTimeMillis() - startTime
+            log.executionTimeInMs = executionTime
+            logger.log(log)
         }
     }
 
 
-    private fun sendResponse(ctx: Context, routeClassInstance: IWebResponse) {
+    private fun sendResponse(ctx: Context, routeClassInstance: IWebResponse, log: Log) {
         val response = routeClassInstance.getResponse()
         when (routeClassInstance) {
             is IWebPage -> ctx.html(response as String)
-            is IApi -> ctx.json(response)
-            else -> throw IllegalStateException("Class ${routeClassInstance.javaClass.simpleName} must implement IPage or IApi")
+            is IApi -> {
+                ctx.json(response)
+                log.responseLog.response = response
+            }
 
+            else -> throw IllegalStateException("Class ${routeClassInstance.javaClass.simpleName} must implement IPage or IApi")
         }
     }
 

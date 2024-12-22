@@ -1,15 +1,9 @@
 
 # To do
 - Logging
-    - Exec time
-    - Call time (UTC, Local)
-    - Path
     - Type: GET, POST, PUT, DELETE
     - Type: API PAGE
-    - Arguments
-    - Response if API. No response if page
-    - There is a default logger that logs to console. 
-      - It can be replaced with a custom logger.
+    - Error logging
 - Data savers. Can I give page elements the ability to save data? 
 - Tester
 - subscribe
