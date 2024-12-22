@@ -8,7 +8,6 @@ To do
   - Type: API PAGE
   - Arguments
   - Response if API
-- Test gradle?
 - Document that need to change the pom to include html and js files in the jar
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
 - subscribe
@@ -22,22 +21,35 @@ If the page is located in the directory "landing" then the path to the page is "
 Prefix: /api
 Name of the class in kebab-case
 
+## Building a JAR
+When building a JAR the html and js files need to be included in the JAR.
+This is done by adding the following to the pom.xml file.
+```xml
+
+<build>
+  <resources>
+    <resource>
+      <directory>src/main/kotlin</directory>
+      <includes>
+        <!-- Include html and js files in the jar -->
+        <include>**/*.html</include>
+        <include>**/*.js</include>
+      </includes>
+    </resource>
+    <!-- Keep the default resources directory if you have one -->
+    <resource>
+      <directory>src/main/resources</directory>
+    </resource>
+  </resources>
+  [...]
+</build>
+```
 # JAR
 Build a JAR
 mvn clean package
 
 Run the JAR
 java -jar myJar.jar
-
-# Gradle
-## Installation
-brew install gradle
-gradle wrapper
-
-# Routing 
-Go with the IPage solution. 
-Find all IPages. 
-For each IPage, create a route.
 
 
 # Data savers
