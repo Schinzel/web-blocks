@@ -43,7 +43,10 @@ The framework provides a straightforward way to create both page renders and API
 - **Developer Experience**: Intuitive routing and clear structure reduces learning curve
 - **Code Quality**: Encourages clean, modular code with clear responsibilities
 
-## Sample paths
+## Sample
+Start the class io.schinzel.sample.main
+
+Sample urls:
 - http://127.0.0.1:5555/?userId=ABC
 - http://127.0.0.1:5555/api/v1/user-information?userId=123
 - http://127.0.0.1:5555/api/v1/user-information/123
