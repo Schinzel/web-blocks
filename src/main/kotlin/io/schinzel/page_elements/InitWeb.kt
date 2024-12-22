@@ -16,13 +16,16 @@ class InitWeb(pagePackage: String, apiPackage: String) {
             config.staticFiles.add("/site", Location.CLASSPATH)
         }
 
+        // Find all page routes
         val pageRoutes = findRoutes(pagePackage)
+        // Find all api routes
         val apiRoutes = findRoutes(apiPackage)
 
+        // Add all routes to Javalin
         (pageRoutes + apiRoutes).forEach { route: Route ->
+            // Print route
             route.toString().println()
-            javalin.get(route.getPath()) { ctx: Context ->
-
+            val handler = { ctx: Context ->
                 // If no arguments, use default constructor
                 val routeInstance = if (route.parameters.isEmpty()) {
                     route.clazz.createInstance()
@@ -39,7 +42,6 @@ class InitWeb(pagePackage: String, apiPackage: String) {
                         }
                     )
                 }
-
                 if (routeInstance is IPage) {
                     val response = routeInstance.getHtml()
                     ctx.html(response)
@@ -49,6 +51,10 @@ class InitWeb(pagePackage: String, apiPackage: String) {
                     ctx.json(response)
                 }
             }
+
+            // Register both GET and POST handlers for the same path
+            javalin.get(route.getPath(), handler)
+            javalin.post(route.getPath(), handler)
         }
         javalin.start(5555)
 

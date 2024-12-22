@@ -11,6 +11,14 @@
 - subscribe
 
 # Documentation
+
+## Sample paths
+http://127.0.0.1:5555/?userId=ABC
+
+http://127.0.0.1:5555/api/v1/user-information?userId=123
+
+http://127.0.0.1:5555/sub-dir/sub-dir-2
+
 ## Page path
 The path to the directory in which a page is located. 
 If the page is located in the directory "landing" then the path to the page is "/"
