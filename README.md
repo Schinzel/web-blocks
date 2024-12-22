@@ -64,7 +64,7 @@ Variables can be passed as:
 - Request body
 
 ## Api path
-Prefix: /api
+Prefix: /api. 
 Name of the class in kebab-case
 
 ## HTML and JS files
