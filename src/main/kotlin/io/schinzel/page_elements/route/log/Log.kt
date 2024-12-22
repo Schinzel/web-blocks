@@ -5,7 +5,8 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 data class Log(
-    var type: String = "",
+    var routeType: String = "",
+    var httpMethod: String = "",
     var requestTimeUtc: String = TimeProvider.nowUtc(),
     val localTimeZone: String,
     var requestTimeLocalTimezone: String = TimeProvider.now(localTimeZone),

@@ -67,7 +67,7 @@ class InitWeb(
 
     private fun createRouteHandler(route: Route): (Context) -> Unit {
         return { ctx: Context ->
-            val log = Log(localTimeZone = localTimezone, type = route.getType())
+            val log = Log(localTimeZone = localTimezone, routeType = route.getType(), httpMethod = ctx.method().toString())
             val startTime = System.currentTimeMillis()
             log.requestLog.path = route.getPath()
             val hasNoArguments = route.parameters.isEmpty()
