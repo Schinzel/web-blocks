@@ -5,13 +5,13 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 data class Log(
-    val requestLog: RequestLog = RequestLog(),
-    val responseLog: ResponseLog = ResponseLog(),
+    var type: String = "",
     var requestTimeUtc: String = TimeProvider.nowUtc(),
     val localTimeZone: String,
     var requestTimeLocalTimezone: String = TimeProvider.now(localTimeZone),
     var executionTimeInMs: Long = -1,
-    var type: String = "",
+    val requestLog: RequestLog = RequestLog(),
+    val responseLog: ResponseLog = ResponseLog(),
 )
 
 data class RequestLog(
@@ -21,7 +21,7 @@ data class RequestLog(
 
 data class ResponseLog(
     var response: Any? = null,
-    var statusCode: String = "",
+    var statusCode: Int = -1,
 )
 
 

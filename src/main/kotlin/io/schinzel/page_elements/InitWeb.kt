@@ -22,8 +22,12 @@ class InitWeb(
 
     init {
         val javalin = Javalin.create { config ->
-            // Serve static files from the classpath
-            config.staticFiles.add("/site", Location.CLASSPATH)
+            // Serve static files at /static/*
+            config.staticFiles.add {
+                it.directory = "/site"
+                it.location = Location.CLASSPATH
+                it.hostedPath = "/static"  // Add this prefix
+            }
         }
         // Find all page routes
         val pageRoutes = findRoutes(pagePackage)
@@ -63,7 +67,7 @@ class InitWeb(
 
     private fun createRouteHandler(route: Route): (Context) -> Unit {
         return { ctx: Context ->
-            val log = Log(localTimeZone = localTimezone)
+            val log = Log(localTimeZone = localTimezone, type = route.getType())
             val startTime = System.currentTimeMillis()
             log.requestLog.path = route.getPath()
             val hasNoArguments = route.parameters.isEmpty()
@@ -87,8 +91,8 @@ class InitWeb(
                 }
             }
             sendResponse(ctx, routeClassInstance, log)
-            val executionTime = System.currentTimeMillis() - startTime
-            log.executionTimeInMs = executionTime
+            log.responseLog.statusCode = ctx.statusCode()
+            log.executionTimeInMs = System.currentTimeMillis() - startTime
             logger.log(log)
         }
     }
@@ -118,8 +122,6 @@ class InitWeb(
                 // If the argument was not in the request body, try query parameter
                 postValue ?: ctx.queryParam(arg.name) ?: ""
             }
-
-            "Value for ${arg.name} is $value".println()
             arg.name to value
         }
     }

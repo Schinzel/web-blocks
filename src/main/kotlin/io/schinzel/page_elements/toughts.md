@@ -4,6 +4,10 @@
     - Type: GET, POST, PUT, DELETE
     - Type: API PAGE
     - Error logging
+- Cannot 
+  - have a page with path "api"
+  - have an api with path "page"
+  - cannot have a page nor an api with path "static"
 - Data savers. Can I give page elements the ability to save data? 
 - Tester
 - subscribe
@@ -48,3 +52,19 @@ fun save(data: String)
 
 api/save-data/{guid}
 Postar json med data, behöver inte vara json antar jag.
+
+
+
+# Backup
+            // Check if route has arguments
+           /* val hasArguments = route.parameters.isNotEmpty()
+            // If has arguments
+            if (hasArguments) {
+                // Create path with parameters
+                val pathWithParams = route.parameters.fold(route.getPath()) { path, param ->
+                    "$path/{${param.name}}"
+                }
+                // Register both GET and POST handlers for the same path
+                javalin.get(pathWithParams, handler)
+                javalin.post(pathWithParams, handler)
+            }*/

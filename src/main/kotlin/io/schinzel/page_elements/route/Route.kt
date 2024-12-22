@@ -35,14 +35,14 @@ data class Route(
 
     fun getPath(): String = path.path
 
+    fun getType(): String = when {
+        isPage -> "Page"
+        isApi -> "Api"
+        else -> "Unknown"
+    }
 
     override fun toString(): String {
-        val type = when {
-            isPage -> "Page"
-            isApi -> "Api"
-            else -> "Unknown"
-        }
-        return "Type: $type, Path: ${getPath()}, Class: ${clazz.simpleName}, Parameters: $parameters"
+        return "Type: ${this.getType()}, Path: ${getPath()}, Class: ${clazz.simpleName}, Parameters: $parameters"
     }
 }
 
