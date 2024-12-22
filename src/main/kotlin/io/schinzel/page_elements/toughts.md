@@ -8,6 +8,8 @@
     - Type: API PAGE
     - Arguments
     - Response if API. No response if page
+    - There is a default logger that logs to console. 
+      - It can be replaced with a custom logger.
 - Data savers. Can I give page elements the ability to save data? 
 - Tester
 - subscribe

@@ -44,6 +44,7 @@ class InitWeb(pagePackage: String, apiPackage: String) {
             val hasNoArguments = route.parameters.isEmpty()
             // Create instance of route class
             val routeClassInstance = when {
+                // If no arguments, use no-argument constructor
                 hasNoArguments -> route.clazz.createInstance()
                 else -> {
                     // If arguments, use constructor with arguments
