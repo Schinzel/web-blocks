@@ -47,7 +47,6 @@ fun setUpRoutes(
             javalin.get(pathWithParams, handler)
             javalin.post(pathWithParams, handler)
         }
-
     }
     // Start server
     javalin.start(5555)
