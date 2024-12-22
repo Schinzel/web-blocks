@@ -24,8 +24,8 @@ java -jar myJar.jar
 
 # Thoughts on data savers
 ## IPageElement routing??
-Göra IPage aware att består av PageElements och lägga upp router till dem autoamtiskt?
-
+Göra IPage aware att består av PageElements och lägga upp router till page elements automatiskt?
+Och att PageElements kan ha en data saver?
 
 ## Path 1
 PageElements kan ha en data sparare
