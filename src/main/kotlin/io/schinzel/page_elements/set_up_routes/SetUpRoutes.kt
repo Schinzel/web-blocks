@@ -3,9 +3,9 @@ package io.schinzel.page_elements.set_up_routes
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.route.Route
-import io.schinzel.page_elements.route.log.ILogger
-import io.schinzel.page_elements.route.log.PrettyConsoleLogger
+import io.schinzel.page_elements.endpoint.Endpoint
+import io.schinzel.page_elements.route_handler.log.ILogger
+import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
 import io.schinzel.page_elements.route_handler.createRouteHandler
 
 fun setUpRoutes(
@@ -27,20 +27,20 @@ fun setUpRoutes(
     // Find all api routes
     val apiRoutes = findRoutes(apiPackage)
     // Add all routes to Javalin
-    (pageRoutes + apiRoutes).forEach { route: Route ->
+    (pageRoutes + apiRoutes).forEach { endpoint: Endpoint ->
         // Print route
-        route.toString().println()
+        endpoint.toString().println()
         // Create handler
-        val handler = createRouteHandler(route, localTimezone, logger)
+        val handler = createRouteHandler(endpoint, localTimezone, logger)
         // Register both GET and POST handlers for the same path
-        javalin.get(route.getPath(), handler)
-        javalin.post(route.getPath(), handler)
+        javalin.get(endpoint.getPath(), handler)
+        javalin.post(endpoint.getPath(), handler)
         // Check if route has arguments
-        val hasArguments = route.parameters.isNotEmpty()
+        val hasArguments = endpoint.parameters.isNotEmpty()
         // If has arguments
         if (hasArguments) {
             // Create path with parameters
-            val pathWithParams = route.parameters.fold(route.getPath()) { path, param ->
+            val pathWithParams = endpoint.parameters.fold(endpoint.getPath()) { path, param ->
                 "$path/{${param.name}}"
             }
             // Register both GET and POST handlers for the same path

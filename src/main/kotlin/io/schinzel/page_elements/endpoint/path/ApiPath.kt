@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.route.path
+package io.schinzel.page_elements.endpoint.path
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import kotlin.reflect.KClass

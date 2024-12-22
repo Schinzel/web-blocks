@@ -1,15 +1,15 @@
 package io.schinzel.page_elements.set_up_routes
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.route.Parameter
-import io.schinzel.page_elements.route.Route
+import io.schinzel.page_elements.endpoint.Parameter
+import io.schinzel.page_elements.endpoint.Endpoint
 import io.schinzel.page_elements.web_response.IWebResponse
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
 import kotlin.reflect.full.primaryConstructor
 
-fun findRoutes(basePackage: String): List<Route> {
+fun findRoutes(basePackage: String): List<Endpoint> {
     val reflections = Reflections(
         ConfigurationBuilder()
             .forPackage(basePackage)
@@ -34,7 +34,7 @@ fun findRoutes(basePackage: String): List<Route> {
             }
 
 
-            Route(
+            Endpoint(
                 basePackage,
                 clazz = clazz.kotlin,
                 parameters = parameters ?: emptyList()

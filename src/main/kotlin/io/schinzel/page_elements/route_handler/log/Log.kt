@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.route.log
+package io.schinzel.page_elements.route_handler.log
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
@@ -40,7 +40,7 @@ class ErrorLog(e: Exception) {
 
 
 object TimeProvider {
-    fun nowUtc(): String = this.now("UTC")
+    fun nowUtc(): String = now("UTC")
 
     fun now(timeZone: String): String {
         return LocalDateTime

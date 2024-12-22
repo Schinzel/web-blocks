@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.route
+package io.schinzel.page_elements.endpoint
 
 data class Parameter(
     val name: String,

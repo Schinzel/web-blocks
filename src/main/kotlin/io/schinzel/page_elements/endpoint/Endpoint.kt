@@ -1,15 +1,15 @@
-package io.schinzel.page_elements.route
+package io.schinzel.page_elements.endpoint
 
+import io.schinzel.page_elements.endpoint.path.ApiPath
+import io.schinzel.page_elements.endpoint.path.IPath
+import io.schinzel.page_elements.endpoint.path.PagePath
 import io.schinzel.page_elements.web_response.IApi
 import io.schinzel.page_elements.web_response.IWebPage
 import io.schinzel.page_elements.web_response.IWebResponse
-import io.schinzel.page_elements.route.path.ApiPath
-import io.schinzel.page_elements.route.path.IPath
-import io.schinzel.page_elements.route.path.PagePath
 import kotlin.reflect.KClass
 
-data class Route(
-    private val basePackage: String,
+class Endpoint(
+    basePackage: String,
     val clazz: KClass<out IWebResponse>,
     val parameters: List<Parameter>
 ) {

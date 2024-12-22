@@ -1,7 +1,7 @@
 package io.schinzel.page_elements.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.page_elements.route.log.Log
+import io.schinzel.page_elements.route_handler.log.Log
 import io.schinzel.page_elements.web_response.IApi
 import io.schinzel.page_elements.web_response.IWebPage
 import io.schinzel.page_elements.web_response.IWebResponse

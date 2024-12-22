@@ -1,12 +1,12 @@
 
 # To do
-- Cannot 
-  - have a page with path "api"
-  - have an api with path "page"
-  - cannot have a page nor an api with path "static"
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe
+- Forbidden paths
+  - have a page with path "api"
+  - have an api with path "page"
+  - cannot have a page nor an api with path "static"
 - Tester & doc
 
 # How to build and run a JAR
