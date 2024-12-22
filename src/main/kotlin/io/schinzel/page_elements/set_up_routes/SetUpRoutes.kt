@@ -4,9 +4,9 @@ import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.page_elements.endpoint.Endpoint
+import io.schinzel.page_elements.route_handler.RequestHandler
 import io.schinzel.page_elements.route_handler.log.ILogger
 import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
-import io.schinzel.page_elements.route_handler.createRouteHandler
 
 fun setUpRoutes(
     pagePackage: String,
@@ -31,10 +31,13 @@ fun setUpRoutes(
         // Print route
         endpoint.toString().println()
         // Create handler
-        val handler = createRouteHandler(endpoint, localTimezone, logger)
+        val handler = RequestHandler(
+            endpoint = endpoint,
+            localTimezone = localTimezone,
+            logger = logger
+        ).handle()
         // Register both GET and POST handlers for the same path
-        javalin.get(endpoint.getPath(), handler)
-        javalin.post(endpoint.getPath(), handler)
+        javalin.getAndPost(endpoint.getPath(), handler)
         // Check if route has arguments
         val hasArguments = endpoint.parameters.isNotEmpty()
         // If has arguments
@@ -44,11 +47,14 @@ fun setUpRoutes(
                 "$path/{${param.name}}"
             }
             // Register both GET and POST handlers for the same path
-            javalin.get(pathWithParams, handler)
-            javalin.post(pathWithParams, handler)
+            javalin.getAndPost(pathWithParams, handler)
         }
     }
     // Start server
     javalin.start(5555)
+}
 
+private fun Javalin.getAndPost(path: String, handler: (ctx: io.javalin.http.Context) -> Unit) {
+    this.get(path, handler)
+    this.post(path, handler)
 }
