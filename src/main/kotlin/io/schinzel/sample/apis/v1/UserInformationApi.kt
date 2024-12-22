@@ -7,6 +7,7 @@ class UserInformationApi: IApi {
     override fun getData(): Any {
         return UserInformation("John Doe", 42)
     }
+
+    data class UserInformation(val name: String, val age: Int)
 }
 
-data class UserInformation(val name: String, val age: Int)

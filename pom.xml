@@ -23,10 +23,6 @@
             <url>https://s3-eu-west-1.amazonaws.com/maven-repo.schinzel.io/release</url>
         </repository>
         <repository>
-            <id>io.schinzel.release</id>
-            <url>https://s3-eu-west-1.amazonaws.com/maven-repo.atexpose.com/release</url>
-        </repository>
-        <repository>
             <!-- Repo for -->
             <id>maven-repo.refur.se</id>
             <url>https://s3-eu-west-1.amazonaws.com/maven-repo.refur.se/release</url>
@@ -34,35 +30,30 @@
     </repositories>
 
     <dependencies>
+
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <!-- Kotlin standard library -->
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
         </dependency>
+
+
         <dependency>
             <!-- Web server -->
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
-            <version>5.6.3</version>
+            <version>6.4.0</version>
         </dependency>
-        <dependency>
-            <!-- Annotations for Javalin -->
-            <groupId>se.refur</groupId>
-            <artifactId>javalin</artifactId>
-            <version>2.0.0</version>
-        </dependency>
+
         <dependency>
             <!-- Basic utilities for Java (and Kotlin to some degree).
             Most commonly the utilities are less verbose versions of common code snippets.-->
             <groupId>io.schinzel</groupId>
             <artifactId>basic-utils</artifactId>
-            <version>1.6.2</version>
+            <version>1.6.4</version>
         </dependency>
-        <dependency>
-            <groupId>io.schinzel</groupId>
-            <artifactId>crypto</artifactId>
-            <version>1.2.6</version>
-        </dependency>
+
         <dependency>
             <!-- Basic utilities. Most commonly less verbose versions of
             common code snippets -->
@@ -70,30 +61,47 @@
             <artifactId>basic-utils-kotlin</artifactId>
             <version>0.9.3</version>
         </dependency>
+
         <dependency>
+            <!-- For reading and writing files -->
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+
+        <dependency>
+            <!-- For serialization to and de-serialization from JSON  -->
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+
+        <dependency>
+            <!-- Reflection utilities -->
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-reflect</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+
         <dependency>
-            <!-- A Kotlin toolkit for Mongo -->
-            <groupId>org.litote.kmongo</groupId>
-            <artifactId>kmongo</artifactId>
-            <version>4.7.1</version>
-            <exclusions>
-                <!-- This is here to prevent a warning that log4j har multiple
-                bindings -->
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-nop</artifactId>
-                </exclusion>
-            </exclusions>
+            <!-- Reflection utilities -->
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
         </dependency>
+
         <dependency>
             <!-- Logging -->
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.6</version>
+        </dependency>
+
+        <dependency>
+            <!-- To convert between different text cases -->
+            <groupId>dev.turingcomplete</groupId>
+            <artifactId>text-case-converter</artifactId>
+            <version>2.0.0</version>
         </dependency>
 
         <!-- TEST -->
@@ -105,6 +113,7 @@
             <version>3.24.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <!-- Unit tests-->
             <groupId>org.junit.jupiter</groupId>

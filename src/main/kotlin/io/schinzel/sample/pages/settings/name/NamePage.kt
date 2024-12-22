@@ -3,7 +3,7 @@ package io.schinzel.sample.pages.settings.name
 import io.schinzel.page_elements.IPage
 
 @Suppress("unused")
-class Page: IPage {
+class NamePage: IPage {
     override fun getHtml(): String {
         return "<h1>Name</h1>"
     }

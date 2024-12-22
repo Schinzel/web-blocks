@@ -18,13 +18,14 @@ data class Route(
 
 
     init {
+        // Convert the package name to a path relative to the base package
         val relativePath = clazz.java.packageName
             .removePrefix(basePackage)
             .removePrefix(".")
             .replace(".", "/")
         path = when {
             isPage -> PagePath(relativePath)
-            isApi -> ApiPath(relativePath)
+            isApi -> ApiPath(relativePath, clazz)
             else -> throw Exception("Class ${clazz.simpleName} does not implement IPage or IApi")
         }
     }

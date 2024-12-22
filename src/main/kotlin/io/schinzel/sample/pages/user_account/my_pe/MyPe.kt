@@ -1,4 +1,4 @@
-package io.schinzel.sample.pages.account.my_pe
+package io.schinzel.sample.pages.user_account.my_pe
 
 import io.schinzel.page_elements.IPageElement
 

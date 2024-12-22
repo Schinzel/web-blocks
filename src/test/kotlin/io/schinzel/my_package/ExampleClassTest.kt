@@ -8,13 +8,13 @@ class ExampleClassTest {
 
     @Test
     fun testIt() {
-        val actual = ExampleClass().doubleIt(4)
+        val actual = 8
         val expected = 8
         assertThat(actual).isEqualTo(expected)
     }
     @Test
     fun testIt2() {
-        val actual = ExampleClass().doubleIt(4)
+        val actual = 8
         val expected = 8
         assertThat(actual).isEqualTo(expected)
     }

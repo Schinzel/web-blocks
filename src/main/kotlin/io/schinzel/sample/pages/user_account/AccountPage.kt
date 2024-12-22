@@ -1,9 +1,9 @@
-package io.schinzel.sample.pages.account
+package io.schinzel.sample.pages.user_account
 
 import io.schinzel.page_elements.IPage
 import io.schinzel.pages.bootstrap_page.BootstrapPage
-import io.schinzel.sample.pages.account.my_pe.MyPe
-import io.schinzel.sample.pages.account.name_pe.NamePe
+import io.schinzel.sample.pages.user_account.my_pe.MyPe
+import io.schinzel.sample.pages.user_account.name_pe.NamePe
 
 class AccountPage: IPage {
 

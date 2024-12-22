@@ -18,6 +18,13 @@ To do
 - Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
 - subscribe
 
+# Documentation
+## Page path
+The path to the directory in which a page is located. 
+
+## Api path
+Prefix: /api
+Name of the class in kebab-case
 
 # JAR
 Build a JAR
