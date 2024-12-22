@@ -1,9 +1,5 @@
 
 # To do
-- Logging
-    - Type: GET, POST, PUT, DELETE
-    - Type: API PAGE
-    - Error logging
 - Cannot 
   - have a page with path "api"
   - have an api with path "page"

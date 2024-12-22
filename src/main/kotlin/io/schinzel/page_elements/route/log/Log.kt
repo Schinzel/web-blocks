@@ -1,9 +1,11 @@
 package io.schinzel.page_elements.route.log
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Log(
     var routeType: String = "",
     var httpMethod: String = "",
@@ -13,6 +15,7 @@ data class Log(
     var executionTimeInMs: Long = -1,
     val requestLog: RequestLog = RequestLog(),
     val responseLog: ResponseLog = ResponseLog(),
+    var errorLog: ErrorLog? = null,
 )
 
 data class RequestLog(
@@ -24,6 +27,16 @@ data class ResponseLog(
     var response: Any? = null,
     var statusCode: Int = -1,
 )
+
+class ErrorLog(e: Exception) {
+    @Suppress("unused")
+    val errorMessage: String = e.message ?: ""
+    @Suppress("unused")
+    val stackTrace: List<String> = e.stackTraceToString()
+        .split("\n")
+        .take(5)
+        .map { it.replace("\t", "") }
+}
 
 
 object TimeProvider {
