@@ -1,6 +1,7 @@
 package io.schinzel.page_elements
 
 import io.javalin.Javalin
+import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
@@ -29,6 +30,15 @@ class InitWeb(pagePackage: String, apiPackage: String) {
             // Register both GET and POST handlers for the same path
             javalin.get(route.getPath(), handler)
             javalin.post(route.getPath(), handler)
+            val hasArguments = route.parameters.isNotEmpty()
+            if (hasArguments) {
+                val pathWithParams = route.parameters.fold(route.getPath()) { path, param ->
+                    "$path/{${param.name}}"
+                }
+                javalin.get(pathWithParams, handler)
+                javalin.post(pathWithParams, handler)
+            }
+
         }
         // Start server
         javalin.start(5555)
@@ -82,10 +92,15 @@ class InitWeb(pagePackage: String, apiPackage: String) {
 
     private fun getArguments(parameters: List<Parameter>, ctx: Context): Map<String, String> {
         return parameters.associate { arg ->
-            // Try to get from POST body first
-            val postValue = ctx.formParam(arg.name)
-            // If not in POST, try query parameter
-            val value = postValue ?: ctx.queryParam(arg.name) ?: ""
+            val value = try {
+                // Try path parameter first
+                ctx.pathParam(arg.name)
+            } catch (e: IllegalArgumentException) {
+                // If path parameter fails, try POST then query
+                val postValue = ctx.formParam(arg.name)
+                postValue ?: ctx.queryParam(arg.name) ?: ""
+            }
+
             "Value for ${arg.name} is $value".println()
             arg.name to value
         }
