@@ -1,7 +1,6 @@
 package io.schinzel.page_elements
 
 import io.javalin.Javalin
-import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
