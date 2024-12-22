@@ -1,7 +1,7 @@
 package io.schinzel.sample.pages.user_account.name_pe
 
-import io.schinzel.page_elements.IPageElement
-import io.schinzel.page_elements.TemplateProcessor
+import io.schinzel.page_elements.web_response.IPageElement
+import io.schinzel.page_elements.file_util.TemplateProcessor
 
 class NamePe(userId: Int): IPageElement {
     private val nameDao = NameDao(userId)

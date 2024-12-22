@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.settings.address
 
-import io.schinzel.page_elements.IWebPage
+import io.schinzel.page_elements.web_response.IWebPage
 
 @Suppress("unused")
 class AddressWebPage: IWebPage {

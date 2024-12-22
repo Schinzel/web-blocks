@@ -1,4 +1,4 @@
-package io.schinzel.page_elements
+package io.schinzel.page_elements.web_response
 
 interface IWebPage : IWebResponse
 

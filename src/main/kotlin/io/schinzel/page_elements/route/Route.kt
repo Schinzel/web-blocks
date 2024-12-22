@@ -1,8 +1,8 @@
 package io.schinzel.page_elements.route
 
-import io.schinzel.page_elements.IApi
-import io.schinzel.page_elements.IWebPage
-import io.schinzel.page_elements.IWebResponse
+import io.schinzel.page_elements.web_response.IApi
+import io.schinzel.page_elements.web_response.IWebPage
+import io.schinzel.page_elements.web_response.IWebResponse
 import io.schinzel.page_elements.route.path.ApiPath
 import io.schinzel.page_elements.route.path.IPath
 import io.schinzel.page_elements.route.path.PagePath

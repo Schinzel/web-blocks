@@ -1,8 +1,8 @@
 package io.schinzel.pages.basic_page
 
-import io.schinzel.page_elements.IWebPage
-import io.schinzel.page_elements.IPageElement
-import io.schinzel.page_elements.TemplateProcessor
+import io.schinzel.page_elements.web_response.IWebPage
+import io.schinzel.page_elements.web_response.IPageElement
+import io.schinzel.page_elements.file_util.TemplateProcessor
 
 class BasicWebPage : IWebPage {
     private val pageElements = mutableListOf<IPageElement>()

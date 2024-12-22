@@ -1,7 +1,9 @@
-package io.schinzel.page_elements.route
+package io.schinzel.page_elements.set_up_routes
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.IWebResponse
+import io.schinzel.page_elements.route.Parameter
+import io.schinzel.page_elements.route.Route
+import io.schinzel.page_elements.web_response.IWebResponse
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder

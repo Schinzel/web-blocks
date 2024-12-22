@@ -1,6 +1,6 @@
 package io.schinzel.sample.apis.v1
 
-import io.schinzel.page_elements.IApi
+import io.schinzel.page_elements.web_response.IApi
 
 @Suppress("unused")
 class ErrorApi: IApi {
