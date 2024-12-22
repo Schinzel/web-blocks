@@ -23,6 +23,9 @@ http://127.0.0.1:5555/sub-dir/sub-dir-2
 The path to the directory in which a page is located. 
 If the page is located in the directory "landing" then the path to the page is "/"
 
+## Routes
+Each route is set up with both get and post requests.
+
 ## Api path
 Prefix: /api
 Name of the class in kebab-case
