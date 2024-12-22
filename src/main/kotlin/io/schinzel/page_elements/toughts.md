@@ -8,6 +8,7 @@
     - Type: API PAGE
     - Arguments
     - Response if API. No response if page
+- Tester
 - subscribe
 
 # How to build and run a JAR
