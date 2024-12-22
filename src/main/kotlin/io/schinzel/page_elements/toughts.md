@@ -7,7 +7,7 @@
     - Type: GET, POST, PUT, DELETE
     - Type: API PAGE
     - Arguments
-    - Response if API
+    - Response if API. No response if page
 - subscribe
 
 # How to build and run a JAR
@@ -18,7 +18,7 @@ Run the JAR
 java -jar myJar.jar
 
 
-# Data savers
+# Thoughts on data savers
 ## Path 1
 PageElements kan ha en data sparare
 
