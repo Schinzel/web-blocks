@@ -79,20 +79,12 @@ class InitWeb(pagePackage: String, apiPackage: String) {
 
 
     private fun sendResponse(ctx: Context, routeClassInstance: IWebResponse) {
+        val response = routeClassInstance.getResponse()
         when (routeClassInstance) {
-            is IPage -> {
-                val response = routeClassInstance.getHtml()
-                ctx.html(response)
-            }
+            is IWebPage -> ctx.html(response as String)
+            is IApi -> ctx.json(response)
+            else -> throw IllegalStateException("Class ${routeClassInstance.javaClass.simpleName} must implement IPage or IApi")
 
-            is IApi -> {
-                val response = routeClassInstance.getData()
-                ctx.json(response)
-            }
-
-            else -> {
-                throw IllegalStateException("Class ${routeClassInstance.javaClass.simpleName} must implement IPage or IApi")
-            }
         }
     }
 

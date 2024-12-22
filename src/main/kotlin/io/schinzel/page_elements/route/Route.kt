@@ -1,7 +1,7 @@
 package io.schinzel.page_elements.route
 
 import io.schinzel.page_elements.IApi
-import io.schinzel.page_elements.IPage
+import io.schinzel.page_elements.IWebPage
 import io.schinzel.page_elements.IWebResponse
 import io.schinzel.page_elements.route.path.ApiPath
 import io.schinzel.page_elements.route.path.IPath
@@ -13,7 +13,7 @@ data class Route(
     val clazz: KClass<out IWebResponse>,
     val parameters: List<Parameter>
 ) {
-    private val isPage = IPage::class.java.isAssignableFrom(clazz.java)
+    private val isPage = IWebPage::class.java.isAssignableFrom(clazz.java)
     private val isApi = IApi::class.java.isAssignableFrom(clazz.java)
     private val path: IPath
 

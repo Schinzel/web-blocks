@@ -1,0 +1,10 @@
+package io.schinzel.sample.pages.settings.name
+
+import io.schinzel.page_elements.IWebPage
+
+@Suppress("unused")
+class NameWebPage: IWebPage {
+    override fun getResponse(): String {
+        return "<h1>Name</h1>"
+    }
+}

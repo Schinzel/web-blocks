@@ -1,13 +1,13 @@
 package io.schinzel.sample.pages.user_account
 
-import io.schinzel.page_elements.IPage
+import io.schinzel.page_elements.IWebPage
 import io.schinzel.pages.bootstrap_page.BootstrapPage
 import io.schinzel.sample.pages.user_account.my_pe.MyPe
 import io.schinzel.sample.pages.user_account.name_pe.NamePe
 
-class AccountPage: IPage {
+class AccountWebPage: IWebPage {
 
-    override fun getHtml(): String {
+    override fun getResponse(): String {
         return BootstrapPage()
             .setTitle("Account")
 

@@ -4,7 +4,7 @@ import io.schinzel.page_elements.IApi
 
 @Suppress("unused")
 class UserInformationApi(private val userId: String = "") : IApi {
-    override fun getData(): Any {
+    override fun getResponse(): Any {
         if (userId.isNotEmpty()) {
             return UserInformation(userId, "Jane Doe", 24)
         }

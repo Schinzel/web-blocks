@@ -4,7 +4,7 @@ import io.schinzel.page_elements.IApi
 
 @Suppress("unused")
 class UserPets : IApi {
-    override fun getData(): Any {
+    override fun getResponse(): Any {
         return listOf(
             Pet("Fluffy", "Cat"),
             Pet("Rex", "Dog")
