@@ -17,6 +17,16 @@
 # Thoughts on data savers
 Should use the same thoughts on routing. I.e. routes to data savers
 is defined by and mirrors the file structure.
+user_account/my_pe
+- Man vill göra två saker
+  - Spara data
+  - Hämta data, förnya ett page element då ett annat sparat data, i.e. subscribe
+
+IPageElement
+IDataSaver
+Skall man ha API:er inna i page elements dirs?
+  Om vi kör fullt ut FBA så är det fallet. Men behövs det??
+     Inte lösa det om det inte är ett problem 
 
 ## IPageElement routing??
 Göra IPage aware att består av PageElements och lägga upp router till page elements automatiskt?

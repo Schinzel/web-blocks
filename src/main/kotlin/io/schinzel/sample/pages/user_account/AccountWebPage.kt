@@ -5,6 +5,7 @@ import io.schinzel.pages.bootstrap_page.BootstrapPage
 import io.schinzel.sample.pages.user_account.my_pe.MyPe
 import io.schinzel.sample.pages.user_account.name_pe.NamePe
 
+@Suppress("unused")
 class AccountWebPage: IWebPage {
 
     override fun getResponse(): String {
