@@ -1,5 +1,5 @@
 
-To do
+# To do
 - Logging
   - Exec time
   - Call time (UTC, Local)
@@ -8,8 +8,6 @@ To do
   - Type: API PAGE
   - Arguments
   - Response if API
-- Document that need to change the pom to include html and js files in the jar
-- Document as it reads from source folder changes will happen real time. No need for hot reloads for html and js files
 - subscribe
 
 # Documentation
@@ -20,6 +18,10 @@ If the page is located in the directory "landing" then the path to the page is "
 ## Api path
 Prefix: /api
 Name of the class in kebab-case
+
+## HTML and JS files
+The HTML and JS files are read from the source folder. This means that changes to these files will be reflected in the 
+application without the need for a hot reload.
 
 ## Building a JAR
 When building a JAR the html and js files need to be included in the JAR.
