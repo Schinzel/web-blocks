@@ -1,7 +1,7 @@
 package io.schinzel.page_elements.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.page_elements.endpoint.Endpoint
+import io.schinzel.page_elements.route_mapping.RouteMapping
 import io.schinzel.page_elements.route_handler.log.ErrorLog
 import io.schinzel.page_elements.route_handler.log.ILogger
 import io.schinzel.page_elements.route_handler.log.Log
@@ -11,7 +11,7 @@ import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
 class RequestHandler(
-    private val endpoint: Endpoint,
+    private val routeMapping: RouteMapping,
     private val localTimezone: String = "Europe/Stockholm",
     private val logger: ILogger = PrettyConsoleLogger(),
 ) {
@@ -19,16 +19,16 @@ class RequestHandler(
         return { ctx: Context ->
             val log = Log(
                 localTimeZone = localTimezone,
-                routeType = endpoint.getType(),
+                routeType = routeMapping.getType(),
                 httpMethod = ctx.method().toString()
             )
             val startTime = System.currentTimeMillis()
             try {
-                log.requestLog.path = endpoint.getPath()
-                val hasNoArguments = endpoint.parameters.isEmpty()
+                log.requestLog.path = routeMapping.getRoute()
+                val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class
                 val routeClassInstance: IWebResponse = when {
-                    hasNoArguments -> endpoint.clazz.createInstance()
+                    hasNoArguments -> routeMapping.clazz.createInstance()
                     else -> createInstanceWithArguments(ctx, log)
                 }
                 sendResponse(ctx, routeClassInstance, log)
@@ -43,10 +43,10 @@ class RequestHandler(
     }
 
     private fun createInstanceWithArguments(ctx: Context, log: Log): IWebResponse {
-        val arguments: Map<String, String> = getArguments(endpoint.parameters, ctx)
+        val arguments: Map<String, String> = getArguments(routeMapping.parameters, ctx)
         log.requestLog.arguments = arguments
-        val constructor = endpoint.clazz.primaryConstructor
-            ?: throw IllegalStateException("No primary constructor found for ${endpoint.clazz.simpleName}")
+        val constructor = routeMapping.clazz.primaryConstructor
+            ?: throw IllegalStateException("No primary constructor found for ${routeMapping.clazz.simpleName}")
         return constructor.callBy(
             constructor.parameters.associateWith { param ->
                 arguments[param.name]

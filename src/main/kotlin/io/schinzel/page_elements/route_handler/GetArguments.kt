@@ -1,7 +1,7 @@
 package io.schinzel.page_elements.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.page_elements.endpoint.Parameter
+import io.schinzel.page_elements.route_mapping.Parameter
 
 fun getArguments(parameters: List<Parameter>, ctx: Context): Map<String, String> {
     return parameters.associate { arg ->
