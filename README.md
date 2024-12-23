@@ -73,6 +73,19 @@ Variables can be passed as:
 Prefix: /api. 
 Name of the class in kebab-case
 
+# Routes
+- Pages reside in the directory "pages"
+    - Pages have no route prefix
+    - Routes are defined by directories that lead to the page
+    - Routing paths mirror the directory structure, where each folder represents a path segment
+- Endpoints reside in the directory "api"
+    - Endpoints have the route prefix "api"
+    - Routing paths mirror the directory structure, where each folder represents a path segment, plus the name of the class in kebab-case
+- Page endpoints are found in the "pages" directory
+    - Typically, these endpoints are used to save data from a page
+    - Page endpoints have the route prefix "page-api"
+    - Routing paths mirror the directory structure, where each folder represents a path segment, plus the name of the class in kebab-case
+
 
 ## Building a JAR
 When building a JAR the html and js files need to be included in the JAR.

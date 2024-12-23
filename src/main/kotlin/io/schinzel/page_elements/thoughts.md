@@ -1,9 +1,11 @@
 
 # To do
+- Data savers
+  - Can I give page elements the ability to save data? 
 - subscribe
 - Logging lacks:
   - Static resources
-  - when a Page or Endpoint or anything is not found
+  - when a Page or Endpoint is not found
 - Forbidden paths
   - have a page with path "api"
   - have an api with path "page"
@@ -15,10 +17,9 @@
 - Run the JAR: java -jar myJar.jar
 
 # Name
-- ElementK
+ElementK
 
 
 # Subscribe
-IPageElement has an Endpoint. 
+IPageElement has an Endpoint.
 updateSubscribers()
-
