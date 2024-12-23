@@ -1,11 +1,9 @@
 package io.schinzel.page_elements.route_mapping
 
-import io.schinzel.page_elements.route_mapping.path.EndpointRoute
-import io.schinzel.page_elements.route_mapping.path.IRoute
-import io.schinzel.page_elements.route_mapping.path.PageRoute
 import io.schinzel.page_elements.web_response.IEndpoint
 import io.schinzel.page_elements.web_response.IRequestProcessor
 import io.schinzel.page_elements.web_response.IWebPage
+import io.schinzel.page_elements.web_response.IWebPageEndpoint
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -16,8 +14,9 @@ class RouteMapping(
     basePackage: String,
     val clazz: KClass<out IRequestProcessor>,
 ) {
-    private val isPage = IWebPage::class.java.isAssignableFrom(clazz.java)
+    private val isWebPage = IWebPage::class.java.isAssignableFrom(clazz.java)
     private val isEndpoint = IEndpoint::class.java.isAssignableFrom(clazz.java)
+    private val isWebPageEndpoint = IWebPageEndpoint::class.java.isAssignableFrom(clazz.java)
     private val route: IRoute
     val parameters: List<Parameter>
 
@@ -26,8 +25,9 @@ class RouteMapping(
         // Convert the package name to a path relative to the base package
         val relativePath = getRelativePath(basePackage, clazz)
         route = when {
-            isPage -> PageRoute(relativePath)
+            isWebPage -> PageRoute(relativePath)
             isEndpoint -> EndpointRoute(relativePath, clazz)
+            isWebPageEndpoint -> WebPageEndPoint(relativePath, clazz)
             else -> throw Exception("Class ${clazz.simpleName} does not implement IPage or IEndpoint")
         }
         parameters = getConstructorParameter(clazz)
@@ -36,8 +36,9 @@ class RouteMapping(
     fun getRoutePath(): String = route.path
 
     fun getType(): String = when {
-        isPage -> "Page"
+        isWebPage -> "Page"
         isEndpoint -> "Endpoint"
+        isWebPageEndpoint -> "WebPageEndpoint"
         else -> "Unknown"
     }
 

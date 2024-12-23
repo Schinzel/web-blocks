@@ -1,12 +1,13 @@
 package io.schinzel.sample.pages.user_account.name_pe
 
-import io.schinzel.page_elements.web_response.IEndpoint
+import io.schinzel.page_elements.web_response.IWebPageEndpoint
 
+@Suppress("unused")
 class NameUpdateDao(
     userId: String,
     firstName: String,
     lastName: String
-) : IEndpoint {
+) : IWebPageEndpoint {
     init {
         println("Saving to db: userId: $userId, firstName: $firstName, lastName: $lastName")
     }

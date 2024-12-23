@@ -5,12 +5,14 @@ import io.schinzel.page_elements.route_handler.log.Log
 import io.schinzel.page_elements.web_response.IEndpoint
 import io.schinzel.page_elements.web_response.IWebPage
 import io.schinzel.page_elements.web_response.IRequestProcessor
+import io.schinzel.page_elements.web_response.IWebPageEndpoint
 
 fun sendResponse(ctx: Context, routeClassInstance: IRequestProcessor, log: Log) {
     val response = routeClassInstance.getResponse()
+
     when (routeClassInstance) {
         is IWebPage -> ctx.html(response as String)
-        is IEndpoint -> {
+        is IEndpoint, is IWebPageEndpoint -> {
             ctx.json(response)
             log.responseLog.response = response
         }
