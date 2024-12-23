@@ -1,13 +1,11 @@
 package io.schinzel.page_elements.set_up_routes
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.route_mapping.Parameter
 import io.schinzel.page_elements.route_mapping.RouteMapping
 import io.schinzel.page_elements.web_response.IRequestProcessor
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
-import kotlin.reflect.full.primaryConstructor
 
 fun findRoutes(basePackage: String): List<RouteMapping> {
     val reflections = Reflections(
@@ -24,21 +22,7 @@ fun findRoutes(basePackage: String): List<RouteMapping> {
             clazz.packageName.startsWith(basePackage) && !clazz.isInterface
         }
         .map { clazz ->
-            // Get constructor parameters using Kotlin reflection
-            val constructorParams = clazz.kotlin.primaryConstructor?.parameters
-            val parameters = constructorParams?.map { param ->
-                Parameter(
-                    name = param.name ?: "",
-                    type = param.type.toString()
-                )
-            }
-
-
-            RouteMapping(
-                basePackage,
-                clazz = clazz.kotlin,
-                parameters = parameters ?: emptyList()
-            )
+            RouteMapping(basePackage, clazz.kotlin)
         }
         .toList()
 }

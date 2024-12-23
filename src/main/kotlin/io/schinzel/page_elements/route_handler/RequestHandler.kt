@@ -26,7 +26,7 @@ class RequestHandler(
             val startTime = System.currentTimeMillis()
             try {
                 // Log the request path
-                log.requestLog.path = routeMapping.getRoute()
+                log.requestLog.path = routeMapping.getRoutePath()
                 // Check if route has arguments
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class

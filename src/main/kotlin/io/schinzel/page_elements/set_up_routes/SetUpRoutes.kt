@@ -37,13 +37,13 @@ fun setUpRoutes(
             logger = logger
         ).handle()
         // Register both GET and POST handlers for the same path
-        javalin.getAndPost(routeMapping.getRoute(), handler)
+        javalin.getAndPost(routeMapping.getRoutePath(), handler)
         // Check if route has arguments
         val hasArguments = routeMapping.parameters.isNotEmpty()
         // If has arguments
         if (hasArguments) {
             // Create path with parameters
-            val pathWithParams = routeMapping.parameters.fold(routeMapping.getRoute()) { path, param ->
+            val pathWithParams = routeMapping.parameters.fold(routeMapping.getRoutePath()) { path, param ->
                 "$path/{${param.name}}"
             }
             // Register both GET and POST handlers for the same path
