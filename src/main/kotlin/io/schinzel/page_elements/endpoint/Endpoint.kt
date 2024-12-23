@@ -1,6 +1,6 @@
 package io.schinzel.page_elements.endpoint
 
-import io.schinzel.page_elements.endpoint.path.ApiPath
+import io.schinzel.page_elements.endpoint.path.EndpointPath
 import io.schinzel.page_elements.endpoint.path.IPath
 import io.schinzel.page_elements.endpoint.path.PagePath
 import io.schinzel.page_elements.web_response.IEndpoint
@@ -28,7 +28,7 @@ class Endpoint(
             .replace("_", "-")
         path = when {
             isPage -> PagePath(relativePath)
-            isApi -> ApiPath(relativePath, clazz)
+            isApi -> EndpointPath(relativePath, clazz)
             else -> throw Exception("Class ${clazz.simpleName} does not implement IPage or IApi")
         }
     }

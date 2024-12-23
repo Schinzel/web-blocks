@@ -3,6 +3,9 @@
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe
+- Logging lacks:
+  - Static resources
+  - when a Page or Endpoint is not found
 - Forbidden paths
   - have a page with path "api"
   - have an api with path "page"
