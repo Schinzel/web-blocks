@@ -6,14 +6,13 @@ import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
 import io.schinzel.page_elements.set_up_routes.setUpRoutes
 
 class InitWeb(
-    pagePackage: String,
-    apiPackage: String,
+    webPackage: String,
     localTimezone: String = "Europe/Stockholm",
     logger: ILogger = PrettyConsoleLogger(),
 ) {
 
     init {
-        setUpRoutes(pagePackage, apiPackage, localTimezone, logger)
+        setUpRoutes(webPackage, localTimezone, logger)
 
         "*".repeat(30).println()
         "Project started".println()

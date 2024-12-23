@@ -9,8 +9,7 @@ import io.schinzel.page_elements.route_handler.log.ILogger
 import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
 
 fun setUpRoutes(
-    pagePackage: String,
-    apiPackage: String,
+    webPackage: String,
     localTimezone: String = "Europe/Stockholm",
     logger: ILogger = PrettyConsoleLogger(),
 ){
@@ -22,12 +21,8 @@ fun setUpRoutes(
             it.hostedPath = "/static"
         }
     }
-    // Find all page routes
-    val pageRoutes = findRoutes(pagePackage)
-    // Find all api routes
-    val apiRoutes = findRoutes(apiPackage)
-    // Add all routes to Javalin
-    (pageRoutes + apiRoutes).forEach { routeMapping: RouteMapping ->
+    // Find all routes and add them Javalin
+    findRoutes(webPackage).forEach { routeMapping: RouteMapping ->
         // Print route
         routeMapping.toString().println()
         // Create handler

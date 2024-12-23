@@ -8,10 +8,11 @@ interface IRoute {
 }
 
 class PageRoute(pagePath: String) : IRoute {
-    override val path: String = if (pagePath == "landing") {
+    val pagePathWithoutPages = pagePath.removePrefix("pages/")
+    override val path: String = if (pagePathWithoutPages == "landing") {
         "/"
     } else {
-        pagePath
+        pagePathWithoutPages
     }
 }
 
@@ -22,7 +23,7 @@ class EndpointRoute(basePath: String, clazz: KClass<*>) : IRoute {
         // Convert the class name from pascal case to kebab case
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
         // Create the path with the prefix "api" and the relative path and the class name
-        path = "api/$basePath/$classNameKebabCase"
+        path = "$basePath/$classNameKebabCase"
     }
 }
 
@@ -30,10 +31,11 @@ class WebPageEndPoint(basePath: String, clazz: KClass<*>) : IRoute {
     override val path: String
 
     init {
+        val pagePathWithoutPages = basePath.removePrefix("pages/")
         // Convert the class name from pascal case to kebab case
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
         // Create the path with the prefix "api" and the relative path and the class name
-        path = "page-api/$basePath/$classNameKebabCase"
+        path = "page-api/$pagePathWithoutPages/$classNameKebabCase"
     }
 }
 

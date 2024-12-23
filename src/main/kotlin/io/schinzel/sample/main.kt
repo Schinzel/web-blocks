@@ -3,7 +3,6 @@ package io.schinzel.sample
 import io.schinzel.page_elements.InitWeb
 
 fun main() {
-    val pagePackage = "io.schinzel.sample.pages"
-    val apiPackage = "io.schinzel.sample.api"
-    InitWeb(pagePackage, apiPackage)
+    val webPackage = "io.schinzel.sample"
+    InitWeb(webPackage)
 }
