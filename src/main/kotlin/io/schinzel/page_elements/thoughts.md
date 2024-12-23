@@ -18,12 +18,12 @@
 
 
 # Thoughts on data savers
-- State one folder
+State one Directory. In this directory:
 - Pages reside in the directory "pages"
   - Pages have no route prefix
 - Endpoints reside in the directory "api"
   - Endpoints have the route prefix "api"
-- Page endpoints are found in the "pages" directory
+- Page endpoints reside in the "pages" directory
   - Typically, these endpoints are used to save data from a page
   - Page endpoints have the route prefix "page-api"
 

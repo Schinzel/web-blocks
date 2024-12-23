@@ -4,7 +4,6 @@ interface IWebPage : IRequestProcessor
 
 interface IWebPageEndpoint : IRequestProcessor
 
-
 interface IEndpoint : IRequestProcessor
 
 interface IRequestProcessor {
