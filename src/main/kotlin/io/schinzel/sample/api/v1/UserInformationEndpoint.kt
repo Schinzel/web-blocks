@@ -1,9 +1,9 @@
-package io.schinzel.sample.apis.v1
+package io.schinzel.sample.api.v1
 
-import io.schinzel.page_elements.web_response.IApi
+import io.schinzel.page_elements.web_response.IEndpoint
 
 @Suppress("unused")
-class UserInformationApi(private val userId: String = "") : IApi {
+class UserInformationEndpoint(private val userId: String = "") : IEndpoint {
     override fun getResponse(): Any {
         if (userId.isNotEmpty()) {
             return UserInformation(userId, "Jane Doe", 24)

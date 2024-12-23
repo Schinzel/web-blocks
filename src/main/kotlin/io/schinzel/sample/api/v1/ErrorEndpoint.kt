@@ -1,9 +1,9 @@
-package io.schinzel.sample.apis.v1
+package io.schinzel.sample.api.v1
 
-import io.schinzel.page_elements.web_response.IApi
+import io.schinzel.page_elements.web_response.IEndpoint
 
 @Suppress("unused")
-class ErrorApi: IApi {
+class ErrorEndpoint: IEndpoint {
     override fun getResponse(): String {
         throw RuntimeException("Something went wrong!!")
     }

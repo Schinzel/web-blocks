@@ -3,7 +3,7 @@ package io.schinzel.page_elements.endpoint
 import io.schinzel.page_elements.endpoint.path.ApiPath
 import io.schinzel.page_elements.endpoint.path.IPath
 import io.schinzel.page_elements.endpoint.path.PagePath
-import io.schinzel.page_elements.web_response.IApi
+import io.schinzel.page_elements.web_response.IEndpoint
 import io.schinzel.page_elements.web_response.IWebPage
 import io.schinzel.page_elements.web_response.IWebResponse
 import kotlin.reflect.KClass
@@ -14,7 +14,7 @@ class Endpoint(
     val parameters: List<Parameter>
 ) {
     private val isPage = IWebPage::class.java.isAssignableFrom(clazz.java)
-    private val isApi = IApi::class.java.isAssignableFrom(clazz.java)
+    private val isApi = IEndpoint::class.java.isAssignableFrom(clazz.java)
     private val path: IPath
 
 

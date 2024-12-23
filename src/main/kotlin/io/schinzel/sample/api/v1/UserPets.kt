@@ -1,9 +1,9 @@
-package io.schinzel.sample.apis.v1
+package io.schinzel.sample.api.v1
 
-import io.schinzel.page_elements.web_response.IApi
+import io.schinzel.page_elements.web_response.IEndpoint
 
 @Suppress("unused")
-class UserPets : IApi {
+class UserPets : IEndpoint {
     override fun getResponse(): Any {
         return listOf(
             Pet("Fluffy", "Cat"),
