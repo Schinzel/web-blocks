@@ -41,20 +41,20 @@ class RouteMapping(
         else -> "Unknown"
     }
 
-    override fun toString(): String {
-        return "Type: ${this.getType()}, Route: ${getRoutePath()}, Class: ${clazz.simpleName}, Parameters: $parameters"
-    }
+    override fun toString(): String = "Type: ${this.getType()}, " +
+            "Route: ${getRoutePath()}, " +
+            "Class: ${clazz.simpleName}, " +
+            "Parameters: $parameters"
 
     companion object {
 
+        fun getRelativePath(basePackage: String, clazz: KClass<out IRequestProcessor>): String = clazz.java
+            .packageName
+            .removePrefix(basePackage)
+            .removePrefix(".")
+            .replace(".", "/")
+            .replace("_", "-")
 
-        fun getRelativePath(basePackage: String, clazz: KClass<out IRequestProcessor>): String {
-            return clazz.java.packageName
-                .removePrefix(basePackage)
-                .removePrefix(".")
-                .replace(".", "/")
-                .replace("_", "-")
-        }
 
         fun getConstructorParameter(clazz: KClass<out IRequestProcessor>): List<Parameter> {
             // Get constructor parameters using Kotlin reflection
