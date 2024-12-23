@@ -1,9 +1,10 @@
 package io.schinzel.page_elements.web_response
 
-interface IWebPage : IWebResponse
+interface IWebPage : IRequestProcessor
 
-interface IEndpoint : IWebResponse
+interface IEndpoint : IRequestProcessor
 
-interface IWebResponse {
+interface IRequestProcessor {
     fun getResponse(): Any
 }
+

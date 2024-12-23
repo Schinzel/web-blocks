@@ -6,7 +6,7 @@ import io.schinzel.page_elements.route_handler.log.ErrorLog
 import io.schinzel.page_elements.route_handler.log.ILogger
 import io.schinzel.page_elements.route_handler.log.Log
 import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
-import io.schinzel.page_elements.web_response.IWebResponse
+import io.schinzel.page_elements.web_response.IRequestProcessor
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
 
@@ -27,7 +27,7 @@ class RequestHandler(
                 log.requestLog.path = routeMapping.getRoute()
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class
-                val routeClassInstance: IWebResponse = when {
+                val routeClassInstance: IRequestProcessor = when {
                     hasNoArguments -> routeMapping.clazz.createInstance()
                     else -> createInstanceWithArguments(ctx, log)
                 }
@@ -42,7 +42,7 @@ class RequestHandler(
         }
     }
 
-    private fun createInstanceWithArguments(ctx: Context, log: Log): IWebResponse {
+    private fun createInstanceWithArguments(ctx: Context, log: Log): IRequestProcessor {
         val arguments: Map<String, String> = getArguments(routeMapping.parameters, ctx)
         log.requestLog.arguments = arguments
         val constructor = routeMapping.clazz.primaryConstructor

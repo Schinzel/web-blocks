@@ -5,12 +5,12 @@ import io.schinzel.page_elements.route_mapping.path.IRoute
 import io.schinzel.page_elements.route_mapping.path.PageRoute
 import io.schinzel.page_elements.web_response.IEndpoint
 import io.schinzel.page_elements.web_response.IWebPage
-import io.schinzel.page_elements.web_response.IWebResponse
+import io.schinzel.page_elements.web_response.IRequestProcessor
 import kotlin.reflect.KClass
 
 class RouteMapping(
     basePackage: String,
-    val clazz: KClass<out IWebResponse>,
+    val clazz: KClass<out IRequestProcessor>,
     val parameters: List<Parameter>
 ) {
     private val isPage = IWebPage::class.java.isAssignableFrom(clazz.java)

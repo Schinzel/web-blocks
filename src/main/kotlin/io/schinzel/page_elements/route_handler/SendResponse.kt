@@ -4,9 +4,9 @@ import io.javalin.http.Context
 import io.schinzel.page_elements.route_handler.log.Log
 import io.schinzel.page_elements.web_response.IEndpoint
 import io.schinzel.page_elements.web_response.IWebPage
-import io.schinzel.page_elements.web_response.IWebResponse
+import io.schinzel.page_elements.web_response.IRequestProcessor
 
-fun sendResponse(ctx: Context, routeClassInstance: IWebResponse, log: Log) {
+fun sendResponse(ctx: Context, routeClassInstance: IRequestProcessor, log: Log) {
     val response = routeClassInstance.getResponse()
     when (routeClassInstance) {
         is IWebPage -> ctx.html(response as String)
