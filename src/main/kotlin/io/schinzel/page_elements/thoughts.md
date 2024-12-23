@@ -14,4 +14,11 @@
 - Build a JAR: mvn clean package 
 - Run the JAR: java -jar myJar.jar
 
+# Name
+- ElementK
+
+
+# Subscribe
+IPageElement has an Endpoint. 
+updateSubscribers()
 
