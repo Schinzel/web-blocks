@@ -8,7 +8,7 @@ convention over configuration and component-based development.
 ## Key Features
 
 ### File-System Based Routing
-Taking inspiration from Next.js, the framework uses a file-system based routing approach where the 
+The framework uses a file-system based routing approach where the 
 application's URL structure directly mirrors its folder structure. This intuitive system:
 - Eliminates the need for manual route configuration
 - Makes the application structure immediately clear to new developers
@@ -20,6 +20,11 @@ The framework encourages building pages from small, independent Page Elements. E
 - Contains all its necessary components, logic, and resources
 - Functions as a self-contained feature module
 - Can be developed, tested, and maintained independently
+
+### Instant Updates
+The HTML and JS files are read from the source folder. This means that changes to these files will be reflected in the
+application without the need for a hot reload.
+
 
 ### Feature-Based Architecture
 The project structure encourages feature-based design principles, where related code is 
@@ -67,9 +72,6 @@ Variables can be passed as:
 Prefix: /api. 
 Name of the class in kebab-case
 
-## HTML and JS files
-The HTML and JS files are read from the source folder. This means that changes to these files will be reflected in the 
-application without the need for a hot reload.
 
 ## Building a JAR
 When building a JAR the html and js files need to be included in the JAR.
