@@ -1,11 +1,11 @@
 package io.schinzel.page_elements.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.page_elements.route_mapping.RouteMapping
 import io.schinzel.page_elements.route_handler.log.ErrorLog
 import io.schinzel.page_elements.route_handler.log.ILogger
 import io.schinzel.page_elements.route_handler.log.Log
 import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
+import io.schinzel.page_elements.route_mapping.RouteMapping
 import io.schinzel.page_elements.web_response.IRequestProcessor
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.primaryConstructor
@@ -17,36 +17,51 @@ class RequestHandler(
 ) {
     fun handle(): (Context) -> Unit {
         return { ctx: Context ->
+            // Create log
             val log = Log(
                 localTimeZone = localTimezone,
                 routeType = routeMapping.getType(),
                 httpMethod = ctx.method().toString()
             )
+            // Set the start time
             val startTime = System.currentTimeMillis()
             try {
+                // Log the request path
                 log.requestLog.path = routeMapping.getRoute()
+                // Check if route has arguments
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class
                 val routeClassInstance: IRequestProcessor = when {
                     hasNoArguments -> routeMapping.clazz.createInstance()
                     else -> createInstanceWithArguments(ctx, log)
                 }
+                // Send response
                 sendResponse(ctx, routeClassInstance, log)
+                // Log the response status code
                 log.responseLog.statusCode = ctx.statusCode()
-                log.executionTimeInMs = System.currentTimeMillis() - startTime
             } catch (e: Exception) {
-                log.executionTimeInMs = System.currentTimeMillis() - startTime
                 log.errorLog = ErrorLog(e)
+            } finally {
+                // Log the execution time
+                log.executionTimeInMs = System.currentTimeMillis() - startTime
+                // Write log
+                logger.log(log)
             }
-            logger.log(log)
         }
     }
 
+    /**
+     * Creates an instance of the route class with constructor arguments applied.
+     */
     private fun createInstanceWithArguments(ctx: Context, log: Log): IRequestProcessor {
+        // Get arguments from from the request
         val arguments: Map<String, String> = getArguments(routeMapping.parameters, ctx)
+        // Log the arguments
         log.requestLog.arguments = arguments
+        // Get the primary constructor of the route class
         val constructor = routeMapping.clazz.primaryConstructor
             ?: throw IllegalStateException("No primary constructor found for ${routeMapping.clazz.simpleName}")
+        // Create instance of route class with arguments
         return constructor.callBy(
             constructor.parameters.associateWith { param ->
                 arguments[param.name]

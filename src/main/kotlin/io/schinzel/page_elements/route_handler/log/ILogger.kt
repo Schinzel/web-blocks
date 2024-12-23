@@ -6,21 +6,21 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.schinzel.basic_utils_kotlin.println
 
 interface ILogger {
-    fun log(log: Log)
+    fun log(logEntry: Log)
 }
 
 class CompactConsoleLogger : ILogger {
-    override fun log(log: Log) {
+    override fun log(logEntry: Log) {
         JsonMapper.prettyMapper
-            .writeValueAsString(log)
+            .writeValueAsString(logEntry)
             .println()
     }
 }
 
 class PrettyConsoleLogger : ILogger {
-    override fun log(log: Log) {
+    override fun log(logEntry: Log) {
         JsonMapper.prettyMapper
-            .writeValueAsString(log)
+            .writeValueAsString(logEntry)
             .println()
     }
 }
