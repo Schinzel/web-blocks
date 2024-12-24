@@ -1,6 +1,4 @@
-package io.schinzel.page_elements
-
-import kotlin.random.Random
+package io.schinzel.web_app_engine
 
 interface IPageElement2 {
 

@@ -1,6 +1,6 @@
 package io.schinzel.sample
 
-import io.schinzel.page_elements.InitWebApp
+import io.schinzel.web_app_engine.InitWebApp
 
 fun main() {
     val webPackage = "io.schinzel.sample"

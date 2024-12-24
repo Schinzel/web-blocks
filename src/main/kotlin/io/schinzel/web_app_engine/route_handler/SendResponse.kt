@@ -1,11 +1,11 @@
-package io.schinzel.page_elements.route_handler
+package io.schinzel.web_app_engine.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.page_elements.route_handler.log.Log
-import io.schinzel.page_elements.web_response.IEndpoint
-import io.schinzel.page_elements.web_response.IWebPage
-import io.schinzel.page_elements.web_response.IRequestProcessor
-import io.schinzel.page_elements.web_response.IWebPageEndpoint
+import io.schinzel.web_app_engine.route_handler.log.Log
+import io.schinzel.web_app_engine.web_response.IEndpoint
+import io.schinzel.web_app_engine.web_response.IWebPage
+import io.schinzel.web_app_engine.web_response.IRequestProcessor
+import io.schinzel.web_app_engine.web_response.IWebPageEndpoint
 
 fun sendResponse(ctx: Context, routeClassInstance: IRequestProcessor, log: Log) {
     val response = routeClassInstance.getResponse()

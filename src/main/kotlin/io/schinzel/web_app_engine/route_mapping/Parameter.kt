@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.route_mapping
+package io.schinzel.web_app_engine.route_mapping
 
 data class Parameter(
     val name: String,

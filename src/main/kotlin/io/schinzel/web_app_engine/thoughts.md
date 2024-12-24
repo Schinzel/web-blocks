@@ -25,6 +25,15 @@ ElementK
 
 
 # Subscribe
+- WebAppEngine does not know about BootstrapPage
+- BootstrapPage 
+  - knows about WebAppEngine 
+  - Owns IPageElement
+  - IPageElement either 
+    - implements IWebPageEndpoint so that each IPageElement gets a route
+    - or creates its own implementation of IRequestProcessor
+
+
 IPageElement has an Endpoint.
 updateSubscribers()
 

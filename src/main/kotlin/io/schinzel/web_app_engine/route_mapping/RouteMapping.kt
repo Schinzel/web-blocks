@@ -1,9 +1,9 @@
-package io.schinzel.page_elements.route_mapping
+package io.schinzel.web_app_engine.route_mapping
 
-import io.schinzel.page_elements.web_response.IEndpoint
-import io.schinzel.page_elements.web_response.IRequestProcessor
-import io.schinzel.page_elements.web_response.IWebPage
-import io.schinzel.page_elements.web_response.IWebPageEndpoint
+import io.schinzel.web_app_engine.web_response.IEndpoint
+import io.schinzel.web_app_engine.web_response.IRequestProcessor
+import io.schinzel.web_app_engine.web_response.IWebPage
+import io.schinzel.web_app_engine.web_response.IWebPageEndpoint
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 

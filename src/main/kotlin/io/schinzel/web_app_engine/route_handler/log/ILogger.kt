@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.route_handler.log
+package io.schinzel.web_app_engine.route_handler.log
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature

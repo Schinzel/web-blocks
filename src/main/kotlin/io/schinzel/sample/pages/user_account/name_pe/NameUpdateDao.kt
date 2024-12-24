@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.user_account.name_pe
 
-import io.schinzel.page_elements.web_response.IWebPageEndpoint
+import io.schinzel.web_app_engine.web_response.IWebPageEndpoint
 
 @Suppress("unused")
 class NameUpdateDao(

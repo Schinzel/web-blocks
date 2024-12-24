@@ -1,12 +1,12 @@
-package io.schinzel.page_elements.set_up_routes
+package io.schinzel.web_app_engine.set_up_routes
 
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.page_elements.route_mapping.RouteMapping
-import io.schinzel.page_elements.route_handler.RequestHandler
-import io.schinzel.page_elements.route_handler.log.ILogger
-import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
+import io.schinzel.web_app_engine.route_mapping.RouteMapping
+import io.schinzel.web_app_engine.route_handler.RequestHandler
+import io.schinzel.web_app_engine.route_handler.log.ILogger
+import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
 
 fun setUpRoutes(
     webPackage: String,
