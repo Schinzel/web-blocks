@@ -16,6 +16,10 @@
 - Build a JAR: mvn clean package 
 - Run the JAR: java -jar myJar.jar
 
+# Super central for the project
+- The IPage and IPageElement class is the central class in the project.
+- The file based routing
+
 # Name
 ElementK
 
@@ -37,8 +41,12 @@ Step 1) Surround IPageElement with a div with a unique id
 Skall man anta ett grid system?
 
 Perhaps one should see it as two systems
-1) The routiing and the file system that provides an url to each page element
+1) The routing and the file system that provides an url to each page element
 2) The bootstrap page system 
    1) Each page element has a div with unique id
    2) There is a footer that sets up the mapping between the unique id and the endpoint
-Where does the subscribe function go?
+
+### Where does the subscribe function go?
+Perhaps that belongs to the Bootstrap implementation of IPage. 
+IBootstrapPageElement implements IPageElement and adds the subscribe function or 
+a val subscribers = mutableListOf<IBootstrapPageElement>()

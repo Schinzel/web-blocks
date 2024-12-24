@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.file_util
+package io.schinzel.page_elements.template_engine
 
 /**
  * This class is used to render a template.
