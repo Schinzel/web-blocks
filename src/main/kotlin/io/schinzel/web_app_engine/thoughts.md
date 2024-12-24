@@ -32,6 +32,7 @@ ElementK
   - IPageElement either 
     - implements IWebPageEndpoint so that each IPageElement gets a route
     - or creates its own implementation of IRequestProcessor
+    - val subscribers = mutableList<IPageElement>
 
 
 IPageElement has an Endpoint.
