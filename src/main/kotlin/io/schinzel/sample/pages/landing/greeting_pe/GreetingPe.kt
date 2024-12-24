@@ -1,13 +1,13 @@
 package io.schinzel.sample.pages.landing.greeting_pe
 
 import io.schinzel.page_elements.web_response.IPageElement
-import io.schinzel.page_elements.file_util.TemplateProcessor
+import io.schinzel.page_elements.file_util.TemplateRenderer
 
 class GreetingPe : IPageElement {
     override fun getHtml(): String {
-        return TemplateProcessor("GreetingPe.html", this)
+        return TemplateRenderer("GreetingPe.html", this)
             .addData("firstName", "Pelle")
-            .getProcessedTemplate()
+            .process()
     }
 
 }

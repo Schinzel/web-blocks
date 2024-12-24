@@ -1,11 +1,11 @@
 package io.schinzel.pages.bootstrap_page
 
 import io.schinzel.page_elements.web_response.IPageElement
-import io.schinzel.page_elements.file_util.TemplateProcessor
+import io.schinzel.page_elements.file_util.TemplateRenderer
 
 class BootstrapPage {
     private var title = ""
-    val rows = mutableListOf<Row>()
+    private val rows = mutableListOf<Row>()
 
     fun addRow(): BootstrapPage {
         rows.add(Row())
@@ -30,9 +30,9 @@ class BootstrapPage {
     fun getHtml(): String {
         val content = rows.joinToString("\n") { it.getHtml() }
 
-        return TemplateProcessor("template.html", this)
+        return TemplateRenderer("template.html", this)
             .addData("title", title)
             .addData("content", content)
-            .getProcessedTemplate()
+            .process()
     }
 }

@@ -2,7 +2,7 @@ package io.schinzel.pages.basic_page
 
 import io.schinzel.page_elements.web_response.IWebPage
 import io.schinzel.page_elements.web_response.IPageElement
-import io.schinzel.page_elements.file_util.TemplateProcessor
+import io.schinzel.page_elements.file_util.TemplateRenderer
 
 class BasicWebPage : IWebPage {
     private val pageElements = mutableListOf<IPageElement>()
@@ -20,9 +20,9 @@ class BasicWebPage : IWebPage {
 
     override fun getResponse(): String {
         val content = pageElements.joinToString(separator = "") { it.getHtml() }
-        return TemplateProcessor("template.html", this)
+        return TemplateRenderer("template.html", this)
             .addData("title", title)
             .addData("content", content)
-            .getProcessedTemplate()
+            .process()
     }
 }

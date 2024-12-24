@@ -3,7 +3,6 @@
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe
-- Break up file reading and template engine
 - Logging lacks:
   - Static resources
   - when a Page or Endpoint is not found
