@@ -35,3 +35,10 @@ Could be on the page or on the IPageElement.
 Step 1) Surround IPageElement with a div with a unique id
 
 Skall man anta ett grid system?
+
+Perhaps one should see it as two systems
+1) The routiing and the file system that provides an url to each page element
+2) The bootstrap page system 
+   1) Each page element has a div with unique id
+   2) There is a footer that sets up the mapping between the unique id and the endpoint
+Where does the subscribe function go?
