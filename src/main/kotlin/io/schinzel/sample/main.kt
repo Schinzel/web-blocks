@@ -1,8 +1,8 @@
 package io.schinzel.sample
 
-import io.schinzel.page_elements.InitWeb
+import io.schinzel.page_elements.InitWebApp
 
 fun main() {
     val webPackage = "io.schinzel.sample"
-    InitWeb(webPackage)
+    InitWebApp(webPackage)
 }

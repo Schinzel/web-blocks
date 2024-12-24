@@ -5,7 +5,7 @@ import io.schinzel.page_elements.route_handler.log.ILogger
 import io.schinzel.page_elements.route_handler.log.PrettyConsoleLogger
 import io.schinzel.page_elements.set_up_routes.setUpRoutes
 
-class InitWeb(
+class InitWebApp(
     webPackage: String,
     localTimezone: String = "Europe/Stockholm",
     logger: ILogger = PrettyConsoleLogger(),

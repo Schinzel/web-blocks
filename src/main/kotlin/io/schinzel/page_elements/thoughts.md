@@ -3,6 +3,7 @@
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe
+- Break up file reading and template engine
 - Logging lacks:
   - Static resources
   - when a Page or Endpoint is not found
@@ -23,3 +24,13 @@ ElementK
 # Subscribe
 IPageElement has an Endpoint.
 updateSubscribers()
+
+IPage has a list of IPageElements.
+Each IPageElement will be surrounded by a giv with a unique id (possible a guid)
+Last on the page JS will be generated with possible a map or a list 
+that maps the unique id to the endpoint of the IPageElement.
+
+The is also the actual subscribe function. 
+Could be on the page or on the IPageElement.
+
+Step 1) Surround IPageElement with a div with a unique id
