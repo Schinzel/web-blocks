@@ -2,22 +2,21 @@ package io.schinzel.page_elements.file_util
 
 import java.io.File
 
+/**
+ * The purpose of this interface is to read a file.
+ */
 interface IFileReader {
-    fun getTemplate(): String
+    fun getFileContent(): String
 }
 
 
-
 /**
- * The purpose of this class is to process a template file and replace placeholders with values.
- * The file to be read must be located in the same package as the class that is calling this class.
- *
  * @param fileName The name of the file to process.
  * @param caller The class that is calling this class. Used to find the file to read.
  */
 class FileFileReader(private val fileName: String, private val caller: Any) : IFileReader {
 
-    override fun getTemplate(): String {
+    override fun getFileContent(): String {
         return when {
             isRunningFromJar() -> readFileInJar(fileName, caller)
             else -> readFileInSrc(fileName, caller)

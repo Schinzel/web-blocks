@@ -1,12 +1,18 @@
 package io.schinzel.page_elements.file_util
 
+/**
+ * The purpose of this interface is to process a template.
+ */
 interface ITemplateProcessor {
     fun addData(key: String, value: String): ITemplateProcessor
     fun processTemplate(template: String): String
 }
 
+/**
+ * This class is used to process a template.
+ */
 class TemplateProcessor: ITemplateProcessor {
-    val data: MutableMap<String, String> = mutableMapOf()
+    private val data: MutableMap<String, String> = mutableMapOf()
 
     override fun addData(key: String, value: String): ITemplateProcessor {
         data[key] = value
