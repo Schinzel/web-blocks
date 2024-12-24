@@ -34,3 +34,5 @@ The is also the actual subscribe function.
 Could be on the page or on the IPageElement.
 
 Step 1) Surround IPageElement with a div with a unique id
+
+Skall man anta ett grid system?
