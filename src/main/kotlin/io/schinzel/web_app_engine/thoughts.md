@@ -24,6 +24,9 @@
 ElementK
 
 
+
+
+
 # Subscribe
 - WebAppEngine does not know about BootstrapPage
 - BootstrapPage 
@@ -60,3 +63,8 @@ Perhaps one should see it as two systems
 Perhaps that belongs to the Bootstrap implementation of IPage. 
 IBootstrapPageElement implements IPageElement and adds the subscribe function or 
 a val subscribers = mutableListOf<IBootstrapPageElement>()
+
+
+```kotlin
+
+```
