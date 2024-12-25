@@ -1,5 +1,6 @@
 
 # To do
+- Fix so that can have int arguments in endpoints
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe
