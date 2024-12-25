@@ -1,4 +1,4 @@
-package io.schinzel.web_app_engine.template_engine
+package io.schinzel.pages.template_engine
 
 /**
  * The purpose of this interface is to process a template.

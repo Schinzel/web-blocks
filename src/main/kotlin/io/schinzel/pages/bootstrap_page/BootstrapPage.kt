@@ -1,7 +1,7 @@
 package io.schinzel.pages.bootstrap_page
 
 import io.schinzel.pages.IPageElement
-import io.schinzel.web_app_engine.template_engine.TemplateRenderer
+import io.schinzel.pages.template_engine.TemplateRenderer
 
 class BootstrapPage {
     private var title = ""
