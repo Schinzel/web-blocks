@@ -6,6 +6,7 @@ import io.schinzel.web_app_engine.IRequestProcessor
 import io.schinzel.web_app_engine.IWebPage
 import io.schinzel.web_app_engine.IWebPageEndpoint
 import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
 
 // Register the default generators
@@ -19,8 +20,22 @@ fun initializeRouteRegistry() {
 // The base interface for route generation strategy
 interface IRouteGenerator<T : IRequestProcessor> {
     fun getPath(relativePath: String, clazz: KClass<out T>): String
-}
 
+    fun getConstructorParameters(): List<Parameter> {
+        // Get constructor parameters using Kotlin reflection
+        val constructorParams = this::class.primaryConstructor?.parameters
+        return (constructorParams
+            ?.map { param ->
+                Parameter(
+                    name = param.name ?: "",
+                    type = param.type.toString()
+                )
+            }
+            ?: emptyList())
+    }
+
+    fun getTypeName(): String
+}
 
 /**
  * The purpose of this class is to store route generators.
@@ -38,17 +53,25 @@ object RouteRegistry {
 
     @Suppress("UNCHECKED_CAST")
     fun getPath(basePackage: String, clazz: KClass<out IRequestProcessor>): String {
-        val generator = generators.entries
-            .find { (interfaceType, _) ->
-                interfaceType.java.isAssignableFrom(clazz.java)
-            }
-            ?.value as? IRouteGenerator<IRequestProcessor>
-            ?: throw IllegalArgumentException("No route generator registered for ${clazz.simpleName}")
+        val generator = getGenerator(clazz)
 
         val relativePath = getRelativePath(basePackage, clazz)
 
         return generator.getPath(relativePath, clazz)
     }
+
+    fun getTypeName(clazz: KClass<out IRequestProcessor>): String =
+        this.getGenerator(clazz).getTypeName()
+
+    private fun getGenerator(clazz: KClass<out IRequestProcessor>): IRouteGenerator<IRequestProcessor> {
+        return generators.entries
+            .find { (interfaceType, _) ->
+                interfaceType.java.isAssignableFrom(clazz.java)
+            }
+            ?.value as? IRouteGenerator<IRequestProcessor>
+            ?: throw IllegalArgumentException("No route generator registered for ${clazz.simpleName}")
+    }
+
 }
 
 
@@ -57,6 +80,8 @@ class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         return if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
     }
+
+    override fun getTypeName(): String = "WebPage"
 }
 
 class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
@@ -65,6 +90,9 @@ class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
         return "page-api/$pagePathWithoutPages/$classNameKebabCase"
     }
+
+    override fun getTypeName(): String = "WebPageEndpoint"
+
 }
 
 class EndpointRouteGenerator : IRouteGenerator<IEndpoint> {
@@ -72,6 +100,8 @@ class EndpointRouteGenerator : IRouteGenerator<IEndpoint> {
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
         return "$relativePath/$classNameKebabCase"
     }
+
+    override fun getTypeName(): String = "EndPoing"
 }
 
 

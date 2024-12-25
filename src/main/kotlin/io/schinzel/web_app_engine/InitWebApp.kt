@@ -5,6 +5,7 @@ import io.schinzel.web_app_engine.route_handler.log.ILogger
 import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
 import io.schinzel.web_app_engine.route_mapping.initializeRouteRegistry
 import io.schinzel.web_app_engine.set_up_routes.setUpRoutes
+import io.schinzel.web_app_engine.set_up_routes.setUpRoutes2
 
 class InitWebApp(
     webPackage: String,
@@ -14,7 +15,7 @@ class InitWebApp(
 
     init {
         initializeRouteRegistry()
-        setUpRoutes(webPackage, localTimezone, logger)
+        setUpRoutes2(webPackage, localTimezone, logger)
 
         "*".repeat(30).println()
         "Project started".println()
