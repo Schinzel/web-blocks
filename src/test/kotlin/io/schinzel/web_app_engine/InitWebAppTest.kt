@@ -40,7 +40,7 @@ class InitWebAppTest {
 
     @Test
     fun `ping - contains pong`() {
-        val actual =Jsoup
+        val actual = Jsoup
             .connect("http://localhost:5555/ping")
             .ignoreContentType(true)
             .execute()
@@ -49,11 +49,27 @@ class InitWebAppTest {
 
     @Test
     fun `simple web page - contains hello world`() {
-        val actual =Jsoup
+        val actual = Jsoup
             .connect("http://localhost:5555/simple-page")
             .ignoreContentType(true)
             .execute()
         assertThat(actual.body()).contains("<h1>Hello world!</h1>")
+    }
+
+    @Test
+    fun `page with arguments - contains arguments`() {
+        val url = "http://localhost:5555/page-with-arguments?" +
+                "myInt=1&" +
+                "myString=hello&" +
+                "myBoolean=true"
+        val actual = Jsoup
+            .connect(url)
+            .ignoreContentType(true)
+            .execute()
+        assertThat(actual.body())
+            .contains("<p>myInt: 1</p>")
+            .contains("<p>myString: hello</p>")
+            .contains("<p>myBoolean: true</p>")
     }
 
 
