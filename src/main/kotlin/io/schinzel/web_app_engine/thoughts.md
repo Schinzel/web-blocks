@@ -1,9 +1,5 @@
 
 # To do
-- Template Engine tillhör not pages inte pages/page-elements
-- Add tests
-- Data savers
-  - Can I give page elements the ability to save data? 
 - subscribe
 - Logging lacks:
   - Static resources
