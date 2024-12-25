@@ -51,7 +51,6 @@ object RouteRegistry {
         generators[processorType] = generator
     }
 
-    @Suppress("UNCHECKED_CAST")
     fun getPath(basePackage: String, clazz: KClass<out IRequestProcessor>): String {
         val generator = getGenerator(clazz)
 
@@ -63,6 +62,7 @@ object RouteRegistry {
     fun getTypeName(clazz: KClass<out IRequestProcessor>): String =
         this.getGenerator(clazz).getTypeName()
 
+    @Suppress("UNCHECKED_CAST")
     private fun getGenerator(clazz: KClass<out IRequestProcessor>): IRouteGenerator<IRequestProcessor> {
         return generators.entries
             .find { (interfaceType, _) ->
@@ -101,7 +101,7 @@ class EndpointRouteGenerator : IRouteGenerator<IEndpoint> {
         return "$relativePath/$classNameKebabCase"
     }
 
-    override fun getTypeName(): String = "EndPoing"
+    override fun getTypeName(): String = "EndPoint"
 }
 
 
