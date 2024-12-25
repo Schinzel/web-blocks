@@ -2,7 +2,7 @@ package io.schinzel.sample.pages.landing
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.pages.basic_page.BasicWebPage
-import io.schinzel.web_app_engine.web_response.IWebPage
+import io.schinzel.web_app_engine.IWebPage
 import io.schinzel.sample.pages.landing.greeting_pe.GreetingPe
 
 @Suppress("unused")

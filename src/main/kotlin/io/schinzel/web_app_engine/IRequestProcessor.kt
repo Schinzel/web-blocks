@@ -1,4 +1,4 @@
-package io.schinzel.web_app_engine.web_response
+package io.schinzel.web_app_engine
 
 interface IWebPage : IRequestProcessor
 

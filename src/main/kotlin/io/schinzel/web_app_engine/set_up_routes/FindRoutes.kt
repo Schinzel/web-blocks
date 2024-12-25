@@ -2,7 +2,7 @@ package io.schinzel.web_app_engine.set_up_routes
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_app_engine.route_mapping.RouteMapping
-import io.schinzel.web_app_engine.web_response.IRequestProcessor
+import io.schinzel.web_app_engine.IRequestProcessor
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder

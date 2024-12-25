@@ -6,7 +6,7 @@ import io.schinzel.web_app_engine.route_handler.log.ILogger
 import io.schinzel.web_app_engine.route_handler.log.Log
 import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
 import io.schinzel.web_app_engine.route_mapping.RouteMapping
-import io.schinzel.web_app_engine.web_response.IRequestProcessor
+import io.schinzel.web_app_engine.IRequestProcessor
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(
