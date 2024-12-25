@@ -33,7 +33,7 @@ class RequestHandler(
                 // Create instance of route class
                 val routeClassInstance: IRequestProcessor = when {
                     hasNoArguments -> routeMapping.clazz.createInstance()
-                    else -> createInstance2(routeMapping, ctx, log)
+                    else -> createInstance(routeMapping, ctx, log)
                 }
                 // Send response
                 sendResponse(ctx, routeClassInstance, log)
@@ -47,27 +47,6 @@ class RequestHandler(
                 // Write log
                 logger.log(log)
             }
-        }
-    }
-
-    companion object {
-
-        fun createInstance2(
-            routeMapping: RouteMapping,
-            ctx: Context,
-            log: Log
-        ): IRequestProcessor {
-            // Get arguments from from the request
-            val arguments: Map<String, String> = getArguments(routeMapping.parameters, ctx)
-            // Log the arguments
-            log.requestLog.arguments = arguments
-            val constructor = routeMapping.getPrimaryConstructor()
-            // Create instance of route class with arguments
-            return routeMapping.getPrimaryConstructor().callBy(
-                constructor.parameters.associateWith { param ->
-                    arguments[param.name]
-                }
-            )
         }
     }
 }
