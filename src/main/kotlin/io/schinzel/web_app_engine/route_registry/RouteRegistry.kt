@@ -18,19 +18,6 @@ fun initializeRouteRegistry() {
 interface IRouteGenerator<T : IRequestProcessor> {
     fun getPath(relativePath: String, clazz: KClass<out T>): String
 
-    fun getConstructorParameters(): List<Parameter> {
-        // Get constructor parameters using Kotlin reflection
-        val constructorParams = this::class.primaryConstructor?.parameters
-        return (constructorParams
-            ?.map { param ->
-                Parameter(
-                    name = param.name ?: "",
-                    type = param.type
-                )
-            }
-            ?: emptyList())
-    }
-
     fun getTypeName(): String
 
     fun getReturnType(): ReturnTypeEnum

@@ -1,7 +1,6 @@
 
 # To do
 - Add tests
-- getConstructorParameters in two places
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe

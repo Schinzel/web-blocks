@@ -13,7 +13,7 @@ class RouteMapping(
     basePackage: String,
     val clazz: KClass<out IRequestProcessor>,
 ) {
-    val parameters: List<Parameter> = getConstructorParameter(clazz)
+    val parameters: List<Parameter> = getConstructorParameters(clazz)
     val path: String = RouteRegistry.getPath(basePackage, clazz)
     val type: String = RouteRegistry.getTypeName(clazz)
 
@@ -27,7 +27,7 @@ class RouteMapping(
     }
 
     companion object {
-        private fun getConstructorParameter(clazz: KClass<out IRequestProcessor>): List<Parameter> {
+        private fun getConstructorParameters(clazz: KClass<out IRequestProcessor>): List<Parameter> {
             // Get constructor parameters using Kotlin reflection
             val constructorParams = clazz.primaryConstructor?.parameters
             return (constructorParams
