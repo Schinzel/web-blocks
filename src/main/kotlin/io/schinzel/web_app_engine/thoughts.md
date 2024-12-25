@@ -12,13 +12,16 @@
   - cannot have a page nor an api with path "static"
 - Tester & doc
 
+
 # How to build and run a JAR
 - Build a JAR: mvn clean package 
 - Run the JAR: java -jar myJar.jar
 
+
 # Super central for the project
 - The IPage and IPageElement class is the central class in the project.
 - The file based routing
+
 
 # Name
 ElementK

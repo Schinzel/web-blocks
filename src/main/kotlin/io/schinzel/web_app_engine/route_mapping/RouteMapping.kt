@@ -1,6 +1,7 @@
 package io.schinzel.web_app_engine.route_mapping
 
-import io.schinzel.web_app_engine.IRequestProcessor
+import io.schinzel.web_app_engine.route_registry.RouteRegistry
+import io.schinzel.web_app_engine.route_registry.processors.IRequestProcessor
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor
@@ -19,6 +20,10 @@ class RouteMapping(
     fun getPrimaryConstructor(): KFunction<IRequestProcessor> {
         return clazz.primaryConstructor
             ?: throw IllegalStateException("No primary constructor found for ${clazz.simpleName}")
+    }
+
+    override fun toString(): String {
+        return "RouteMapping(type='$type', path='$path', parameters=$parameters)"
     }
 
     companion object {

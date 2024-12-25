@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.sub_dir.sub_dir_2
 
-import io.schinzel.web_app_engine.IWebPage
+import io.schinzel.web_app_engine.route_registry.processors.IWebPage
 
 @Suppress("unused")
 class MyWebPage: IWebPage {

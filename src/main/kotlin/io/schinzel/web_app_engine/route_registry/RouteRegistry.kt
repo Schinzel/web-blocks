@@ -1,10 +1,7 @@
-package io.schinzel.web_app_engine.route_mapping
+package io.schinzel.web_app_engine.route_registry
 
-import dev.turingcomplete.textcaseconverter.StandardTextCases
-import io.schinzel.web_app_engine.IEndpoint
-import io.schinzel.web_app_engine.IRequestProcessor
-import io.schinzel.web_app_engine.IWebPage
-import io.schinzel.web_app_engine.IWebPageEndpoint
+import io.schinzel.web_app_engine.route_mapping.Parameter
+import io.schinzel.web_app_engine.route_registry.processors.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -62,7 +59,7 @@ object RouteRegistry {
     }
 
     fun getTypeName(clazz: KClass<out IRequestProcessor>): String =
-        this.getGenerator(clazz).getTypeName()
+        getGenerator(clazz).getTypeName()
 
     @Suppress("UNCHECKED_CAST")
     fun getGenerator(clazz: KClass<out IRequestProcessor>): IRouteGenerator<IRequestProcessor> {
@@ -74,54 +71,4 @@ object RouteRegistry {
             ?: throw IllegalArgumentException("No route generator registered for ${clazz.simpleName}")
     }
 
-}
-
-
-class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
-    override fun getPath(relativePath: String, clazz: KClass<out IWebPage>): String {
-        val pagePathWithoutPages = relativePath.removePrefix("pages/")
-        return if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
-    }
-
-    override fun getTypeName() = "WebPage"
-    override fun getReturnType() = ReturnTypeEnum.HTML
-}
-
-class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
-    override fun getPath(relativePath: String, clazz: KClass<out IWebPageEndpoint>): String {
-        val pagePathWithoutPages = relativePath.removePrefix("pages/")
-        val classNameKebabCase = getClassNameAsKebabCase(clazz)
-        return "page-api/$pagePathWithoutPages/$classNameKebabCase"
-    }
-
-    override fun getTypeName() = "WebPageEndpoint"
-    override fun getReturnType() = ReturnTypeEnum.JSON
-}
-
-class EndpointRouteGenerator : IRouteGenerator<IEndpoint> {
-    override fun getPath(relativePath: String, clazz: KClass<out IEndpoint>): String {
-        val classNameKebabCase = getClassNameAsKebabCase(clazz)
-        return "$relativePath/$classNameKebabCase"
-    }
-
-    override fun getTypeName() = "EndPoint"
-    override fun getReturnType() = ReturnTypeEnum.JSON
-}
-
-
-private fun getRelativePath(basePackage: String, clazz: KClass<out IRequestProcessor>): String =
-    clazz.java
-        .packageName
-        .removePrefix(basePackage)
-        .removePrefix(".")
-        .replace(".", "/")
-        .replace("_", "-")
-
-
-private fun getClassNameAsKebabCase(clazz: KClass<*>): String {
-    return clazz.simpleName!!
-        .removeSuffix("WebPageEndpoint")
-        .removeSuffix("Endpoint")
-        .removeSuffix("Api")
-        .let { StandardTextCases.PASCAL_CASE.convertTo(StandardTextCases.KEBAB_CASE, it) }
 }

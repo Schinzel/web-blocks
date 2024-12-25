@@ -1,6 +1,6 @@
 package io.schinzel.sample.api.v1
 
-import io.schinzel.web_app_engine.IEndpoint
+import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
 
 @Suppress("unused")
 class UserPets : IEndpoint {

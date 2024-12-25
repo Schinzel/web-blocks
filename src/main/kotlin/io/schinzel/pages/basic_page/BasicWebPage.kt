@@ -1,6 +1,6 @@
 package io.schinzel.pages.basic_page
 
-import io.schinzel.web_app_engine.IWebPage
+import io.schinzel.web_app_engine.route_registry.processors.IWebPage
 import io.schinzel.pages.IPageElement
 import io.schinzel.web_app_engine.template_engine.TemplateRenderer
 
