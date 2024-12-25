@@ -1,13 +1,13 @@
 package io.schinzel.web_app_engine.set_up_routes
 
 import io.schinzel.web_app_engine.IRequestProcessor
-import io.schinzel.web_app_engine.route_mapping.RouteMapping2
+import io.schinzel.web_app_engine.route_mapping.RouteMapping
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
 
 
-fun findRoutes(basePackage: String): List<RouteMapping2> {
+fun findRoutes(basePackage: String): List<RouteMapping> {
     val reflections = Reflections(
         ConfigurationBuilder()
             .forPackage(basePackage)
@@ -22,7 +22,7 @@ fun findRoutes(basePackage: String): List<RouteMapping2> {
             clazz.packageName.startsWith(basePackage) && !clazz.isInterface
         }
         .map {
-            RouteMapping2(basePackage, it.kotlin)
+            RouteMapping(basePackage, it.kotlin)
         }
         .toList()
 }

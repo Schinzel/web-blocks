@@ -5,7 +5,7 @@ import io.javalin.http.staticfiles.Location
 import io.schinzel.web_app_engine.route_handler.RequestHandler
 import io.schinzel.web_app_engine.route_handler.log.ILogger
 import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
-import io.schinzel.web_app_engine.route_mapping.RouteMapping2
+import io.schinzel.web_app_engine.route_mapping.RouteMapping
 
 fun setUpRoutes(
     webPackage: String,
@@ -21,7 +21,7 @@ fun setUpRoutes(
         }
     }
     // Find all routes and add them Javalin
-    findRoutes(webPackage).forEach { routeMapping: RouteMapping2 ->
+    findRoutes(webPackage).forEach { routeMapping: RouteMapping ->
         // Create handler
         val handler = RequestHandler(
             routeMapping = routeMapping,

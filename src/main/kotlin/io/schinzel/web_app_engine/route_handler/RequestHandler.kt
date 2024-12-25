@@ -6,11 +6,11 @@ import io.schinzel.web_app_engine.route_handler.log.ErrorLog
 import io.schinzel.web_app_engine.route_handler.log.ILogger
 import io.schinzel.web_app_engine.route_handler.log.Log
 import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
-import io.schinzel.web_app_engine.route_mapping.RouteMapping2
+import io.schinzel.web_app_engine.route_mapping.RouteMapping
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(
-    private val routeMapping: RouteMapping2,
+    private val routeMapping: RouteMapping,
     private val localTimezone: String = "Europe/Stockholm",
     private val logger: ILogger = PrettyConsoleLogger(),
 ) {
@@ -53,7 +53,7 @@ class RequestHandler(
     companion object {
 
         fun createInstance2(
-            routeMapping: RouteMapping2,
+            routeMapping: RouteMapping,
             ctx: Context,
             log: Log
         ): IRequestProcessor {

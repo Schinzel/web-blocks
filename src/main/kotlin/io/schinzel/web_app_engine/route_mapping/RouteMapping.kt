@@ -8,7 +8,7 @@ import kotlin.reflect.full.primaryConstructor
 /**
  * The purpose of this class is to map a route to a class.
  */
-class RouteMapping2(
+class RouteMapping(
     basePackage: String,
     val clazz: KClass<out IRequestProcessor>,
 ) {
