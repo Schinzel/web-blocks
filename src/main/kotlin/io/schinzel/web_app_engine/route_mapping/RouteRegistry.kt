@@ -35,7 +35,11 @@ interface IRouteGenerator<T : IRequestProcessor> {
     }
 
     fun getTypeName(): String
+
+    fun getReturnType(): ReturnTypeEnum
 }
+
+enum class ReturnTypeEnum { HTML, JSON }
 
 /**
  * The purpose of this class is to store route generators.
@@ -53,9 +57,7 @@ object RouteRegistry {
 
     fun getPath(basePackage: String, clazz: KClass<out IRequestProcessor>): String {
         val generator = getGenerator(clazz)
-
         val relativePath = getRelativePath(basePackage, clazz)
-
         return generator.getPath(relativePath, clazz)
     }
 
@@ -63,7 +65,7 @@ object RouteRegistry {
         this.getGenerator(clazz).getTypeName()
 
     @Suppress("UNCHECKED_CAST")
-    private fun getGenerator(clazz: KClass<out IRequestProcessor>): IRouteGenerator<IRequestProcessor> {
+    fun getGenerator(clazz: KClass<out IRequestProcessor>): IRouteGenerator<IRequestProcessor> {
         return generators.entries
             .find { (interfaceType, _) ->
                 interfaceType.java.isAssignableFrom(clazz.java)
@@ -81,7 +83,8 @@ class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
         return if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
     }
 
-    override fun getTypeName(): String = "WebPage"
+    override fun getTypeName() = "WebPage"
+    override fun getReturnType() = ReturnTypeEnum.HTML
 }
 
 class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
@@ -91,8 +94,8 @@ class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
         return "page-api/$pagePathWithoutPages/$classNameKebabCase"
     }
 
-    override fun getTypeName(): String = "WebPageEndpoint"
-
+    override fun getTypeName() = "WebPageEndpoint"
+    override fun getReturnType() = ReturnTypeEnum.JSON
 }
 
 class EndpointRouteGenerator : IRouteGenerator<IEndpoint> {
@@ -101,7 +104,8 @@ class EndpointRouteGenerator : IRouteGenerator<IEndpoint> {
         return "$relativePath/$classNameKebabCase"
     }
 
-    override fun getTypeName(): String = "EndPoint"
+    override fun getTypeName() = "EndPoint"
+    override fun getReturnType() = ReturnTypeEnum.JSON
 }
 
 
