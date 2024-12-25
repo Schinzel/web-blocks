@@ -34,7 +34,7 @@ class RouteMapping(
                 ?.map { param ->
                     Parameter(
                         name = param.name ?: "",
-                        type = param.type.toString()
+                        type = param.type
                     )
                 }
                 ?: emptyList())

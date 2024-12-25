@@ -1,6 +1,7 @@
 
 # To do
-- Fix so that can have int arguments in endpoints
+- Add tests
+- getConstructorParameters in two places
 - Data savers
   - Can I give page elements the ability to save data? 
 - subscribe

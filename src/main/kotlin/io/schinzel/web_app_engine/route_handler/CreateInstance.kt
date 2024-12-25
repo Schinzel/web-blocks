@@ -11,7 +11,7 @@ fun createInstance(
     log: Log
 ): IRequestProcessor {
     // Get arguments from from the request
-    val arguments: Map<String, String> = getArguments(routeMapping.parameters, ctx)
+    val arguments: Map<String, Any?> = getArguments(routeMapping.parameters, ctx)
     // Log the arguments
     log.requestLog.arguments = arguments
     val constructor = routeMapping.getPrimaryConstructor()

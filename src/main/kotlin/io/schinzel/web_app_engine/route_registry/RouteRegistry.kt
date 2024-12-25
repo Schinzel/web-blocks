@@ -25,7 +25,7 @@ interface IRouteGenerator<T : IRequestProcessor> {
             ?.map { param ->
                 Parameter(
                     name = param.name ?: "",
-                    type = param.type.toString()
+                    type = param.type
                 )
             }
             ?: emptyList())

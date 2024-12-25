@@ -6,7 +6,7 @@ import io.schinzel.sample.pages.user_account.my_pe.MyPe
 import io.schinzel.sample.pages.user_account.name_pe.NamePe
 
 @Suppress("unused")
-class AccountWebPage(private val userId: String): IWebPage {
+class AccountWebPage(private val userId: Int): IWebPage {
 
     override fun getResponse(): String {
         val response = BootstrapPage()

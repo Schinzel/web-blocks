@@ -20,7 +20,7 @@ data class Log(
 
 data class RequestLog(
     var path: String = "",
-    var arguments: Map<String, String> = mapOf(),
+    var arguments: Map<String, Any?> = mapOf(),
 )
 
 data class ResponseLog(
