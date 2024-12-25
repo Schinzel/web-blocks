@@ -6,10 +6,10 @@ import io.schinzel.sample.pages.user_account.my_pe.MyPe
 import io.schinzel.sample.pages.user_account.name_pe.NamePe
 
 @Suppress("unused")
-class AccountWebPage(private val userId: Int): IWebPage {
+class AccountWebPage(private val userId: String): IWebPage {
 
     override fun getResponse(): String {
-        return BootstrapPage()
+        val response = BootstrapPage()
             .setTitle("Account")
 
             .addRow()
@@ -29,5 +29,6 @@ class AccountWebPage(private val userId: Int): IWebPage {
             .addColumn(5)
             .addPageElement(NamePe(userId))
             .getHtml()
+        return response
     }
 }

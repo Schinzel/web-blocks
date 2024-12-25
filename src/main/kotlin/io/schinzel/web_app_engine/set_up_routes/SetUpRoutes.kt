@@ -34,15 +34,6 @@ fun setUpRoutes(
         javalin.getAndPost(routeMapping.path, handler)
         // Check if route has arguments
         val hasArguments = routeMapping.parameters.isNotEmpty()
-        // If has arguments
-        if (hasArguments) {
-            // Create path with parameters
-            val pathWithParams = routeMapping.parameters.fold(routeMapping.path) { path, param ->
-                "$path/{${param.name}}"
-            }
-            // Register both GET and POST handlers for the same path
-            javalin.getAndPost(pathWithParams, handler)
-        }
     }
     // Start server
     javalin.start(5555)

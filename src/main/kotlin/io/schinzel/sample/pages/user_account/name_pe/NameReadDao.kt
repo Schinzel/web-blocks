@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.user_account.name_pe
 
-class NameReadDao(private val userId: Int) {
+class NameReadDao(private val userId: String) {
     fun getFirstName(): String {
         return "John"
     }
