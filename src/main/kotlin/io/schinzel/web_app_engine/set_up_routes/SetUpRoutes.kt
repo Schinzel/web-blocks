@@ -41,7 +41,7 @@ fun setUpRoutes(
         ctx.result("pong " + Instant.now().toIsoString())
     }
 
-        javalin.start(5555)
+    javalin.start(5555)
 
     return javalin
 }
