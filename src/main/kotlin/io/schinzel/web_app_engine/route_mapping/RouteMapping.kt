@@ -14,8 +14,12 @@ class RouteMapping(
     val clazz: KClass<out IResponseHandler>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(clazz)
-    val path: String = ResponseHandlerDescriptorRegistry.getResponseHandlerDescriptor(clazz).getPath(basePackage, clazz)
-    val type: String = ResponseHandlerDescriptorRegistry.getResponseHandlerDescriptor(clazz).getTypeName()
+    val path: String = ResponseHandlerDescriptorRegistry
+        .getResponseHandlerDescriptor(clazz)
+        .getPath(basePackage, clazz)
+    val type: String = ResponseHandlerDescriptorRegistry
+        .getResponseHandlerDescriptor(clazz)
+        .getTypeName()
 
     fun getPrimaryConstructor(): KFunction<IResponseHandler> {
         return clazz.primaryConstructor
