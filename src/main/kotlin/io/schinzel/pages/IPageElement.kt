@@ -20,7 +20,6 @@ interface IObserverAndSubject {
         observers.add(observer)
         return this
     }
-
 }
 
 
