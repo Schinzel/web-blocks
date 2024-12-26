@@ -1,16 +1,8 @@
 
 # To do
-- subscribe 
-    - Let createResponseHandler 
-      - construct the call url and set in the IPageEndpointResponseHandler
-      - set arguments map<String,Any> in the IPageEndpointResponseHandler
-    - Give IEndpoint the ability to generate a invoke ULR
-      - with parameters as arguments
-    - Surround each IPageElement with a div with a unique id
-      - Also somehow has the url, or has the data to create the url, to make a request to update page element 
-        - Should it be the page element that has this capability?
-    - How to update a page element?
-      - An endpoint can return the url and parameters to make a request to the endpoint    
+- subscribe
+  - Page element must let their constructor arguments be val
+    - Then I can take these and construct the URL 
 - Logging lacks:
   - Static resources
   - when a Page or Endpoint is not found
