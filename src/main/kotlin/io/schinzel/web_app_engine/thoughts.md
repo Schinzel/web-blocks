@@ -1,6 +1,9 @@
 
 # To do
 - subscribe
+  - Surround each IPageElement with a div with a unique id
+    - Also somehow has the url, or has the data to create the url, to make a request to update page element 
+      - Should it be the page element that has this capability?
   - How to update a page element?
     - An endpoint can return the url and parameters to make a request to the endpoint    
 - Logging lacks:

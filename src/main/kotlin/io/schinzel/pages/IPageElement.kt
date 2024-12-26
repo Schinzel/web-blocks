@@ -15,4 +15,13 @@ interface ISubject {
     }
 }
 
-interface ObservablePageElement : IPageElement, IObserver, ISubject
+interface ObservablePageElement : IPageElement, IObserver, ISubject {
+
+    fun getBapp(): String {
+        val pageElementHtml = this.getHtml()
+        val guid = "my_guid"
+        return "<div id='$guid'>$pageElementHtml</div>"
+    }
+
+}
+
