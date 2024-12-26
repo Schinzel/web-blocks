@@ -4,7 +4,7 @@ import io.schinzel.web_app_engine.route_registry.IRouteGenerator
 import io.schinzel.web_app_engine.route_registry.ReturnTypeEnum
 import kotlin.reflect.KClass
 
-interface IWebPage : IRequestProcessor
+interface IWebPage : IEndpoint
 
 class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
     override fun getPath(relativePath: String, clazz: KClass<out IWebPage>): String {

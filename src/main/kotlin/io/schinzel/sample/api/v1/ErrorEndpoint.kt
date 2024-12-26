@@ -1,9 +1,9 @@
 package io.schinzel.sample.api.v1
 
-import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
+import io.schinzel.web_app_engine.route_registry.processors.IApiEndpoint
 
 @Suppress("unused")
-class ErrorEndpoint: IEndpoint {
+class ErrorEndpoint: IApiEndpoint {
     override fun getResponse(): String {
         throw RuntimeException("Something went wrong!!")
     }

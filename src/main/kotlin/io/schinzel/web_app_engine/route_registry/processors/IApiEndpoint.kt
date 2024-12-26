@@ -5,16 +5,14 @@ import io.schinzel.web_app_engine.route_registry.ReturnTypeEnum
 import io.schinzel.web_app_engine.route_registry.getClassNameAsKebabCase
 import kotlin.reflect.KClass
 
-interface IWebPageEndpoint : IEndpoint
+interface IApiEndpoint : IEndpoint
 
-
-class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
-    override fun getPath(relativePath: String, clazz: KClass<out IWebPageEndpoint>): String {
-        val pagePathWithoutPages = relativePath.removePrefix("pages/")
+class ApiEndpointRouteGenerator : IRouteGenerator<IApiEndpoint> {
+    override fun getPath(relativePath: String, clazz: KClass<out IApiEndpoint>): String {
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
-        return "page-api/$pagePathWithoutPages/$classNameKebabCase"
+        return "$relativePath/$classNameKebabCase"
     }
 
-    override fun getTypeName() = "WebPageEndpoint"
+    override fun getTypeName() = "ApiEndpoint"
     override fun getReturnType() = ReturnTypeEnum.JSON
 }

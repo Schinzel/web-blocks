@@ -1,12 +1,12 @@
 package io.schinzel.web_app_engine.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.web_app_engine.route_registry.processors.IRequestProcessor
+import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
 import io.schinzel.web_app_engine.route_handler.log.Log
 import io.schinzel.web_app_engine.route_registry.ReturnTypeEnum
 import io.schinzel.web_app_engine.route_registry.RouteRegistry
 
-fun sendResponse(ctx: Context, routeClassInstance: IRequestProcessor, log: Log) {
+fun sendResponse(ctx: Context, routeClassInstance: IEndpoint, log: Log) {
     val returnType = RouteRegistry
         .getGenerator(routeClassInstance::class)
         .getReturnType()

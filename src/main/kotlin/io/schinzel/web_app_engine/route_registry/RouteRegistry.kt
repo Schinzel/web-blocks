@@ -1,21 +1,19 @@
 package io.schinzel.web_app_engine.route_registry
 
-import io.schinzel.web_app_engine.route_mapping.Parameter
 import io.schinzel.web_app_engine.route_registry.processors.*
 import kotlin.reflect.KClass
-import kotlin.reflect.full.primaryConstructor
 
 
 // Register the default generators
 fun initializeRouteRegistry() {
     RouteRegistry.register(IWebPage::class, WebPageRouteGenerator())
     RouteRegistry.register(IWebPageEndpoint::class, WebPageEndpointRouteGenerator())
-    RouteRegistry.register(IEndpoint::class, EndpointRouteGenerator())
+    RouteRegistry.register(IApiEndpoint::class, ApiEndpointRouteGenerator())
 }
 
 
 // The base interface for route generation strategy
-interface IRouteGenerator<T : IRequestProcessor> {
+interface IRouteGenerator<T : IEndpoint> {
     fun getPath(relativePath: String, clazz: KClass<out T>): String
 
     fun getTypeName(): String
@@ -31,30 +29,30 @@ enum class ReturnTypeEnum { HTML, JSON }
  * That is a class that can generate a route for a given class.
  */
 object RouteRegistry {
-    private val generators = mutableMapOf<KClass<out IRequestProcessor>, IRouteGenerator<out IRequestProcessor>>()
-    fun <T : IRequestProcessor> register(
+    private val generators = mutableMapOf<KClass<out IEndpoint>, IRouteGenerator<out IEndpoint>>()
+    fun <T : IEndpoint> register(
         processorType: KClass<T>,
         generator: IRouteGenerator<T>
     ) {
         generators[processorType] = generator
     }
 
-    fun getPath(basePackage: String, clazz: KClass<out IRequestProcessor>): String {
+    fun getPath(basePackage: String, clazz: KClass<out IEndpoint>): String {
         val generator = getGenerator(clazz)
         val relativePath = getRelativePath(basePackage, clazz)
         return generator.getPath(relativePath, clazz)
     }
 
-    fun getTypeName(clazz: KClass<out IRequestProcessor>): String =
+    fun getTypeName(clazz: KClass<out IEndpoint>): String =
         getGenerator(clazz).getTypeName()
 
     @Suppress("UNCHECKED_CAST")
-    fun getGenerator(clazz: KClass<out IRequestProcessor>): IRouteGenerator<IRequestProcessor> {
+    fun getGenerator(clazz: KClass<out IEndpoint>): IRouteGenerator<IEndpoint> {
         return generators.entries
             .find { (interfaceType, _) ->
                 interfaceType.java.isAssignableFrom(clazz.java)
             }
-            ?.value as? IRouteGenerator<IRequestProcessor>
+            ?.value as? IRouteGenerator<IEndpoint>
             ?: throw IllegalArgumentException("No route generator registered for ${clazz.simpleName}")
     }
 

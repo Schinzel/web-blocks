@@ -1,7 +1,7 @@
 package io.schinzel.web_app_engine.route_mapping
 
 import io.schinzel.web_app_engine.route_registry.RouteRegistry
-import io.schinzel.web_app_engine.route_registry.processors.IRequestProcessor
+import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor
@@ -11,13 +11,13 @@ import kotlin.reflect.full.primaryConstructor
  */
 class RouteMapping(
     basePackage: String,
-    val clazz: KClass<out IRequestProcessor>,
+    val clazz: KClass<out IEndpoint>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(clazz)
     val path: String = RouteRegistry.getPath(basePackage, clazz)
     val type: String = RouteRegistry.getTypeName(clazz)
 
-    fun getPrimaryConstructor(): KFunction<IRequestProcessor> {
+    fun getPrimaryConstructor(): KFunction<IEndpoint> {
         return clazz.primaryConstructor
             ?: throw IllegalStateException("No primary constructor found for ${clazz.simpleName}")
     }
@@ -27,7 +27,7 @@ class RouteMapping(
     }
 
     companion object {
-        private fun getConstructorParameters(clazz: KClass<out IRequestProcessor>): List<Parameter> {
+        private fun getConstructorParameters(clazz: KClass<out IEndpoint>): List<Parameter> {
             // Get constructor parameters using Kotlin reflection
             val constructorParams = clazz.primaryConstructor?.parameters
             return (constructorParams
