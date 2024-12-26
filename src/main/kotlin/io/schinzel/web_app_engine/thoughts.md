@@ -1,7 +1,8 @@
 
 # To do
 - subscribe
-  - Look into an event publishing system? 
+  - How to update a page element?
+    - An endpoint can return the url and parameters to make a request to the endpoint    
 - Logging lacks:
   - Static resources
   - when a Page or Endpoint is not found
