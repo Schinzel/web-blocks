@@ -44,7 +44,7 @@ object RouteRegistry {
         getGenerator(clazz).getTypeName()
 
     @Suppress("UNCHECKED_CAST")
-    fun getGenerator(clazz: KClass<out IEndpoint>): IRouteGenerator<IEndpoint> {
+    private fun getGenerator(clazz: KClass<out IEndpoint>): IRouteGenerator<IEndpoint> {
         return generators.entries
             .find { (interfaceType, _) ->
                 interfaceType.java.isAssignableFrom(clazz.java)
