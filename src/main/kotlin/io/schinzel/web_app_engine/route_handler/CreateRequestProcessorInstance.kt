@@ -5,7 +5,7 @@ import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
 import io.schinzel.web_app_engine.route_handler.log.Log
 import io.schinzel.web_app_engine.route_mapping.RouteMapping
 
-fun createRequestProcessorInstance(
+fun createResponseHandler(
     routeMapping: RouteMapping,
     ctx: Context,
     log: Log

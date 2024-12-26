@@ -33,7 +33,7 @@ class RequestHandler(
                 // Create instance of route class
                 val routeClassInstance: IResponseHandler = when {
                     hasNoArguments -> routeMapping.clazz.createInstance()
-                    else -> createRequestProcessorInstance(routeMapping, ctx, log)
+                    else -> createResponseHandler(routeMapping, ctx, log)
                 }
                 // Send response
                 sendResponse(ctx, routeClassInstance, log)
