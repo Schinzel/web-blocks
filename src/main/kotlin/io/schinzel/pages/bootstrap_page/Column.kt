@@ -5,7 +5,6 @@ import io.schinzel.pages.IPageElement
 class Column(val span: Int) {
     val elements: MutableList<IPageElement> = mutableListOf()
 
-    // |<div class="col-$span">
     fun getHtml(): String {
         return """
             |<div class="col-$span">

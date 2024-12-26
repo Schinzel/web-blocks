@@ -1,7 +1,7 @@
 package io.schinzel.sample.pages.landing
 
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.pages.basic_page.BasicWebPage
+import io.schinzel.pages.bootstrap_page.BootstrapPage
 import io.schinzel.web_app_engine.route_registry.processors.IWebPage
 import io.schinzel.sample.pages.landing.greeting_pe.GreetingPe
 
@@ -12,16 +12,11 @@ class LandingWebPage(userId: String = ""): IWebPage {
     }
 
     override fun getResponse(): String {
-        return BasicWebPage()
+        return BootstrapPage()
             .setTitle("Welcome")
+            .addRow()
+            .addColumn(12)
             .addPageElement(GreetingPe())
-            .getResponse() as String
+            .getHtml()
     }
-}
-
-fun main() {
-    BasicWebPage()
-        .addPageElement(GreetingPe())
-        .getResponse()
-        .println()
 }

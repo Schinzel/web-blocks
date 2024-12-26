@@ -7,6 +7,11 @@ class BootstrapPage {
     private var title = ""
     private val rows = mutableListOf<Row>()
 
+    fun setTitle(title: String): BootstrapPage {
+        this.title = title
+        return this
+    }
+
     fun addRow(): BootstrapPage {
         rows.add(Row())
         return this
@@ -14,11 +19,6 @@ class BootstrapPage {
 
     fun addColumn(span: Int): BootstrapPage {
         rows.last().columns.add(Column(span))
-        return this
-    }
-
-    fun setTitle(title: String): BootstrapPage {
-        this.title = title
         return this
     }
 
@@ -30,7 +30,7 @@ class BootstrapPage {
     fun getHtml(): String {
         val content = rows.joinToString("\n") { it.getHtml() }
 
-        return TemplateRenderer("template.html", this)
+        return TemplateRenderer("bootstrap-page-template.html", this)
             .addData("title", title)
             .addData("content", content)
             .process()
