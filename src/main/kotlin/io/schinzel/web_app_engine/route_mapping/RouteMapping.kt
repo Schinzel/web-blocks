@@ -14,8 +14,8 @@ class RouteMapping(
     val clazz: KClass<out IEndpoint>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(clazz)
-    val path: String = RouteRegistry.getPath(basePackage, clazz)
-    val type: String = RouteRegistry.getTypeName(clazz)
+    val path: String = RouteRegistry.getGenerator(clazz).getPath(basePackage, clazz)
+    val type: String = RouteRegistry.getGenerator(clazz).getTypeName()
 
     fun getPrimaryConstructor(): KFunction<IEndpoint> {
         return clazz.primaryConstructor

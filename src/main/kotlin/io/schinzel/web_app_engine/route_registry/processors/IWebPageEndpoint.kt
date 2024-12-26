@@ -1,7 +1,8 @@
 package io.schinzel.web_app_engine.route_registry.processors
 
-import io.schinzel.web_app_engine.route_registry.IRouteGenerator
+import io.schinzel.web_app_engine.route_registry.IEndpointPath
 import io.schinzel.web_app_engine.route_registry.getClassNameAsKebabCase
+import io.schinzel.web_app_engine.route_registry.getRelativePath
 import kotlin.reflect.KClass
 
 interface IWebPageEndpoint : IEndpoint {
@@ -9,8 +10,9 @@ interface IWebPageEndpoint : IEndpoint {
 }
 
 
-class WebPageEndpointRouteGenerator : IRouteGenerator<IWebPageEndpoint> {
-    override fun getPath(relativePath: String, clazz: KClass<out IWebPageEndpoint>): String {
+class WebPageEndpointPath : IEndpointPath<IWebPageEndpoint> {
+    override fun getPath(endpointPackage: String, clazz: KClass<out IWebPageEndpoint>): String {
+        val relativePath = getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
         return "page-api/$pagePathWithoutPages/$classNameKebabCase"

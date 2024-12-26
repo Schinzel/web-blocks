@@ -1,6 +1,7 @@
 package io.schinzel.web_app_engine.route_registry.processors
 
-import io.schinzel.web_app_engine.route_registry.IRouteGenerator
+import io.schinzel.web_app_engine.route_registry.IEndpointPath
+import io.schinzel.web_app_engine.route_registry.getRelativePath
 import kotlin.reflect.KClass
 
 interface IWebPage : IEndpoint {
@@ -9,8 +10,9 @@ interface IWebPage : IEndpoint {
 
 }
 
-class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
-    override fun getPath(relativePath: String, clazz: KClass<out IWebPage>): String {
+class WebPagePath : IEndpointPath<IWebPage> {
+    override fun getPath(endpointPackage: String, clazz: KClass<out IWebPage>): String {
+        val relativePath = getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         return if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
     }
