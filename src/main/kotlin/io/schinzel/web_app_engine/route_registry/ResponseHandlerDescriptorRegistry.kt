@@ -4,7 +4,9 @@ import io.schinzel.web_app_engine.route_registry.processors.*
 import kotlin.reflect.KClass
 
 
-// Register the default descriptors
+/**
+ * Register the default descriptors
+ */
 fun initializeResponseHandlerDescriptorRegistry() {
     ResponseHandlerDescriptorRegistry
         .register(IPageResponseHandler::class, PageResponseHandlerDescriptor())
