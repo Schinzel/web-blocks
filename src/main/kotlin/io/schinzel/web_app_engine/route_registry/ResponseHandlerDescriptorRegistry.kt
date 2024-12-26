@@ -6,9 +6,12 @@ import kotlin.reflect.KClass
 
 // Register the default descriptors
 fun initializeResponseHandlerDescriptorRegistry() {
-    ResponseHandlerDescriptorRegistry.register(IPageResponseHandler::class, PageResponseHandlerDescriptor())
-    ResponseHandlerDescriptorRegistry.register(IPageEndpointResponseHandler::class, PageEndpointResponseHandlerDescriptor())
-    ResponseHandlerDescriptorRegistry.register(IEndpointResponseHandler::class, EndpointResponseHandlerDescriptor())
+    ResponseHandlerDescriptorRegistry
+        .register(IPageResponseHandler::class, PageResponseHandlerDescriptor())
+    ResponseHandlerDescriptorRegistry
+        .register(IPageEndpointResponseHandler::class, PageEndpointResponseHandlerDescriptor())
+    ResponseHandlerDescriptorRegistry
+        .register(IEndpointResponseHandler::class, EndpointResponseHandlerDescriptor())
 }
 
 
