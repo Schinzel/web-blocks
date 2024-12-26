@@ -1,6 +1,6 @@
 package io.schinzel.web_app_engine.set_up_routes
 
-import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
+import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
 import io.schinzel.web_app_engine.route_mapping.RouteMapping
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
@@ -15,7 +15,7 @@ fun findRoutes(basePackage: String): List<RouteMapping> {
     )
 
     return reflections
-        .getSubTypesOf(IEndpoint::class.java)
+        .getSubTypesOf(IResponseHandler::class.java)
         // Filter only classes in the base package and subpackages. This is needed because
         // Reflections will scan all classes in the classpath by default.
         .filter { clazz ->

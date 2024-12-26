@@ -1,6 +1,6 @@
 package io.schinzel.web_app_engine
 
-import io.schinzel.web_app_engine.route_registry.initializeRouteRegistry
+import io.schinzel.web_app_engine.route_registry.initializeResponseHandlerDescriptorRegistry
 import io.schinzel.web_app_engine.set_up_routes.setUpRoutes
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.HttpStatusException
@@ -15,7 +15,7 @@ class InitWebAppTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
-            initializeRouteRegistry()
+            initializeResponseHandlerDescriptorRegistry()
             setUpRoutes("io.schinzel.web_app_engine")
         }
     }

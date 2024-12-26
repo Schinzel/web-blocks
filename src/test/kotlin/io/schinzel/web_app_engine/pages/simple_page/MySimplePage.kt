@@ -1,9 +1,9 @@
 package io.schinzel.web_app_engine.pages.simple_page
 
-import io.schinzel.web_app_engine.route_registry.processors.IWebPage
+import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
 
 @Suppress("unused")
-class MySimplePage : IWebPage {
+class MySimplePage : IPageResponseHandler {
     override fun getResponse(): String {
         return """
             <!DOCTYPE html>

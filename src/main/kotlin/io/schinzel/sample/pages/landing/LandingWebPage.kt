@@ -2,11 +2,11 @@ package io.schinzel.sample.pages.landing
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.pages.bootstrap_page.BootstrapPage
-import io.schinzel.web_app_engine.route_registry.processors.IWebPage
+import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
 import io.schinzel.sample.pages.landing.greeting_pe.GreetingPe
 
 @Suppress("unused")
-class LandingWebPage(userId: String = ""): IWebPage {
+class LandingWebPage(userId: String = ""): IPageResponseHandler {
     init {
         "LandingPage created with userId: $userId".println()
     }

@@ -1,17 +1,17 @@
 package io.schinzel.web_app_engine.route_registry.processors
 
-import io.schinzel.web_app_engine.route_registry.IEndpointPath
+import io.schinzel.web_app_engine.route_registry.IResponseHandlerDescriptor
 import io.schinzel.web_app_engine.route_registry.getClassNameAsKebabCase
 import io.schinzel.web_app_engine.route_registry.getRelativePath
 import kotlin.reflect.KClass
 
-interface IWebPageEndpoint : IEndpoint {
+interface IPageEndpointResponseHandler : IResponseHandler {
     override fun getReturnType() = ReturnTypeEnum.JSON
 }
 
 
-class WebPageEndpointPath : IEndpointPath<IWebPageEndpoint> {
-    override fun getPath(endpointPackage: String, clazz: KClass<out IWebPageEndpoint>): String {
+class PageEndpointResponseHandlerDescriptor : IResponseHandlerDescriptor<IPageEndpointResponseHandler> {
+    override fun getPath(endpointPackage: String, clazz: KClass<out IPageEndpointResponseHandler>): String {
         val relativePath = getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         val classNameKebabCase = getClassNameAsKebabCase(clazz)

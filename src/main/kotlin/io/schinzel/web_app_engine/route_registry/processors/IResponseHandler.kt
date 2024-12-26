@@ -1,7 +1,7 @@
 package io.schinzel.web_app_engine.route_registry.processors
 
 
-interface IEndpoint {
+interface IResponseHandler {
     fun getResponse(): Any
 
     fun getReturnType(): ReturnTypeEnum

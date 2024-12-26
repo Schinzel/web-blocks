@@ -1,7 +1,7 @@
 package io.schinzel.web_app_engine.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
+import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
 import io.schinzel.web_app_engine.route_handler.log.ErrorLog
 import io.schinzel.web_app_engine.route_handler.log.ILogger
 import io.schinzel.web_app_engine.route_handler.log.Log
@@ -31,7 +31,7 @@ class RequestHandler(
                 // Check if route has arguments
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class
-                val routeClassInstance: IEndpoint = when {
+                val routeClassInstance: IResponseHandler = when {
                     hasNoArguments -> routeMapping.clazz.createInstance()
                     else -> createRequestProcessorInstance(routeMapping, ctx, log)
                 }

@@ -1,7 +1,7 @@
 package io.schinzel.web_app_engine.route_mapping
 
-import io.schinzel.web_app_engine.route_registry.RouteRegistry
-import io.schinzel.web_app_engine.route_registry.processors.IEndpoint
+import io.schinzel.web_app_engine.route_registry.ResponseHandlerDescriptorRegistry
+import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor
@@ -11,13 +11,13 @@ import kotlin.reflect.full.primaryConstructor
  */
 class RouteMapping(
     basePackage: String,
-    val clazz: KClass<out IEndpoint>,
+    val clazz: KClass<out IResponseHandler>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(clazz)
-    val path: String = RouteRegistry.getGenerator(clazz).getPath(basePackage, clazz)
-    val type: String = RouteRegistry.getGenerator(clazz).getTypeName()
+    val path: String = ResponseHandlerDescriptorRegistry.getResponseHandlerDescriptor(clazz).getPath(basePackage, clazz)
+    val type: String = ResponseHandlerDescriptorRegistry.getResponseHandlerDescriptor(clazz).getTypeName()
 
-    fun getPrimaryConstructor(): KFunction<IEndpoint> {
+    fun getPrimaryConstructor(): KFunction<IResponseHandler> {
         return clazz.primaryConstructor
             ?: throw IllegalStateException("No primary constructor found for ${clazz.simpleName}")
     }
@@ -27,7 +27,7 @@ class RouteMapping(
     }
 
     companion object {
-        private fun getConstructorParameters(clazz: KClass<out IEndpoint>): List<Parameter> {
+        private fun getConstructorParameters(clazz: KClass<out IResponseHandler>): List<Parameter> {
             // Get constructor parameters using Kotlin reflection
             val constructorParams = clazz.primaryConstructor?.parameters
             return (constructorParams

@@ -1,9 +1,9 @@
 package io.schinzel.web_app_engine.pages.landing
 
-import io.schinzel.web_app_engine.route_registry.processors.IWebPage
+import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
 
 @Suppress("unused")
-class LandingPage : IWebPage {
+class LandingPage : IPageResponseHandler {
     override fun getResponse(): String {
         return """
             <!DOCTYPE html>

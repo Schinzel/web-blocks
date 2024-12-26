@@ -1,10 +1,10 @@
 package io.schinzel.pages.basic_page
 
-import io.schinzel.web_app_engine.route_registry.processors.IWebPage
+import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
 import io.schinzel.pages.IPageElement
 import io.schinzel.pages.template_engine.TemplateRenderer
 
-class BasicWebPage : IWebPage {
+class BasicWebPage : IPageResponseHandler {
     private val pageElements = mutableListOf<IPageElement>()
     private var title = ""
 
@@ -13,7 +13,7 @@ class BasicWebPage : IWebPage {
         return this
     }
 
-    fun addPageElement(pageElement: IPageElement): IWebPage {
+    fun addPageElement(pageElement: IPageElement): IPageResponseHandler {
         pageElements.add(pageElement)
         return this
     }
