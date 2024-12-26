@@ -1,6 +1,7 @@
 
 # To do
 - subscribe
+  - Look into an event publishing system? 
 - Logging lacks:
   - Static resources
   - when a Page or Endpoint is not found
