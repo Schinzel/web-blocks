@@ -4,24 +4,25 @@ interface IPageElement {
     fun getHtml(): String
 }
 
-interface IObserver
 
-interface ISubject {
-    val observers: MutableList<IObserver>
+interface IObserverAndSubject {
+    val guid: String
+    val observers: MutableList<IObserverAndSubject>
 
-    fun addObserver(observer: IObserver): ISubject {
+    fun addObserver(observer: IObserverAndSubject): IObserverAndSubject {
         observers.add(observer)
         return this
     }
+
 }
 
-interface ObservablePageElement : IPageElement, IObserver, ISubject {
+interface ObservablePageElement : IPageElement, IObserverAndSubject {
+    override val guid: String
 
-    fun getBapp(): String {
+    fun getSubscribeHtml(): String {
         val pageElementHtml = this.getHtml()
-        val guid = "my_guid"
-        return "<div id='$guid'>$pageElementHtml</div>"
+        val observersAsString = observers.joinToString(",")
+        return "<div id='$guid' data-observer-ids='$observersAsString'>$pageElementHtml</div>"
     }
-
 }
 

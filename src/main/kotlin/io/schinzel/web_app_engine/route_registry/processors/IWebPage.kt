@@ -6,6 +6,7 @@ import kotlin.reflect.KClass
 interface IWebPage : IEndpoint {
     override fun getReturnType() = ReturnTypeEnum.HTML
     override fun getResponse(): String
+
 }
 
 class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
