@@ -1,10 +1,12 @@
 package io.schinzel.web_app_engine.route_registry.processors
 
 import io.schinzel.web_app_engine.route_registry.IRouteGenerator
-import io.schinzel.web_app_engine.route_registry.ReturnTypeEnum
 import kotlin.reflect.KClass
 
-interface IWebPage : IEndpoint
+interface IWebPage : IEndpoint {
+    override fun getReturnType() = ReturnTypeEnum.HTML
+    override fun getResponse(): String
+}
 
 class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
     override fun getPath(relativePath: String, clazz: KClass<out IWebPage>): String {
@@ -13,5 +15,4 @@ class WebPageRouteGenerator : IRouteGenerator<IWebPage> {
     }
 
     override fun getTypeName() = "WebPage"
-    override fun getReturnType() = ReturnTypeEnum.HTML
 }

@@ -2,8 +2,13 @@ package io.schinzel.web_app_engine.pages.page_with_arguments
 
 import io.schinzel.web_app_engine.route_registry.processors.IWebPage
 
-class MyPage(val myInt: Int, val myString: String, val myBoolean: Boolean) : IWebPage {
-    override fun getResponse(): Any {
+@Suppress("unused")
+class MyPage(
+    private val myInt: Int,
+    private val myString: String,
+    private val myBoolean: Boolean
+) : IWebPage {
+    override fun getResponse(): String {
         return """
             <!DOCTYPE html>
             <html lang="en">

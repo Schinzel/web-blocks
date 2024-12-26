@@ -18,10 +18,7 @@ interface IRouteGenerator<T : IEndpoint> {
 
     fun getTypeName(): String
 
-    fun getReturnType(): ReturnTypeEnum
 }
-
-enum class ReturnTypeEnum { HTML, JSON }
 
 /**
  * The purpose of this class is to store route generators.
