@@ -4,9 +4,7 @@ interface IPageElement {
     fun getHtml(): String
 }
 
-interface IObserver {
-    fun update()
-}
+interface IObserver
 
 interface ISubject {
     val observers: MutableList<IObserver>
@@ -15,8 +13,6 @@ interface ISubject {
         observers.add(observer)
         return this
     }
-
-    fun notifyObservers() {
-        observers.forEach { it.update() }
-    }
 }
+
+interface ObservablePageElement : IPageElement, IObserver, ISubject
