@@ -17,6 +17,7 @@ class RouteMapping(
     val path: String = ResponseHandlerDescriptorRegistry
         .getResponseHandlerDescriptor(clazz)
         .getPath(basePackage, clazz)
+    // WebPage, API and so on
     val type: String = ResponseHandlerDescriptorRegistry
         .getResponseHandlerDescriptor(clazz)
         .getTypeName()
