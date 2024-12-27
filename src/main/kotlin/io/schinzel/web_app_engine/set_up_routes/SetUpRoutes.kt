@@ -28,14 +28,14 @@ fun setUpRoutes(
     // Find all routes and add them Javalin
     findRoutes(endpointPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
         responseHandlerMapping.println()
-        // Create handler
-        val handler = RequestHandler(
+        // Create request handler
+        val requestHandler = RequestHandler(
             responseHandlerMapping = responseHandlerMapping,
             localTimezone = localTimezone,
             logger = logger
-        ).handle()
+        ).getHandler()
         // Register both GET and POST handlers for the same path
-        javalin.getAndPost(responseHandlerMapping.path, handler)
+        javalin.getAndPost(responseHandlerMapping.path, requestHandler)
     }
     javalin.get("ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())

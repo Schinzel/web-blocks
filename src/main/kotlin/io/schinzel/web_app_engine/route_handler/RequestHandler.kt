@@ -15,7 +15,7 @@ class RequestHandler(
     private val logger: ILogger = PrettyConsoleLogger(),
 ) {
 
-    fun handle(): (Context) -> Unit {
+    fun getHandler(): (Context) -> Unit {
         return { ctx: Context ->
             // Create log
             val log = Log(
