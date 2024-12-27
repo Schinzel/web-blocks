@@ -16,7 +16,7 @@ fun createResponseHandler(
     log.requestLog.arguments = arguments
     val constructor = routeMapping.getPrimaryConstructor()
     // Create instance of route class with arguments
-    return routeMapping.getPrimaryConstructor().callBy(
+    return constructor.callBy(
         constructor.parameters.associateWith { param ->
             arguments[param.name]
         }
