@@ -7,14 +7,14 @@ import io.schinzel.web_app_engine.route_registry.initializeResponseHandlerDescri
 import io.schinzel.web_app_engine.set_up_routes.setUpRoutes
 
 class InitWebApp(
-    webPackage: String,
+    endpointPackage: String,
     localTimezone: String = "Europe/Stockholm",
     logger: ILogger = PrettyConsoleLogger(),
 ) {
 
     init {
         initializeResponseHandlerDescriptorRegistry()
-        setUpRoutes(webPackage, localTimezone, logger)
+        setUpRoutes(endpointPackage, localTimezone, logger)
 
         "*".repeat(30).println()
         "Project started".println()

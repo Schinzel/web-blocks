@@ -13,7 +13,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 fun setUpRoutes(
-    webPackage: String,
+    endpointPackage: String,
     localTimezone: String = "Europe/Stockholm",
     logger: ILogger = PrettyConsoleLogger(),
 ): Javalin? {
@@ -26,7 +26,7 @@ fun setUpRoutes(
         }
     }
     // Find all routes and add them Javalin
-    findRoutes(webPackage).forEach { routeMapping: RouteMapping ->
+    findRoutes(endpointPackage).forEach { routeMapping: RouteMapping ->
         routeMapping.println()
         // Create handler
         val handler = RequestHandler(

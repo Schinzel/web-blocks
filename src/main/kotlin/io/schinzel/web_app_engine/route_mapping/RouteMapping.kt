@@ -10,13 +10,13 @@ import kotlin.reflect.full.primaryConstructor
  * The purpose of this class is to map a route to a class.
  */
 class RouteMapping(
-    basePackage: String,
+    endpointPackage: String,
     val clazz: KClass<out IResponseHandler>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(clazz)
     val path: String = ResponseHandlerDescriptorRegistry
         .getResponseHandlerDescriptor(clazz)
-        .getPath(basePackage, clazz)
+        .getPath(endpointPackage, clazz)
     // WebPage, API and so on
     val type: String = ResponseHandlerDescriptorRegistry
         .getResponseHandlerDescriptor(clazz)
