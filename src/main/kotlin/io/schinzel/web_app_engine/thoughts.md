@@ -13,6 +13,7 @@
   - have an api with path "page"
   - cannot have a page nor an api with path "static"
 - Tester & doc
+- Create an html page that returns all the endpoints
 
 
 # How to build and run a JAR
