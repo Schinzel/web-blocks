@@ -3,6 +3,9 @@ package io.schinzel.web_app_engine.route_registry.response_handlers
 import kotlin.reflect.KClass
 
 
+/**
+ * The purpose of this interface is to handle the response of a request
+ */
 interface IResponseHandler {
     fun getResponse(): Any
 
@@ -13,9 +16,9 @@ enum class ReturnTypeEnum { HTML, JSON }
 
 
 /**
- * This is needed as some properties we need to derive using the
- * class, as we do not have an instance of the endpoint when setting
- * up the routes.
+ * The purpose of this interface it to provide information on a response handler
+ * when we do not have an instance. For example when setting up the routes
+ * we do not have instances, just classes.
  */
 interface IResponseHandlerDescriptor<T : IResponseHandler> {
     fun getPath(endpointPackage: String, clazz: KClass<out T>): String

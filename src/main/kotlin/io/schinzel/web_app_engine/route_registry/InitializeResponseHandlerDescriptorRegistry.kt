@@ -11,5 +11,5 @@ fun initializeResponseHandlerDescriptorRegistry() {
     ResponseHandlerDescriptorRegistry
         .register(IPageEndpointResponseHandler::class, PageEndpointResponseHandlerDescriptor())
     ResponseHandlerDescriptorRegistry
-        .register(IEndpointResponseHandler::class, EndpointResponseHandlerDescriptor())
+        .register(IApiEndpointResponseHandler::class, ApiEndpointResponseHandlerDescriptor())
 }
