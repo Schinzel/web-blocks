@@ -7,9 +7,10 @@ import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor
 
 /**
- * The purpose of this class is to map a route to a class.
+ * The purpose of this class to provide a mapping between
+ * a response handler class and its path
  */
-class RouteMapping(
+class ResponseHandlerMapping(
     endpointPackage: String,
     val responseHandlerClass: KClass<out IResponseHandler>,
 ) {

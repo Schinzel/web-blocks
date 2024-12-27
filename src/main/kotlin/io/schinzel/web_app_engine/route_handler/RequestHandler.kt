@@ -6,11 +6,11 @@ import io.schinzel.web_app_engine.route_handler.log.ErrorLog
 import io.schinzel.web_app_engine.route_handler.log.ILogger
 import io.schinzel.web_app_engine.route_handler.log.Log
 import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
-import io.schinzel.web_app_engine.route_mapping.RouteMapping
+import io.schinzel.web_app_engine.route_mapping.ResponseHandlerMapping
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(
-    private val routeMapping: RouteMapping,
+    private val responseHandlerMapping: ResponseHandlerMapping,
     private val localTimezone: String = "Europe/Stockholm",
     private val logger: ILogger = PrettyConsoleLogger(),
 ) {
@@ -20,20 +20,20 @@ class RequestHandler(
             // Create log
             val log = Log(
                 localTimeZone = localTimezone,
-                routeType = routeMapping.type,
+                routeType = responseHandlerMapping.type,
                 httpMethod = ctx.method().toString()
             )
             // Set the start time
             val startTime = System.currentTimeMillis()
             try {
                 // Log the request path
-                log.requestLog.path = routeMapping.path
+                log.requestLog.path = responseHandlerMapping.path
                 // Check if route has arguments
-                val hasNoArguments = routeMapping.parameters.isEmpty()
+                val hasNoArguments = responseHandlerMapping.parameters.isEmpty()
                 // Create instance of route class
                 val responseHandler: IResponseHandler = when {
-                    hasNoArguments -> routeMapping.responseHandlerClass.createInstance()
-                    else -> createResponseHandler(routeMapping, ctx, log)
+                    hasNoArguments -> responseHandlerMapping.responseHandlerClass.createInstance()
+                    else -> createResponseHandler(responseHandlerMapping, ctx, log)
                 }
                 // Send response
                 sendResponse(ctx, responseHandler, log)
