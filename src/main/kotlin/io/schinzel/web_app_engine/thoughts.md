@@ -2,9 +2,9 @@
 # To do
 - subscribe
   - The next piece of the puzzle is to find path
-    - Can IResponseHandle return path with the help of  IResponseHandlerDescriptor
+    - Can IResponseHandle return path with the help of IResponseHandlerDescriptor
       - I think so if we have access to endpointPackage
-        - Make endpointPackage into to a public property 
+        - Make endpointPackage into to a public property
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
   - One class the handles requests and responses (if any)
