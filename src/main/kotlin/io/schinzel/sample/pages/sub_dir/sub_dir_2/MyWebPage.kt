@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.sub_dir.sub_dir_2
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.IPageResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class MyWebPage: IPageResponseHandler {

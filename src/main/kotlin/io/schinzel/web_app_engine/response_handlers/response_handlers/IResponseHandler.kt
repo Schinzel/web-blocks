@@ -1,4 +1,4 @@
-package io.schinzel.web_app_engine.route_registry.response_handlers
+package io.schinzel.web_app_engine.response_handlers.response_handlers
 
 import kotlin.reflect.KClass
 

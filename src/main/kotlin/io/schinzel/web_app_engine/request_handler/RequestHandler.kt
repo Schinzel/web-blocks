@@ -1,12 +1,12 @@
-package io.schinzel.web_app_engine.route_handler
+package io.schinzel.web_app_engine.request_handler
 
 import io.javalin.http.Context
-import io.schinzel.web_app_engine.route_registry.response_handlers.IResponseHandler
-import io.schinzel.web_app_engine.route_handler.log.ErrorLog
-import io.schinzel.web_app_engine.route_handler.log.ILogger
-import io.schinzel.web_app_engine.route_handler.log.Log
-import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
-import io.schinzel.web_app_engine.route_mapping.ResponseHandlerMapping
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
+import io.schinzel.web_app_engine.request_handler.log.ErrorLog
+import io.schinzel.web_app_engine.request_handler.log.ILogger
+import io.schinzel.web_app_engine.request_handler.log.Log
+import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
+import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(

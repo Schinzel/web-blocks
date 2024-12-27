@@ -1,4 +1,4 @@
-package io.schinzel.web_app_engine.route_handler.log
+package io.schinzel.web_app_engine.request_handler.log
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime

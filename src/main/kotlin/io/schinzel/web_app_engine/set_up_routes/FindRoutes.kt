@@ -1,7 +1,7 @@
 package io.schinzel.web_app_engine.set_up_routes
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.IResponseHandler
-import io.schinzel.web_app_engine.route_mapping.ResponseHandlerMapping
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
+import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder

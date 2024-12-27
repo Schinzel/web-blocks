@@ -1,4 +1,4 @@
-package io.schinzel.web_app_engine.route_registry
+package io.schinzel.web_app_engine.response_handlers
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import kotlin.reflect.KClass

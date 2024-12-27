@@ -1,6 +1,6 @@
 package io.schinzel.sample.api.v1
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.IApiEndpointResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IApiEndpointResponseHandler
 
 @Suppress("unused")
 class ErrorEndpoint: IApiEndpointResponseHandler {

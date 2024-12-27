@@ -1,7 +1,7 @@
-package io.schinzel.web_app_engine.route_handler
+package io.schinzel.web_app_engine.request_handler
 
 import io.javalin.http.Context
-import io.schinzel.web_app_engine.route_mapping.Parameter
+import io.schinzel.web_app_engine.response_handler_mapping.Parameter
 
 fun getArguments(parameters: List<Parameter>, ctx: Context): Map<String, Any?> {
     return parameters.associate { parameter ->

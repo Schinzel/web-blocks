@@ -1,6 +1,6 @@
-package io.schinzel.web_app_engine.route_mapping
+package io.schinzel.web_app_engine.response_handler_mapping
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.IResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 

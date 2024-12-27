@@ -1,4 +1,4 @@
-package io.schinzel.web_app_engine.route_mapping
+package io.schinzel.web_app_engine.response_handler_mapping
 
 import kotlin.reflect.KType
 import kotlin.reflect.full.starProjectedType

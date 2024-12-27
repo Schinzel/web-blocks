@@ -1,6 +1,6 @@
-package io.schinzel.web_app_engine.route_registry
+package io.schinzel.web_app_engine.response_handlers
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.*
+import io.schinzel.web_app_engine.response_handlers.response_handlers.*
 
 /**
  * Register the default descriptors

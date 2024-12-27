@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.user_account.name_pe
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.IPageEndpointResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageEndpointResponseHandler
 
 @Suppress("unused")
 class NameUpdateDao(

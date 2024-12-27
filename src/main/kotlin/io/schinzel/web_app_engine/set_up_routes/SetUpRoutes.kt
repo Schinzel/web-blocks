@@ -3,10 +3,10 @@ package io.schinzel.web_app_engine.set_up_routes
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
-import io.schinzel.web_app_engine.route_handler.RequestHandler
-import io.schinzel.web_app_engine.route_handler.log.ILogger
-import io.schinzel.web_app_engine.route_handler.log.PrettyConsoleLogger
-import io.schinzel.web_app_engine.route_mapping.ResponseHandlerMapping
+import io.schinzel.web_app_engine.request_handler.RequestHandler
+import io.schinzel.web_app_engine.request_handler.log.ILogger
+import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
+import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime

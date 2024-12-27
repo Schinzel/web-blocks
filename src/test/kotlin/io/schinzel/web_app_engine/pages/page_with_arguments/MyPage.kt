@@ -1,6 +1,6 @@
 package io.schinzel.web_app_engine.pages.page_with_arguments
 
-import io.schinzel.web_app_engine.route_registry.response_handlers.IPageResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class MyPage(
