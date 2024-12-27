@@ -14,13 +14,17 @@ class RouteMapping(
     val clazz: KClass<out IResponseHandler>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(clazz)
-    val path: String = ResponseHandlerDescriptorRegistry
-        .getResponseHandlerDescriptor(clazz)
-        .getPath(endpointPackage, clazz)
+    val path: String
+
     // WebPage, API and so on
-    val type: String = ResponseHandlerDescriptorRegistry
-        .getResponseHandlerDescriptor(clazz)
-        .getTypeName()
+    val type: String
+
+    init {
+        val responseHandlerDescriptor = ResponseHandlerDescriptorRegistry
+            .getResponseHandlerDescriptor(clazz)
+        path = responseHandlerDescriptor.getPath(endpointPackage, clazz)
+        type = responseHandlerDescriptor.getTypeName()
+    }
 
     fun getPrimaryConstructor(): KFunction<IResponseHandler> {
         return clazz.primaryConstructor
@@ -29,20 +33,5 @@ class RouteMapping(
 
     override fun toString(): String {
         return "RouteMapping(type='$type', path='$path', parameters=$parameters)"
-    }
-
-    companion object {
-        private fun getConstructorParameters(clazz: KClass<out IResponseHandler>): List<Parameter> {
-            // Get constructor parameters using Kotlin reflection
-            val constructorParams = clazz.primaryConstructor?.parameters
-            return (constructorParams
-                ?.map { param ->
-                    Parameter(
-                        name = param.name ?: "",
-                        type = param.type
-                    )
-                }
-                ?: emptyList())
-        }
     }
 }
