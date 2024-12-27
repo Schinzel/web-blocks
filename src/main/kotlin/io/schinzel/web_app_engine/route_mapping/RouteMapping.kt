@@ -11,9 +11,9 @@ import kotlin.reflect.full.primaryConstructor
  */
 class RouteMapping(
     endpointPackage: String,
-    val clazz: KClass<out IResponseHandler>,
+    val responseHandlerClass: KClass<out IResponseHandler>,
 ) {
-    val parameters: List<Parameter> = getConstructorParameters(clazz)
+    val parameters: List<Parameter> = getConstructorParameters(responseHandlerClass)
     val path: String
 
     // WebPage, API and so on
@@ -21,14 +21,14 @@ class RouteMapping(
 
     init {
         val responseHandlerDescriptor = ResponseHandlerDescriptorRegistry
-            .getResponseHandlerDescriptor(clazz)
-        path = responseHandlerDescriptor.getPath(endpointPackage, clazz)
+            .getResponseHandlerDescriptor(responseHandlerClass)
+        path = responseHandlerDescriptor.getPath(endpointPackage, responseHandlerClass)
         type = responseHandlerDescriptor.getTypeName()
     }
 
     fun getPrimaryConstructor(): KFunction<IResponseHandler> {
-        return clazz.primaryConstructor
-            ?: throw IllegalStateException("No primary constructor found for ${clazz.simpleName}")
+        return responseHandlerClass.primaryConstructor
+            ?: throw IllegalStateException("No primary constructor found for ${responseHandlerClass.simpleName}")
     }
 
     override fun toString(): String {

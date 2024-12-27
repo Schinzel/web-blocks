@@ -32,7 +32,7 @@ class RequestHandler(
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class
                 val responseHandler: IResponseHandler = when {
-                    hasNoArguments -> routeMapping.clazz.createInstance()
+                    hasNoArguments -> routeMapping.responseHandlerClass.createInstance()
                     else -> createResponseHandler(routeMapping, ctx, log)
                 }
                 // Send response
