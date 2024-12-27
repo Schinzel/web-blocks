@@ -1,5 +1,7 @@
 package io.schinzel.pages
 
+import io.schinzel.basic_utils_kotlin.printlnWithPrefix
+import io.schinzel.basicutils.RandomUtil
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
@@ -62,7 +64,23 @@ interface ObservablePageElement : IPageElement, IObserverAndSubject {
     fun getSubscribeHtml(): String {
         val pageElementHtml = this.getHtml()
         val observersAsString: String = observers.joinToString(",") { it.guid }
-        return "<div id='$guid' data-observer-ids='$observersAsString'>$pageElementHtml</div>"
+        return "<div id='$guid' " +
+                "data-observer-ids='$observersAsString'" +
+                ">$pageElementHtml</div>"
     }
+}
+
+class MyClass(val userId: String, val petId: String): ObservablePageElement{
+    override val guid: String = RandomUtil.getRandomString(10)
+    override val observers: MutableList<IObserverAndSubject> = mutableListOf()
+    private val petName: String = "Fluffy"
+
+    override fun getHtml(): String {
+        TODO("Not yet implemented")
+    }
+}
+
+fun main() {
+    MyClass("123", "456").getConstructorArguments().printlnWithPrefix("Arguments")
 }
 
