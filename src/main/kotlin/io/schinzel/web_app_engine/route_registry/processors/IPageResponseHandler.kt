@@ -8,6 +8,7 @@ interface IPageResponseHandler : IResponseHandler {
     override fun getReturnType() = ReturnTypeEnum.HTML
     override fun getResponse(): String
 
+
 }
 
 class PageResponseHandlerDescriptor : IResponseHandlerDescriptor<IPageResponseHandler> {

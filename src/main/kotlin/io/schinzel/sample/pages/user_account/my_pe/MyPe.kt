@@ -8,13 +8,3 @@ class MyPe(private val text: String) : IPageElement {
         return "<div>$text</div>"
     }
 }
-
-class MyClass(private val text1: String, private val text2: String) : IPageElement {
-    private val textA = ""
-
-    private val textB = ""
-
-    override fun getHtml(): String {
-        return "<div>text</div>"
-    }
-}

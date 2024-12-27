@@ -1,33 +1,8 @@
 package io.schinzel.web_app_engine.route_registry
 
-import io.schinzel.web_app_engine.route_registry.processors.*
+import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
 import kotlin.reflect.KClass
 
-
-/**
- * Register the default descriptors
- */
-fun initializeResponseHandlerDescriptorRegistry() {
-    ResponseHandlerDescriptorRegistry
-        .register(IPageResponseHandler::class, PageResponseHandlerDescriptor())
-    ResponseHandlerDescriptorRegistry
-        .register(IPageEndpointResponseHandler::class, PageEndpointResponseHandlerDescriptor())
-    ResponseHandlerDescriptorRegistry
-        .register(IEndpointResponseHandler::class, EndpointResponseHandlerDescriptor())
-}
-
-
-/**
- * This is needed as some properties we need to derive using the
- * class, as we do not have an instance of the endpoint when setting
- * up the routes.
- */
-interface IResponseHandlerDescriptor<T : IResponseHandler> {
-    fun getPath(endpointPackage: String, clazz: KClass<out T>): String
-
-    fun getTypeName(): String
-
-}
 
 /**
  * The purpose of this class is to store route generators.
@@ -35,7 +10,9 @@ interface IResponseHandlerDescriptor<T : IResponseHandler> {
  * That is a class that can generate a route for a given class.
  */
 object ResponseHandlerDescriptorRegistry {
-    private val generators = mutableMapOf<KClass<out IResponseHandler>, IResponseHandlerDescriptor<out IResponseHandler>>()
+    private val generators =
+        mutableMapOf<KClass<out IResponseHandler>, IResponseHandlerDescriptor<out IResponseHandler>>()
+
     fun <T : IResponseHandler> register(
         processorType: KClass<T>,
         generator: IResponseHandlerDescriptor<T>

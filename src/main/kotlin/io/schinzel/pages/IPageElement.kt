@@ -46,7 +46,7 @@ interface IObserverAndSubject {
         return clazz.memberProperties
             .filter { it.name in constructorParamNames }
             .associate { prop ->
-                val property = prop as KProperty1<IPageElement2, *>
+                val property = prop as KProperty1<IObserverAndSubject, *>
                 prop.name to (property.get(this) ?: throw IllegalStateException("Property ${prop.name} is null"))
             }
     }
