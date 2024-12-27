@@ -1,7 +1,7 @@
 package io.schinzel.web_app_engine.route_handler
 
 import io.javalin.http.Context
-import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IResponseHandler
 import io.schinzel.web_app_engine.route_handler.log.Log
 import io.schinzel.web_app_engine.route_mapping.RouteMapping
 

@@ -1,6 +1,7 @@
 package io.schinzel.web_app_engine.route_registry
 
-import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IResponseHandlerDescriptor
 import kotlin.reflect.KClass
 
 

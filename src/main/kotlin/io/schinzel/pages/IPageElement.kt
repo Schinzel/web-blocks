@@ -1,6 +1,5 @@
 package io.schinzel.pages
 
-import io.schinzel.web_app_engine.route_registry.processors.IPageEndpointResponseHandler
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor

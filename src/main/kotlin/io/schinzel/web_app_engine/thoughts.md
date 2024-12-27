@@ -1,8 +1,8 @@
 
 # To do
 - subscribe
-  - Page element must let their constructor arguments be val
-    - Then I can take these and construct the URL 
+  - The next piece of the puzzle is to find path
+  - Can IResponseHandle return path with the help of  IResponseHandlerDescriptor
 - Logging lacks:
   - Static resources
   - when a Page or Endpoint is not found

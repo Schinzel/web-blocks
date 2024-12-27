@@ -1,6 +1,6 @@
 package io.schinzel.web_app_engine.pages.simple_page
 
-import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class MySimplePage : IPageResponseHandler {

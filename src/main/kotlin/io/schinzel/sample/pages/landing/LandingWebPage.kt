@@ -2,7 +2,7 @@ package io.schinzel.sample.pages.landing
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.pages.bootstrap_page.BootstrapPage
-import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IPageResponseHandler
 import io.schinzel.sample.pages.landing.greeting_pe.GreetingPe
 
 @Suppress("unused")

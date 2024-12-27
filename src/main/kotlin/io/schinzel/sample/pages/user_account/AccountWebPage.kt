@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.user_account
 
-import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IPageResponseHandler
 import io.schinzel.pages.bootstrap_page.BootstrapPage
 import io.schinzel.sample.pages.user_account.my_pe.MyPe
 import io.schinzel.sample.pages.user_account.name_pe.NamePe

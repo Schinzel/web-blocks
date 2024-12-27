@@ -1,6 +1,6 @@
 package io.schinzel.web_app_engine.api
 
-import io.schinzel.web_app_engine.route_registry.processors.IEndpointResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IEndpointResponseHandler
 
 @Suppress("unused")
 class GetPetsEndpoint : IEndpointResponseHandler {

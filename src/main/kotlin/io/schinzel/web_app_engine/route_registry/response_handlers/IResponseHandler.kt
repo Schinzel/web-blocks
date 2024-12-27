@@ -1,7 +1,16 @@
-package io.schinzel.web_app_engine.route_registry
+package io.schinzel.web_app_engine.route_registry.response_handlers
 
-import io.schinzel.web_app_engine.route_registry.processors.IResponseHandler
 import kotlin.reflect.KClass
+
+
+interface IResponseHandler {
+    fun getResponse(): Any
+
+    fun getReturnType(): ReturnTypeEnum
+}
+
+enum class ReturnTypeEnum { HTML, JSON }
+
 
 /**
  * This is needed as some properties we need to derive using the
@@ -14,3 +23,4 @@ interface IResponseHandlerDescriptor<T : IResponseHandler> {
     fun getTypeName(): String
 
 }
+

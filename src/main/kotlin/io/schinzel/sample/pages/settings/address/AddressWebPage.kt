@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.settings.address
 
-import io.schinzel.web_app_engine.route_registry.processors.IPageResponseHandler
+import io.schinzel.web_app_engine.route_registry.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class AddressWebPage: IPageResponseHandler {
