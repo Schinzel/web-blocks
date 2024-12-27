@@ -31,12 +31,12 @@ class RequestHandler(
                 // Check if route has arguments
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 // Create instance of route class
-                val routeClassInstance: IResponseHandler = when {
+                val responseHandler: IResponseHandler = when {
                     hasNoArguments -> routeMapping.clazz.createInstance()
                     else -> createResponseHandler(routeMapping, ctx, log)
                 }
                 // Send response
-                sendResponse(ctx, routeClassInstance, log)
+                sendResponse(ctx, responseHandler, log)
                 // Log the response status code
                 log.responseLog.statusCode = ctx.statusCode()
             } catch (e: Exception) {
