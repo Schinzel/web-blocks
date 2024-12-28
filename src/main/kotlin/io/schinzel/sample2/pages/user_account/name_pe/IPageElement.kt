@@ -15,19 +15,7 @@ interface IPageElement {
 }
 
 interface IPageElement2 {
-    @Suppress("UNCHECKED_CAST")
-    fun getConstructorArguments(): Map<String, Any> {
-        val clazz = this::class
-        val constructorParams = clazz.primaryConstructor?.parameters ?: emptyList()
-        val constructorParamNames = constructorParams.map { it.name }.toSet()
 
-        return clazz.memberProperties
-            .filter { it.name in constructorParamNames }
-            .associate { prop ->
-                val property = prop as KProperty1<IPageElement2, *>
-                prop.name to (property.get(this) ?: throw IllegalStateException("Property ${prop.name} is null"))
-            }
-    }
 }
 
 
@@ -46,10 +34,6 @@ interface IObserverAndSubject {
 
 interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubject {
     override val guid: String
-
-    fun bapp() {
-        this::class.primaryConstructor
-    }
 
     fun getSubscribeHtml(): String {
         val pageElementHtml = this.getResponse()
@@ -98,6 +82,5 @@ fun main() {
     val myClass = MyClass("123", "456")
     myClass.getConstructorArguments().printlnWithPrefix("Arguments")
     myClass.getPath().printlnWithPrefix("Path")
-    myClass.getPageElementPath().printlnWithPrefix("getPageElementPath")
 }
 

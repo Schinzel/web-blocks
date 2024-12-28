@@ -1,10 +1,10 @@
 
 # To do
 - subscribe
-  - The next piece of the puzzle is to find path
-    - Can IResponseHandle return path with the help of IResponseHandlerDescriptor
-      - I think so if we have access to endpointPackage
-        - Make endpointPackage into to a public property
+  - Next step create a path with two elements. 
+    - One that says "Hi [name]!"
+    - One that has a text field with the name that can be changed
+    - The first element should subscribe to the second element
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
   - One class the handles requests and responses (if any)
