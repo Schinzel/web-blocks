@@ -5,7 +5,7 @@ import io.schinzel.web_app_engine.set_up_routes.setUpRoutes
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
@@ -15,8 +15,9 @@ class InitWebAppTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
-            initializeResponseHandlerDescriptorRegistry()
-            setUpRoutes("io.schinzel.web_app_engine")
+            val endpointPackage = "io.schinzel.web_app_engine"
+            initializeResponseHandlerDescriptorRegistry(endpointPackage)
+            setUpRoutes(endpointPackage)
         }
     }
 

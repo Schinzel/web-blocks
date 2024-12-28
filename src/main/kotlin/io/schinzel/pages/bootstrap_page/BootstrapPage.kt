@@ -1,6 +1,6 @@
 package io.schinzel.pages.bootstrap_page
 
-import io.schinzel.pages.IPageElement
+import io.schinzel.sample2.pages.user_account.name_pe.IPageElement
 import io.schinzel.pages.template_engine.TemplateRenderer
 
 class BootstrapPage {

@@ -9,8 +9,11 @@ interface IPageEndpointResponseHandler : IResponseHandler {
 }
 
 
-class PageEndpointResponseHandlerDescriptor : IResponseHandlerDescriptor<IPageEndpointResponseHandler> {
-    override fun getPath(endpointPackage: String, clazz: KClass<out IPageEndpointResponseHandler>): String {
+class PageEndpointResponseHandlerDescriptor(
+    private val endpointPackage: String
+) : IResponseHandlerDescriptor<IPageEndpointResponseHandler> {
+
+    override fun getPath(clazz: KClass<out IPageEndpointResponseHandler>): String {
         val relativePath = getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         val classNameKebabCase = getClassNameAsKebabCase(clazz)

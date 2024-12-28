@@ -13,7 +13,7 @@ class InitWebApp(
 ) {
 
     init {
-        initializeResponseHandlerDescriptorRegistry()
+        initializeResponseHandlerDescriptorRegistry(endpointPackage)
         setUpRoutes(endpointPackage, localTimezone, logger)
 
         "*".repeat(30).println()

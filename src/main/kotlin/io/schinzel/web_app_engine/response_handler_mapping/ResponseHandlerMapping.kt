@@ -11,7 +11,6 @@ import kotlin.reflect.full.primaryConstructor
  * a response handler class and its path
  */
 class ResponseHandlerMapping(
-    endpointPackage: String,
     val responseHandlerClass: KClass<out IResponseHandler>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(responseHandlerClass)
@@ -23,7 +22,7 @@ class ResponseHandlerMapping(
     init {
         val responseHandlerDescriptor = ResponseHandlerDescriptorRegistry
             .getResponseHandlerDescriptor(responseHandlerClass)
-        path = responseHandlerDescriptor.getPath(endpointPackage, responseHandlerClass)
+        path = responseHandlerDescriptor.getPath(responseHandlerClass)
         type = responseHandlerDescriptor.getTypeName()
     }
 

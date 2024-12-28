@@ -22,7 +22,7 @@ fun findRoutes(endpointPackage: String): List<ResponseHandlerMapping> {
             clazz.packageName.startsWith(endpointPackage) && !clazz.isInterface
         }
         .map {
-            ResponseHandlerMapping(endpointPackage, it.kotlin)
+            ResponseHandlerMapping(it.kotlin)
         }
         .toList()
 }

@@ -9,8 +9,10 @@ interface IApiEndpointResponseHandler : IResponseHandler {
     override fun getReturnType() = ReturnTypeEnum.JSON
 }
 
-class ApiEndpointResponseHandlerDescriptor : IResponseHandlerDescriptor<IApiEndpointResponseHandler> {
-    override fun getPath(endpointPackage: String, clazz: KClass<out IApiEndpointResponseHandler>): String {
+class ApiEndpointResponseHandlerDescriptor(
+    private val endpointPackage: String
+) : IResponseHandlerDescriptor<IApiEndpointResponseHandler> {
+    override fun getPath(clazz: KClass<out IApiEndpointResponseHandler>): String {
         val relativePath = getRelativePath(endpointPackage, clazz)
         val classNameKebabCase = getClassNameAsKebabCase(clazz)
         return "$relativePath/$classNameKebabCase"
