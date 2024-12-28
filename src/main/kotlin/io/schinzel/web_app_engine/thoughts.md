@@ -5,6 +5,7 @@
     - One that says "Hi [name]!"
     - One that has a text field with the name that can be changed
     - The first element should subscribe to the second element
+- Error handling with html
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
   - One class the handles requests and responses (if any)

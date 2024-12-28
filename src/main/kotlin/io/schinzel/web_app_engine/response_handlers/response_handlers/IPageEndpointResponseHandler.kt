@@ -4,9 +4,7 @@ import io.schinzel.web_app_engine.response_handlers.getClassNameAsKebabCase
 import io.schinzel.web_app_engine.response_handlers.getRelativePath
 import kotlin.reflect.KClass
 
-interface IPageEndpointResponseHandler : IResponseHandler {
-    override fun getReturnType() = ReturnTypeEnum.JSON
-}
+interface IPageEndpointResponseHandler : IResponseHandler
 
 
 class PageEndpointResponseHandlerDescriptor(
@@ -21,4 +19,5 @@ class PageEndpointResponseHandlerDescriptor(
     }
 
     override fun getTypeName() = "WebPageEndpoint"
+    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.JSON
 }

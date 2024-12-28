@@ -9,13 +9,17 @@ data class Parameter(
 ) {
     fun convertValue(value: String): Any? {
         if (value.isEmpty()) return null
-        return when (type) {
-            Int::class.starProjectedType -> value.toInt()
-            Long::class.starProjectedType -> value.toLong()
-            Double::class.starProjectedType -> value.toDouble()
-            Float::class.starProjectedType -> value.toFloat()
-            Boolean::class.starProjectedType -> value.toBoolean()
-            else -> value // Default to string
+        return try {
+            when (type) {
+                Int::class.starProjectedType -> value.toInt()
+                Long::class.starProjectedType -> value.toLong()
+                Double::class.starProjectedType -> value.toDouble()
+                Float::class.starProjectedType -> value.toFloat()
+                Boolean::class.starProjectedType -> value.toBoolean()
+                else -> value
+            }
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Could not convert value '$value' to type $type")
         }
     }
 }

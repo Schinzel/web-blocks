@@ -2,6 +2,7 @@ package io.schinzel.web_app_engine.response_handler_mapping
 
 import io.schinzel.web_app_engine.response_handlers.ResponseHandlerDescriptorRegistry
 import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.ReturnTypeEnum
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor
@@ -18,12 +19,14 @@ class ResponseHandlerMapping(
 
     // WebPage, API and so on
     val type: String
+    val returnType: ReturnTypeEnum
 
     init {
         val responseHandlerDescriptor = ResponseHandlerDescriptorRegistry
             .getResponseHandlerDescriptor(responseHandlerClass)
         path = responseHandlerDescriptor.getPath(responseHandlerClass)
         type = responseHandlerDescriptor.getTypeName()
+        returnType = responseHandlerDescriptor.getReturnType()
     }
 
     fun getPrimaryConstructor(): KFunction<IResponseHandler> {

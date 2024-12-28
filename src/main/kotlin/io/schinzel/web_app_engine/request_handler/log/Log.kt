@@ -1,12 +1,15 @@
 package io.schinzel.web_app_engine.request_handler.log
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import io.schinzel.basicutils.RandomUtil
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Log(
+    // A unique id for this error
+    val errorId: String = RandomUtil.getRandomString(12),
     var routeType: String = "",
     var httpMethod: String = "",
     var requestTimeUtc: String = TimeProvider.nowUtc(),

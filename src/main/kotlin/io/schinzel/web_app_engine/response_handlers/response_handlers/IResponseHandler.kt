@@ -10,8 +10,6 @@ import kotlin.reflect.KClass
 interface IResponseHandler {
     fun getResponse(): Any
 
-    fun getReturnType(): ReturnTypeEnum
-
     fun getPath(): String {
         return ResponseHandlerDescriptorRegistry
             .getResponseHandlerDescriptor(this::class)
@@ -31,7 +29,9 @@ enum class ReturnTypeEnum { HTML, JSON }
 interface IResponseHandlerDescriptor<T : IResponseHandler> {
     fun getPath(clazz: KClass<out T>): String
 
+    // WebPage, API and so on. For user notification and logging purposes
     fun getTypeName(): String
 
+    fun getReturnType(): ReturnTypeEnum
 }
 

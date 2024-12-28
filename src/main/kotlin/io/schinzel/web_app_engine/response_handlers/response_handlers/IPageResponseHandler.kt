@@ -5,7 +5,6 @@ import io.schinzel.web_app_engine.response_handlers.getRelativePath
 import kotlin.reflect.KClass
 
 interface IPageResponseHandler : IResponseHandler {
-    override fun getReturnType() = ReturnTypeEnum.HTML
     override fun getResponse(): String
 }
 
@@ -21,4 +20,5 @@ class PageResponseHandlerDescriptor(
     }
 
     override fun getTypeName() = "WebPage"
+    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.HTML
 }

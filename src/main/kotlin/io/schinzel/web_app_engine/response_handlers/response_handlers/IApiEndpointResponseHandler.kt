@@ -5,9 +5,7 @@ import io.schinzel.web_app_engine.response_handlers.getRelativePath
 import kotlin.reflect.KClass
 
 
-interface IApiEndpointResponseHandler : IResponseHandler {
-    override fun getReturnType() = ReturnTypeEnum.JSON
-}
+interface IApiEndpointResponseHandler : IResponseHandler
 
 class ApiEndpointResponseHandlerDescriptor(
     private val endpointPackage: String
@@ -19,4 +17,5 @@ class ApiEndpointResponseHandlerDescriptor(
     }
 
     override fun getTypeName() = "ApiEndpoint"
+    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.JSON
 }

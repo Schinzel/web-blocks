@@ -1,12 +1,13 @@
 package io.schinzel.web_app_engine.request_handler
 
 import io.javalin.http.Context
-import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
 import io.schinzel.web_app_engine.request_handler.log.ErrorLog
 import io.schinzel.web_app_engine.request_handler.log.ILogger
 import io.schinzel.web_app_engine.request_handler.log.Log
 import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
 import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
+import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
+import io.schinzel.web_app_engine.response_handlers.response_handlers.ReturnTypeEnum
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(
@@ -17,6 +18,7 @@ class RequestHandler(
 
     fun getHandler(): (Context) -> Unit {
         return { ctx: Context ->
+            val returnType = responseHandlerMapping.returnType
             // Create log
             val log = Log(
                 localTimeZone = localTimezone,
@@ -35,12 +37,26 @@ class RequestHandler(
                     hasNoArguments -> responseHandlerMapping.responseHandlerClass.createInstance()
                     else -> createResponseHandler(responseHandlerMapping, ctx, log)
                 }
+
+                // Get the response
+                val response: Any = responseHandler.getResponse()
                 // Send response
-                sendResponse(ctx, responseHandler, log)
+                when (returnType) {
+                    ReturnTypeEnum.HTML -> ctx.html(response as String)
+                    ReturnTypeEnum.JSON -> ctx.json(response)
+                }
+
+                // Log the response if it is JSON
+                if (returnType == ReturnTypeEnum.JSON) {
+                    log.responseLog.response = response
+                }
+
                 // Log the response status code
                 log.responseLog.statusCode = ctx.statusCode()
             } catch (e: Exception) {
+                ctx.status(500)
                 log.errorLog = ErrorLog(e)
+                ApiError(e.message ?: "An error occurred", log.errorId)
             } finally {
                 // Log the execution time
                 log.executionTimeInMs = System.currentTimeMillis() - startTime
@@ -50,3 +66,8 @@ class RequestHandler(
         }
     }
 }
+
+data class ApiError(
+    val message: String,
+    val errorId: String
+)
