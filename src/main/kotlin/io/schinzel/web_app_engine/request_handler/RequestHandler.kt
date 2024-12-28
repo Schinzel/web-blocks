@@ -39,41 +39,50 @@ class RequestHandler(
                     hasNoArguments -> responseHandlerMapping.responseHandlerClass.createInstance()
                     else -> createResponseHandler(responseHandlerMapping, ctx, log)
                 }
-
-                // Get the response
-                val response: Any = responseHandler.getResponse()
                 // Send response
-                when (returnType) {
-                    ReturnTypeEnum.HTML -> {
-                        val formattedHtml = if (prettyFormatHtml) {
-                            prettyFormatHtml(response as String)
-                        } else {
-                            response as String
-                        }
-                        ctx.html(formattedHtml)
-                    }
-
-                    ReturnTypeEnum.JSON -> ctx.json(response)
-                }
-
-                // Log the response if it is JSON
-                if (returnType == ReturnTypeEnum.JSON) {
-                    log.responseLog.response = response
-                }
-
-                // Log the response status code
-                log.responseLog.statusCode = ctx.statusCode()
+                sendResponse(ctx, responseHandler, log, returnType, prettyFormatHtml)
             } catch (e: Exception) {
                 ctx.status(500)
                 log.errorLog = ErrorLog(e)
                 ApiError(e.message ?: "An error occurred", log.errorId)
             } finally {
+                // Log the response status code
+                log.responseLog.statusCode = ctx.statusCode()
                 // Log the execution time
                 log.executionTimeInMs = System.currentTimeMillis() - startTime
                 // Write log
                 logger.log(log)
             }
         }
+    }
+}
+
+fun sendResponse(
+    ctx: Context,
+    responseHandler: IResponseHandler,
+    log: Log,
+    returnType: ReturnTypeEnum,
+    prettyFormatHtml: Boolean
+) {
+    // Get the response
+    val response: Any = responseHandler.getResponse()
+    // Send response
+    when (returnType) {
+        ReturnTypeEnum.HTML -> {
+            val formattedHtml = if (prettyFormatHtml) {
+                prettyFormatHtml(response as String)
+            } else {
+                response as String
+            }
+            ctx.html(formattedHtml)
+        }
+
+        ReturnTypeEnum.JSON -> ctx.json(response)
+    }
+
+    // Log the response if it is JSON
+    if (returnType == ReturnTypeEnum.JSON) {
+        log.responseLog.response = response
     }
 }
 
