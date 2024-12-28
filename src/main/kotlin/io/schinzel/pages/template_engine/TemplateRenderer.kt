@@ -18,6 +18,10 @@ class TemplateRenderer(
         return this
     }
 
+    fun addData(key: String, value: Int): TemplateRenderer {
+        return this.addData(key, value.toString())
+    }
+
     fun process(): String {
         val fileContent = templateReader.getFileContent()
         return templateProcessor.processTemplate(fileContent)

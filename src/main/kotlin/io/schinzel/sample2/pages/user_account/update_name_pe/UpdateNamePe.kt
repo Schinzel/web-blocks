@@ -14,6 +14,7 @@ class UpdateNamePe(val userId: Int) : ObservablePageElement {
     override fun getHtml(): String {
         return TemplateRenderer("template.html", this)
             .addData("firstName", firstName)
+            .addData("userId", userId)
             .process()
     }
 }

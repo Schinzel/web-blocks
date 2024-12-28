@@ -6,7 +6,36 @@
                    class="form-control"
                    id="first_name"
                    placeholder="Enter your first name"
+                   data-user-id="{{userId}}"
                    value="{{firstName}}">
         </div>
     </form>
 </div>
+<script>
+    $("#first_name").on("change", async function () {
+        const userId = $(this).data("userId")
+        const firstName = $(this).val()
+
+        try {
+            const response = await $.ajax({
+                url: "/page-api/user-account/update-name-pe/update-first-name",
+                method: "POST",
+                data: JSON.stringify({
+                    userId,
+                    firstName
+                }),
+                contentType: "application/json"
+            })
+
+            if (!response.success) {
+                throw new Error(response.error || "Failed to update name")
+            }
+        } catch (error) {
+            console.error("Failed to update name:", error)
+            // Optionally show error to user
+            alert("Failed to save name. Please try again.")
+            // Optionally revert to original value
+            $(this).val($(this).prop("defaultValue"))
+        }
+    })
+</script>
