@@ -8,16 +8,20 @@ import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageRespo
 @Suppress("unused")
 class AccountWebPage(private val userId: Int) : IPageResponseHandler {
     override fun getResponse(): String {
+        val welcomePe = WelcomePe(userId)
+        val updateNamePe = UpdateNamePe(userId)
+        updateNamePe.addObserver(welcomePe)
+
         val response = BootstrapPageV2()
             .setTitle("Account")
 
             .addRow()
             .addColumn(12)
-            .addPageElement(WelcomePe(userId))
+            .addPageElement(welcomePe)
 
             .addRow()
             .addColumn(12)
-            .addPageElement(UpdateNamePe(userId))
+            .addPageElement(updateNamePe)
 
             .getHtml()
         return response
