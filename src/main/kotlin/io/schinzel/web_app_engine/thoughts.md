@@ -1,10 +1,8 @@
 
 # To do
 - subscribe
-  - Next step create a path with two elements. 
-    - One that says "Hi [name]!"
-    - One that has a text field with the name that can be changed
-    - The first element should subscribe to the second element
+  - Create one more element and subscribe to the first element
+  - Create JavaScript for the subscription
 - Error handling with html
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
