@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.user_account.name_pe
 
-import io.schinzel.sample2.pages.user_account.name_pe.IPageElement
+import io.schinzel.pages.bootstrap_page.IPageElement
 import io.schinzel.pages.template_engine.TemplateRenderer
 
 class NamePe(userId: Int): IPageElement {

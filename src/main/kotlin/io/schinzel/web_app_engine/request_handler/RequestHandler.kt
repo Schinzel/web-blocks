@@ -8,12 +8,14 @@ import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
 import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
 import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
 import io.schinzel.web_app_engine.response_handlers.response_handlers.ReturnTypeEnum
+import org.jsoup.Jsoup
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(
     private val responseHandlerMapping: ResponseHandlerMapping,
     private val localTimezone: String = "Europe/Stockholm",
     private val logger: ILogger = PrettyConsoleLogger(),
+    private val prettyFormatHtml: Boolean = true,
 ) {
 
     fun getHandler(): (Context) -> Unit {
@@ -42,7 +44,15 @@ class RequestHandler(
                 val response: Any = responseHandler.getResponse()
                 // Send response
                 when (returnType) {
-                    ReturnTypeEnum.HTML -> ctx.html(response as String)
+                    ReturnTypeEnum.HTML -> {
+                        val formattedHtml = if (prettyFormatHtml) {
+                            prettyFormatHtml(response as String)
+                        } else {
+                            response as String
+                        }
+                        ctx.html(formattedHtml)
+                    }
+
                     ReturnTypeEnum.JSON -> ctx.json(response)
                 }
 
@@ -65,6 +75,14 @@ class RequestHandler(
             }
         }
     }
+}
+
+fun prettyFormatHtml(htmlString: String): String {
+    val document = Jsoup.parse(htmlString)
+    document.outputSettings()
+        .prettyPrint(true)
+        .indentAmount(2)
+    return document.outerHtml()
 }
 
 data class ApiError(

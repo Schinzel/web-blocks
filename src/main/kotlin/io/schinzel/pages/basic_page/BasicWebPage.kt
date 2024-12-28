@@ -1,7 +1,7 @@
 package io.schinzel.pages.basic_page
 
 import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageResponseHandler
-import io.schinzel.sample2.pages.user_account.name_pe.IPageElement
+import io.schinzel.pages.bootstrap_page.IPageElement
 import io.schinzel.pages.template_engine.TemplateRenderer
 
 class BasicWebPage : IPageResponseHandler {

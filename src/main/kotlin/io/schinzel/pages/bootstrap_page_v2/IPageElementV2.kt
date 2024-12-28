@@ -1,4 +1,4 @@
-package io.schinzel.sample2.pages.user_account.name_pe
+package io.schinzel.pages.bootstrap_page_v2
 
 import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.basicutils.RandomUtil
@@ -10,12 +10,8 @@ import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 
 
-interface IPageElement {
+interface IPageElementV2 {
     fun getHtml(): String
-}
-
-interface IPageElement2 {
-
 }
 
 
@@ -27,16 +23,14 @@ interface IObserverAndSubject {
         observers.add(observer)
         return this
     }
-
-
 }
 
 
-interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubject {
-    override val guid: String
+interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubject, IPageElementV2 {
 
-    fun getSubscribeHtml(): String {
-        val pageElementHtml = this.getResponse()
+
+    override fun getResponse(): String {
+        val pageElementHtml = this.getHtml()
         val observersAsString: String = observers.joinToString(",") { it.guid }
         val path = this.getPath()
         val arguments = this.getConstructorArguments()
@@ -46,8 +40,10 @@ interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubj
         return "<div id=\"$guid\" " +
                 "data-observer-ids=\"$observersAsString\" " +
                 "data-path=\"$path\" " +
-                "data-arguments=\"$argumentsAsString\" " +
-                ">$pageElementHtml</div>"
+                "data-arguments=\"$argumentsAsString\"" +
+                ">\n" +
+                pageElementHtml +
+                "</div>"
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -65,15 +61,15 @@ interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubj
 
 }
 
+
 class MyClass(val userId: String, val petId: String) : ObservablePageElement {
     override val guid: String = RandomUtil.getRandomString(10)
     override val observers: MutableList<IObserverAndSubject> = mutableListOf()
     private val petName: String = "Fluffy"
 
-    override fun getResponse(): String {
+    override fun getHtml(): String {
         TODO("Not yet implemented")
     }
-
 }
 
 fun main() {
