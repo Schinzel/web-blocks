@@ -3,15 +3,17 @@ The project consists of two parts:
 - A web framework
 - A component framework
 
-# Problem to solve
-
 
 # Web Framework
 ## Features
 - File-based routing system.
+- Each endpoint supports both GET and POST requests and the arguments can be passed as:
+  - Query parameters
+  - Request body
+
 - Implement the interfaces 
-  - IPageResponseHandler - For handling page requests
-  - IApiEndpointResponseHandler - For handling API requests
+  - IPageResponseHandler.getResponse():String - For handling page requests
+  - IApiEndpointResponseHandler.getResponse():Any - For handling API requests
 
 
 ## Benefits
@@ -23,8 +25,6 @@ This intuitive system:
 - Simplifies navigation and routing management
 - Provides a predictable pattern for adding new pages
 
-## Problem to solve
-
 
 # Component Framework
 
@@ -34,29 +34,17 @@ This intuitive system:
 - Each page element has its own endpoint
 - The page elements can update themselves independently of the page
 - A publish-subscribe system where a page elements can notify is subscribers that they should update themselves.
-- Instant Updates. The HTML and JS files are read from the source folder. This means that changes to these files will be reflected in the
-application without the need for a hot reload.
-- Each endpoint supports both GET and POST requests
+- Instant Updates. The HTML and JS files are read from the source folder. This means that changes to these files will 
+be reflected instantly in the application without the need for a hot reload.
 
 
-## Problem to solve
-
-
-
-Page Elements is a lightweight web framework for Kotlin that combines the simplicity of a file-system based routing 
-with the power of modular, feature-based architecture. 
-It enables developers to quickly build maintainable web applications by embracing 
-convention over configuration and component-based development.
-
-## Key Features
-
-
-### Modular Page Elements
-The framework encourages building pages from small, independent Page Elements. Each Page Element:
-- Contains all its necessary components, logic, and resources
-- Functions as a self-contained feature module
-- Can be developed, tested, and maintained independently
-
+### Benefits
+- **Maintainability**: Small, focused components are easier to understand and modify
+- **Scalability**: Feature-based organization supports growing codebases
+- **Developer Experience**: Intuitive routing and clear structure reduces learning curve
+- **Testing**:  Can be developed, tested, and maintained independently
+- **Code Quality**: Encourages clean, modular code with clear responsibilities
+- 
 
 
 ### Feature-Based Architecture
@@ -67,21 +55,9 @@ grouped by feature rather than technical function. This approach:
 - Facilitates better code organization and maintenance
 - Enables easier scaling of the codebase
 
-### Simple API Integration
-The framework provides a straightforward way to create both page renders and API endpoints:
-- Unified handling of GET and POST requests
-- Automatic parameter parsing
-- Clean separation between page rendering and API logic
-- Type-safe request handling
 
-### Benefits
-- **Rapid Development**: Convention over configuration reduces boilerplate
-- **Maintainability**: Small, focused components are easier to understand and modify
-- **Scalability**: Feature-based organization supports growing codebases
-- **Developer Experience**: Intuitive routing and clear structure reduces learning curve
-- **Code Quality**: Encourages clean, modular code with clear responsibilities
 
-## Sample
+# Sample
 Start the class io.schinzel.sample.main
 
 Sample urls:
