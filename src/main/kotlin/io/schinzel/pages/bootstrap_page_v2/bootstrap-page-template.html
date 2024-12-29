@@ -71,6 +71,9 @@
                     contentType: "application/json"
                 })
                 console.log(`Update response for ${id}:`, response)
+                if (response.success) {
+                    $(`#${id}`).html(response.message)
+                }
             } catch (error) {
                 console.error(`Failed to update ${id}:`, error)
             }
