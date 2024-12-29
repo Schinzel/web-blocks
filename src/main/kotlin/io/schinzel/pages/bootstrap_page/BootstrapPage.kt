@@ -21,7 +21,7 @@ class BootstrapPage {
         return this
     }
 
-    fun addPageElement(pageElement: IPageElement): BootstrapPage {
+    fun addPageElement(pageElement: ObservablePageElement): BootstrapPage {
         rows.last().columns.last().elements.add(pageElement)
         return this
     }

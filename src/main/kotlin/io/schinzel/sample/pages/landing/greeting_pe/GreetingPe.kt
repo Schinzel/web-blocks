@@ -1,10 +1,10 @@
 package io.schinzel.sample.pages.landing.greeting_pe
 
-import io.schinzel.pages.bootstrap_page.IPageElement
+import io.schinzel.pages.bootstrap_page.ObservablePageElement
 import io.schinzel.pages.template_engine.TemplateRenderer
 
-class GreetingPe : IPageElement {
-    override fun getHtml(): String {
+class GreetingPe : ObservablePageElement() {
+    override fun getResponse(): String {
         return TemplateRenderer("GreetingPe.html", this)
             .addData("firstName", "Pelle")
             .process()

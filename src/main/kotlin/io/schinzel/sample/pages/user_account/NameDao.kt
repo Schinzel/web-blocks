@@ -1,4 +1,4 @@
-package io.schinzel.sample2.pages.user_account
+package io.schinzel.sample.pages.user_account
 
 class NameDao(private val userId: Int) {
 

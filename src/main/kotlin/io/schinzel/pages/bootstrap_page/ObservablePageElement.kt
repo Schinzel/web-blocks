@@ -1,4 +1,4 @@
-package io.schinzel.pages.bootstrap_page_v2
+package io.schinzel.pages.bootstrap_page
 
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_app_engine.request_handler.log.JsonMapper
@@ -7,13 +7,7 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 
-
-interface IPageElementV2 {
-    fun getHtml(): String
-}
-
-
-abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElementV2 {
+abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElement {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<ObservablePageElement> = mutableListOf()
 

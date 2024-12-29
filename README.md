@@ -61,11 +61,11 @@ grouped by feature rather than technical function. This approach:
 Start the class io.schinzel.sample.main
 
 Sample urls:
-- http://127.0.0.1:5555/?userId=ABC
-- http://127.0.0.1:5555/api/v1/user-information?userId=123
-- http://127.0.0.1:5555/api/v1/user-information/123
-- http://127.0.0.1:5555/sub-dir/sub-dir-2
-- http://127.0.0.1:5555/page-api/user-account/name-pe/name-update-dao/123/Henrik/Svensson
+- Call landing page: http://127.0.0.1:5555/?userId=ABC
+- Invoke an API endpoint: http://127.0.0.1:5555/api/v1/user-information?userId=123
+- Call a page a in a subdirectory = http://127.0.0.1:5555/sub-dir/sub-dir-2
+- Call a page element in a page http://127.0.0.1:5555/page-api/user-account/update-name-pe/update-first-name/?userId=123&firstName=Jack
+- Call a page with interconnecting page elements http://127.0.0.1:5555/user-account?userId=123
 
 ## Page path
 The path to the directory in which a page is located. 
