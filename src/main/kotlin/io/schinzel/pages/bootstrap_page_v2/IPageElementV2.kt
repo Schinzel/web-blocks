@@ -29,8 +29,8 @@ interface IObserverAndSubject {
 interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubject, IPageElementV2 {
 
 
-    override fun getResponse(): String {
-        val pageElementHtml = this.getHtml()
+    override fun getHtml(): String {
+        val pageElementHtml = this.getResponse()
         val observersAsString: String = observers.joinToString(",") { it.guid }
         val path = this.getPath()
         val arguments = this.getConstructorArguments()
@@ -62,13 +62,13 @@ interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubj
 
 }
 
-
+/*
 class MyClass(val userId: String, val petId: String) : ObservablePageElement {
     override val guid: String = RandomUtil.getRandomString(10)
     override val observers: MutableList<IObserverAndSubject> = mutableListOf()
     private val petName: String = "Fluffy"
 
-    override fun getHtml(): String {
+    override fun getResoponse(): String {
         TODO("Not yet implemented")
     }
 }
@@ -81,3 +81,4 @@ fun main() {
     myClass.getPath().printlnWithPrefix("Path")
 }
 
+*/

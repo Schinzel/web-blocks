@@ -6,7 +6,7 @@ class ColumnV2(val span: Int) {
     fun getHtml(): String {
         return """
             |<div class="col-$span">
-            |  ${elements.joinToString("\n") { it.getResponse() }}
+            |  ${elements.joinToString("\n") { it.getHtml() }}
             |</div>
         """.trimMargin()
     }

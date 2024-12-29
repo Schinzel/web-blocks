@@ -10,7 +10,7 @@ class WelcomePe(val userId: Int) : ObservablePageElement {
     override val observers = mutableListOf<IObserverAndSubject>()
 
     private val firstName = NameDao(userId).getFirstName()
-    override fun getHtml(): String {
+    override fun getResponse(): String {
         return "<h1>Welcome $firstName</h1>"
     }
 }

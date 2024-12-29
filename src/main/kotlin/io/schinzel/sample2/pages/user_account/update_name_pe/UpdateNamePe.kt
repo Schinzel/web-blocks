@@ -11,7 +11,7 @@ class UpdateNamePe(val userId: Int) : ObservablePageElement {
     override val guid: String = RandomUtil.getRandomString(10)
     override val observers: MutableList<IObserverAndSubject> = mutableListOf()
 
-    override fun getHtml(): String {
+    override fun getResponse(): String {
         return TemplateRenderer("template.html", this)
             .addData("firstName", firstName)
             .addData("userId", userId)
