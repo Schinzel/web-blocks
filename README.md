@@ -1,4 +1,47 @@
 # Page Elements - A Modern Web Framework for Kotlin
+The project consists of two parts:
+- A web framework
+- A component framework
+
+# Problem to solve
+
+
+# Web Framework
+## Features
+- File-based routing system.
+- Implement the interfaces 
+  - IPageResponseHandler - For handling page requests
+  - IApiEndpointResponseHandler - For handling API requests
+
+
+## Benefits
+The framework uses a file-system based routing approach where the
+application's URL structure directly mirrors its folder structure. 
+This intuitive system:
+- Eliminates the need for manual route configuration
+- Makes the application structure immediately clear to new developers
+- Simplifies navigation and routing management
+- Provides a predictable pattern for adding new pages
+
+## Problem to solve
+
+
+# Component Framework
+
+## Features
+- A grid based system based on Bootstrap
+- A page consists of a set of modular stand alone page elements. 
+- Each page element has its own endpoint
+- The page elements can update themselves independently of the page
+- A publish-subscribe system where a page elements can notify is subscribers that they should update themselves.
+- Instant Updates. The HTML and JS files are read from the source folder. This means that changes to these files will be reflected in the
+application without the need for a hot reload.
+- Each endpoint supports both GET and POST requests
+
+
+## Problem to solve
+
+
 
 Page Elements is a lightweight web framework for Kotlin that combines the simplicity of a file-system based routing 
 with the power of modular, feature-based architecture. 
@@ -7,13 +50,6 @@ convention over configuration and component-based development.
 
 ## Key Features
 
-### File-System Based Routing
-The framework uses a file-system based routing approach where the 
-application's URL structure directly mirrors its folder structure. This intuitive system:
-- Eliminates the need for manual route configuration
-- Makes the application structure immediately clear to new developers
-- Simplifies navigation and routing management
-- Provides a predictable pattern for adding new pages
 
 ### Modular Page Elements
 The framework encourages building pages from small, independent Page Elements. Each Page Element:
@@ -21,9 +57,6 @@ The framework encourages building pages from small, independent Page Elements. E
 - Functions as a self-contained feature module
 - Can be developed, tested, and maintained independently
 
-### Instant Updates
-The HTML and JS files are read from the source folder. This means that changes to these files will be reflected in the
-application without the need for a hot reload.
 
 
 ### Feature-Based Architecture
