@@ -38,6 +38,7 @@ interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubj
             .writeValueAsString(arguments)
             .replace("\"", "&quot;")
         return "<div id=\"$guid\" " +
+                "data-page-element "+
                 "data-observer-ids=\"$observersAsString\" " +
                 "data-path=\"$path\" " +
                 "data-arguments=\"$argumentsAsString\"" +

@@ -28,6 +28,11 @@
             if (!response.success) {
                 throw new Error(response.error || "Failed to update name")
             }
+            const containerId = $(this).closest("[data-page-element]").attr("id")
+            console.log(`Updated first name to ${firstName}`)
+            console.log(`Notifying container ${containerId} of update`)
+            window.pubSub.notify(containerId)
+
         } catch (error) {
             console.error("Failed to update name:", error)
             // Optionally show error to user

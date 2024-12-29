@@ -11,5 +11,74 @@
 <div class="container">
     {{content}}
 </div>
+<script>
+    /**
+     * Manages pub/sub relationships between page elements
+     * Uses data-observer-ids attribute to track which elements observe others
+     */
+    class PageElementPubSub {
+        constructor() {
+            // Map of element IDs to array of observer IDs
+            this.elements = new Map()
+            this.init()
+        }
+
+        /**
+         * Initializes pub/sub system by scanning DOM for page elements
+         * Reads data-observer-ids attribute to build observer relationships
+         */
+        init() {
+            $("[data-page-element]").each((_, element) => {
+                const $element = $(element)
+                const id = $element.attr("id")
+                // Split observer IDs on space and filter out empty strings
+                const observerIds = $element.data("observerIds").split(" ").filter(Boolean)
+                this.elements.set(id, observerIds)
+                console.log(`Registered element ${id} with observers: ${observerIds}`)
+            })
+        }
+
+        /**
+         * Notifies all observers of a source element that they should update
+         * @param {string} sourceId - ID of element that changed
+         */
+        notify(sourceId) {
+            const sourceObservers = this.elements.get(sourceId) || []
+            for (const [id, _] of this.elements) {
+                if (sourceObservers.includes(id)) {
+                    this.triggerUpdate(id)
+                }
+            }
+        }
+
+        /**
+         * Triggers update event for a specific element
+         * Uses custom events for loose coupling between components
+         * @param {string} id - ID of element to update
+         */
+        triggerUpdate(id) {
+            console.log(`Triggering update for ${id}`)
+            const event = new CustomEvent("pageElement:update", {
+                detail: {id}
+            })
+            window.dispatchEvent(event)
+        }
+    }
+
+    // Initialize when DOM and all scripts are fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+        // Additional safety check for jQuery
+        if (typeof $ === "undefined") {
+            console.error("jQuery not loaded")
+            return
+        }
+
+        try {
+            window.pubSub = new PageElementPubSub()
+        } catch (error) {
+            console.error("Failed to initialize PubSub:", error)
+        }
+    })
+</script>
 </body>
 </html>
