@@ -2,7 +2,7 @@
 # To do
 - Is broken: http://127.0.0.1:5555/api/v1/user-information?userId=123
 - Port
-  - Check if port is buzy when starting server
+  - Check if port is busy when starting server
   - Let tests run on random port
 - Can template files have include files?
 - Error handling with html
