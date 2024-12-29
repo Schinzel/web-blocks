@@ -32,7 +32,7 @@
                 const $element = $(element)
                 const id = $element.attr("id")
                 // Split observer IDs on space and filter out empty strings
-                const observerIds = $element.data("observerIds").split(" ").filter(Boolean)
+                const observerIds = $element.data("observerIds").split(",").filter(Boolean)
                 this.elements.set(id, observerIds)
                 console.log(`Registered element ${id} with observers: ${observerIds}`)
             })
@@ -43,12 +43,15 @@
          * @param {string} sourceId - ID of element that changed
          */
         notify(sourceId) {
+            console.log("Current elements map:", Object.fromEntries(this.elements))
             const sourceObservers = this.elements.get(sourceId) || []
-            for (const [id, _] of this.elements) {
-                if (sourceObservers.includes(id)) {
-                    this.triggerUpdate(id)
-                }
-            }
+            console.log(`Source ${sourceId} has observers:`, sourceObservers)
+
+            // Process each observer sequentially
+            sourceObservers.forEach(observerId => {
+                console.log(`Updating observer: ${observerId}`)
+                this.triggerUpdate(observerId)
+            })
         }
 
         /**

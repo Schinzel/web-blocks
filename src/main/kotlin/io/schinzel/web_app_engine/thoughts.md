@@ -1,8 +1,9 @@
 
 # To do
 - subscribe
-  - Create one more element and subscribe to the first element
-  - Create JavaScript for the subscription
+  - Is it a observer pattern or a publish/subscribe pattern?
+  - Each page element has to implement guid and observers. 
+    - Should this be done differently? 
 - Error handling with html
 - A common class to send data to the server with
   - Error handling
