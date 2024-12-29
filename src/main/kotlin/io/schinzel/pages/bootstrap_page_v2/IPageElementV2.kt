@@ -1,9 +1,7 @@
 package io.schinzel.pages.bootstrap_page_v2
 
-import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_app_engine.request_handler.log.JsonMapper
-import io.schinzel.web_app_engine.response_handlers.initializeResponseHandlerDescriptorRegistry
 import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageEndpointResponseHandler
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
@@ -15,70 +13,55 @@ interface IPageElementV2 {
 }
 
 
-interface IObserverAndSubject {
-    val guid: String
-    val observers: MutableList<IObserverAndSubject>
+abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElementV2 {
+    private val guid: String = RandomUtil.getRandomString(15)
+    private val observers: MutableList<ObservablePageElement> = mutableListOf()
 
-    fun addObserver(observer: IObserverAndSubject): IObserverAndSubject {
+    /**
+     * Adds an observer to the list of observers.
+     */
+    fun addObserver(observer: ObservablePageElement): ObservablePageElement {
         observers.add(observer)
         return this
     }
-}
 
-
-interface ObservablePageElement : IPageEndpointResponseHandler, IObserverAndSubject, IPageElementV2 {
-
-
+    /**
+     * Returns the HTML of the page element, which is the getResponse() method
+     * wrapped in a div element with several data attributes.
+     */
     override fun getHtml(): String {
+        // Get the HTML of the page element
         val pageElementHtml = this.getResponse()
-        val observersAsString: String = observers.joinToString(",") { it.guid }
-        val path = this.getPath()
-        val arguments = this.getConstructorArguments()
-        val argumentsAsString = JsonMapper.noIndentMapper
-            .writeValueAsString(arguments)
+        // Get the id of the observers
+        val observersIdsAsString: String = observers.joinToString(",") { it.guid }
+        // Get the path of the page element
+        val pageElementEndPointPath = this.getPath()
+        // Get the arguments of the page element (i.e. parameters with values)
+        val constructorArguments = JsonMapper.noIndentMapper
+            .writeValueAsString(this.getConstructorArguments())
             .replace("\"", "&quot;")
         return "<div id=\"$guid\" " +
-                "data-page-element "+
-                "data-observer-ids=\"$observersAsString\" " +
-                "data-path=\"$path\" " +
-                "data-arguments=\"$argumentsAsString\"" +
+                "data-page-element " +
+                "data-observer-ids=\"$observersIdsAsString\" " +
+                "data-path=\"$pageElementEndPointPath\" " +
+                "data-arguments=\"$constructorArguments\"" +
                 ">\n" +
                 pageElementHtml +
                 "</div>"
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun getConstructorArguments(): Map<String, Any> {
-        val clazz = this::class
-        val constructorParams = clazz.primaryConstructor?.parameters ?: emptyList()
+    private fun getConstructorArguments(): Map<String, Any> {
+        // Get the constructor parameters
+        val constructorParams = this::class.primaryConstructor?.parameters ?: emptyList()
+        // Get the names of the constructor parameters
         val constructorParamNames = constructorParams.map { it.name }.toSet()
-        return clazz.memberProperties
+        // Get the values of the constructor parameters
+        return this::class.memberProperties
             .filter { it.name in constructorParamNames }
             .associate { prop ->
-                val property = prop as KProperty1<IObserverAndSubject, *>
+                val property = prop as KProperty1<ObservablePageElement, *>
                 prop.name to (property.get(this) ?: throw IllegalStateException("Property ${prop.name} is null"))
             }
     }
-
 }
-
-/*
-class MyClass(val userId: String, val petId: String) : ObservablePageElement {
-    override val guid: String = RandomUtil.getRandomString(10)
-    override val observers: MutableList<IObserverAndSubject> = mutableListOf()
-    private val petName: String = "Fluffy"
-
-    override fun getResoponse(): String {
-        TODO("Not yet implemented")
-    }
-}
-
-fun main() {
-
-    initializeResponseHandlerDescriptorRegistry("io.schinzel.sample2")
-    val myClass = MyClass("123", "456")
-    myClass.getConstructorArguments().printlnWithPrefix("Arguments")
-    myClass.getPath().printlnWithPrefix("Path")
-}
-
-*/
