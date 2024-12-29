@@ -1,10 +1,9 @@
 
 # To do
-- subscribe
-  - Each page element has to implement guid and observers. 
-    - Should this be done differently? 
-  - Add stuff from sample(1)
-  - Remove sample (1)
+- Port
+  - Check if port is buzy when starting server
+  - Let tests run on random port
+- Can template files have include files?
 - Error handling with html
 - License
 - A common class to send data to the server with
