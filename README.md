@@ -1,6 +1,6 @@
 # Page Elements - A Modern Web Framework for Kotlin
 
-Page Elements is a lightweight web framework for Kotlin that combines the simplicity of Next.js routing 
+Page Elements is a lightweight web framework for Kotlin that combines the simplicity of a file-system based routing 
 with the power of modular, feature-based architecture. 
 It enables developers to quickly build maintainable web applications by embracing 
 convention over configuration and component-based development.
