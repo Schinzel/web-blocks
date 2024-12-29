@@ -56,12 +56,24 @@
          * Uses custom events for loose coupling between components
          * @param {string} id - ID of element to update
          */
-        triggerUpdate(id) {
-            console.log(`Triggering update for ${id}`)
-            const event = new CustomEvent("pageElement:update", {
-                detail: {id}
-            })
-            window.dispatchEvent(event)
+        async triggerUpdate(id) {
+            const element = document.getElementById(id)
+            if (!element) return
+
+            const path = element.dataset.path
+            const args = JSON.parse(element.dataset.arguments)
+
+            try {
+                const response = await $.ajax({
+                    url: `/${path}`,
+                    method: "POST",
+                    data: JSON.stringify(args),
+                    contentType: "application/json"
+                })
+                console.log(`Update response for ${id}:`, response)
+            } catch (error) {
+                console.error(`Failed to update ${id}:`, error)
+            }
         }
     }
 
