@@ -8,10 +8,9 @@ import java.time.format.DateTimeFormatter
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Log(
-    // A unique id for this error
-    val errorId: String = RandomUtil.getRandomString(12),
     var routeType: String = "",
     var httpMethod: String = "",
+    var requestBody: String = "",
     var requestTimeUtc: String = TimeProvider.nowUtc(),
     val localTimeZone: String,
     var requestTimeLocalTimezone: String = TimeProvider.now(localTimeZone),
@@ -24,17 +23,20 @@ data class Log(
 data class RequestLog(
     var path: String = "",
     var arguments: Map<String, Any?> = mapOf(),
+    var requestBody: String = "",
 )
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class ResponseLog(
     var response: Any? = null,
     var statusCode: Int = -1,
 )
 
+@Suppress("unused")
 class ErrorLog(e: Exception) {
-    @Suppress("unused")
+    // A unique id for this error
+    val errorId: String = RandomUtil.getRandomString(12)
     val errorMessage: String = e.message ?: ""
-    @Suppress("unused")
     val stackTrace: List<String> = e.stackTraceToString()
         .split("\n")
         .take(5)

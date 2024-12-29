@@ -4,6 +4,10 @@
   - Create one more element and subscribe to the first element
   - Create JavaScript for the subscription
 - Error handling with html
+- A common class to send data to the server with
+  - Error handling
+  - Success handling
+  - browser console logging
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
   - One class the handles requests and responses (if any)
