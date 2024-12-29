@@ -13,28 +13,27 @@
 </div>
 <script>
     /**
-     * Manages pub/sub relationships between page elements
+     * Manages observer relationships between page elements.
+     * Implements the observer pattern to notify observers of changes.
      * Uses data-observer-ids attribute to track which elements observe others
      */
-    class PageElementPubSub {
+    class PageElementObserver {
         constructor() {
             // Map of element IDs to array of observer IDs
             this.elements = new Map()
-            this.init()
-        }
-
-        /**
-         * Initializes pub/sub system by scanning DOM for page elements
-         * Reads data-observer-ids attribute to build observer relationships
-         */
-        init() {
+            // For each page element
             $("[data-page-element]").each((_, element) => {
+                // Wrap the vanilla DOM element in a jQuery object
                 const $element = $(element)
-                const id = $element.attr("id")
-                // Split observer IDs on space and filter out empty strings
-                const observerIds = $element.data("observerIds").split(",").filter(Boolean)
-                this.elements.set(id, observerIds)
-                console.log(`Registered element ${id} with observers: ${observerIds}`)
+                // Get the id of the page element
+                const pageElementId = $element.attr("id")
+                // Get the ids of the page elements that observe this page element
+                const idsOfObservingPageElements = $element.data("observerIds")
+                    .split(",") // split on comma
+                    .filter(Boolean) // filter out empty strings
+                // Register the element with its observers
+                this.elements.set(pageElementId, idsOfObservingPageElements)
+                console.log(`Registered element ${pageElementId} with observers: ${idsOfObservingPageElements}`)
             })
         }
 
@@ -74,6 +73,7 @@
                     contentType: "application/json"
                 })
                 console.log(`Update response for ${id}:`, response)
+                // noinspection JSUnresolvedReference
                 if (response.success) {
                     $(`#${id}`).html(response.message)
                 }
@@ -92,9 +92,9 @@
         }
 
         try {
-            window.pubSub = new PageElementPubSub()
+            window.observer = new PageElementObserver()
         } catch (error) {
-            console.error("Failed to initialize PubSub:", error)
+            console.error("Failed to initialize observers:", error)
         }
     })
 </script>

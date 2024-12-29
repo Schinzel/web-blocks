@@ -1,9 +1,10 @@
 
 # To do
 - subscribe
-  - Is it a observer pattern or a publish/subscribe pattern?
   - Each page element has to implement guid and observers. 
     - Should this be done differently? 
+  - Add stuff from sample(1)
+  - Remove sample (1)
 - Error handling with html
 - License
 - A common class to send data to the server with
