@@ -5,6 +5,7 @@
   - Each page element has to implement guid and observers. 
     - Should this be done differently? 
 - Error handling with html
+- License
 - A common class to send data to the server with
   - Error handling
   - Success handling
