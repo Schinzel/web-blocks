@@ -1,9 +1,13 @@
 
 # To do
-- Is broken: http://127.0.0.1:5555/api/v1/user-information?userId=123
 - Port
   - Check if port is busy when starting server
   - Let tests run on random port
+- Name of this project
+- Readme
+  - Instructions
+- Path parameters?
+- Create a new public repo
 - Can template files have include files?
 - Error handling with html
 - License

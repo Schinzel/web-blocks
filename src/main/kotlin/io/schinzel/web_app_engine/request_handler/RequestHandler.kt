@@ -83,7 +83,7 @@ fun sendResponse(
         }
 
         ReturnTypeEnum.JSON -> {
-            val responseObject = ApiResponse.Success(message = response as String)
+            val responseObject = ApiResponse.Success(message = response)
             ctx.json(responseObject)
             log.responseLog.response = responseObject
         }
@@ -93,7 +93,7 @@ fun sendResponse(
 sealed class ApiResponse {
     data class Success(
         val success: Boolean = true,
-        val message: String? = null
+        val message: Any? = null
     ) : ApiResponse()
 
     data class Error(
