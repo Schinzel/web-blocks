@@ -1,15 +1,15 @@
 
 # To do
 - Name of this project
+- ApiResponse.Error is not used
 - Readme
   - Instructions
 - Sample web framework
 - Path parameters?
-- Create a new public repo
 - Can template files have include files?
 - Error handling with html
 - License
-- A common class to send data to the server with
+- A common JavaScript class to send data to the server with
   - Error handling
   - Success handling
   - browser console logging
@@ -23,6 +23,7 @@
   - have a page with path "api"
   - have an api with path "page"
   - cannot have a page nor an api with path "static"
+- Create a new public repo
 - Tester & doc
 - Create a human readable html page that returns documentation of all the endpoints
 

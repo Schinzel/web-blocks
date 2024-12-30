@@ -7,6 +7,19 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 
+/**
+ * The purpose of this class is to allow page elements to be observable.
+ *
+ * This means that on the client side a page element can notify its
+ * observers (other page elements).
+ *
+ * Each page element has a path a constructor arguments so that these
+ * can be used or make a request to the server to get an updated version
+ * of the HTML and JavaScript of the page element.
+ *
+ * Each page element implements the function getResponse() which returns
+ * the HTML and JavaScript of the page element.
+ */
 abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElement {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<ObservablePageElement> = mutableListOf()
@@ -35,9 +48,13 @@ abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElemen
             .writeValueAsString(this.getConstructorArguments())
             .replace("\"", "&quot;")
         return "<div id=\"$guid\" " +
+                // Mark the div as a page element so that all page elements on the page are easily found
                 "data-page-element " +
+                // Add the ids of the observers of this page element
                 "data-observer-ids=\"$observersIdsAsString\" " +
+                // The path to the endpoint of this page element
                 "data-path=\"$pageElementEndPointPath\" " +
+                // The constructor arguments of this page element
                 "data-arguments=\"$constructorArguments\"" +
                 ">\n" +
                 pageElementHtml +
