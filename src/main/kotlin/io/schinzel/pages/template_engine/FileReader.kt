@@ -14,7 +14,7 @@ interface IFileReader {
  * @param fileName The name of the file to process.
  * @param caller The class that is calling this class. Used to find the file to read.
  */
-class FileFileReader(private val fileName: String, private val caller: Any) : IFileReader {
+class FileReader(private val fileName: String, private val caller: Any) : IFileReader {
 
     override fun getFileContent(): String {
         return when {

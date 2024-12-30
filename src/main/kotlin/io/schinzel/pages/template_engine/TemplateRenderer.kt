@@ -10,8 +10,8 @@ class TemplateRenderer(
     fileName: String,
     caller: Any,
 ) {
-    private val templateReader = FileFileReader(fileName, caller)
-    private val templateProcessor = TemplateProcessor()
+    private val templateReader: FileReader = FileReader(fileName, caller)
+    private val templateProcessor = TemplateProcessor(caller)
 
     fun addData(key: String, value: String): TemplateRenderer {
         templateProcessor.addData(key, value)

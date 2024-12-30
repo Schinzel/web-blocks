@@ -11,7 +11,7 @@ interface ITemplateProcessor {
 /**
  * This class is used to process a template.
  */
-class TemplateProcessor: ITemplateProcessor {
+class TemplateProcessor(private val caller: Any): ITemplateProcessor {
     private val data: MutableMap<String, String> = mutableMapOf()
 
     override fun addData(key: String, value: String): ITemplateProcessor {
@@ -20,18 +20,47 @@ class TemplateProcessor: ITemplateProcessor {
     }
 
     override fun processTemplate(template: String): String {
-        return applyData(template, data)
+        val templateWithIncludeFilesRead = processIncludeFiles(template, caller)
+        return applyData(templateWithIncludeFilesRead, data)
     }
 
 
     companion object {
+        private const val INCLUDE_FILE_START = "{{>"
+        private const val INCLUDE_FILE_END = "}}"
+
+        fun processIncludeFiles(templateFileContent: String, caller: Any): String {
+            var processedTemplate = templateFileContent
+            while (true) {
+                // Find next include
+                val startIndex = processedTemplate.indexOf(INCLUDE_FILE_START)
+                if (startIndex == -1) break
+
+                // Find end of include
+                val endIndex = processedTemplate.indexOf(INCLUDE_FILE_END, startIndex)
+                if (endIndex == -1) break
+
+                // Extract filename
+                val fileName = processedTemplate
+                    .substring(startIndex + INCLUDE_FILE_START.length, endIndex)
+                    .trim()
+
+                // Replace include with file content
+                val fileContent = FileReader(fileName, caller).getFileContent()
+                processedTemplate = processedTemplate.substring(0, startIndex) +
+                        fileContent +
+                        processedTemplate.substring(endIndex + INCLUDE_FILE_END.length)
+            }
+            return processedTemplate
+        }
+
         /**
-         * @param fileContent The content of the file to process.
+         * @param template The content of the template file to process.
          * @param data The data to replace placeholders with.
          * @return The file content with placeholders replaced with values from the data map.
          */
-        private fun applyData(fileContent: String, data: Map<String, String>): String {
-            return data.entries.fold(fileContent) { content, (key, value) ->
+        private fun applyData(template: String, data: Map<String, String>): String {
+            return data.entries.fold(template) { content, (key, value) ->
                 content.replace("{{$key}}", value)
             }
         }

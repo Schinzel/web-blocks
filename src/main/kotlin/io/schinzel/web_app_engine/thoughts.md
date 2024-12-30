@@ -1,12 +1,16 @@
 
 # To do
+- Template engine
+  - Include files in include files??
+  - Improve code template engine
+  - But the JavaScript code for Observers in a separate file
+  - Add a cache to for template file reading
 - Name of this project
 - ApiResponse.Error is not used
 - Readme
   - Instructions
 - Sample web framework
 - Path parameters?
-- Can template files have include files?
 - Error handling with html
 - License
 - A common JavaScript class to send data to the server with
