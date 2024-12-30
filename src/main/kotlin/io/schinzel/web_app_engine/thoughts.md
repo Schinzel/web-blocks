@@ -1,8 +1,8 @@
 
 # To do
-- Port
-  - Check if port is busy when starting server
-  - Let tests run on random port
+- More constructor variables
+  - Logger
+  - Pretty print html
 - Name of this project
 - Readme
   - Instructions

@@ -16,6 +16,7 @@ fun setUpRoutes(
     endpointPackage: String,
     localTimezone: String = "Europe/Stockholm",
     logger: ILogger = PrettyConsoleLogger(),
+    port: Int,
 ): Javalin? {
     val javalin = Javalin.create { config ->
         // Serve static files at /static/*
@@ -41,7 +42,7 @@ fun setUpRoutes(
         ctx.result("pong " + Instant.now().toIsoString())
     }
 
-    javalin.start(5555)
+    javalin.start(port)
 
     return javalin
 }
