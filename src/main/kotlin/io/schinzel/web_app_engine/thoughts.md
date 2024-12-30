@@ -3,7 +3,7 @@
 - Template engine
   - Include files in include files??
   - Improve code template engine
-  - But the JavaScript code for Observers in a separate file
+  - Put the JavaScript code for Observers in a separate file
   - Add a cache to for template file reading
 - Name of this project
 - ApiResponse.Error is not used
