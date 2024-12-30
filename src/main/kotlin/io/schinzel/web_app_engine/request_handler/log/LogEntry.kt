@@ -7,7 +7,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class Log(
+data class LogEntry(
     var routeType: String = "",
     var httpMethod: String = "",
     var requestBody: String = "",

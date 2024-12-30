@@ -2,22 +2,15 @@ package io.schinzel.web_app_engine.set_up_routes
 
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
-import io.schinzel.basic_utils_kotlin.println
+import io.schinzel.web_app_engine.WebAppConfig
 import io.schinzel.web_app_engine.request_handler.RequestHandler
-import io.schinzel.web_app_engine.request_handler.log.ILogger
-import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
 import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-fun setUpRoutes(
-    endpointPackage: String,
-    localTimezone: String = "Europe/Stockholm",
-    logger: ILogger = PrettyConsoleLogger(),
-    port: Int,
-): Javalin? {
+fun setUpRoutes(webAppConfig: WebAppConfig): Javalin? {
     val javalin = Javalin.create { config ->
         // Serve static files at /static/*
         config.staticFiles.add {
@@ -27,23 +20,17 @@ fun setUpRoutes(
         }
     }
     // Find all routes and add them Javalin
-    findRoutes(endpointPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
-        responseHandlerMapping.println()
+    findRoutes(webAppConfig.endpointPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
         // Create request handler
-        val requestHandler = RequestHandler(
-            responseHandlerMapping = responseHandlerMapping,
-            localTimezone = localTimezone,
-            logger = logger
-        ).getHandler()
+        val requestHandler = RequestHandler(responseHandlerMapping, webAppConfig)
+            .getHandler()
         // Register both GET and POST handlers for the same path
         javalin.getAndPost(responseHandlerMapping.path, requestHandler)
     }
     javalin.get("ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())
     }
-
-    javalin.start(port)
-
+    javalin.start(webAppConfig.port)
     return javalin
 }
 

@@ -1,8 +1,5 @@
 
 # To do
-- More constructor variables
-  - Logger
-  - Pretty print html
 - Name of this project
 - Readme
   - Instructions

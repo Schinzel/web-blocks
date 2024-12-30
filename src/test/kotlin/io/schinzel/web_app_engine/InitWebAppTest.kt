@@ -1,7 +1,6 @@
 package io.schinzel.web_app_engine
 
-import io.schinzel.web_app_engine.response_handlers.initializeResponseHandlerDescriptorRegistry
-import io.schinzel.web_app_engine.set_up_routes.setUpRoutes
+import io.schinzel.web_app_engine.request_handler.log.NoLogger
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
@@ -16,9 +15,14 @@ class InitWebAppTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
-            val endpointPackage = "io.schinzel.web_app_engine"
-            initializeResponseHandlerDescriptorRegistry(endpointPackage)
-            setUpRoutes(endpointPackage = endpointPackage, port = randomPort)
+            InitWebApp(
+                WebAppConfig(
+                    endpointPackage =  "io.schinzel.web_app_engine",
+                    port = randomPort,
+                    logger = NoLogger(),
+                    prettyFormatHtml = false
+                )
+            )
         }
     }
 

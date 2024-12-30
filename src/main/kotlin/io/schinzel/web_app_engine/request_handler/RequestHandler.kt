@@ -1,11 +1,9 @@
 package io.schinzel.web_app_engine.request_handler
 
 import io.javalin.http.Context
-import io.schinzel.basic_utils_kotlin.printlnWithPrefix
+import io.schinzel.web_app_engine.WebAppConfig
 import io.schinzel.web_app_engine.request_handler.log.ErrorLog
-import io.schinzel.web_app_engine.request_handler.log.ILogger
-import io.schinzel.web_app_engine.request_handler.log.Log
-import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
+import io.schinzel.web_app_engine.request_handler.log.LogEntry
 import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
 import io.schinzel.web_app_engine.response_handlers.response_handlers.IResponseHandler
 import io.schinzel.web_app_engine.response_handlers.response_handlers.ReturnTypeEnum
@@ -14,19 +12,15 @@ import kotlin.reflect.full.createInstance
 
 class RequestHandler(
     private val responseHandlerMapping: ResponseHandlerMapping,
-    private val localTimezone: String = "Europe/Stockholm",
-    private val logger: ILogger = PrettyConsoleLogger(),
-    private val prettyFormatHtml: Boolean = true,
+    private val webAppConfig: WebAppConfig,
 ) {
 
     fun getHandler(): (Context) -> Unit {
         return { ctx: Context ->
-            ctx.body().printlnWithPrefix("Request body")
-
             val returnType = responseHandlerMapping.returnType
             // Create log
-            val log = Log(
-                localTimeZone = localTimezone,
+            val logEntry = LogEntry(
+                localTimeZone = webAppConfig.localTimezone,
                 routeType = responseHandlerMapping.type,
                 httpMethod = ctx.method().toString()
             )
@@ -34,29 +28,29 @@ class RequestHandler(
             val startTime = System.currentTimeMillis()
             try {
                 // Log the request path
-                log.requestLog.path = responseHandlerMapping.path
-                log.requestLog.requestBody = ctx.body()
+                logEntry.requestLog.path = responseHandlerMapping.path
+                logEntry.requestLog.requestBody = ctx.body()
                 // Check if route has arguments
                 val hasNoArguments = responseHandlerMapping.parameters.isEmpty()
                 // Create instance of route class
                 val responseHandler: IResponseHandler = when {
                     hasNoArguments -> responseHandlerMapping.responseHandlerClass.createInstance()
-                    else -> createResponseHandler(responseHandlerMapping, ctx, log)
+                    else -> createResponseHandler(responseHandlerMapping, ctx, logEntry)
                 }
                 // Send response
-                sendResponse(ctx, responseHandler, log, returnType, prettyFormatHtml)
+                sendResponse(ctx, responseHandler, logEntry, returnType, webAppConfig.prettyFormatHtml)
             } catch (e: Exception) {
                 ctx.status(500)
                 val errorLog = ErrorLog(e)
-                log.errorLog = errorLog
+                logEntry.errorLog = errorLog
                 ApiError(e.message ?: "An error occurred", errorLog.errorId)
             } finally {
                 // Log the response status code
-                log.responseLog.statusCode = ctx.statusCode()
+                logEntry.responseLog.statusCode = ctx.statusCode()
                 // Log the execution time
-                log.executionTimeInMs = System.currentTimeMillis() - startTime
-                // Write log
-                logger.log(log)
+                logEntry.executionTimeInMs = System.currentTimeMillis() - startTime
+                // Log the request and response
+                webAppConfig.logger.log(logEntry)
             }
         }
     }
@@ -65,7 +59,7 @@ class RequestHandler(
 fun sendResponse(
     ctx: Context,
     responseHandler: IResponseHandler,
-    log: Log,
+    logEntry: LogEntry,
     returnType: ReturnTypeEnum,
     prettyFormatHtml: Boolean
 ) {
@@ -85,7 +79,7 @@ fun sendResponse(
         ReturnTypeEnum.JSON -> {
             val responseObject = ApiResponse.Success(message = response)
             ctx.json(responseObject)
-            log.responseLog.response = responseObject
+            logEntry.responseLog.response = responseObject
         }
     }
 }

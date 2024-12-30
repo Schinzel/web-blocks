@@ -3,27 +3,31 @@ package io.schinzel.web_app_engine
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web_app_engine.request_handler.log.ILogger
-import io.schinzel.web_app_engine.request_handler.log.PrettyConsoleLogger
+import io.schinzel.web_app_engine.request_handler.log.ConsoleLogger
 import io.schinzel.web_app_engine.response_handlers.initializeResponseHandlerDescriptorRegistry
 import io.schinzel.web_app_engine.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
 
+data class WebAppConfig(
+    val endpointPackage: String,
+    val port: Int = 5555,
+    val logger: ILogger = ConsoleLogger(true),
+    val localTimezone: String = "Europe/Stockholm",
+    val prettyFormatHtml: Boolean = true,
+)
+
 class InitWebApp(
-    endpointPackage: String,
-    port: Int = 5555,
-    localTimezone: String = "Europe/Stockholm",
-    logger: ILogger = PrettyConsoleLogger(),
+    webAppConfig: WebAppConfig
 ) {
 
     init {
-        Thrower.throwIfFalse(isPortAvailable(port))
-            .message("Port $port is not available")
-        initializeResponseHandlerDescriptorRegistry(endpointPackage)
-        setUpRoutes(endpointPackage, localTimezone, logger, port)
-
+        Thrower.throwIfFalse(isPortAvailable(webAppConfig.port))
+            .message("Port ${webAppConfig.port} is not available")
+        initializeResponseHandlerDescriptorRegistry(webAppConfig.endpointPackage)
+        setUpRoutes(webAppConfig)
         "*".repeat(30).println()
-        "Project started on port $port".println()
+        "Project started on port ${webAppConfig.port}".println()
         "*".repeat(30).println()
     }
 
