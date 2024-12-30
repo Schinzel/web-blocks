@@ -55,7 +55,11 @@ grouped by feature rather than technical function. This approach:
 - Facilitates better code organization and maintenance
 - Enables easier scaling of the codebase
 
-
+## Template Engine
+Can read files from the source folder. 
+This means that changes to these files will be reflected instantly in the application without the need for a hot reload.
+Variables can be passed to the template engine. In the file this are marked with {{variableName}}
+Template files can include other template files. The syntax for this is {{include:fileName.html}}   
 
 # Sample
 Start the class io.schinzel.sample.main

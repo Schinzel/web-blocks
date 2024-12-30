@@ -26,7 +26,7 @@ class TemplateProcessor(private val caller: Any): ITemplateProcessor {
 
 
     companion object {
-        private const val INCLUDE_FILE_START = "{{>"
+        private const val INCLUDE_FILE_START = "{{include:"
         private const val INCLUDE_FILE_END = "}}"
 
         fun processIncludeFiles(templateFileContent: String, caller: Any): String {
