@@ -5,8 +5,8 @@
 - Name of this project
 - ApiResponse.Error is not used
 - Readme
-  - Instructions
-- Sample web framework
+  - Split to three files
+- Sample for the web framework
 - Path parameters?
 - Error handling with html
 - License
