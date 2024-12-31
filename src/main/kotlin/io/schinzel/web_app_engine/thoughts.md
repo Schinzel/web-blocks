@@ -1,7 +1,6 @@
 
 # To do
 - Template engine
-  - Improve code template engine
   - Add a cache to for template file reading
 - Name of this project
 - ApiResponse.Error is not used
