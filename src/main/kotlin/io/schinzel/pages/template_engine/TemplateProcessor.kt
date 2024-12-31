@@ -49,7 +49,7 @@ class TemplateProcessor(private val caller: Any) : ITemplateProcessor {
 
 
             val fileContent = FileReader(includeFileName, caller).getFileContent()
-            val processedContent = processIncludeFiles(fileContent, depth + 1)
+            val processedContent = processIncludeFiles(fileContent, caller, depth + 1)
 
             processedTemplate = processedTemplate.substring(0, startIndex) +
                     processedContent +

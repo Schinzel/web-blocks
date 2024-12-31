@@ -11,6 +11,7 @@ fun main() {
             port = 5555,
             logger = ConsoleLogger(prettyPrint = true),
             localTimezone = "Europe/Stockholm",
+            prettyFormatHtml = true,
         )
     )
 }

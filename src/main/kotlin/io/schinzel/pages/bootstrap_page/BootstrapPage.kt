@@ -29,7 +29,7 @@ class BootstrapPage {
     fun getHtml(): String {
         val content = rows.joinToString("\n") { it.getHtml() }
 
-        return TemplateRenderer("bootstrap-page-template.html", this)
+        return TemplateRenderer("html/bootstrap-page-template.html", this)
             .addData("title", title)
             .addData("content", content)
             .process()
