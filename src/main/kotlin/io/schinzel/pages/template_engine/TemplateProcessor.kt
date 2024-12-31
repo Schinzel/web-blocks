@@ -1,5 +1,7 @@
 package io.schinzel.pages.template_engine
 
+import io.schinzel.pages.template_engine.file_reader.FileReaderFactory
+
 /**
  * The purpose of this interface is to process a template.
  */
@@ -31,6 +33,12 @@ class TemplateProcessor(private val caller: Any) : ITemplateProcessor {
         private const val MAX_INCLUDE_DEPTH = 10
     }
 
+    /**
+     * @param content The content of the template file to process.
+     * @param caller The class that is calling this class. Used to find the file to read.
+     * @param depth The depth of the include file. Used to prevent circular dependencies.
+     * @return The file content with include files processed.
+     */
     private fun processIncludeFiles(content: String, caller: Any, depth: Int = 0): String {
         if (depth >= MAX_INCLUDE_DEPTH) {
             throw IllegalStateException("Max include depth ($MAX_INCLUDE_DEPTH) exceeded. Possible circular dependency.")
@@ -47,9 +55,11 @@ class TemplateProcessor(private val caller: Any) : ITemplateProcessor {
                 .substring(startIndex + INCLUDE_FILE_START.length, endIndex)
                 .trim()
 
-
-            val fileContent = FileReader(includeFileName, caller).getFileContent()
-            val processedContent = processIncludeFiles(fileContent, caller, depth + 1)
+            // Read include file
+            val includeFileContent = FileReaderFactory.create(includeFileName, caller)
+                .getFileContent()
+            // Process include file recursively
+            val processedContent = processIncludeFiles(includeFileContent, caller, depth + 1)
 
             processedTemplate = processedTemplate.substring(0, startIndex) +
                     processedContent +

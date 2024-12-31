@@ -1,5 +1,7 @@
 package io.schinzel.pages.template_engine
 
+import io.schinzel.pages.template_engine.file_reader.FileReaderFactory
+
 /**
  * This class is used to render a template.
  * @param fileName The name of the file to process.
@@ -7,10 +9,9 @@ package io.schinzel.pages.template_engine
  * Used to find the file to read.
  */
 class TemplateRenderer(
-    fileName: String,
-    caller: Any,
+    private val fileName: String,
+    private val caller: Any,
 ) {
-    private val templateReader: FileReader = FileReader(fileName, caller)
     private val templateProcessor = TemplateProcessor(caller)
 
     fun addData(key: String, value: String): TemplateRenderer {
@@ -23,7 +24,8 @@ class TemplateRenderer(
     }
 
     fun process(): String {
-        val fileContent = templateReader.getFileContent()
+        val fileContent = FileReaderFactory.create(fileName, caller)
+            .getFileContent()
         return templateProcessor.processTemplate(fileContent)
     }
 }
