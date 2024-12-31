@@ -11,7 +11,7 @@ interface ITemplateProcessor {
 /**
  * This class is used to process a template.
  */
-class TemplateProcessor(private val caller: Any): ITemplateProcessor {
+class TemplateProcessor(private val caller: Any) : ITemplateProcessor {
     private val data: MutableMap<String, String> = mutableMapOf()
 
     override fun addData(key: String, value: String): ITemplateProcessor {
@@ -28,41 +28,44 @@ class TemplateProcessor(private val caller: Any): ITemplateProcessor {
     companion object {
         private const val INCLUDE_FILE_START = "{{include:"
         private const val INCLUDE_FILE_END = "}}"
+        private const val MAX_INCLUDE_DEPTH = 10
+    }
 
-        fun processIncludeFiles(templateFileContent: String, caller: Any): String {
-            var processedTemplate = templateFileContent
-            while (true) {
-                // Find next include
-                val startIndex = processedTemplate.indexOf(INCLUDE_FILE_START)
-                if (startIndex == -1) break
-
-                // Find end of include
-                val endIndex = processedTemplate.indexOf(INCLUDE_FILE_END, startIndex)
-                if (endIndex == -1) break
-
-                // Extract filename
-                val fileName = processedTemplate
-                    .substring(startIndex + INCLUDE_FILE_START.length, endIndex)
-                    .trim()
-
-                // Replace include with file content
-                val fileContent = FileReader(fileName, caller).getFileContent()
-                processedTemplate = processedTemplate.substring(0, startIndex) +
-                        fileContent +
-                        processedTemplate.substring(endIndex + INCLUDE_FILE_END.length)
-            }
-            return processedTemplate
+    private fun processIncludeFiles(content: String, caller: Any, depth: Int = 0): String {
+        if (depth >= MAX_INCLUDE_DEPTH) {
+            throw IllegalStateException("Max include depth ($MAX_INCLUDE_DEPTH) exceeded. Possible circular dependency.")
         }
+        var processedTemplate = content
+        while (true) {
+            val startIndex = processedTemplate.indexOf(INCLUDE_FILE_START)
+            if (startIndex == -1) break
 
-        /**
-         * @param template The content of the template file to process.
-         * @param data The data to replace placeholders with.
-         * @return The file content with placeholders replaced with values from the data map.
-         */
-        private fun applyData(template: String, data: Map<String, String>): String {
-            return data.entries.fold(template) { content, (key, value) ->
-                content.replace("{{$key}}", value)
-            }
+            val endIndex = processedTemplate.indexOf(INCLUDE_FILE_END, startIndex)
+            if (endIndex == -1) break
+
+            val includeFileName = processedTemplate
+                .substring(startIndex + INCLUDE_FILE_START.length, endIndex)
+                .trim()
+
+
+            val fileContent = FileReader(includeFileName, caller).getFileContent()
+            val processedContent = processIncludeFiles(fileContent, depth + 1)
+
+            processedTemplate = processedTemplate.substring(0, startIndex) +
+                    processedContent +
+                    processedTemplate.substring(endIndex + INCLUDE_FILE_END.length)
+        }
+        return processedTemplate
+    }
+
+    /**
+     * @param template The content of the template file to process.
+     * @param data The data to replace placeholders with.
+     * @return The file content with placeholders replaced with values from the data map.
+     */
+    private fun applyData(template: String, data: Map<String, String>): String {
+        return data.entries.fold(template) { content, (key, value) ->
+            content.replace("{{$key}}", value)
         }
     }
 }
