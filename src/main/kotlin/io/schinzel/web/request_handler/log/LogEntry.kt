@@ -53,7 +53,3 @@ object TimeProvider {
             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
     }
 }
-
-fun main() {
-    ZoneId.getAvailableZoneIds().forEach { println(it) }
-}
