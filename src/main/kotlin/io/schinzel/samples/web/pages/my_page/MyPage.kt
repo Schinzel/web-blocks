@@ -1,6 +1,6 @@
 package io.schinzel.samples.web.pages.my_page
 
-import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageResponseHandler
+import io.schinzel.web.response_handlers.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class MyPage : IPageResponseHandler {

@@ -1,6 +1,6 @@
 package io.schinzel.samples.component.api.v1
 
-import io.schinzel.web_app_engine.response_handlers.response_handlers.IApiEndpointResponseHandler
+import io.schinzel.web.response_handlers.response_handlers.IApiEndpointResponseHandler
 
 @Suppress("unused")
 class UserPets : IApiEndpointResponseHandler {

@@ -1,8 +1,8 @@
 package io.schinzel.samples.web
 
-import io.schinzel.web_app_engine.InitWebApp
-import io.schinzel.web_app_engine.WebAppConfig
-import io.schinzel.web_app_engine.request_handler.log.ConsoleLogger
+import io.schinzel.web.InitWebApp
+import io.schinzel.web.WebAppConfig
+import io.schinzel.web.request_handler.log.ConsoleLogger
 
 fun main() {
     InitWebApp(

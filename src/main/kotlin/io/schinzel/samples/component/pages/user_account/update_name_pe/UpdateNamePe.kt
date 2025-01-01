@@ -1,7 +1,7 @@
 package io.schinzel.samples.component.pages.user_account.update_name_pe
 
-import io.schinzel.pages.bootstrap_page.ObservablePageElement
-import io.schinzel.pages.template_engine.TemplateRenderer
+import io.schinzel.components.bootstrap_page.ObservablePageElement
+import io.schinzel.components.template_engine.TemplateRenderer
 import io.schinzel.samples.component.pages.user_account.NameDao
 
 class UpdateNamePe(val userId: Int) : ObservablePageElement() {
