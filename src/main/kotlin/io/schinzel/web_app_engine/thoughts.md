@@ -3,9 +3,8 @@
 - Template engine
   - Add a cache to for template file reading
 - Name of this project
+- Packages response_handlers.response_handlers
 - ApiResponse.Error is not used
-- Readme
-  - Split to three files
 - Sample for the web framework
 - Path parameters?
 - Error handling with html

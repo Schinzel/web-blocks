@@ -2,6 +2,7 @@ package io.schinzel.web_app_engine.set_up_routes
 
 import io.javalin.Javalin
 import io.javalin.http.staticfiles.Location
+import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_app_engine.WebAppConfig
 import io.schinzel.web_app_engine.request_handler.RequestHandler
 import io.schinzel.web_app_engine.response_handler_mapping.ResponseHandlerMapping
@@ -21,6 +22,8 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin? {
     }
     // Find all routes and add them Javalin
     findRoutes(webAppConfig.endpointPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
+        // Print the route
+        responseHandlerMapping.println()
         // Create request handler
         val requestHandler = RequestHandler(responseHandlerMapping, webAppConfig)
             .getHandler()

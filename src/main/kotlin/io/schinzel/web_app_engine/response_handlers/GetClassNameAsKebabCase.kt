@@ -5,7 +5,7 @@ import kotlin.reflect.KClass
 
 fun getClassNameAsKebabCase(clazz: KClass<*>): String {
     return clazz.simpleName!!
-        .removeSuffix("WebPageEndpoint")
+        .removeSuffix("PageEndpoint")
         .removeSuffix("Endpoint")
         .removeSuffix("Api")
         .let { StandardTextCases.PASCAL_CASE.convertTo(StandardTextCases.KEBAB_CASE, it) }
