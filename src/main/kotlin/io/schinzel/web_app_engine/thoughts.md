@@ -23,7 +23,7 @@
   - cannot have a page nor an api with path "static"
 - Create a new public repo
 - Tester & doc
-- Create a human readable html page that returns documentation of all the endpoints
+- Create a human readable html page that contains documentation of all the endpoints
 
 
 # How to build and run a JAR
