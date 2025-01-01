@@ -35,32 +35,38 @@ There are three types of response handlers:
 - The path is decided by the directory structure and the file name
   - API endpoints are located in the `api` directory
   - Directory names are converted from snake case to kebab case
-  - Class names are converted from pascal case to kebab case
-  - A possible suffix `Endpoint` is removed
+  - Class names are converted from PascalCase to kebab-case
+  - Suffix `API` or `Endpoint` are removed
   - Api paths are prefixed with `api`
   - For example the endpoint `/api/my_dir/MyPersonEndpoint.kt` will receive the path `api/my-dir/my-person`
   
   
 ### Page endpoint response handler 
 - Returns a JSON object
-- Used by pages to for example save data or update an element on a the page. 
-These are tied to pages as opposed to being standalone endpoints like the API endpoints.
+- These are assume to be tied to pages as opposed to being standalone endpoints like the API endpoints.
+  Used by pages to for example save data or update an element on a the page.
 - Implements `IPageEndpointResponseHandler.getResponse()`
 - Returns an object which will be converted to JSON
 - The path is decided by the directory structure and the file name
     - Located in the `pages` directory
     - All page endpoints are prefixed with `page-api`
-    - Class names are converted from pascal case to kebab case
-    - A possible suffix `Endpoint` or `PageEndpoint` is removed
+    - Class names are converted from PascalCase to kebab-case
+    - Suffixes `Endpoint` or `PageEndpoint` are removed
     - Page endpoints paths are prefixed with `page-api`
     - For example the page endpoint `/pages/my_dir/MyPageSavePersonNameEndpoint.kt` 
       will receive the path `page-api/my-dir/my-page/save-person-name`
 
 
 ## Parameters
+- Parameters to pages, api endpoints and page endpoints 
+are passed as query parameters or in the request body.
+- These are stated a constructor arguments that are declared as `val` and non-private (public)
+- Parameters are converted from camelCase to kebab-case
+  
+## Sample
+Start the main file in `io.schinzel.sample.web`
 
-
-## Sample URLs
+URLs:
 - http://127.0.0.1:5555/my-page
 - http://127.0.0.1:5555/my-dir/my-page
 - http://127.0.0.1:5555/api/my-dir/my-person

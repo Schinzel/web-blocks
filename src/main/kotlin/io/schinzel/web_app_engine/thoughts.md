@@ -1,8 +1,9 @@
 
 # To do
+- Parameters to kebab case
 - Template engine
   - Add a cache to for template file reading
-- Name of this project
+- Name(s) of this project/frameworks 
 - Packages response_handlers.response_handlers
 - ApiResponse.Error is not used
 - Sample for the web framework

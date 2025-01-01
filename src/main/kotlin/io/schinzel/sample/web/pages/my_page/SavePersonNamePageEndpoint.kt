@@ -10,5 +10,4 @@ class SavePersonNamePageEndpoint(
     override fun getResponse(): Any {
         return "Saved $firstName for user $userId"
     }
-
 }
