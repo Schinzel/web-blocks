@@ -14,9 +14,8 @@ This intuitive system:
 - Simplifies navigation and routing management
 - Provides a predictable pattern for adding new pages
 
-## Response Handlers
-To create a html page or an API endpoint, implement a response handler.
-There are three types of response handlers:
+## Routes
+Each route is set up with both get and post requests.
 
 ### Page response handler
 - Used to serve HTML Pages
@@ -58,13 +57,14 @@ There are three types of response handlers:
 
 
 ## Parameters
-- Parameters to pages, api endpoints and page endpoints 
-are passed as query parameters or in the request body.
+Arguments to pages, api endpoints and page endpoints can be passed as:
+- Query parameters
+- Request body
 - These are stated a constructor arguments that are declared as `val` and non-private (public)
 - Parameters are converted from camelCase to kebab-case
   
 ## Sample
-Start the main file in `io.schinzel.sample.web`
+Start the main file in `io.schinzel.sample.web.main`
 
 URLs:
 - http://127.0.0.1:5555/my-page
@@ -72,8 +72,8 @@ URLs:
 - http://127.0.0.1:5555/api/my-dir/my-person
 - http://127.0.0.1:5555/page-api/my-page/save-person-name?userId=123&firstName=John
 
-### Custom Response Handler
-To create your own response handler, implement one of the interfaces above, you need to:
+## Custom Response Handler
+To create your own response handler you need to:
 - Implement `IResponseHandler`
 - Implement `IResponseHandlerDescriptor`
 - Register the descriptor with the `ResponseHandlerDescriptorRegistry`

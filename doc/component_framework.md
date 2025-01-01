@@ -1,4 +1,5 @@
 # Component Framework
+
 ## Features
 - A grid based system based on Bootstrap
 - A page consists of a set of modular stand alone page elements.
@@ -33,7 +34,7 @@ grouped by feature rather than technical function. This approach:
 
 
 # Sample
-Start the class io.schinzel.sample.main
+Start the class `io.schinzel.samples.web.main`
 
 Sample urls:
 - Call landing page: http://127.0.0.1:5555/?userId=ABC
@@ -42,29 +43,7 @@ Sample urls:
 - Call a page element in a page http://127.0.0.1:5555/page-api/user-account/update-name-pe/update-first-name/?userId=123&firstName=Jack
 - Call a page with interconnecting page elements http://127.0.0.1:5555/user-account?userId=123
 
-## Page path
-The path to the directory in which a page is located.
-If the page is located in the directory "landing" then the path to the page is "/"
 
-## Routes
-Each route is set up with both get and post requests.
-Variables can be passed as:
-- Query parameters
-- Path parameters
-- Request body
-
-## Api path
-Prefix: /api.
-Name of the class in kebab-case
-
-# Routes
-Routing paths mirror the directory structure, where each folder represents a path segment
-- Pages reside in the directory "pages"
-- Endpoints reside in the directory "api"
-- Page endpoints are found in the "pages" directory
-    - Typically, these endpoints are used to save data from a page
-    - Page endpoints have the route prefix "page-api"
-    - Routing paths mirror the directory structure, where each folder represents a path segment, plus the name of the class in kebab-case
 
 
 ## Building a JAR
