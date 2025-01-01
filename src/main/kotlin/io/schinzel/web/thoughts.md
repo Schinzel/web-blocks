@@ -1,7 +1,5 @@
 
 # To do
-- Template engine
-  - Add a cache to for template file reading
 - Name(s) of this project/frameworks 
 - Packages response_handlers.response_handlers
 - ApiResponse.Error is not used
