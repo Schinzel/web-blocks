@@ -104,7 +104,8 @@
         </dependency>
 
         <dependency>
-            <!-- To convert between different text cases -->
+            <!-- To convert between different text cases
+            https://github.com/marcelkliemannel/text-case-converter -->
             <groupId>dev.turingcomplete</groupId>
             <artifactId>text-case-converter</artifactId>
             <version>2.0.0</version>
@@ -212,7 +213,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>io.schinzel.sample.MainKt</mainClass>
+                                    <mainClass>io.schinzel.samples.MainKt</mainClass>
                                 </transformer>
                             </transformers>
                             <!-- Name of jar file. Will be myJar.jar -->

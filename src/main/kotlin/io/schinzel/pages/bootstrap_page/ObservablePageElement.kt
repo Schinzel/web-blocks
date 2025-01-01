@@ -1,5 +1,6 @@
 package io.schinzel.pages.bootstrap_page
 
+import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_app_engine.request_handler.log.JsonMapper
 import io.schinzel.web_app_engine.response_handlers.response_handlers.IPageEndpointResponseHandler
@@ -72,7 +73,9 @@ abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElemen
             .filter { it.name in constructorParamNames }
             .associate { prop ->
                 val property = prop as KProperty1<ObservablePageElement, *>
-                prop.name to (property.get(this) ?: throw IllegalStateException("Property ${prop.name} is null"))
+                val parameterNameInKebabCase = StandardTextCases.SOFT_CAMEL_CASE
+                    .convertTo(StandardTextCases.KEBAB_CASE, prop.name)
+                parameterNameInKebabCase to (property.get(this) ?: throw IllegalStateException("Property ${prop.name} is null"))
             }
     }
 }

@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <div class="mb-3">
+        <label for="first_name" class="form-label">First Name</label>
+        <input type="text"
+               class="form-control"
+               id="first_name"
+               placeholder="Enter your first name"
+               data-user-id="{{userId}}"
+               value="{{firstName}}">
+    </div>
+</div>
+<script>
+    $("#first_name").on("change", async function () {
+        const userId = $(this).data("userId")
+        const firstName = $(this).val()
+
+        try {
+            const response = await $.ajax({
+                url: "/page-api/user-account/update-name-pe/update-first-name",
+                method: "POST",
+                data: JSON.stringify({
+                    "user-id": userId,
+                    "first-name": firstName
+                }),
+                contentType: "application/json"
+            })
+
+            // noinspection JSUnresolvedReference
+            if (!response.success) {
+                throw new Error(response.error || "Failed to update name")
+            }
+            const containerId = $(this).closest("[data-page-element]").attr("id")
+            console.log(`Updated first name to ${firstName}`)
+            console.log(`Notifying container ${containerId} of update`)
+            window.observer.notify(containerId)
+
+        } catch (error) {
+            console.error("Failed to update name:", error)
+            // Optionally show error to user
+            alert("Failed to save name. Please try again.")
+            // Optionally revert to original value
+            $(this).val($(this).prop("defaultValue"))
+        }
+    })
+</script>
