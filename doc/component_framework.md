@@ -2,7 +2,7 @@
 
 ## Features
 - A grid based system based on Bootstrap
-- A page consists of a set of modular stand alone page elements.
+- A page consists of a set of modular standalone page elements.
 - Each page element has it's own endpoint
 - The page elements can update themselves independently of the page
 - A publish-subscribe system where a page elements can notify is subscribers that they should update themselves.
