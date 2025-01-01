@@ -2,8 +2,8 @@ package io.schinzel.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.web.request_handler.log.LogEntry
-import io.schinzel.web.response_handlers.response_handlers.IResponseHandler
-import io.schinzel.web.response_handlers.response_handlers.ReturnTypeEnum
+import io.schinzel.web.response_handlers.IResponseHandler
+import io.schinzel.web.response_handlers.ReturnTypeEnum
 import org.jsoup.Jsoup
 
 

@@ -3,7 +3,7 @@ package io.schinzel.components.bootstrap_page
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web.request_handler.log.JsonMapper
-import io.schinzel.web.response_handlers.response_handlers.IPageEndpointResponseHandler
+import io.schinzel.web.response_handlers.IPageEndpointResponseHandler
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor

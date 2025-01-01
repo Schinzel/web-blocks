@@ -1,7 +1,7 @@
 package io.schinzel.web.response_handler_mapping
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
-import io.schinzel.web.response_handlers.response_handlers.IResponseHandler
+import io.schinzel.web.response_handlers.IResponseHandler
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 

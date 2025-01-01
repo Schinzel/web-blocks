@@ -1,8 +1,8 @@
 package io.schinzel.web.response_handler_mapping
 
 import io.schinzel.web.response_handlers.ResponseHandlerDescriptorRegistry
-import io.schinzel.web.response_handlers.response_handlers.IResponseHandler
-import io.schinzel.web.response_handlers.response_handlers.ReturnTypeEnum
+import io.schinzel.web.response_handlers.IResponseHandler
+import io.schinzel.web.response_handlers.ReturnTypeEnum
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor

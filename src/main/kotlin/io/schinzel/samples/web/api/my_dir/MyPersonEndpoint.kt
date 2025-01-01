@@ -1,6 +1,6 @@
 package io.schinzel.samples.web.api.my_dir
 
-import io.schinzel.web.response_handlers.response_handlers.IApiEndpointResponseHandler
+import io.schinzel.web.response_handlers.IApiEndpointResponseHandler
 
 @Suppress("unused")
 class MyPersonEndpoint: IApiEndpointResponseHandler {

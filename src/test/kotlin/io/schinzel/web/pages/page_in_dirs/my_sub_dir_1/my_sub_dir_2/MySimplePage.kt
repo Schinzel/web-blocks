@@ -1,6 +1,6 @@
 package io.schinzel.web.pages.page_in_dirs.my_sub_dir_1.my_sub_dir_2
 
-import io.schinzel.web.response_handlers.response_handlers.IPageResponseHandler
+import io.schinzel.web.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class MySimplePage : IPageResponseHandler {

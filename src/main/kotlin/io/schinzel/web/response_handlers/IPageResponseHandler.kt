@@ -1,6 +1,5 @@
-package io.schinzel.web.response_handlers.response_handlers
+package io.schinzel.web.response_handlers
 
-import io.schinzel.web.response_handlers.getRelativePath
 import kotlin.reflect.KClass
 
 interface IPageResponseHandler : IResponseHandler {
@@ -13,7 +12,7 @@ class PageResponseHandlerDescriptor(
 ) : IResponseHandlerDescriptor<IPageResponseHandler> {
 
     override fun getPath(clazz: KClass<out IPageResponseHandler>): String {
-        val relativePath = getRelativePath(endpointPackage, clazz)
+        val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         return if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
     }

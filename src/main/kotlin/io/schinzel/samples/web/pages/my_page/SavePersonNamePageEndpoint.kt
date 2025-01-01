@@ -1,6 +1,6 @@
 package io.schinzel.samples.web.pages.my_page
 
-import io.schinzel.web.response_handlers.response_handlers.IPageEndpointResponseHandler
+import io.schinzel.web.response_handlers.IPageEndpointResponseHandler
 
 @Suppress("unused")
 class SavePersonNamePageEndpoint(

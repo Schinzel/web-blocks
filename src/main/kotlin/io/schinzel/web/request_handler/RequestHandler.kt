@@ -5,7 +5,7 @@ import io.schinzel.web.WebAppConfig
 import io.schinzel.web.request_handler.log.ErrorLog
 import io.schinzel.web.request_handler.log.LogEntry
 import io.schinzel.web.response_handler_mapping.ResponseHandlerMapping
-import io.schinzel.web.response_handlers.response_handlers.IResponseHandler
+import io.schinzel.web.response_handlers.IResponseHandler
 import kotlin.reflect.full.createInstance
 
 class RequestHandler(

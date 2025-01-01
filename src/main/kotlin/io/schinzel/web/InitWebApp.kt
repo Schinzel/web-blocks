@@ -2,9 +2,9 @@ package io.schinzel.web
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
-import io.schinzel.web.request_handler.log.ILogger
 import io.schinzel.web.request_handler.log.ConsoleLogger
-import io.schinzel.web.response_handlers.initializeResponseHandlerDescriptorRegistry
+import io.schinzel.web.request_handler.log.ILogger
+import io.schinzel.web.response_handlers.*
 import io.schinzel.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
@@ -39,6 +39,18 @@ class InitWebApp(
             } catch (e: IOException) {
                 false
             }
+        }
+
+        /**
+         * Register the default descriptors
+         */
+        fun initializeResponseHandlerDescriptorRegistry(endpointPackage: String) {
+            ResponseHandlerDescriptorRegistry
+                .register(IPageResponseHandler::class, PageResponseHandlerDescriptor(endpointPackage))
+            ResponseHandlerDescriptorRegistry
+                .register(IPageEndpointResponseHandler::class, PageEndpointResponseHandlerDescriptor(endpointPackage))
+            ResponseHandlerDescriptorRegistry
+                .register(IApiEndpointResponseHandler::class, ApiEndpointResponseHandlerDescriptor(endpointPackage))
         }
     }
 }

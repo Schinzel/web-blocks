@@ -4,7 +4,7 @@ import io.schinzel.components.bootstrap_page.BootstrapPage
 import io.schinzel.samples.component.pages.user_account.intro_text.IntroductionTextPe
 import io.schinzel.samples.component.pages.user_account.update_name_pe.UpdateNamePe
 import io.schinzel.samples.component.pages.user_account.welcome_pe.WelcomePe
-import io.schinzel.web.response_handlers.response_handlers.IPageResponseHandler
+import io.schinzel.web.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class AccountWebPage(private val userId: Int) : IPageResponseHandler {

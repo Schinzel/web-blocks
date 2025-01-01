@@ -1,7 +1,5 @@
-package io.schinzel.web.response_handlers.response_handlers
+package io.schinzel.web.response_handlers
 
-import io.schinzel.web.response_handlers.getClassNameAsKebabCase
-import io.schinzel.web.response_handlers.getRelativePath
 import kotlin.reflect.KClass
 
 interface IPageEndpointResponseHandler : IResponseHandler
@@ -12,9 +10,9 @@ class PageEndpointResponseHandlerDescriptor(
 ) : IResponseHandlerDescriptor<IPageEndpointResponseHandler> {
 
     override fun getPath(clazz: KClass<out IPageEndpointResponseHandler>): String {
-        val relativePath = getRelativePath(endpointPackage, clazz)
+        val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
-        val classNameKebabCase = getClassNameAsKebabCase(clazz)
+        val classNameKebabCase = ResponseHandlerUtil.getClassNameAsKebabCase(clazz)
         return "page-api/$pagePathWithoutPages/$classNameKebabCase"
     }
 

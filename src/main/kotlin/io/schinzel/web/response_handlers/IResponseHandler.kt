@@ -1,6 +1,5 @@
-package io.schinzel.web.response_handlers.response_handlers
+package io.schinzel.web.response_handlers
 
-import io.schinzel.web.response_handlers.ResponseHandlerDescriptorRegistry
 import kotlin.reflect.KClass
 
 

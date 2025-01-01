@@ -1,6 +1,6 @@
 package io.schinzel.web.pages.landing
 
-import io.schinzel.web.response_handlers.response_handlers.IPageResponseHandler
+import io.schinzel.web.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
 class LandingPage : IPageResponseHandler {

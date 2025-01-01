@@ -1,7 +1,5 @@
-package io.schinzel.web.response_handlers.response_handlers
+package io.schinzel.web.response_handlers
 
-import io.schinzel.web.response_handlers.getClassNameAsKebabCase
-import io.schinzel.web.response_handlers.getRelativePath
 import kotlin.reflect.KClass
 
 
@@ -11,8 +9,8 @@ class ApiEndpointResponseHandlerDescriptor(
     private val endpointPackage: String
 ) : IResponseHandlerDescriptor<IApiEndpointResponseHandler> {
     override fun getPath(clazz: KClass<out IApiEndpointResponseHandler>): String {
-        val relativePath = getRelativePath(endpointPackage, clazz)
-        val classNameKebabCase = getClassNameAsKebabCase(clazz)
+        val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
+        val classNameKebabCase = ResponseHandlerUtil.getClassNameAsKebabCase(clazz)
         return "$relativePath/$classNameKebabCase"
     }
 
