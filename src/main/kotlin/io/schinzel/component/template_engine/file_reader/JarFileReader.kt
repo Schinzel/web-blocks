@@ -1,4 +1,4 @@
-package io.schinzel.components.template_engine.file_reader
+package io.schinzel.component.template_engine.file_reader
 
 
 /**

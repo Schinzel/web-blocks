@@ -1,4 +1,4 @@
-package io.schinzel.components.bootstrap_page
+package io.schinzel.component.bootstrap_page
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil

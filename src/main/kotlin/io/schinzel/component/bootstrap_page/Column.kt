@@ -1,4 +1,4 @@
-package io.schinzel.components.bootstrap_page
+package io.schinzel.component.bootstrap_page
 
 class Column(val span: Int) {
     val elements: MutableList<ObservablePageElement> = mutableListOf()

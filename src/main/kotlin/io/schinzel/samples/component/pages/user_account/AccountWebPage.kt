@@ -1,6 +1,6 @@
 package io.schinzel.samples.component.pages.user_account
 
-import io.schinzel.components.bootstrap_page.BootstrapPage
+import io.schinzel.component.bootstrap_page.BootstrapPage
 import io.schinzel.samples.component.pages.user_account.intro_text.IntroductionTextPe
 import io.schinzel.samples.component.pages.user_account.update_name_pe.UpdateNamePe
 import io.schinzel.samples.component.pages.user_account.welcome_pe.WelcomePe

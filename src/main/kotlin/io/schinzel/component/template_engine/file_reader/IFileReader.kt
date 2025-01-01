@@ -1,4 +1,4 @@
-package io.schinzel.components.template_engine.file_reader
+package io.schinzel.component.template_engine.file_reader
 
 /**
  * The purpose of this interface is to provide a function for reading a file.

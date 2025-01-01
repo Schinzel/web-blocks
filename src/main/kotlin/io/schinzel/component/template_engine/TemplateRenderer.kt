@@ -1,6 +1,6 @@
-package io.schinzel.components.template_engine
+package io.schinzel.component.template_engine
 
-import io.schinzel.components.template_engine.file_reader.FileReaderFactory
+import io.schinzel.component.template_engine.file_reader.FileReaderFactory
 
 /**
  * This class is used to render a template.
