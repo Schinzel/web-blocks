@@ -1,15 +1,12 @@
 
 # To do
-- Parameters to kebab case
 - Template engine
   - Add a cache to for template file reading
 - Name(s) of this project/frameworks 
 - Packages response_handlers.response_handlers
 - ApiResponse.Error is not used
-- Sample for the web framework
 - Path parameters?
 - Error handling with html
-- License
 - A common JavaScript class to send data to the server with
   - Error handling
   - Success handling
@@ -41,7 +38,6 @@
 
 # Name
 ElementK
-
 
 
 
