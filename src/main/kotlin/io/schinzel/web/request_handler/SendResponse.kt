@@ -6,7 +6,9 @@ import io.schinzel.web.response_handlers.IResponseHandler
 import io.schinzel.web.response_handlers.ReturnTypeEnum
 import org.jsoup.Jsoup
 
-
+/**
+ * The purpose of this class is to send a response to a client
+ */
 fun sendResponse(
     ctx: Context,
     responseHandler: IResponseHandler,
@@ -35,19 +37,6 @@ fun sendResponse(
     }
 }
 
-private sealed class ApiResponse {
-    data class Success(
-        val success: Boolean = true,
-        val message: Any? = null
-    ) : ApiResponse()
-
-    data class Error(
-        val success: Boolean = false,
-        val message: String,
-        val code: String? = null
-    ) : ApiResponse()
-}
-
 private fun prettyFormatHtml(htmlString: String): String {
     val document = Jsoup.parse(htmlString)
     document.outputSettings()
@@ -55,8 +44,3 @@ private fun prettyFormatHtml(htmlString: String): String {
         .indentAmount(2)
     return document.outerHtml()
 }
-
-data class ApiError(
-    val message: String,
-    val errorId: String
-)

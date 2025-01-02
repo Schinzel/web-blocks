@@ -8,6 +8,9 @@ import io.schinzel.web.response_handler_mapping.ResponseHandlerMapping
 import io.schinzel.web.response_handlers.IResponseHandler
 import kotlin.reflect.full.createInstance
 
+/**
+ * The purpose of this class is to handle a request.
+ */
 class RequestHandler(
     private val responseHandlerMapping: ResponseHandlerMapping,
     private val webAppConfig: WebAppConfig,
@@ -41,7 +44,10 @@ class RequestHandler(
                 ctx.status(500)
                 val errorLog = ErrorLog(e)
                 logEntry.errorLog = errorLog
-                ApiError(e.message ?: "An error occurred", errorLog.errorId)
+                ApiResponse.Error(
+                    message = e.message ?: "An error occurred",
+                    errorId = errorLog.errorId
+                )
             } finally {
                 // Log the response status code
                 logEntry.responseLog.statusCode = ctx.statusCode()
