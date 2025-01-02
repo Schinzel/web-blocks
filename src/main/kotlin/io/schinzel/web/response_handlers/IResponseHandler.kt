@@ -26,6 +26,10 @@ enum class ReturnTypeEnum { HTML, JSON }
  * we do not have instances, just classes.
  */
 interface IResponseHandlerDescriptor<T : IResponseHandler> {
+    /**
+     * @param clazz The class of the response handler
+     * @return The path or route of the response handler
+     */
     fun getPath(clazz: KClass<out T>): String
 
     // WebPage, API and so on. For user notification and logging purposes
