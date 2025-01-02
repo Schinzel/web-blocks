@@ -17,43 +17,63 @@ This intuitive system:
 ## Routes
 Each route is set up with both get and post requests.
 
-### Page response handler
-- Used to serve HTML Pages
-- Implements `IPageResponseHandler.getResponse()`
-- Returns an HTML page as a string
-- The path is decided by the directory structure.
-  - Pages are located in the `pages` directory
-  - Directory name in snake case are converted to kebab case
-  - For example the page `/pages/my_dir/my_page/ThePage.kt` will receive the path `/my-dir/my-page` 
-  - A special case is if a page resides in the directory `landing` it will be served as the root page
-
 ### API response handler
-- Used to serve JSON responses
-- Implements `IApiEndpointResponseHandler.getResponse()`
-- Returns an object which will be converted to JSON
-- The path is decided by the directory structure and the file name
-  - API endpoints are located in the `api` directory
-  - Directory names are converted from snake case to kebab case
-  - Class names are converted from PascalCase to kebab-case
-  - Suffix `API` or `Endpoint` are removed
-  - Api paths are prefixed with `api`
-  - For example the endpoint `/api/my_dir/MyPersonEndpoint.kt` will receive the path `api/my-dir/my-person`
-  
+
+| Attribute  | Description                                 |
+|------------|---------------------------------------------|
+| Returns    | JSON                                        |
+| Implements | `IApiEndpointResponseHandler.getResponse()` |
+| Location   | Located in the `api` directory              |
+
+
+
+| Property         | Description                                                                    |
+|------------------|--------------------------------------------------------------------------------|
+| Path             | The path is decided by the directory structure and the Class name              |
+| Case             | Directory names are converted from snake_case to kebab-case                    |
+| Case             | Class names are converted from PascalCase to kebab-case                        |
+| Suffixes removed | Suffixes `Api` or `Endpoint` are removed                                       |
+| Prefix           | Api paths are prefixed with `api`                                              |
+| Example          | `/api/my_dir/MyPersonEndpoint.kt` will receive the path `api/my-dir/my-person` |
+
+
+### Page response handler
+
+| Attribute  | Description                           |
+|------------|---------------------------------------|
+| Returns    | HTML                                  |
+| Implements | `IIPageResponseHandler.getResponse()` |
+| Location   | Located in the `pages` directory      |
+
+
+| Property     | Description                                                                       |
+|--------------|-----------------------------------------------------------------------------------|
+| Path         | The path is decided by the directory structure                                    |
+| Case         | Directory names are converted from snake_case to kebab-case                       |
+| Special case | A that page resides in the directory `landing` it will be served as the root page |
+| Example      | `/pages/my_dir/my_page/ThePage.kt` will receive the path `/my-dir/my-page`        |
+
   
 ### Page endpoint response handler 
-- Returns a JSON object
-- These are assume to be tied to pages as opposed to being standalone endpoints like the API endpoints.
-  Used by pages to for example save data or update an element on a the page.
-- Implements `IPageEndpointResponseHandler.getResponse()`
-- Returns an object which will be converted to JSON
-- The path is decided by the directory structure and the file name
-    - Located in the `pages` directory
-    - All page endpoints are prefixed with `page-api`
-    - Class names are converted from PascalCase to kebab-case
-    - Suffixes `Endpoint` or `PageEndpoint` are removed
-    - Page endpoints paths are prefixed with `page-api`
-    - For example the page endpoint `/pages/my_dir/MyPageSavePersonNameEndpoint.kt` 
-      will receive the path `page-api/my-dir/my-page/save-person-name`
+
+These are assume to be tied to pages as opposed to being standalone endpoints like the API endpoints.
+Used by pages to for example save data or update an element on a the page.
+
+| Attribute  | Description                                  |
+|------------|----------------------------------------------|
+| Returns    | JSON                                         |
+| Implements | `IPageEndpointResponseHandler.getResponse()` |
+| Location   | Located in the `pages` directory             |
+
+
+| Property         | Description                                                                                                                  |
+|------------------|------------------------------------------------------------------------------------------------------------------------------|
+| Path             | The path is decided by the directory structure and the Class name                                                            |
+| Case             | Directory names are converted from snake_case to kebab-case                                                                  |
+| Case             | Class names are converted from PascalCase to kebab-case                                                                      |
+| Suffixes removed | Suffixes `PageEndpoint` or `Endpoint` are removed                                                                            |
+| Prefix           | Prefixed with `page-api`                                                                                                     |
+| Example          | `/pages/user_pages/settings/SavePersonNameEndpoint.kt` will receive the path `page-api/user-pages/settings/save-person-name` |
 
 
 ## Parameters
@@ -64,7 +84,7 @@ Arguments to pages, api endpoints and page endpoints can be passed as:
 - Parameters are converted from camelCase to kebab-case
   
 ## Sample
-Start the main file in `io.schinzel.sample.web.main`
+Start the main file in `io.schinzel.samples.web.main`
 
 URLs:
 - http://127.0.0.1:5555/my-page

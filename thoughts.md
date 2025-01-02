@@ -1,15 +1,15 @@
 
 # To do
 - Name(s) of this project/frameworks 
+- Forbidden paths
+  - have a page with path "api"
+  - have an api with path "page"
+  - cannot have a page nor an api with path "static"
 - Error handling with html
 - A common JavaScript class to send data to the server with
   - Error handling
   - Success handling
   - browser console logging
-- Forbidden paths
-  - have a page with path "api"
-  - have an api with path "page"
-  - cannot have a page nor an api with path "static"
 - Create a new public repo
 - Tester & doc
 - Create a human readable html page that contains documentation of all the endpoints
