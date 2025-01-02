@@ -1,5 +1,11 @@
 # A Web and Component Framework for Kotlin
 
+**Low barrier to entry, high ceiling**  
+This project allows you a low threshold to create web application in Kotlin.
+It is easy to get started with simple pages while supporting complex, maintainable web applications as you scale.
+
+
+## Problems to solve
 The problems this project aims to solve are the following.
 
 **Web pages can easily become very large and hard to read and maintain**   
@@ -7,6 +13,10 @@ This is solved by a component framework that allows for breaking up a web page i
 
 **Finding api endpoints and web pages in a large project can be a hassle**   
 This is solved by file system based routing.
+
+**Low threshold to get started**   
+There are sample applications that you can copy and base you project on, so that your do not have 
+to read a line of instruction to get started.
 
 **Finding resource files that belong to a web page, such as HTML template pages can be unintuitive and in location far away from the web page**   
 This is solved by file by reading resources from the source folder of classes when in development
