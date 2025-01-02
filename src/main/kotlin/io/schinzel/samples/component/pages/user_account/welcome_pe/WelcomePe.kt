@@ -1,6 +1,6 @@
 package io.schinzel.samples.component.pages.user_account.welcome_pe
 
-import io.schinzel.component.bootstrap_page.ObservablePageElement
+import io.schinzel.component.page.ObservablePageElement
 import io.schinzel.samples.component.pages.user_account.NameDao
 
 class WelcomePe(val userId: Int) : ObservablePageElement() {

@@ -49,12 +49,13 @@
             const element = document.getElementById(id)
             if (!element) return
 
-            const path = element.dataset.path
+            // Get the path and arguments for the update
+            const endpointPath = element.dataset.path
             const args = JSON.parse(element.dataset.arguments)
 
             try {
                 const response = await $.ajax({
-                    url: `/${path}`,
+                    url: `/${endpointPath}`,
                     method: "POST",
                     data: JSON.stringify(args),
                     contentType: "application/json"
@@ -62,7 +63,9 @@
                 console.log(`Update response for ${id}:`, response)
                 // noinspection JSUnresolvedReference
                 if (response.success) {
-                    $(`#${id}`).html(response.message)
+                    const newPageElementHtml = response.message
+                    // Replace the html of the page element with the html from the response
+                    $(`#${id}`).html(newPageElementHtml)
                 }
             } catch (error) {
                 console.error(`Failed to update ${id}:`, error)

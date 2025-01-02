@@ -1,5 +1,8 @@
-package io.schinzel.component.bootstrap_page
+package io.schinzel.component.page
 
+/**
+ * The purpose of this class is to represent a row in a web page.
+ */
 class Row {
     val columns: MutableList<Column> = mutableListOf()
 

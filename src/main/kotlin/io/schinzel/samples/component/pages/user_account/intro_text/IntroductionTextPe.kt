@@ -1,6 +1,6 @@
 package io.schinzel.samples.component.pages.user_account.intro_text
 
-import io.schinzel.component.bootstrap_page.ObservablePageElement
+import io.schinzel.component.page.ObservablePageElement
 import io.schinzel.component.template_engine.TemplateRenderer
 import io.schinzel.samples.component.pages.user_account.NameDao
 

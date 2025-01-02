@@ -1,4 +1,4 @@
-package io.schinzel.component.bootstrap_page
+package io.schinzel.component.page
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
@@ -64,18 +64,21 @@ abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElemen
 
     @Suppress("UNCHECKED_CAST")
     private fun getConstructorArguments(): Map<String, Any> {
-        // Get the constructor parameters
+        // Get the constructor parameters of the class that implements this class
         val constructorParams = this::class.primaryConstructor?.parameters ?: emptyList()
         // Get the names of the constructor parameters
         val constructorParamNames = constructorParams.map { it.name }.toSet()
         // Get the values of the constructor parameters
         return this::class.memberProperties
+            // Filter out the properties that are not constructor parameters
             .filter { it.name in constructorParamNames }
             .associate { prop ->
                 val property = prop as KProperty1<ObservablePageElement, *>
+                // Convert the parameter name to kebab case
                 val parameterNameInKebabCase = StandardTextCases.SOFT_CAMEL_CASE
                     .convertTo(StandardTextCases.KEBAB_CASE, prop.name)
-                parameterNameInKebabCase to (property.get(this) ?: throw IllegalStateException("Property ${prop.name} is null"))
+                parameterNameInKebabCase to (property.get(this)
+                    ?: throw IllegalStateException("Property ${prop.name} is null"))
             }
     }
 }

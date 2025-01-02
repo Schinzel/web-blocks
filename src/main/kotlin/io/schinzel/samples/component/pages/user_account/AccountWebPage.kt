@@ -1,6 +1,6 @@
 package io.schinzel.samples.component.pages.user_account
 
-import io.schinzel.component.bootstrap_page.BootstrapPage
+import io.schinzel.component.page.Page
 import io.schinzel.samples.component.pages.user_account.intro_text.IntroductionTextPe
 import io.schinzel.samples.component.pages.user_account.update_name_pe.UpdateNamePe
 import io.schinzel.samples.component.pages.user_account.welcome_pe.WelcomePe
@@ -16,11 +16,11 @@ class AccountWebPage(private val userId: Int) : IPageResponseHandler {
             .addObserver(welcomePe)
             .addObserver(introTextPe)
 
-        val response = BootstrapPage()
+        val response = Page()
             .setTitle("Account")
 
-            .addRow()
-            .addColumn(12)
+//            .addRow()
+//            .addColumn(12)
             .addPageElement(welcomePe)
 
             .addRow()
