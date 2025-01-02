@@ -12,7 +12,8 @@ class PageEndpointResponseHandlerDescriptor(
     override fun getPath(clazz: KClass<out IPageEndpointResponseHandler>): String {
         val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
-        val classNameKebabCase = ResponseHandlerUtil.getClassNameAsKebabCase(clazz)
+        val classNameKebabCase = ResponseHandlerUtil
+            .removeSuffixesAndToKebabCase(clazz, listOf("PageEndpoint", "Endpoint"))
         return "page-api/$pagePathWithoutPages/$classNameKebabCase"
     }
 

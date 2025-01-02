@@ -10,7 +10,8 @@ class ApiEndpointResponseHandlerDescriptor(
 ) : IResponseHandlerDescriptor<IApiEndpointResponseHandler> {
     override fun getPath(clazz: KClass<out IApiEndpointResponseHandler>): String {
         val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
-        val classNameKebabCase = ResponseHandlerUtil.getClassNameAsKebabCase(clazz)
+        val classNameKebabCase = ResponseHandlerUtil
+            .removeSuffixesAndToKebabCase(clazz, listOf("Api", "Endpoint"))
         return "$relativePath/$classNameKebabCase"
     }
 
