@@ -9,7 +9,7 @@ import java.time.ZoneId
 
 /**
  * The purpose of this class is to hold configuration settings for the web app.
- * @param endpointPackage The package where the endpoints are located.
+ * @param routesPackage The package where the response handlers are located.
  * @param port The port the web app will listen to. Default value is 5555.
  * @param logger The logger to use. Default value is a console logger.
  * @param localTimezone The timezone to use. Default value is "Europe/Stockholm".
@@ -17,7 +17,7 @@ import java.time.ZoneId
  * For production environment set this should be false.
  */
 data class WebAppConfig(
-    val endpointPackage: String,
+    val routesPackage: String,
     val port: Int = 5555,
     val logger: ILogger = ConsoleLogger(prettyPrint = true),
     val localTimezone: String = "Europe/Stockholm",
@@ -26,12 +26,10 @@ data class WebAppConfig(
     init {
         Thrower.throwIfFalse(port in 1..65535)
             .message("Incorrect port '$port'. Port must be between 1 and 65535.")
-        Thrower.throwIfFalse(isPortAvailable(port))
-            .message("Port $port is not available")
         Thrower.throwIfFalse(isValidTimezone(localTimezone))
             .message("'$localTimezone' is not a valid timezone")
-        Thrower.throwIfFalse(isValidPackage(endpointPackage))
-            .message("'$endpointPackage' is not a valid package")
+        Thrower.throwIfFalse(isValidPackage(routesPackage))
+            .message("'$routesPackage' is not a valid package")
 
     }
 
@@ -42,12 +40,7 @@ data class WebAppConfig(
                 .any { it.name == packageName }
 
 
-        private fun isPortAvailable(port: Int): Boolean =
-            try {
-                ServerSocket(port).use { true }
-            } catch (e: IOException) {
-                false
-            }
+
 
 
         private fun isValidTimezone(timezone: String): Boolean =

@@ -11,7 +11,7 @@ import io.schinzel.web.request_handler.log.ConsoleLogger
 fun main() {
     InitWebApp(
         WebAppConfig(
-            endpointPackage = "io.schinzel.samples.web",
+            routesPackage = "io.schinzel.samples.web",
             port = 5555,
             logger = ConsoleLogger(prettyPrint = true),
             localTimezone = "Europe/Stockholm",

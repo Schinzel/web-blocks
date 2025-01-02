@@ -17,7 +17,7 @@ class InitWebAppTest {
         fun beforeAll() {
             InitWebApp(
                 WebAppConfig(
-                    endpointPackage =  "io.schinzel.web",
+                    routesPackage =  "io.schinzel.web",
                     port = randomPort,
                     logger = NoLogger(),
                     prettyFormatHtml = false

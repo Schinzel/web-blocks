@@ -21,7 +21,7 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin? {
         }
     }
     // Find all routes and add them Javalin
-    findRoutes(webAppConfig.endpointPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
+    findRoutes(webAppConfig.routesPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
         // Print the route
         responseHandlerMapping.println()
         // Create request handler
