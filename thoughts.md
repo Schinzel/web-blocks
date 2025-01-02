@@ -1,6 +1,5 @@
 
 # To do
-- Name(s) of this project/frameworks 
 - Forbidden paths
   - have a page with path "api"
   - have an api with path "page"
@@ -10,6 +9,7 @@
   - Error handling
   - Success handling
   - browser console logging
+- Name(s) of this project/frameworks
 - Create a new public repo
 - Tester & doc
 - Create a human readable html page-that contains documentation of all the endpoints
@@ -38,5 +38,7 @@ Swarming - Ants (many small independent things working together)
 Swarm
 BeeSwarm
 Web Swarm
+Web Islands 
+Web Elements (no, is already a thing)
 
 
