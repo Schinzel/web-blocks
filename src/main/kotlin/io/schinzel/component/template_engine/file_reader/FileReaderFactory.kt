@@ -2,6 +2,10 @@ package io.schinzel.component.template_engine.file_reader
 
 /**
  * The purpose of this class is to create a file reader.
+ *
+ * The file reader is either a [JarFileReader] or a [SourceFileReader].
+ * If the caller is running from a jar file, a [JarFileReader] is created, else
+ * a [SourceFileReader] is created.
  */
 object FileReaderFactory {
 

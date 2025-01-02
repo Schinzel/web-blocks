@@ -9,7 +9,7 @@ import io.schinzel.web.response_handler_mapping.Parameter
  * @param parameters The parameters as defined by the route. I.e. the parameter names
  * are in kebab case.
  * @param ctx The Javalin context
- * @return A map with the parameter names as keys and the parameter values as values
+ * @return A map with the argument names as keys and the argument values as values
  */
 fun getArguments(parameters: List<Parameter>, ctx: Context): Map<String, Any> {
     return parameters.associate { parameter ->
@@ -40,6 +40,7 @@ fun getArguments(parameters: List<Parameter>, ctx: Context): Map<String, Any> {
                         "to type ${parameter.type} for parameter '${parameter.name}'"
             )
         }
+        // Convert the parameter name to camel case
         val parameterNameInCamelCase = StandardTextCases.KEBAB_CASE
             .convertTo(StandardTextCases.SOFT_CAMEL_CASE, parameterNameInKebabCase)
         parameterNameInCamelCase to parameterValue

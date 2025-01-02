@@ -6,6 +6,9 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+/**
+ * The purpose of this class is to represent a log entry for a request and response.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class LogEntry(
     var routeType: String = "",
