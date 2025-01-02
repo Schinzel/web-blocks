@@ -30,7 +30,7 @@
 
 
 # Name
-WebComponent (no, is already a think)
+WebComponent (no, is already a thing)
 ElementK
 
 
