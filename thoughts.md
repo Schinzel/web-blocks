@@ -31,6 +31,12 @@
 
 # Name
 WebComponent (no, is already a thing)
+WebComp
 ElementK
+Islands
+Swarming - Ants (many small independent things working together)
+Swarm
+BeeSwarm
+Web Swarm
 
 
