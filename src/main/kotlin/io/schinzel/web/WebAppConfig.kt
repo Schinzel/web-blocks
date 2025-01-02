@@ -3,8 +3,6 @@ package io.schinzel.web
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web.request_handler.log.ConsoleLogger
 import io.schinzel.web.request_handler.log.ILogger
-import java.io.IOException
-import java.net.ServerSocket
 import java.time.ZoneId
 
 /**
@@ -38,9 +36,6 @@ data class WebAppConfig(
             ClassLoader.getSystemClassLoader()
                 .definedPackages
                 .any { it.name == packageName }
-
-
-
 
 
         private fun isValidTimezone(timezone: String): Boolean =
