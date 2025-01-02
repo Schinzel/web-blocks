@@ -2,10 +2,10 @@
 
 ## Features
 - A grid based system based on Bootstrap
-- A page consists of a set of modular standalone page elements.
-- Each page element has it's own endpoint
-- The page elements can update themselves independently of the page
-- A publish-subscribe system where a page elements can notify is subscribers that they should update themselves.
+- A page consists of a set of modular standalone page-elements.
+- Each page-element has it's own endpoint
+- The page-elements can update themselves independently of the page
+- A publish-subscribe system where a page-elements can notify is subscribers that they should update themselves.
 - Instant Updates. The HTML and JS files are read from the source folder. This means that changes to these files will
   be reflected instantly in the application without the need for a hot reload.
 - Template engine
@@ -51,8 +51,8 @@ Sample urls:
 - Call landing page: http://127.0.0.1:5555/?user-id=ABC
 - Invoke an API endpoint: http://127.0.0.1:5555/api/v1/user-information?user-id=123
 - Call a page a in a subdirectory = http://127.0.0.1:5555/sub-dir/sub-dir-2
-- Call a page element in a page http://127.0.0.1:5555/page-api/user-account/update-name-pe/update-first-name/?user-id=123&first-name=Jack
-- Call a page with interconnecting page elements http://127.0.0.1:5555/user-account?user-id=123
+- Call a page-element in a page http://127.0.0.1:5555/page-api/user-account/update-name-pe/update-first-name/?user-id=123&first-name=Jack
+- Call a page with interconnecting page-elements http://127.0.0.1:5555/user-account?user-id=123
 
 
 

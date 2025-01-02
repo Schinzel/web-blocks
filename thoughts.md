@@ -12,7 +12,7 @@
   - browser console logging
 - Create a new public repo
 - Tester & doc
-- Create a human readable html page that contains documentation of all the endpoints
+- Create a human readable html page-that contains documentation of all the endpoints
 
 # Maybe to do
 - Break up ResponseHandlerMapping?

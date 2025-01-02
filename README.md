@@ -3,7 +3,7 @@
 The problems this project aims to solve are the following.
 
 **Web pages can easily become very large and hard to read and maintain**   
-This is solved by a component framework that allows for breaking up a web page into small standalone page elements.
+This is solved by a component framework that allows for breaking up a web page into small standalone page-elements.
 
 **Finding api endpoints and web pages in a large project can be a hassle**   
 This is solved by file system based routing.
