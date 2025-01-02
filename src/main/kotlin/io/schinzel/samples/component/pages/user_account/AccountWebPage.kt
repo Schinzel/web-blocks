@@ -19,8 +19,8 @@ class AccountWebPage(private val userId: Int) : IPageResponseHandler {
         val response = Page()
             .setTitle("Account")
 
-//            .addRow()
-//            .addColumn(12)
+            .addRow()
+            .addColumn(12)
             .addPageElement(welcomePe)
 
             .addRow()
