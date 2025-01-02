@@ -1,7 +1,11 @@
 package io.schinzel.web
 
+import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web.request_handler.log.ConsoleLogger
 import io.schinzel.web.request_handler.log.ILogger
+import java.io.IOException
+import java.net.ServerSocket
+import java.time.ZoneId
 
 /**
  * The purpose of this class is to hold configuration settings for the web app.
@@ -18,4 +22,40 @@ data class WebAppConfig(
     val logger: ILogger = ConsoleLogger(prettyPrint = true),
     val localTimezone: String = "Europe/Stockholm",
     val prettyFormatHtml: Boolean = true,
-)
+) {
+    init {
+        Thrower.throwIfFalse(port in 1..65535)
+            .message("Incorrect port '$port'. Port must be between 1 and 65535.")
+        Thrower.throwIfFalse(isPortAvailable(port))
+            .message("Port $port is not available")
+        Thrower.throwIfFalse(isValidTimezone(localTimezone))
+            .message("'$localTimezone' is not a valid timezone")
+        Thrower.throwIfFalse(isValidPackage(endpointPackage))
+            .message("'$endpointPackage' is not a valid package")
+
+    }
+
+    companion object {
+        private fun isValidPackage(packageName: String): Boolean =
+            ClassLoader.getSystemClassLoader()
+                .definedPackages
+                .any { it.name == packageName }
+
+
+        private fun isPortAvailable(port: Int): Boolean =
+            try {
+                ServerSocket(port).use { true }
+            } catch (e: IOException) {
+                false
+            }
+
+
+        private fun isValidTimezone(timezone: String): Boolean =
+            try {
+                ZoneId.of(timezone)
+                true
+            } catch (e: Exception) {
+                false
+            }
+    }
+}
