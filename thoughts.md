@@ -10,7 +10,6 @@
   - have a page with path "api"
   - have an api with path "page"
   - cannot have a page nor an api with path "static"
-- Separate removal of suffixes or change documentation
 - Create a new public repo
 - Tester & doc
 - Create a human readable html page that contains documentation of all the endpoints
