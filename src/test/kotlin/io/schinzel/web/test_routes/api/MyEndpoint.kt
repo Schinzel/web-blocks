@@ -1,4 +1,4 @@
-package io.schinzel.web.api
+package io.schinzel.web.test_routes.api
 
 import io.schinzel.web.response_handlers.IApiEndpointResponseHandler
 

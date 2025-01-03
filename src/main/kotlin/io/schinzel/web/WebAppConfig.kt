@@ -28,7 +28,6 @@ data class WebAppConfig(
             .message("'$localTimezone' is not a valid timezone")
         Thrower.throwIfFalse(isValidPackage(routesPackage))
             .message("'$routesPackage' is not a valid package")
-
     }
 
     companion object {

@@ -8,8 +8,9 @@ interface IPageEndpointResponseHandler : IResponseHandler
 class PageEndpointResponseHandlerDescriptor(
     private val endpointPackage: String
 ) : IResponseHandlerDescriptor<IPageEndpointResponseHandler> {
+    override val reservedStartOfPaths: Set<String> = setOf("page", "api")
 
-    override fun getPath(clazz: KClass<out IPageEndpointResponseHandler>): String {
+    override fun getRoutePath(clazz: KClass<out IPageEndpointResponseHandler>): String {
         val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
         val classNameKebabCase = ResponseHandlerUtil

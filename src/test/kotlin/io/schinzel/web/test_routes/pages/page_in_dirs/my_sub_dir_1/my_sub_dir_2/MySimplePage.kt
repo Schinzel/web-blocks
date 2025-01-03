@@ -1,4 +1,4 @@
-package io.schinzel.web.pages.simple_page
+package io.schinzel.web.test_routes.pages.page_in_dirs.my_sub_dir_1.my_sub_dir_2
 
 import io.schinzel.web.response_handlers.IPageResponseHandler
 
@@ -13,7 +13,7 @@ class MySimplePage : IPageResponseHandler {
                <title>Hello</title>
             </head>
             <body>
-               <h1>Hello world!</h1>
+               <h1>Hello sub dir world!</h1>
             </body>
             </html>
         """.trimIndent()

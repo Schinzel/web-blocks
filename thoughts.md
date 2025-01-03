@@ -4,6 +4,7 @@
   - have a page with path "api"
   - have an api with path "page"
   - cannot have a page nor an api with path "static"
+- Project need to be in one dir. I.e. io.schinzel.[something]
 - Error handling with html
 - A common JavaScript class to send data to the server with
   - Error handling
@@ -12,7 +13,7 @@
 - Name(s) of this project/frameworks
 - Create a new public repo
 - Tester & doc
-- Create a human readable html page-that contains documentation of all the endpoints
+- Create a human-readable html page-that contains documentation of all the endpoints
 
 # Maybe to do
 - Break up ResponseHandlerMapping?

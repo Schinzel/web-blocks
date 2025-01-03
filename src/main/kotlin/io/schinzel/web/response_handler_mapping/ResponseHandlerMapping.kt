@@ -24,7 +24,7 @@ class ResponseHandlerMapping(
     init {
         val responseHandlerDescriptor = ResponseHandlerDescriptorRegistry
             .getResponseHandlerDescriptor(responseHandlerClass)
-        path = responseHandlerDescriptor.getPath(responseHandlerClass)
+        path = responseHandlerDescriptor.getValidatedRoutePath(responseHandlerClass)
         type = responseHandlerDescriptor.getTypeName()
         returnType = responseHandlerDescriptor.getReturnType()
     }

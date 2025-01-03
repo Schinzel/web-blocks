@@ -1,4 +1,4 @@
-package io.schinzel.web.pages.landing
+package io.schinzel.web.test_routes.pages.landing
 
 import io.schinzel.web.response_handlers.IPageResponseHandler
 

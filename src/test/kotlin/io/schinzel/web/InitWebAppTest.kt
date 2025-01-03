@@ -1,6 +1,7 @@
 package io.schinzel.web
 
 import io.schinzel.web.request_handler.log.NoLogger
+import io.schinzel.web.test_routes.DummyClass
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
@@ -15,9 +16,10 @@ class InitWebAppTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
+            DummyClass()
             InitWebApp(
                 WebAppConfig(
-                    routesPackage =  "io.schinzel.web",
+                    routesPackage = "io.schinzel.web.test_routes",
                     port = randomPort,
                     logger = NoLogger(),
                     prettyFormatHtml = false

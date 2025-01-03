@@ -1,5 +1,6 @@
 package io.schinzel.web.response_handlers
 
+import kotlin.collections.forEach
 import kotlin.reflect.KClass
 
 
@@ -12,11 +13,14 @@ interface IResponseHandler {
     fun getPath(): String {
         return ResponseHandlerDescriptorRegistry
             .getResponseHandlerDescriptor(this::class)
-            .getPath(this::class)
+            .getValidatedRoutePath(this::class)
     }
-
 }
 
+/**
+ * The purpose of this enum is to provide information
+ * on the return type of response handlers
+ */
 enum class ReturnTypeEnum { HTML, JSON }
 
 
@@ -26,15 +30,41 @@ enum class ReturnTypeEnum { HTML, JSON }
  * we do not have instances, just classes.
  */
 interface IResponseHandlerDescriptor<T : IResponseHandler> {
+    val reservedStartOfPaths: Set<String>
+
+    private fun getSystemReservedPaths(): Set<String> = setOf("static")
+
+    /**
+     * Checks that path does not start with any of the forbidden prefixes
+     * @param clazz The class of the response handler
+     * @return The path or route of the response handler
+     */
+    fun getValidatedRoutePath(clazz: KClass<out T>): String {
+        val path = getRoutePath(clazz)
+        (getSystemReservedPaths() + reservedStartOfPaths).forEach { prefix ->
+            require(!path.startsWith("$prefix/")) {
+                "Route path cannot start with '$prefix/' as it's reserved for system use. Route path: '$path'"
+            }
+        }
+        return path
+    }
+
     /**
      * @param clazz The class of the response handler
      * @return The path or route of the response handler
      */
-    fun getPath(clazz: KClass<out T>): String
+    fun getRoutePath(clazz: KClass<out T>): String
 
-    // WebPage, API and so on. For user notification and logging purposes
-    fun getTypeName(): String
-
+    /**
+     * @return The return type of IResponseHandler.getResponse().
+     * For example HTML or JSON
+     */
     fun getReturnType(): ReturnTypeEnum
-}
 
+    /**
+     * @return The type name of the response handler.
+     * For example "WebPage" or "API"
+     * For user notification and logging purposes
+     */
+    fun getTypeName(): String
+}

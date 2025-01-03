@@ -1,4 +1,4 @@
-package io.schinzel.web.pages.page_with_arguments
+package io.schinzel.web.test_routes.pages.page_with_arguments
 
 import io.schinzel.web.response_handlers.IPageResponseHandler
 
