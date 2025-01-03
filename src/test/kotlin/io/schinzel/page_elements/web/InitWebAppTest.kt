@@ -11,21 +11,16 @@ import org.junit.jupiter.api.Test
 
 class InitWebAppTest {
     companion object {
-        val randomPort = (49152..65535).random()
+        var randomPort = -1
 
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
             // Create an instance of the class so that its package is available
             DummyClass()
-            InitWebApp(
-                WebAppConfig(
-                    routesPackage = "io.schinzel.page_elements.web.test_routes",
-                    port = randomPort,
-                    logger = NoLogger(),
-                    prettyFormatHtml = false
-                )
-            )
+            val config = WebAppConfigUtil.get("io.schinzel.page_elements.web.test_routes")
+            randomPort = config.port
+            InitWebApp(config)
         }
     }
 

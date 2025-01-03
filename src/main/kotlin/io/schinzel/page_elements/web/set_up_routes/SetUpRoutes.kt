@@ -22,8 +22,10 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin? {
     }
     // Find all routes and add them Javalin
     findRoutes(webAppConfig.routesPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
-        // Print the route
-        responseHandlerMapping.println()
+        if (webAppConfig.printStartupMessages) {
+            // Print the route
+            responseHandlerMapping.println()
+        }
         // Create request handler
         val requestHandler = RequestHandler(responseHandlerMapping, webAppConfig)
             .getHandler()

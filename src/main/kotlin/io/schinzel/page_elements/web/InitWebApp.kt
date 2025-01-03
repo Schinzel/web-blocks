@@ -21,9 +21,11 @@ class InitWebApp(
 
         initializeResponseHandlerDescriptorRegistry(webAppConfig.routesPackage)
         setUpRoutes(webAppConfig)
-        "*".repeat(30).println()
-        "Project started on port $port".println()
-        "*".repeat(30).println()
+        if (webAppConfig.printStartupMessages) {
+            "*".repeat(30).println()
+            "Project started on port $port".println()
+            "*".repeat(30).println()
+        }
     }
 
 

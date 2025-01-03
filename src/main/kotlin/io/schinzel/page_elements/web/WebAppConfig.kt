@@ -20,6 +20,7 @@ data class WebAppConfig(
     val logger: ILogger = ConsoleLogger(prettyPrint = true),
     val localTimezone: String = "Europe/Stockholm",
     val prettyFormatHtml: Boolean = true,
+    val printStartupMessages: Boolean = true
 ) {
     init {
         Thrower.throwIfFalse(port in 1..65535)

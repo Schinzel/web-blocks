@@ -16,6 +16,7 @@ fun main() {
             logger = ConsoleLogger(prettyPrint = true),
             localTimezone = "Europe/Stockholm",
             prettyFormatHtml = true,
+            printStartupMessages = true
         )
     )
 }
