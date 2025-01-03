@@ -1,14 +1,13 @@
 
 # To do
-- Project need to be in one dir. I.e. io.schinzel.[something]
 - Error handling with html
 - A common JavaScript class to send data to the server with
   - Error handling
   - Success handling
   - browser console logging
 - Name(s) of this project/frameworks
+  - Project need to be in one dir. I.e. io.schinzel.[something]
 - Create a new public repo
-- Tester & doc
 - Create a human-readable html page-that contains documentation of all the endpoints
 
 # Maybe to do
@@ -27,6 +26,7 @@
 
 
 # Name
+Page elements
 WebComponent (no, is already a thing)
 WebComp
 ElementK
