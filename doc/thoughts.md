@@ -1,6 +1,13 @@
 
 # To do
-- Error handling with html
+- Error handling with html- 
+  - A dir "errors"
+  - Will need to spend some time on the file reader so this doesn't 
+  get too complicated
+  - Subfolder that can override the default error pages
+    - These can override the default error pages if in dev mode
+  - Environment as a sealed class
+- Check how next does file routing when using the app router
 - A common JavaScript class to send data to the server with
   - Error handling
   - Success handling
