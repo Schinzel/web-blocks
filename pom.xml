@@ -23,11 +23,6 @@
             <id>maven-repo.atexpose.com</id>
             <url>https://s3-eu-west-1.amazonaws.com/maven-repo.schinzel.io/release</url>
         </repository>
-        <repository>
-            <!-- Repo for -->
-            <id>maven-repo.refur.se</id>
-            <url>https://s3-eu-west-1.amazonaws.com/maven-repo.refur.se/release</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -78,6 +73,7 @@
         </dependency>
 
         <dependency>
+            <!-- For serialization to and de-serialization from JSON -->
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
             <version>2.17.2</version>
@@ -131,7 +127,8 @@
         </dependency>
 
         <dependency>
-            <!-- For making HTTP requests in tests -->
+            <!-- For making HTTP requests in tests.
+             And for pretty formating HTML. -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.18.3</version>
