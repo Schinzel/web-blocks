@@ -137,6 +137,7 @@
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+
         <resources>
             <resource>
                 <directory>src/main/kotlin</directory>
@@ -151,8 +152,8 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-        <plugins>
 
+        <plugins>
             <plugin>
                 <!-- Build kotlin -->
                 <groupId>org.jetbrains.kotlin</groupId>
