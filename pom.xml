@@ -152,6 +152,7 @@
             </resource>
         </resources>
         <plugins>
+
             <plugin>
                 <!-- Build kotlin -->
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -182,6 +183,7 @@
                     <jvmTarget>${java.version}</jvmTarget>
                 </configuration>
             </plugin>
+
             <plugin>
                 <!-- The shade plugin creates an uber/fat jar containing all dependencies.
                 This means the jar can run standalone without external dependencies.
@@ -228,15 +230,13 @@
                                 <!-- Merges service files -->
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-
                                 <!-- Produces a manifest file -->
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>io.schinzel.page_elements.samples.component.MainKt</mainClass>
                                 </transformer>
-
                             </transformers>
-                            <!-- Name of jar file. Will be myJar.jar -->
+                            <!-- Set the name of jar file -->
                             <finalName>../${jar.name}</finalName>
                         </configuration>
                     </execution>
