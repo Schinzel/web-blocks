@@ -139,6 +139,8 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/main/kotlin</directory>
@@ -148,7 +150,7 @@
                     <include>**/*.js</include>
                 </includes>
             </resource>
-            <!-- Keep the default resources directory if you have one -->
+            <!-- Keep the default resources directory -->
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
@@ -166,11 +168,6 @@
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <source>src/main/kotlin</source>
-                            </sourceDirs>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>test-compile</id>
@@ -221,34 +218,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <source>9</source>
-                    <target>9</target>
-                    <excludes>
-                        <exclude>**/*.java</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
