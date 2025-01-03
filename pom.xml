@@ -15,6 +15,7 @@
         <kotlin.version>2.0.20</kotlin.version>
         <kotlin.compiler.apiVersion>2.0</kotlin.compiler.apiVersion>
         <kotlin.compiler.languageVersion>2.0</kotlin.compiler.languageVersion>
+        <jar.name>myJar</jar.name>
     </properties>
 
     <repositories>
@@ -199,6 +200,7 @@
                         <configuration>
                             <filters>
                                 <filter>
+                                    <!-- To remove a series of warnings -->
                                     <artifact>*:*</artifact>
                                     <excludes>
                                         <exclude>META-INF/*.SF</exclude>
@@ -212,6 +214,13 @@
                                         <exclude>module-info.class</exclude>
                                     </excludes>
                                 </filter>
+                                <filter>
+                                    <!-- To remove a warning about jetty -->
+                                    <artifact>org.eclipse.jetty:jetty-webapp</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/services/org.eclipse.jetty.webapp.Configuration</exclude>
+                                    </excludes>
+                                </filter>
                             </filters>
                             <transformers>
                                 <transformer
@@ -220,7 +229,43 @@
                                 </transformer>
                             </transformers>
                             <!-- Name of jar file. Will be myJar.jar -->
-                            <finalName>../myJar</finalName>
+                            <finalName>../${jar.name}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- The purpose of this plugin is simply to print start and end message -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <!-- Print start message -->
+                    <execution>
+                        <id>start-message</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>echo</executable>
+                            <arguments>
+                                <argument>🚀 Starting build process...</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Print end message -->
+                    <execution>
+                        <id>end-message</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>echo</executable>
+                            <arguments>
+                                <argument>✨ Build completed! Jar created: ${jar.name}.jar</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
