@@ -10,12 +10,12 @@
     <packaging>jar</packaging>
 
     <properties>
-        <jar.finalName>custom-jar-name</jar.finalName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>2.0.20</kotlin.version>
         <kotlin.compiler.apiVersion>2.0</kotlin.compiler.apiVersion>
         <kotlin.compiler.languageVersion>2.0</kotlin.compiler.languageVersion>
         <jar.name>myJar</jar.name>
+        <jackson.version>2.17.2</jackson.version>
     </properties>
 
     <repositories>
@@ -26,14 +26,12 @@
     </repositories>
 
     <dependencies>
-
         <dependency>
             <!-- Kotlin standard library -->
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
-
 
         <dependency>
             <!-- Web server -->
@@ -69,14 +67,14 @@
             <!-- For serialization to and de-serialization from JSON  -->
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.17.2</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
             <!-- For serialization to and de-serialization from JSON -->
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.17.2</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
@@ -133,7 +131,6 @@
             <artifactId>jsoup</artifactId>
             <version>1.18.3</version>
         </dependency>
-
     </dependencies>
 
     <build>
