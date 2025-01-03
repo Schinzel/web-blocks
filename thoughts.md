@@ -5,8 +5,6 @@
   - Error handling
   - Success handling
   - browser console logging
-- Name(s) of this project/frameworks
-  - Project need to be in one dir. I.e. io.schinzel.[something]
 - Create a new public repo
 - Create a human-readable html page-that contains documentation of all the endpoints
 
