@@ -6,6 +6,8 @@
   - Success handling
   - browser console logging
 - Create a new public repo
+- Create a project that uses this framework and see if one can make it work. 
+  - Preferably on Heroku
 - Create a human-readable html page-that contains documentation of all the endpoints
 
 # Maybe to do
