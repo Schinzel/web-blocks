@@ -8,7 +8,6 @@ interface IApiEndpointResponseHandler : IResponseHandler
 class ApiEndpointResponseHandlerDescriptor(
     private val endpointPackage: String
 ) : IResponseHandlerDescriptor<IApiEndpointResponseHandler> {
-    override val reservedStartOfPaths: Set<String> = setOf("page", "page-api")
 
     override fun getRoutePath(clazz: KClass<out IApiEndpointResponseHandler>): String {
         val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)

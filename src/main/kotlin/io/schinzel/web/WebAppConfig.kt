@@ -41,7 +41,7 @@ data class WebAppConfig(
             try {
                 ZoneId.of(timezone)
                 true
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 false
             }
     }

@@ -10,12 +10,19 @@ interface IPageResponseHandler : IResponseHandler {
 class PageResponseHandlerDescriptor(
     private val endpointPackage: String
 ) : IResponseHandlerDescriptor<IPageResponseHandler> {
-    override val reservedStartOfPaths: Set<String> = setOf("page", "page-api")
+    private val systemPaths = listOf("api", "page-api", "static")
 
     override fun getRoutePath(clazz: KClass<out IPageResponseHandler>): String {
         val relativePath = ResponseHandlerUtil.getRelativePath(endpointPackage, clazz)
         val pagePathWithoutPages = relativePath.removePrefix("pages/")
-        return if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
+        val returnPath = if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
+        systemPaths.forEach { systemPath ->
+            if (returnPath.startsWith(systemPath)) {
+                throw IllegalArgumentException("Page path cannot start with '$systemPath'. " +
+                        "Page path: '$returnPath'")
+            }
+        }
+        return returnPath
     }
 
     override fun getTypeName() = "WebPage"

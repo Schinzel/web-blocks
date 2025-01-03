@@ -1,8 +1,6 @@
 package io.schinzel.web.response_handlers
 
-import kotlin.collections.forEach
 import kotlin.reflect.KClass
-
 
 /**
  * The purpose of this interface is to handle the response of a request
@@ -13,7 +11,7 @@ interface IResponseHandler {
     fun getPath(): String {
         return ResponseHandlerDescriptorRegistry
             .getResponseHandlerDescriptor(this::class)
-            .getValidatedRoutePath(this::class)
+            .getRoutePath(this::class)
     }
 }
 
@@ -30,24 +28,6 @@ enum class ReturnTypeEnum { HTML, JSON }
  * we do not have instances, just classes.
  */
 interface IResponseHandlerDescriptor<T : IResponseHandler> {
-    val reservedStartOfPaths: Set<String>
-
-    private fun getSystemReservedPaths(): Set<String> = setOf("static")
-
-    /**
-     * Checks that path does not start with any of the forbidden prefixes
-     * @param clazz The class of the response handler
-     * @return The path or route of the response handler
-     */
-    fun getValidatedRoutePath(clazz: KClass<out T>): String {
-        val path = getRoutePath(clazz)
-        (getSystemReservedPaths() + reservedStartOfPaths).forEach { prefix ->
-            require(!path.startsWith("$prefix/")) {
-                "Route path cannot start with '$prefix/' as it's reserved for system use. Route path: '$path'"
-            }
-        }
-        return path
-    }
 
     /**
      * @param clazz The class of the response handler

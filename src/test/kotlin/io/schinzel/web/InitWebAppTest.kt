@@ -16,6 +16,7 @@ class InitWebAppTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
+            // Create an instance of the class so that its package is available
             DummyClass()
             InitWebApp(
                 WebAppConfig(
