@@ -1,6 +1,6 @@
 
 # Error handling
-- Error Class
+- Error Class Singleton
   - Constructor arguments
     - dir of error pages
     - environment
