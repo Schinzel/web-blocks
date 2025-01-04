@@ -2,6 +2,7 @@
 # Error handling
 - How to get path to files to read in source dir?
   - Should work in dev mode when using this as a dependency
+  - Should work when using this as a JAR
 - Error Class Singleton
   - Constructor arguments
     - dir of error pages
