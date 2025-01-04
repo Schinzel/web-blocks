@@ -8,11 +8,13 @@ import java.time.ZoneId
 /**
  * The purpose of this class is to hold configuration settings for the web app.
  * @param routesPackage The package where the response handlers are located.
+ * For example "io.schinzel.page_elements.samples.component".
  * @param port The port the web app will listen to. Default value is 5555.
  * @param logger The logger to use. Default value is a console logger.
  * @param localTimezone The timezone to use. Default value is "Europe/Stockholm".
  * @param prettyFormatHtml If the html should be pretty formatted. Default value is true.
  * For production environment set this should be false.
+ * @param printStartupMessages If startup messages should be printed. Default value is true.
  */
 data class WebAppConfig(
     val routesPackage: String,

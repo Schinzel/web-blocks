@@ -14,10 +14,21 @@ object FileReaderFactory {
      * @param caller The class that is calling this method.
      * @return A file reader.
      */
-    fun create(caller: Any): IFileReader = when {
+    fun createFromCaller(caller: Any): IFileReader = when {
         isRunningFromJar() -> JarFileReader(caller)
         else -> SourceFileReader(caller)
     }
+
+    /**
+     * Creates a file reader.
+     * @param path The path to the file to read.
+     * @return A file reader.
+     */
+    fun createFromPath(path: String): IFileReader = when {
+        isRunningFromJar() -> JarFileReader(path)
+        else -> SourceFileReader(path)
+    }
+
 
     /**
      * @return True if the caller is running from a jar file.

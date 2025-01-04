@@ -6,17 +6,19 @@ import io.schinzel.page_elements.component.template_engine.file_reader.IFileRead
 /**
  * This class is used to process a template.
  */
-class TemplateProcessor2(caller: Any) {
+class TemplateProcessor(private val fileReader: IFileReader) {
     private val data: MutableMap<String, String> = mutableMapOf()
-    private val fileReader: IFileReader = FileReaderFactory.create(caller)
 
+    constructor(path: String) : this(FileReaderFactory.createFromPath(path))
 
-    fun addData(key: String, value: String): TemplateProcessor2 {
+    constructor(caller: Any) : this(FileReaderFactory.createFromCaller(caller))
+
+    fun addData(key: String, value: String): TemplateProcessor {
         data[key] = value
         return this
     }
 
-    fun addData(key: String, value: Int): TemplateProcessor2 =
+    fun addData(key: String, value: Int): TemplateProcessor =
         this.addData(key, value.toString())
 
 
@@ -35,7 +37,6 @@ class TemplateProcessor2(caller: Any) {
 
     /**
      * @param content The content of the template file to process.
-     * @param caller The class that is calling this class. Used to find the file to read.
      * @param depth The depth of the include file. Used to prevent circular dependencies.
      * @return The file content with include files processed.
      */

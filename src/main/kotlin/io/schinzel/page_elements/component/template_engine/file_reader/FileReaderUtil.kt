@@ -8,9 +8,11 @@ import java.io.File
 object FileReaderUtil {
     /**
      * @return The path to the package of the caller class.
-     * For example: io/schinzel/page_elements_kotlin/page/greeting_pe
+     * For example: "io.schinzel.page_elements.samples.web"
+     * -> "io/schinzel/page_elements/samples/web"
      */
-    fun getPathToCallerClass(caller: Any): String {
-        return caller::class.java.packageName.replace('.', File.separatorChar)
-    }
+    fun fromPackageToPath(caller: Any): String =
+        caller::class.java.packageName
+            .replace('.', File.separatorChar)
+
 }

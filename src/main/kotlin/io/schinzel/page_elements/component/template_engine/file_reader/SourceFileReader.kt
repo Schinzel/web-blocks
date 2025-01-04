@@ -12,7 +12,7 @@ class SourceFileReader(private val path: String) : IFileReader {
     /**
      * @param caller The class that is calling this class.
      */
-    constructor(caller: Any) : this(FileReaderUtil.getPathToCallerClass(caller))
+    constructor(caller: Any) : this(FileReaderUtil.fromPackageToPath(caller))
 
     override fun getFileContent(fileName: String): String {
         // For example: Users/schinzel/code/page-elements-kotlin

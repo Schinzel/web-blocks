@@ -12,7 +12,7 @@ class JarFileReader(private val path: String) : IFileReader {
     /**
      * @param caller The class that is calling this class.
      */
-    constructor(caller: Any) : this(FileReaderUtil.getPathToCallerClass(caller))
+    constructor(caller: Any) : this(FileReaderUtil.fromPackageToPath(caller))
 
     companion object {
         private val cache = mutableMapOf<String, String>()
