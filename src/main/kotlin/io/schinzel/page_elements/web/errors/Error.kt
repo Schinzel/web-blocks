@@ -2,7 +2,6 @@ package io.schinzel.page_elements.web.errors
 
 import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.component.template_engine.TemplateProcessor
-import io.schinzel.page_elements.component.template_engine.file_reader.FileReaderUtil
 import io.schinzel.page_elements.web.WebAppConfig
 import java.io.File
 
@@ -30,11 +29,9 @@ fun main() {
     val webAppConfig = WebAppConfig(
         routesPackage = "io.schinzel.page_elements.samples.web"
     )
-    val pathToErrorDir = FileReaderUtil
-        .fromPackageToPath(webAppConfig.routesPackage) +
-            File.separatorChar + "errors"
+    val pathToErrorDir = webAppConfig.routesPackage
+        .replace('.', File.separatorChar) + "/errors"
     pathToErrorDir.printlnWithPrefix("pathToErrorDir")
-
 }
 
 

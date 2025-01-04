@@ -19,7 +19,8 @@ class SourceFileReader(private val path: String) : IFileReader {
         val projectDir = File("")
         // For example: /Users/schinzel/code/page-elements-kotlin/
         // src/main/kotlin/io/schinzel/page_elements_kotlin/page/greeting_pe/GreetingPe.html
-        val pathToFile = projectDir.absolutePath + "/src/main/kotlin/" +
+        val pathToFile = projectDir.absolutePath +
+                "/src/main/kotlin/" +
                 path + "/" + fileName
         // Create file
         val file = File(pathToFile)
