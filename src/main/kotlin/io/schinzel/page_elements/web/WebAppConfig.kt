@@ -34,10 +34,12 @@ data class WebAppConfig(
     }
 
     companion object {
-        private fun isValidPackage(packageName: String): Boolean =
-            ClassLoader.getSystemClassLoader()
-                .definedPackages
-                .any { it.name == packageName }
+        fun isValidPackage(packageName: String): Boolean {
+            val path = packageName.replace('.', '/')
+            return ClassLoader.getSystemClassLoader()
+                .getResources(path)
+                .hasMoreElements()
+        }
 
 
         private fun isValidTimezone(timezone: String): Boolean =

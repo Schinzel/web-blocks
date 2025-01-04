@@ -19,6 +19,10 @@
 
 
 # To do
+- Should I use path instead of package? 
+  - It seems like I convert the package to a path in many places
+- Actually, for classpath resources you should always use forward slash '/', even on Windows!
+  - Check where I use File.separator if this is correct!
 - Check how next does file routing when using the app router
 - A common JavaScript class to send data to the server with
   - Error handling

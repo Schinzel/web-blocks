@@ -1,6 +1,7 @@
 package io.schinzel.page_elements.web.response_handlers
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
+import java.io.File
 import kotlin.reflect.KClass
 
 object ResponseHandlerUtil {
@@ -50,6 +51,6 @@ object ResponseHandlerUtil {
             .packageName
             .removePrefix(endpointPackage)
             .removePrefix(".")
-            .replace(".", "/")
+            .replace(".", File.separatorChar.toString())
             .replace("_", "-")
 }
