@@ -34,7 +34,7 @@ class InitWebApp(
         private fun isPortAvailable(port: Int): Boolean =
             try {
                 ServerSocket(port).use { true }
-            } catch (e: IOException) {
+            } catch (_: IOException) {
                 false
             }
 
