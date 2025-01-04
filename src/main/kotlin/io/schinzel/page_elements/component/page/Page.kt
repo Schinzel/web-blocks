@@ -1,6 +1,6 @@
 package io.schinzel.page_elements.component.page
 
-import io.schinzel.page_elements.component.template_engine.TemplateRenderer
+import io.schinzel.page_elements.component.template_engine.TemplateProcessor2
 
 /**
  * The purpose of this class is to represent a web page.
@@ -61,9 +61,9 @@ class Page {
         // The content of the page
         val content = rows.joinToString("\n") { it.getHtml() }
         // Insert the title and content into the page template
-        return TemplateRenderer("html/page-template.html", this)
+        return TemplateProcessor2(this)
             .addData("title", title)
             .addData("content", content)
-            .process()
+            .processTemplate("html/page-template.html")
     }
 }

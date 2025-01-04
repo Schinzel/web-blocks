@@ -20,6 +20,11 @@ object FileReaderFactory {
         else -> SourceFileReader(fileName, caller)
     }
 
+    fun create2(caller: Any): IFileReader2 = when {
+        isRunningFromJar() -> JarFileReader2(caller)
+        else -> SourceFileReader2(caller)
+    }
+
     /**
      * @return True if the caller is running from a jar file.
      */

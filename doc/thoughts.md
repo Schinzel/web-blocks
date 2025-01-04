@@ -4,6 +4,8 @@
   - A dir "errors"
   - Will need to spend some time on the file reader so this doesn't 
   get too complicated
+    - FileReaderFactory.create(caller)
+    - IFileReader.read(fileName)
   - Subfolder that can override the default error pages
     - These can override the default error pages if in dev mode
   - Environment as a sealed class

@@ -1,15 +1,15 @@
 package io.schinzel.page_elements.samples.component.pages.user_account.intro_text
 
 import io.schinzel.page_elements.component.page.ObservablePageElement
-import io.schinzel.page_elements.component.template_engine.TemplateRenderer
+import io.schinzel.page_elements.component.template_engine.TemplateProcessor2
 import io.schinzel.page_elements.samples.component.pages.user_account.NameDao
 
 class IntroductionTextPe(val userId: Int) : ObservablePageElement() {
 
     private val firstName = NameDao(userId).getFirstName()
     override fun getResponse(): String {
-        return TemplateRenderer("template.html", this)
+        return TemplateProcessor2(this)
             .addData("firstName", firstName)
-            .process()
+            .processTemplate("template.html")
     }
 }

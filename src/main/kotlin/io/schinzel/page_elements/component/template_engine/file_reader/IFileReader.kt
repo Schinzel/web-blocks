@@ -6,3 +6,8 @@ package io.schinzel.page_elements.component.template_engine.file_reader
 interface IFileReader {
     fun getFileContent(): String
 }
+
+
+interface IFileReader2 {
+    fun getFileContent(fileName: String): String
+}
