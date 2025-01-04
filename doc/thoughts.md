@@ -1,15 +1,24 @@
 
-# To do
-- Error handling with html- 
+# Error handling
+- Error Class
+  - Constructor arguments
+    - dir of error pages
+    - environment
+  - Method arguments
+    - ErrorLog, contains error number, message, and stack trace
+  
+
+- Error handling with html-
   - A dir "errors"
-  - Will need to spend some time on the file reader so this doesn't 
-  get too complicated
-    - Start with only reading the files in the root folder "errors" 
-    - Caller is only used to get the path.
-      - So abstract on caller so that can be on error folder
+  - Will need to spend some time on the file reader so this doesn't
+    get too complicated
+    - Start with only reading the files in the root folder "errors"
   - Subfolder that can override the default error pages
     - These can override the default error pages if in dev mode
   - Environment as a sealed class
+
+
+# To do
 - Check how next does file routing when using the app router
 - A common JavaScript class to send data to the server with
   - Error handling
