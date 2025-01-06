@@ -17,9 +17,8 @@ import java.time.ZoneId
  * @param printStartupMessages If startup messages should be printed. Default value is true.
  */
 data class WebAppConfig(
-    val webRootPackage: String,
-    val webRootPath: String = "",
     val webRootClass: Any,
+    val webRootPackage: String = webRootClass::class.java.packageName,
     val port: Int = 5555,
     val logger: ILogger = ConsoleLogger(prettyPrint = true),
     val localTimezone: String = "Europe/Stockholm",
