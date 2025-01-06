@@ -1,6 +1,7 @@
 package io.schinzel.page_elements.samples.component
 
 import io.schinzel.page_elements.web.InitWebApp
+import io.schinzel.page_elements.web.WebApp
 import io.schinzel.page_elements.web.WebAppConfig
 import io.schinzel.page_elements.web.request_handler.log.ConsoleLogger
 
@@ -9,7 +10,7 @@ import io.schinzel.page_elements.web.request_handler.log.ConsoleLogger
  * See README.md for links to use with this demo.
  */
 fun main() {
-    InitWebApp(
+    /*InitWebApp(
         WebAppConfig(
             routesPackage = "io.schinzel.page_elements.samples.component",
             port = 5555,
@@ -18,5 +19,11 @@ fun main() {
             prettyFormatHtml = true,
             printStartupMessages = true
         )
-    )
+    )*/
+    MyWebApp().start()
+}
+
+class MyWebApp : WebApp() {
+    // Required configuration
+    override val port: Int = 5555
 }

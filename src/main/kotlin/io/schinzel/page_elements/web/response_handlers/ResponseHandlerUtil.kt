@@ -46,10 +46,10 @@ object ResponseHandlerUtil {
      * and the class resides in "io.schinzel.samples.component.settings.address"
      * this function returns "pages/settings/address"
      */
-    fun getRelativePath(endpointPackage: String, clazz: KClass<out IResponseHandler>): String =
+    fun getRelativePath(webRootPackage: String, clazz: KClass<out IResponseHandler>): String =
         clazz.java
             .packageName
-            .removePrefix(endpointPackage)
+            .removePrefix(webRootPackage)
             .removePrefix(".")
             .replace(".", File.separatorChar.toString())
             .replace("_", "-")

@@ -1,4 +1,19 @@
 
+# File, paths and packages needed
+Not jar
+- Template files
+  - Absolute path to the template files
+  - Derived from relative to the caller class
+- Error template files - Absolute path to the error template files
+JAR
+  - Path based on package
+    - io/schinzel/samples/component/pages/user_account/intro_text
+  - Error template files
+    - Relative root?
+****************************************************************************************************
+Can jag skicka in MyWebApp som caller? och sen errors/404.html som filnamn?
+****************************************************************************************************
+
 # Error handling
 - How to get path to files to read in source dir?
   - Should work in dev mode when using this as a dependency
@@ -22,6 +37,7 @@
 
 
 # To do
+- "/src/main/kotlin/" is hard coded in SourceFileReader
 - Should I use path instead of package? 
   - It seems like I convert the package to a path in many places
 - Actually, for classpath resources you should always use forward slash '/', even on Windows!

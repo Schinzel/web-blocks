@@ -5,33 +5,17 @@ import io.schinzel.page_elements.component.template_engine.TemplateProcessor
 import io.schinzel.page_elements.web.WebAppConfig
 import java.io.File
 
-object Error {
-    lateinit var errorDir: String
-    lateinit var environment: Environment
-
-    fun init(errorDir: String, environment: Environment) {
-        this.errorDir = errorDir
-        this.environment = environment
-    }
+class ErrorPages(private val webRootClass: Any) {
 
     fun getErrorPage(errorCode: Int): String {
-        val fileName = "$errorCode.html"
-        val html = TemplateProcessor(errorDir)
+        val fileName = "errors/$errorCode.html"
+        val html = TemplateProcessor(webRootClass)
             .addData("error_code", errorCode)
             .addData("error_message", "An error occurred")
             .addData("error_description", "An error occurred")
             .processTemplate(fileName)
         return html
     }
-}
-
-fun main() {
-    val webAppConfig = WebAppConfig(
-        routesPackage = "io.schinzel.page_elements.samples.web"
-    )
-    val pathToErrorDir = webAppConfig.routesPackage
-        .replace('.', File.separatorChar) + "/errors"
-    pathToErrorDir.printlnWithPrefix("pathToErrorDir")
 }
 
 

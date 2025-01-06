@@ -21,17 +21,18 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin? {
         }
     }
     // Find all routes and add them Javalin
-    findRoutes(webAppConfig.routesPackage).forEach { responseHandlerMapping: ResponseHandlerMapping ->
-        if (webAppConfig.printStartupMessages) {
-            // Print the route
-            responseHandlerMapping.println()
+    findRoutes(webAppConfig.webRootPackage)
+        .forEach { responseHandlerMapping: ResponseHandlerMapping ->
+            if (webAppConfig.printStartupMessages) {
+                // Print the route
+                responseHandlerMapping.println()
+            }
+            // Create request handler
+            val requestHandler = RequestHandler(responseHandlerMapping, webAppConfig)
+                .getHandler()
+            // Register both GET and POST handlers for the same path
+            javalin.getAndPost(responseHandlerMapping.path, requestHandler)
         }
-        // Create request handler
-        val requestHandler = RequestHandler(responseHandlerMapping, webAppConfig)
-            .getHandler()
-        // Register both GET and POST handlers for the same path
-        javalin.getAndPost(responseHandlerMapping.path, requestHandler)
-    }
     javalin.get("ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())
     }

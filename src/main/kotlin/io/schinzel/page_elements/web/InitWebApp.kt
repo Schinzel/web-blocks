@@ -19,7 +19,7 @@ class InitWebApp(
         Thrower.throwIfFalse(isPortAvailable(port))
             .message("Port $port is not available")
 
-        initializeResponseHandlerDescriptorRegistry(webAppConfig.routesPackage)
+        initializeResponseHandlerDescriptorRegistry(webAppConfig.webRootPackage)
         setUpRoutes(webAppConfig)
         if (webAppConfig.printStartupMessages) {
             "*".repeat(30).println()

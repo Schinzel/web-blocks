@@ -6,7 +6,7 @@ object WebAppConfigUtil {
     fun get(routesPackage: String): WebAppConfig {
         val randomPort = (49152..65535).random()
         return WebAppConfig(
-            routesPackage = routesPackage,
+            webRootPackage = routesPackage,
             port = randomPort,
             logger = NoLogger(),
             prettyFormatHtml = false,

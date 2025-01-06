@@ -7,10 +7,10 @@ import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
 
 
-fun findRoutes(endpointPackage: String): List<ResponseHandlerMapping> {
+fun findRoutes(webRootPackage: String): List<ResponseHandlerMapping> {
     val reflections = Reflections(
         ConfigurationBuilder()
-            .forPackage(endpointPackage)
+            .forPackage(webRootPackage)
             .setScanners(Scanners.SubTypes)
     )
 
@@ -19,7 +19,7 @@ fun findRoutes(endpointPackage: String): List<ResponseHandlerMapping> {
         // Filter only classes in the base package and subpackages. This is needed because
         // Reflections will scan all classes in the classpath by default.
         .filter { clazz ->
-            clazz.packageName.startsWith(endpointPackage) && !clazz.isInterface
+            clazz.packageName.startsWith(webRootPackage) && !clazz.isInterface
         }
         .map {
             ResponseHandlerMapping(it.kotlin)

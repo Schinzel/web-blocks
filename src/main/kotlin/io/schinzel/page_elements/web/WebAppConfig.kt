@@ -7,7 +7,7 @@ import java.time.ZoneId
 
 /**
  * The purpose of this class is to hold configuration settings for the web app.
- * @param routesPackage The package where the response handlers are located.
+ * @param webRootPackage The package where the response handlers are located.
  * For example "io.schinzel.page_elements.samples.component".
  * @param port The port the web app will listen to. Default value is 5555.
  * @param logger The logger to use. Default value is a console logger.
@@ -17,7 +17,9 @@ import java.time.ZoneId
  * @param printStartupMessages If startup messages should be printed. Default value is true.
  */
 data class WebAppConfig(
-    val routesPackage: String,
+    val webRootPackage: String,
+    val webRootPath: String = "",
+    val webRootClass: Any,
     val port: Int = 5555,
     val logger: ILogger = ConsoleLogger(prettyPrint = true),
     val localTimezone: String = "Europe/Stockholm",
@@ -29,8 +31,8 @@ data class WebAppConfig(
             .message("Incorrect port '$port'. Port must be between 1 and 65535.")
         Thrower.throwIfFalse(isValidTimezone(localTimezone))
             .message("'$localTimezone' is not a valid timezone")
-        Thrower.throwIfFalse(isValidPackage(routesPackage))
-            .message("'$routesPackage' is not a valid package")
+        Thrower.throwIfFalse(isValidPackage(webRootPackage))
+            .message("'$webRootPackage' is not a valid package")
     }
 
     companion object {
