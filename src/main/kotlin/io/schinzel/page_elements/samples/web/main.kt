@@ -9,7 +9,7 @@ import io.schinzel.page_elements.web.request_handler.log.ConsoleLogger
  * See README.md for links to use with this demo.
  */
 fun main() {
-    InitWebApp(
+    /*InitWebApp(
         WebAppConfig(
             webRootPackage = "io.schinzel.page_elements.samples.web",
             port = 5555,
@@ -18,5 +18,5 @@ fun main() {
             prettyFormatHtml = true,
             printStartupMessages = true,
         )
-    )
+    )*/
 }

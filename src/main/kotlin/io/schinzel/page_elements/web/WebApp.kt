@@ -2,6 +2,7 @@ package io.schinzel.page_elements.web
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basic_utils_kotlin.printlnWithPrefix
+import io.schinzel.page_elements.samples.web.MyWebApp
 import io.schinzel.page_elements.web.errors.ErrorPages
 import io.schinzel.page_elements.web.request_handler.log.ConsoleLogger
 import io.schinzel.page_elements.web.request_handler.log.ILogger
@@ -22,6 +23,8 @@ abstract class WebApp {
             .printlnWithPrefix("Routes package")
         val webRootPath = getSourceRoot(this, sourceDirectory)
             .printlnWithPrefix("WebApp source root")
+
+        this::class.java.simpleName.printlnWithPrefix("WebApp class")
         ErrorPages(this)
             .getErrorPage(404)
             .println()
@@ -50,11 +53,3 @@ fun getSourceRoot(caller: Any, sourceDirectory: String): String {
 }
 
 
-class MyWebApp : WebApp() {
-    // Required configuration
-    override val port: Int = 8080
-}
-
-fun main() {
-    MyWebApp().start()
-}
