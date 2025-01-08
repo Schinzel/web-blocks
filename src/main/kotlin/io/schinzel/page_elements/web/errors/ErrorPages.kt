@@ -29,7 +29,7 @@ class ErrorPages(
     }
 
     /**
-     * NOTE, NEEDS TO FORK FOR SOURCE AND JAR
+     * NOTE, NEEDS TO WORK FOR SOURCE AND JAR
      */
 /*    private fun getFileName(errorCode: Int): String {
         if (environment.isDevelopment()) {
