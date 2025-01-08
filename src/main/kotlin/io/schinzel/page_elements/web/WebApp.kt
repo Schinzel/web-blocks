@@ -14,8 +14,6 @@ abstract class WebApp {
 
     fun start() {
 
-        ErrorPages(this)
-            .getErrorPage(404)
 
         val webAppConfig = WebAppConfig(
             webRootClass = this,
@@ -25,6 +23,8 @@ abstract class WebApp {
             prettyFormatHtml = prettyFormatHtml,
             printStartupMessages = printStartupMessages
         )
+        ErrorPages(this, webAppConfig.environment)
+            .getErrorPage(404)
         InitWebApp(webAppConfig)
     }
 }

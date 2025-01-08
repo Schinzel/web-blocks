@@ -1,11 +1,22 @@
 package io.schinzel.page_elements.web.errors
 
-import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.component.template_engine.TemplateProcessor
-import io.schinzel.page_elements.web.WebAppConfig
-import java.io.File
+import io.schinzel.page_elements.web.Environment
 
-class ErrorPages(private val webRootClass: Any) {
+/**
+ * One folder for each environment. In each folder, there are error pages for that environment.
+ * The error pages are named by the error code. For example, 404.html.
+ *
+ * Each folder has a default error page, default.html. If the error page for an error code is not found in the
+ * environment folder, the default error page is used.
+ *
+ * The root folder contains the default error pages which are used if there
+ * is no directory for the current environment.
+ */
+class ErrorPages(
+    private val webRootClass: Any,
+    private val environment: Environment
+) {
 
     fun getErrorPage(errorCode: Int): String {
         val fileName = "errors/$errorCode.html"
@@ -16,19 +27,24 @@ class ErrorPages(private val webRootClass: Any) {
             .processTemplate(fileName)
         return html
     }
+
+    /**
+     * NOTE, NEEDS TO FORK FOR SOURCE AND JAR
+     */
+/*    private fun getFileName(errorCode: Int): String {
+        if (environment.isDevelopment()) {
+            val nameTemplateErrorFile = "errors/$errorCode.html"
+            // If the file does not exist, return a default error page
+            val nameTemplateErrorFile = "errors/default.html"
+            // If default error page does not exist, return a default error page
+
+        }else {
+            val environmentName = environment.getEnvironmentName()
+            val nameTemplateErrorFile = "errors/$environmentName/$errorCode.html"
+
+        }
+
+    }*/
 }
 
 
-sealed class Environment {
-    object DEVELOPMENT : Environment()
-    object STAGING : Environment()
-    object PRODUCTION : Environment()
-
-    class Custom(val name: String) : Environment()
-}
-
-// User adds their environment
-val ACCEPTANCE = Environment.Custom("ACCEPTANCE")
-
-// Or define a proper object
-object ACCEPTANCE_V2 : Environment()

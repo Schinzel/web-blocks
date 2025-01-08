@@ -10,16 +10,6 @@ import io.schinzel.page_elements.web.request_handler.log.ConsoleLogger
  * See README.md for links to use with this demo.
  */
 fun main() {
-    /*InitWebApp(
-        WebAppConfig(
-            routesPackage = "io.schinzel.page_elements.samples.component",
-            port = 5555,
-            logger = ConsoleLogger(prettyPrint = true),
-            localTimezone = "Europe/Stockholm",
-            prettyFormatHtml = true,
-            printStartupMessages = true
-        )
-    )*/
     MyWebApp().start()
 }
 

@@ -9,7 +9,7 @@ object FileReaderUtil {
     /**
      * @return The path to the package of the caller class.
      */
-    fun fromPackageToPath(caller: Any): String {
+    fun pathFromProjectRootToCaller(caller: Any): String {
         return caller::class.java.packageName.replace('.', File.separatorChar)
     }
 }

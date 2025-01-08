@@ -9,7 +9,6 @@ import io.schinzel.page_elements.component.template_engine.file_reader.IFileRead
 class TemplateProcessor(private val fileReader: IFileReader) {
     private val data: MutableMap<String, String> = mutableMapOf()
 
-    constructor(path: String) : this(FileReaderFactory.createFromPath(path))
 
     constructor(caller: Any) : this(FileReaderFactory.createFromCaller(caller))
 

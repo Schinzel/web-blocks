@@ -19,15 +19,6 @@ object FileReaderFactory {
         else -> SourceFileReader(caller)
     }
 
-    /**
-     * Creates a file reader.
-     * @param path The path to the file to read.
-     * @return A file reader.
-     */
-    fun createFromPath(path: String): IFileReader = when {
-        isRunningFromJar() -> JarFileReader(path)
-        else -> SourceFileReader(path)
-    }
 
 
     /**

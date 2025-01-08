@@ -1,6 +1,6 @@
 
 # File, paths and packages needed
-Not jar
+Source
 - Template files
   - Absolute path to the template files
   - Derived from relative to the caller class
