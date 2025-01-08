@@ -18,7 +18,9 @@ class InitWebAppTest {
         fun beforeAll() {
             // Create an instance of the class so that its package is available
             DummyClass()
-            MyWebApp1().start()
+            val myWebApp = MyWebApp1()
+            randomPort = myWebApp.port
+            myWebApp.start()
         }
     }
 
