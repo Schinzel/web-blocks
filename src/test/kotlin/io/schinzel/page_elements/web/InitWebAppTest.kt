@@ -1,6 +1,5 @@
 package io.schinzel.page_elements.web
 
-import io.schinzel.page_elements.web.test_routes.DummyClass
 import io.schinzel.page_elements.web.test_routes.MyWebApp1
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.HttpStatusException
@@ -16,8 +15,6 @@ class InitWebAppTest {
         @JvmStatic
         @BeforeAll
         fun beforeAll() {
-            // Create an instance of the class so that its package is available
-            DummyClass()
             val myWebApp = MyWebApp1()
             randomPort = myWebApp.port
             myWebApp.start()
