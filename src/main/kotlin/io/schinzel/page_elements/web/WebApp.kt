@@ -23,8 +23,8 @@ abstract class WebApp {
             prettyFormatHtml = prettyFormatHtml,
             printStartupMessages = printStartupMessages
         )
-        ErrorPages(this, webAppConfig.environment)
-            .getErrorPage(404)
+//        ErrorPages(this, webAppConfig.environment)
+//            .getErrorPage(404)
         InitWebApp(webAppConfig)
     }
 }
