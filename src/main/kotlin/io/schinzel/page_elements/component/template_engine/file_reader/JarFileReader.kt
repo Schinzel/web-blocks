@@ -12,12 +12,18 @@ class JarFileReader(private val caller: Any) : IFileReader {
         private val cache = mutableMapOf<String, String>()
     }
 
-    override fun getFileContent(fileName: String): String {
+    /**
+     * Reads a file from the jar file.
+     * @param filePath The path and name of the file to read relative the the caller.
+     * For example: "template.html" or "html/page-template.html"
+     * @return The content of the file.
+     */
+    override fun getFileContent(filePath: String): String {
         // For example: io/schinzel/page_elements/samples/component/pages
         val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
         // Get the full path to the file
         // For example: /io/schinzel/samples/component/pages/user_account/intro_text/template.html
-        val pathToFile = "/$pathFromProjectRootToCaller/$fileName"
+        val pathToFile = "/$pathFromProjectRootToCaller/$filePath"
         // Return cached content if exists, otherwise read file and cache it
         return cache.getOrPut(pathToFile) {
             // Read the file

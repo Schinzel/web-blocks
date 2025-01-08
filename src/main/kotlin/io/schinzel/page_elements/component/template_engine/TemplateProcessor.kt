@@ -10,7 +10,7 @@ class TemplateProcessor(private val fileReader: IFileReader) {
     private val data: MutableMap<String, String> = mutableMapOf()
 
 
-    constructor(caller: Any) : this(FileReaderFactory.createFromCaller(caller))
+    constructor(caller: Any) : this(FileReaderFactory.create(caller))
 
     fun addData(key: String, value: String): TemplateProcessor {
         data[key] = value
