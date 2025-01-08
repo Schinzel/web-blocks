@@ -5,15 +5,13 @@ import java.io.File
 /**
  * The purpose of this class is to read a file from the source code directory.
  * @param caller The class that is calling this class.
- * For example: io/schinzel/samples/component/pages/user_account/intro_text
  */
 class SourceFileReader(private val caller: Any) : IFileReader {
 
 
     override fun getFileContent(fileName: String): String {
         // For example: io/schinzel/page_elements/samples/component/pages
-        val pathFromProjectRootToCaller = FileReaderUtil
-            .pathFromProjectRootToCaller(caller)
+        val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
         // For example: Users/schinzel/code/page-elements-kotlin
         val pathToProjectRoot = File("").absolutePath
         // For example: /Users/schinzel/code/page-elements-kotlin/
