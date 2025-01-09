@@ -1,3 +1,50 @@
+    ********************************************************************************************************************
+    ERROR PAGES
+    ********************************************************************************************************************
+
+    /*
+    fun getFileName(errorCode: Int): String {
+        if (environment.isDevelopment()) {
+            return getDevFileName(errorCode)
+        }
+        val fileReader = FileReaderFactory.create(webRootClass)
+        val environmentDirectoryExists = fileReader
+            .getFile("errors/${environment.getEnvironmentName()}")
+            .exists()
+        if (!environmentDirectoryExists) {
+            return getDevFileName(errorCode)
+        }
+        return ""
+    }
+
+    private fun getDevFileName(errorCode: Int): String {
+        val fileNameErrorCodeFile = "errors/$errorCode.html"
+        val errorCodeFileExists = FileReaderFactory.create(webRootClass)
+            .getFile(fileNameErrorCodeFile)
+            .exists()
+        return when (errorCodeFileExists) {
+            true -> fileNameErrorCodeFile
+            false -> "errors/default.html"
+        }
+    }
+
+    private fun getErrorFileName(errorCode: Int, environment: Environment): String {
+        val path = when (environment.isDevelopment()) {
+            true -> "errors"
+            false -> "errors/${environment.getEnvironmentName()}"
+        }
+        val fileNameErrorCodeFile = "$path/$errorCode.html"
+        val errorCodeFileExists = FileReaderFactory.create(webRootClass)
+            .getFile(fileNameErrorCodeFile)
+            .exists()
+        return when (errorCodeFileExists) {
+            true -> fileNameErrorCodeFile
+            false -> "$path/default.html"
+        }
+    }*/
+
+    ********************************************************************************************************************
+
         // Check if route has arguments
         val hasArguments = routeMapping.parameters.isNotEmpty()
         // If has arguments

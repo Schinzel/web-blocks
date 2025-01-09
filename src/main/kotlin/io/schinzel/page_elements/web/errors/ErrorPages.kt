@@ -68,7 +68,7 @@ class ErrorPages(
                 // If environment-default-file does exist
                 val environmentDefaultFile = "errors/${environment.getEnvironmentName()}/default.html"
                 if (fileReader.getFile(environmentDefaultFile).exists()) {
-                    // Return environment default-file
+                    // Return environment-default-file
                     return environmentDefaultFile
                 }
             }
@@ -86,47 +86,5 @@ class ErrorPages(
             }
             return null
         }
-
     }
-
-    /*
-    fun getFileName(errorCode: Int): String {
-        if (environment.isDevelopment()) {
-            return getDevFileName(errorCode)
-        }
-        val fileReader = FileReaderFactory.create(webRootClass)
-        val environmentDirectoryExists = fileReader
-            .getFile("errors/${environment.getEnvironmentName()}")
-            .exists()
-        if (!environmentDirectoryExists) {
-            return getDevFileName(errorCode)
-        }
-        return ""
-    }
-
-    private fun getDevFileName(errorCode: Int): String {
-        val fileNameErrorCodeFile = "errors/$errorCode.html"
-        val errorCodeFileExists = FileReaderFactory.create(webRootClass)
-            .getFile(fileNameErrorCodeFile)
-            .exists()
-        return when (errorCodeFileExists) {
-            true -> fileNameErrorCodeFile
-            false -> "errors/default.html"
-        }
-    }
-
-    private fun getErrorFileName(errorCode: Int, environment: Environment): String {
-        val path = when (environment.isDevelopment()) {
-            true -> "errors"
-            false -> "errors/${environment.getEnvironmentName()}"
-        }
-        val fileNameErrorCodeFile = "$path/$errorCode.html"
-        val errorCodeFileExists = FileReaderFactory.create(webRootClass)
-            .getFile(fileNameErrorCodeFile)
-            .exists()
-        return when (errorCodeFileExists) {
-            true -> fileNameErrorCodeFile
-            false -> "$path/default.html"
-        }
-    }*/
 }
