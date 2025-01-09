@@ -7,6 +7,18 @@ import java.io.File
  * @param caller The class that is calling this class.
  */
 class SourceFileReader(private val caller: Any) : IFileReader {
+    private val absolutePathToCaller: String
+
+    init {
+        // For example: io/schinzel/page_elements/samples/component/pages
+        val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
+        // For example: Users/schinzel/code/page-elements-kotlin
+        val absolutePathToProjectRoot = File("").absolutePath
+        // For example: /Users/schinzel/code/page-elements-kotlin/io/schinzel/page_elements/samples/component/pages
+        absolutePathToCaller = "$absolutePathToProjectRoot/src/main/kotlin/$pathFromProjectRootToCaller"
+
+
+    }
 
     /**
      * Reads a file from the source code directory.
@@ -14,22 +26,24 @@ class SourceFileReader(private val caller: Any) : IFileReader {
      * For example: "template.html" or "html/page-template.html"
      * @return The content of the file.
      */
-
     override fun getFileContent(filePath: String): String {
-        // For example: io/schinzel/page_elements/samples/component/pages
-        val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
-        // For example: Users/schinzel/code/page-elements-kotlin
-        val pathToProjectRoot = File("").absolutePath
-        // For example: /Users/schinzel/code/page-elements-kotlin/
-        // src/main/kotlin/io/schinzel/page_elements_kotlin/page/greeting_pe/GreetingPe.html
-        val pathToFile = "$pathToProjectRoot/src/main/kotlin/$pathFromProjectRootToCaller/$filePath"
         // Create file
-        val file = File(pathToFile)
+        val file = getFile(filePath)
         return when {
             // If file exists, read it
             file.exists() -> file.readText()
             // If file does not exist, throw exception
-            else -> throw Exception("File not found '$pathToFile'")
+            else -> throw Exception("File not found '${getAbsolutePathToFile(filePath)}'")
         }
     }
+
+    override fun fileExists(filePath: String): Boolean = getFile(filePath).exists()
+
+    private fun getFile(filePath: String): File {
+        val pathToFile = getAbsolutePathToFile(filePath)
+        return File(pathToFile)
+    }
+
+
+    private fun getAbsolutePathToFile(filePath: String): String = "$absolutePathToCaller/$filePath"
 }

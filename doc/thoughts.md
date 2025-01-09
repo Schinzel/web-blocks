@@ -47,6 +47,7 @@ Can jag skicka in MyWebApp som caller? och sen errors/404.html som filnamn?
   - Error handling
   - Success handling
   - browser console logging
+- Make think internal? So is not exposed outside the JAR
 - Create a new public repo
 - Create a project that uses this framework and see if one can make it work. 
   - Preferably on Heroku

@@ -28,9 +28,6 @@ class ErrorPages(
         return html
     }
 
-    /**
-     * NOTE, NEEDS TO WORK FOR SOURCE AND JAR
-     */
 /*    private fun getFileName(errorCode: Int): String {
         if (environment.isDevelopment()) {
             val nameTemplateErrorFile = "errors/$errorCode.html"
@@ -38,7 +35,7 @@ class ErrorPages(
             val nameTemplateErrorFile = "errors/default.html"
             // If default error page does not exist, return a default error page
 
-        }else {
+        } else {
             val environmentName = environment.getEnvironmentName()
             val nameTemplateErrorFile = "errors/$environmentName/$errorCode.html"
 

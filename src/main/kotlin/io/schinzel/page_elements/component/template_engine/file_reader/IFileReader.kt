@@ -5,4 +5,6 @@ package io.schinzel.page_elements.component.template_engine.file_reader
  */
 interface IFileReader {
     fun getFileContent(filePath: String): String
+
+    fun fileExists(filePath: String): Boolean
 }

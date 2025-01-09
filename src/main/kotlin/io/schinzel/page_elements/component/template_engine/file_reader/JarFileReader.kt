@@ -1,5 +1,7 @@
 package io.schinzel.page_elements.component.template_engine.file_reader
 
+import java.io.File
+
 
 /**
  * The purpose of this class is to read a file from a jar file.
@@ -7,6 +9,9 @@ package io.schinzel.page_elements.component.template_engine.file_reader
  * @param caller The class that is calling this class.
  */
 class JarFileReader(private val caller: Any) : IFileReader {
+    // For example: io/schinzel/page_elements/samples/component/pages
+    private val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
+
 
     companion object {
         private val cache = mutableMapOf<String, String>()
@@ -31,4 +36,14 @@ class JarFileReader(private val caller: Any) : IFileReader {
                 ?: throw Exception("File not found '$pathToFile'")
         }
     }
+
+    override fun fileExists(filePath: String): Boolean = getFile(filePath).exists()
+
+    private fun getFile(filePath: String): File {
+        val pathToFile = getAbsolutePathToFile(filePath)
+        return File(pathToFile)
+    }
+
+    private fun getAbsolutePathToFile(filePath: String): String = "$pathFromProjectRootToCaller/$filePath"
+
 }
