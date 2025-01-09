@@ -10,7 +10,7 @@ import java.io.File
  */
 class JarFileReader(private val caller: Any) : IFileReader {
     // For example: io/schinzel/page_elements/samples/component/pages
-    private val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
+    override val pathToCaller = "/" + FileReaderUtil.pathFromProjectRootToCaller(caller)
 
 
     companion object {
@@ -24,11 +24,9 @@ class JarFileReader(private val caller: Any) : IFileReader {
      * @return The content of the file.
      */
     override fun getFileContent(filePath: String): String {
-        // For example: io/schinzel/page_elements/samples/component/pages
-        val pathFromProjectRootToCaller = FileReaderUtil.pathFromProjectRootToCaller(caller)
         // Get the full path to the file
         // For example: /io/schinzel/samples/component/pages/user_account/intro_text/template.html
-        val pathToFile = "/$pathFromProjectRootToCaller/$filePath"
+        val pathToFile = getAbsolutePathToFile(filePath)
         // Return cached content if exists, otherwise read file and cache it
         return cache.getOrPut(pathToFile) {
             // Read the file
@@ -36,14 +34,4 @@ class JarFileReader(private val caller: Any) : IFileReader {
                 ?: throw Exception("File not found '$pathToFile'")
         }
     }
-
-    override fun fileExists(filePath: String): Boolean = getFile(filePath).exists()
-
-    private fun getFile(filePath: String): File {
-        val pathToFile = getAbsolutePathToFile(filePath)
-        return File(pathToFile)
-    }
-
-    private fun getAbsolutePathToFile(filePath: String): String = "$pathFromProjectRootToCaller/$filePath"
-
 }

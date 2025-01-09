@@ -7,7 +7,7 @@ import java.io.File
  * @param caller The class that is calling this class.
  */
 class SourceFileReader(private val caller: Any) : IFileReader {
-    private val absolutePathToCaller: String
+    override val pathToCaller: String
 
     init {
         // For example: io/schinzel/page_elements/samples/component/pages
@@ -15,8 +15,7 @@ class SourceFileReader(private val caller: Any) : IFileReader {
         // For example: Users/schinzel/code/page-elements-kotlin
         val absolutePathToProjectRoot = File("").absolutePath
         // For example: /Users/schinzel/code/page-elements-kotlin/io/schinzel/page_elements/samples/component/pages
-        absolutePathToCaller = "$absolutePathToProjectRoot/src/main/kotlin/$pathFromProjectRootToCaller"
-
+        pathToCaller = "$absolutePathToProjectRoot/src/main/kotlin/$pathFromProjectRootToCaller"
 
     }
 
@@ -36,14 +35,4 @@ class SourceFileReader(private val caller: Any) : IFileReader {
             else -> throw Exception("File not found '${getAbsolutePathToFile(filePath)}'")
         }
     }
-
-    override fun fileExists(filePath: String): Boolean = getFile(filePath).exists()
-
-    private fun getFile(filePath: String): File {
-        val pathToFile = getAbsolutePathToFile(filePath)
-        return File(pathToFile)
-    }
-
-
-    private fun getAbsolutePathToFile(filePath: String): String = "$absolutePathToCaller/$filePath"
 }
