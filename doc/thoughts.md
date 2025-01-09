@@ -3,6 +3,7 @@
 - Expand hard coded error page
 - Let request handler return error pages
 - Add Tests
+- How about error logging for JSON requests/responses
 
 
 # To do
