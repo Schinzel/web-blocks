@@ -10,6 +10,7 @@ sealed class Environment {
     fun isProduction() = this == PRODUCTION
 
     fun isDevelopment() = this == DEVELOPMENT
+    fun isNotDevelopment() = !isDevelopment()
 
     fun getEnvironmentName() = this::class.simpleName?.lowercase()
         ?: throw IllegalStateException("Environment name not found")

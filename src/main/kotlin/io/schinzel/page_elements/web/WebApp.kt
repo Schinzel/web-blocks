@@ -1,5 +1,6 @@
 package io.schinzel.page_elements.web
 
+import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.web.errors.ErrorPages
 import io.schinzel.page_elements.web.request_handler.log.ConsoleLogger
 import io.schinzel.page_elements.web.request_handler.log.ILogger
@@ -21,10 +22,11 @@ abstract class WebApp {
             logger = logger,
             localTimezone = localTimezone,
             prettyFormatHtml = prettyFormatHtml,
-            printStartupMessages = printStartupMessages
+            printStartupMessages = false
         )
-//        ErrorPages(this, webAppConfig.environment)
-//            .getErrorPage(404)
+        ErrorPages(this, Environment.PRODUCTION)
+            .getFileNameV2(501, Environment.STAGING)
+            .printlnWithPrefix("Error page file name")
         InitWebApp(webAppConfig)
     }
 }
