@@ -24,9 +24,12 @@ abstract class WebApp {
             prettyFormatHtml = prettyFormatHtml,
             printStartupMessages = false
         )
+        //ErrorPages(this, Environment.PRODUCTION)
+       // ErrorPages.getFileNameV2(this, Environment.STAGING, 501).printlnWithPrefix("Error page file name")
+
         ErrorPages(this, Environment.PRODUCTION)
-            .getFileNameV2(501, Environment.STAGING)
-            .printlnWithPrefix("Error page file name")
-        InitWebApp(webAppConfig)
+            .getErrorPage(404)
+            .printlnWithPrefix("Error page")
+        //InitWebApp(webAppConfig)
     }
 }

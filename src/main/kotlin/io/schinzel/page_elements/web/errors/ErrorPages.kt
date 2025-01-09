@@ -36,7 +36,7 @@ class ErrorPages(
 ) {
 
     fun getErrorPage(errorCode: Int): String {
-        val fileName = getFileNameV2(errorCode, environment)
+        val fileName = getFileNameV2(webRootClass, environment, errorCode)
             ?: return "<h1>An error occurred</h1>"
         fileName.printlnWithPrefix("Error page file name")
         val html = TemplateProcessor(webRootClass)
@@ -47,46 +47,49 @@ class ErrorPages(
         return html
     }
 
-    /**
-     * @return The path to the error page for the given error code relative
-     * the the web root. For example: "errors/404.html" or "errors/default.html"
-     * or "errors/production/404.html"
-     *
-     * If not event the default error page is found, null is returned.
-     */
-    fun getFileNameV2(errorCode: Int, environment: Environment): String? {
-        val fileReader = FileReaderFactory.create(webRootClass)
-        // If environment is not development
-        if (environment.isNotDevelopment()) {
-            // If environment-error-code-file does exists
-            val environmentErrorCodeFile = "errors/${environment.getEnvironmentName()}/$errorCode.html"
-            if (fileReader.getFile(environmentErrorCodeFile).exists()) {
-                // Return environment error-code-file
-                return environmentErrorCodeFile
+    companion object {
+        /**
+         * @return The path to the error page for the given error code relative
+         * the the web root. For example: "errors/404.html" or "errors/default.html"
+         * or "errors/production/404.html"
+         *
+         * If not event the default error page is found, null is returned.
+         */
+        fun getFileNameV2(webRootClass: Any, environment: Environment, errorCode: Int): String? {
+            val fileReader = FileReaderFactory.create(webRootClass)
+            // If environment is not development
+            if (environment.isNotDevelopment()) {
+                // If environment-error-code-file does exists
+                val environmentErrorCodeFile = "errors/${environment.getEnvironmentName()}/$errorCode.html"
+                if (fileReader.getFile(environmentErrorCodeFile).exists()) {
+                    // Return environment error-code-file
+                    return environmentErrorCodeFile
+                }
+                // If environment-default-file does exist
+                val environmentDefaultFile = "errors/${environment.getEnvironmentName()}/default.html"
+                if (fileReader.getFile(environmentDefaultFile).exists()) {
+                    // Return environment default-file
+                    return environmentDefaultFile
+                }
             }
-            // If environment-default-file does exist
-            val environmentDefaultFile = "errors/${environment.getEnvironmentName()}/default.html"
-            if (fileReader.getFile(environmentDefaultFile).exists()) {
-                // Return environment default-file
-                return environmentDefaultFile
+            // If development-error-code-file does exist
+            val developmentErrorCodeFile = "errors/$errorCode.html"
+            if (fileReader.getFile(developmentErrorCodeFile).exists()) {
+                // Return development-error-code-file
+                return developmentErrorCodeFile
             }
+            // If development-default-file does exist
+            val developmentDefaultFile = "errors/default.html"
+            if (fileReader.getFile(developmentDefaultFile).exists()) {
+                // Return development-default-file
+                return developmentDefaultFile
+            }
+            return null
         }
-        // If development-error-code-file does exist
-        val developmentErrorCodeFile = "errors/$errorCode.html"
-        if (fileReader.getFile(developmentErrorCodeFile).exists()) {
-            // Return development-error-code-file
-            return developmentErrorCodeFile
-        }
-        // If development-default-file does exist
-        val developmentDefaultFile = "errors/default.html"
-        if (fileReader.getFile(developmentDefaultFile).exists()) {
-            // Return development-default-file
-            return developmentDefaultFile
-        }
-        return null
+
     }
 
-
+    /*
     fun getFileName(errorCode: Int): String {
         if (environment.isDevelopment()) {
             return getDevFileName(errorCode)
@@ -125,7 +128,5 @@ class ErrorPages(
             true -> fileNameErrorCodeFile
             false -> "$path/default.html"
         }
-    }
+    }*/
 }
-
-

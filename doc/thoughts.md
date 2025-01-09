@@ -1,39 +1,8 @@
 
 # File, paths and packages needed
-Source
-- Template files
-  - Absolute path to the template files
-  - Derived from relative to the caller class
-- Error template files - Absolute path to the error template files
-JAR
-  - Path based on package
-    - io/schinzel/samples/component/pages/user_account/intro_text
-  - Error template files
-    - Relative root?
-****************************************************************************************************
-Can jag skicka in MyWebApp som caller? och sen errors/404.html som filnamn?
-****************************************************************************************************
-
-# Error handling
-- How to get path to files to read in source dir?
-  - Should work in dev mode when using this as a dependency
-  - Should work when using this as a JAR
-- Error Class Singleton
-  - Constructor arguments
-    - dir of error pages
-    - environment
-  - Method arguments
-    - ErrorLog, contains error number, message, and stack trace
-  
-
-- Error handling with html-
-  - A dir "errors"
-  - Will need to spend some time on the file reader so this doesn't
-    get too complicated
-    - Start with only reading the files in the root folder "errors"
-  - Subfolder that can override the default error pages
-    - These can override the default error pages if in dev mode
-  - Environment as a sealed class
+- Expand hard coded error page
+- Let request handler return error pages
+- Add Tests
 
 
 # To do
