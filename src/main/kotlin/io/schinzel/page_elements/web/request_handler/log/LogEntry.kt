@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter
 data class LogEntry(
     var routeType: String = "",
     var httpMethod: String = "",
-    var requestBody: String = "",
     var requestTimeUtc: String = TimeProvider.nowUtc(),
     val localTimeZone: String,
     var requestTimeLocalTimezone: String = TimeProvider.now(localTimeZone),
