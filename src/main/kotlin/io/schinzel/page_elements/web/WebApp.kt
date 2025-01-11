@@ -10,6 +10,7 @@ abstract class WebApp {
     open val localTimezone: String = "Europe/Stockholm"
     open val prettyFormatHtml: Boolean = true
     open val printStartupMessages: Boolean = true
+    open val environment: Environment = Environment.DEVELOPMENT
 
     fun start() {
         val webAppConfig = WebAppConfig(
@@ -18,7 +19,8 @@ abstract class WebApp {
             logger = logger,
             localTimezone = localTimezone,
             prettyFormatHtml = prettyFormatHtml,
-            printStartupMessages = printStartupMessages
+            printStartupMessages = printStartupMessages,
+            environment = environment,
         )
         InitWebApp(webAppConfig)
     }

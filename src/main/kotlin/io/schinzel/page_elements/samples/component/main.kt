@@ -1,5 +1,6 @@
 package io.schinzel.page_elements.samples.component
 
+import io.schinzel.page_elements.web.Environment
 import io.schinzel.page_elements.web.WebApp
 
 /**
@@ -13,4 +14,5 @@ fun main() {
 class MyWebApp : WebApp() {
     // Required configuration
     override val port: Int = 5555
+    override val environment = Environment.DEVELOPMENT
 }

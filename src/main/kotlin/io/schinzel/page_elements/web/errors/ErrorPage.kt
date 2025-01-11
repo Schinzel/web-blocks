@@ -12,6 +12,10 @@ class ErrorPage(
     private val environment: Environment
 ) {
     private val data: MutableMap<String, String> = mutableMapOf()
+    init {
+        // Add the environment to the data
+        this.addData("environment", environment.getEnvironmentName())
+    }
 
     fun addData(key: String, value: String): ErrorPage {
         data[key] = value
