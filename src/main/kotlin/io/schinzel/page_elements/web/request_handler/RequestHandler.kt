@@ -2,7 +2,7 @@ package io.schinzel.page_elements.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.page_elements.web.WebAppConfig
-import io.schinzel.page_elements.web.errors.ErrorPages
+import io.schinzel.page_elements.web.errors.ErrorPage
 import io.schinzel.page_elements.web.request_handler.log.ErrorLog
 import io.schinzel.page_elements.web.request_handler.log.LogEntry
 import io.schinzel.page_elements.web.response_handler_mapping.ResponseHandlerMapping
@@ -51,7 +51,7 @@ class RequestHandler(
 
         }
     }
-
+/*
     fun getHandler_BACKUP(): (Context) -> Unit {
         return { ctx: Context ->
             val returnType = responseHandlerMapping.returnType
@@ -89,7 +89,7 @@ class RequestHandler(
                     }
 
                     ReturnTypeEnum.HTML -> {
-                        ErrorPages(webAppConfig.webRootClass, webAppConfig.environment)
+                        ErrorPage(webAppConfig.webRootClass, webAppConfig.environment)
                             .getErrorPage(ctx.status().code)
                     }
                 }
@@ -102,5 +102,5 @@ class RequestHandler(
                 webAppConfig.logger.log(logEntry)
             }
         }
-    }
+    }*/
 }

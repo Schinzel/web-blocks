@@ -20,6 +20,10 @@ class TemplateProcessor(private val fileReader: IFileReader) {
     fun addData(key: String, value: Int): TemplateProcessor =
         this.addData(key, value.toString())
 
+    fun addDataSet(data: MutableMap<String, String>): TemplateProcessor {
+        this.data.putAll(data)
+        return this
+    }
 
     fun processTemplate(fileName: String): String {
         val content = fileReader.getFileContent(fileName)

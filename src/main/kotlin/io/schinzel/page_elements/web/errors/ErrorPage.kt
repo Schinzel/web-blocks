@@ -5,54 +5,40 @@ import io.schinzel.page_elements.component.template_engine.file_reader.FileReade
 import io.schinzel.page_elements.web.Environment
 
 /**
- * One folder for each environment. In each folder, there are error pages for that environment.
- * The error pages are named by the error code. For example, 404.html.
- *
- * Each folder has a default error page, default.html. If the error page for an error code is not found in the
- * environment folder, the default error page is used.
- *
- * The root folder contains the default error pages which are used if there
- * is no directory for the current environment.
+ * The purpose of this class is to return an error page.
  */
-
-/**
- * If environment is not dev{
- *      if an environment-error-code-file does exists
- *          return environment error-code-file
- *      if environment-default-file does exist
- *          return environment default-file
- * }
- *  if development-error-code-file does exist
- *      return development-error-code-file
- *  if development-default-file does exist
- *      return development-default-file
- * return hard coded default error page
- *
- */
-class ErrorPages(
+class ErrorPage(
     private val webRootClass: Any,
     private val environment: Environment
 ) {
+    private val data: MutableMap<String, String> = mutableMapOf()
+
+    fun addData(key: String, value: String): ErrorPage {
+        data[key] = value
+        return this
+    }
+
+    fun addData(key: String, value: Int): ErrorPage =
+        this.addData(key, value.toString())
+
 
     fun getErrorPage(errorCode: Int): String {
         val fileName = getFileName(webRootClass, environment, errorCode)
-            // If no error page is found, return default error page
-            ?: return getDefaultErrorPage()
+        // If no error page is found, return default error page
+            ?: return getDefaultErrorPage(errorCode)
         return TemplateProcessor(webRootClass)
+            .addDataSet(data)
             .addData("errorCode", errorCode)
-            .addData("errorMessage", "An error occurred")
-            .addData("errorDescription", "An error occurred")
             .processTemplate(fileName)
     }
 
     /**
      * @return The default error page.
      */
-    private fun getDefaultErrorPage(): String {
+    private fun getDefaultErrorPage(errorCode: Int): String {
         return TemplateProcessor(this)
-            .addData("errorCode", 500)
-            .addData("errorMessage", "An error occurred")
-            .addData("errorDescription", "An error occurred")
+            .addDataSet(data)
+            .addData("errorCode", errorCode)
             .processTemplate("default_error_page.html")
     }
 
@@ -65,6 +51,9 @@ class ErrorPages(
          * If no error page is found, null is returned.
          */
         fun getFileName(webRootClass: Any, environment: Environment, errorCode: Int): String? {
+            if (true){
+                return null
+            }
             val fileReader = FileReaderFactory.create(webRootClass)
             // If environment is not development
             if (environment.isNotDevelopment()) {
