@@ -2,6 +2,7 @@ package io.schinzel.page_elements.web
 
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
+import io.schinzel.page_elements.web.request_handler.setUpErrorHandling
 import io.schinzel.page_elements.web.response_handlers.*
 import io.schinzel.page_elements.web.set_up_routes.setUpRoutes
 import java.io.IOException
@@ -20,7 +21,8 @@ class InitWebApp(
             .message("Port $port is not available")
 
         initializeResponseHandlerDescriptorRegistry(webAppConfig.webRootPackage)
-        setUpRoutes(webAppConfig)
+        val javalin = setUpRoutes(webAppConfig)
+        javalin.setUpErrorHandling(webAppConfig)
         if (webAppConfig.printStartupMessages) {
             "*".repeat(30).println()
             "Project started on port $port".println()

@@ -38,7 +38,6 @@ class ErrorPages(
     fun getErrorPage(errorCode: Int): String {
         val fileName = getFileName(webRootClass, environment, errorCode)
             ?: return "<h1>An error occurred</h1>"
-        fileName.printlnWithPrefix("Error page file name")
         val html = TemplateProcessor(webRootClass)
             .addData("error_code", errorCode)
             .addData("error_message", "An error occurred")

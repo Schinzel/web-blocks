@@ -11,7 +11,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-fun setUpRoutes(webAppConfig: WebAppConfig): Javalin? {
+fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
     val javalin = Javalin.create { config ->
         // Serve static files at /static/*
         config.staticFiles.add {
