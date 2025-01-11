@@ -10,9 +10,10 @@ import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
  * TO DO:
  * - Determine if it is a HTML or JSON response.
  *      - Look at the prefix of the path
+ *      - If no recognized prefix, look at the Accept header
  * - Add JSON responses
  * - Add logging
- *    - Want that unique id that is displayed in the response to the client aslo in the log
+ *    - Want that unique id that is displayed in the response to the client also in the log
  */
 
 fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
