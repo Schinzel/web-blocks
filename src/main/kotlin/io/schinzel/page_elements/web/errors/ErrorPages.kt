@@ -36,7 +36,7 @@ class ErrorPages(
 ) {
 
     fun getErrorPage(errorCode: Int): String {
-        val fileName = getFileNameV2(webRootClass, environment, errorCode)
+        val fileName = getFileName(webRootClass, environment, errorCode)
             ?: return "<h1>An error occurred</h1>"
         fileName.printlnWithPrefix("Error page file name")
         val html = TemplateProcessor(webRootClass)
@@ -53,9 +53,9 @@ class ErrorPages(
          * the the web root. For example: "errors/404.html" or "errors/default.html"
          * or "errors/production/404.html"
          *
-         * If not event the default error page is found, null is returned.
+         * If no error page is found, null is returned.
          */
-        fun getFileNameV2(webRootClass: Any, environment: Environment, errorCode: Int): String? {
+        fun getFileName(webRootClass: Any, environment: Environment, errorCode: Int): String? {
             val fileReader = FileReaderFactory.create(webRootClass)
             // If environment is not development
             if (environment.isNotDevelopment()) {

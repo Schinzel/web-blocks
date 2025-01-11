@@ -1,11 +1,13 @@
 package io.schinzel.page_elements.web.request_handler
 
 import io.javalin.http.Context
+import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.web.WebAppConfig
 import io.schinzel.page_elements.web.request_handler.log.ErrorLog
 import io.schinzel.page_elements.web.request_handler.log.LogEntry
 import io.schinzel.page_elements.web.response_handler_mapping.ResponseHandlerMapping
 import io.schinzel.page_elements.web.response_handlers.IResponseHandler
+import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
 import kotlin.reflect.full.createInstance
 
 /**
@@ -41,13 +43,16 @@ class RequestHandler(
                 // Send response
                 sendResponse(ctx, responseHandler, logEntry, returnType, webAppConfig.prettyFormatHtml)
             } catch (e: Exception) {
+                ctx.status().printlnWithPrefix("Error status")
                 ctx.status(500)
                 val errorLog = ErrorLog(e)
                 logEntry.errorLog = errorLog
-                ApiResponse.Error(
-                    message = e.message ?: "An error occurred",
-                    errorId = errorLog.errorId
-                )
+                if (responseHandlerMapping.returnType == ReturnTypeEnum.JSON) {
+                    ApiResponse.Error(
+                        message = e.message ?: "An error occurred",
+                        errorId = errorLog.errorId
+                    )
+                }
             } finally {
                 // Log the response status code
                 logEntry.responseLog.statusCode = ctx.statusCode()
