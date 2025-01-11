@@ -39,6 +39,6 @@ reading resource files from the source folder of classes,
 and a file system based routing system you can have a feature based architecture. 
 
 The project consists of two parts:
-- [Component Framework](src/main/kotlin/io/schinzel/page_elements/component/README.md)
 - [Web Framework](src/main/kotlin/io/schinzel/page_elements/web/README.md)
+- [Component Framework](src/main/kotlin/io/schinzel/page_elements/component/README.md)
 

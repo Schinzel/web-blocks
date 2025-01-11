@@ -39,9 +39,9 @@ class ErrorPages(
         val fileName = getFileName(webRootClass, environment, errorCode)
             ?: return "<h1>An error occurred</h1>"
         val html = TemplateProcessor(webRootClass)
-            .addData("error_code", errorCode)
-            .addData("error_message", "An error occurred")
-            .addData("error_description", "An error occurred")
+            .addData("errorCode", errorCode)
+            .addData("errorMessage", "An error occurred")
+            .addData("errorDescription", "An error occurred")
             .processTemplate(fileName)
         return html
     }

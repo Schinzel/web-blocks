@@ -6,6 +6,12 @@ import io.schinzel.page_elements.web.WebAppConfig
 import io.schinzel.page_elements.web.errors.ErrorPages
 import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
 
+/**
+ * TO DO:
+ * - Add JSON responses
+ * - Add logging
+ */
+
 fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
     this
         .exception(Exception::class.java) { e, ctx ->
@@ -15,22 +21,28 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
                 }
 
                 ReturnTypeEnum.HTML -> {
-                    ErrorPages(webAppConfig.webRootClass, webAppConfig.environment)
-                        .getErrorPage(ctx.status().code)
-                        .printlnWithPrefix("******** Error page ********")
-                    throw Exception("Not implemented")
+                    val errorPageHtml = ErrorPages(webAppConfig.webRootClass, webAppConfig.environment)
+                        .getErrorPage(500)
+                    ctx.html(errorPageHtml)
                 }
             }
         }
-        // Counterintuitive, but actually catches all 400-HTTP status errors (404, 401, 403, etc),
-        // i.e. all client errors
         .error(404) { ctx ->
-            val errorPageHtml = ErrorPages(webAppConfig.webRootClass, webAppConfig.environment)
-                .getErrorPage(404)
-            ctx.html(errorPageHtml)
+            when (getReturnType()) {
+                ReturnTypeEnum.JSON -> {
+                    throw Exception("Not implemented")
+                }
+
+                ReturnTypeEnum.HTML -> {
+                    val errorPageHtml = ErrorPages(webAppConfig.webRootClass, webAppConfig.environment)
+                        .getErrorPage(404)
+                    ctx.html(errorPageHtml)
+                }
+            }
         }
     return this
 }
+
 
 
 private fun getReturnType(): ReturnTypeEnum {
