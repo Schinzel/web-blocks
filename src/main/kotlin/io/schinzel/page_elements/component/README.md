@@ -11,8 +11,8 @@
 - Template engine
 
 ## Template Engine
-- Variables can be passed to the template engine. In the file variable to be replaces with values have the syntax {{variableName}}
-- Template files can include other template files. The syntax for this is {{include:fileName.html}}.
+- Variables can be passed to the template engine. In the file variables to be replaced with values have the syntax `{{variableName}}`
+- Template files can include other template files. The syntax for this is `{{include:fileName.html}}`.
     - Include files can contain include files. There is a maximum depth of 10 levels of include files, as to avoid infinite loops.
 
 ### Template Engine File Reader
@@ -54,7 +54,6 @@ grouped by feature rather than technical function. This approach:
 When building a JAR the html and js files need to be included in the JAR.
 This is done by adding the following to the pom.xml file.
 ```xml
-
 <build>
   <resources>
     <resource>
