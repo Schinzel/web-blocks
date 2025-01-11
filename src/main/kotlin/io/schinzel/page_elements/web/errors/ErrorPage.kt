@@ -23,10 +23,6 @@ class ErrorPage(
         return this
     }
 
-    fun addData(key: String, value: Int): ErrorPage =
-        this.addData(key, value.toString())
-
-
     fun getErrorPage(errorCode: Int): String {
         val fileName = getFileName(webRootClass, environment, errorCode)
         // If no error page is found, return default error page
