@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error | {{appName}}</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #faf8ff;  /* Light purple tint background */
+        }
+
+        .error-code {
+            font-size: 72px;
+            margin: 0;
+            color: #6b46c1;  /* Rich purple */
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .error-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 10px 0 20px 0;
+            font-weight: 600;
+        }
+
+        .error-message {
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .error-id {
+            background: #e9e3f8;  /* Light purple background */
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 20px 0;
+            color: #553c9a;  /* Darker purple for contrast */
+            font-size: 14px;
+        }
+
+        .home-link {
+            color: #805ad5;  /* Purple link */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: 2px solid #805ad5;
+            border-radius: 6px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .home-link:hover {
+            background: #805ad5;
+            color: white;
+            text-decoration: none;
+        }
+
+        pre {
+            overflow-x: auto;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9e3f8;
+        }
+    </style>
+</head>
+<body>
+<h1 class="error-code">404</h1>
+<h2 class="error-title">Internal Server Error</h2>
+<p class="error-message">{{errorMessage}}</p>
+
+<div class="error-id">Error Reference: {{errorCode}}</div>
+
+<a href="/" class="home-link">Return Home</a>
+
+</body>
+</html>

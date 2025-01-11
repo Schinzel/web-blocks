@@ -8,6 +8,7 @@
 
 # To do
 - "/src/main/kotlin/" is hard coded in SourceFileReader
+- Should resource files be snake-case or camel-case?
 - Session variable? 
 - Actually, for classpath resources you should always use forward slash '/', even on Windows!
   - Check where I use File.separator if this is correct!

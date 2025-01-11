@@ -1,6 +1,5 @@
 package io.schinzel.page_elements.web.errors
 
-import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.component.template_engine.TemplateProcessor
 import io.schinzel.page_elements.component.template_engine.file_reader.FileReaderFactory
 import io.schinzel.page_elements.web.Environment
@@ -37,13 +36,24 @@ class ErrorPages(
 
     fun getErrorPage(errorCode: Int): String {
         val fileName = getFileName(webRootClass, environment, errorCode)
-            ?: return "<h1>An error occurred</h1>"
-        val html = TemplateProcessor(webRootClass)
+            // If no error page is found, return default error page
+            ?: return getDefaultErrorPage()
+        return TemplateProcessor(webRootClass)
             .addData("errorCode", errorCode)
             .addData("errorMessage", "An error occurred")
             .addData("errorDescription", "An error occurred")
             .processTemplate(fileName)
-        return html
+    }
+
+    /**
+     * @return The default error page.
+     */
+    private fun getDefaultErrorPage(): String {
+        return TemplateProcessor(this)
+            .addData("errorCode", 500)
+            .addData("errorMessage", "An error occurred")
+            .addData("errorDescription", "An error occurred")
+            .processTemplate("default_error_page.html")
     }
 
     companion object {
