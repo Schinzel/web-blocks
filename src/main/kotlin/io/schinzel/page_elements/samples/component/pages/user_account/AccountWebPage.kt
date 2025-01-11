@@ -16,10 +16,6 @@ class AccountWebPage(private val userId: Int) : IPageResponseHandler {
             .addObserver(welcomePe)
             .addObserver(introTextPe)
 
-        if (true){
-            throw Exception("This is a test exception")
-        }
-
         val response = Page()
             .setTitle("Account")
 

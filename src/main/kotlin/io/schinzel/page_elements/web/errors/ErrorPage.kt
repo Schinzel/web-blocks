@@ -12,6 +12,7 @@ class ErrorPage(
     private val environment: Environment
 ) {
     private val data: MutableMap<String, String> = mutableMapOf()
+
     init {
         // Add the environment to the data
         this.addData("environment", environment.getEnvironmentName())
@@ -54,10 +55,11 @@ class ErrorPage(
          *
          * If no error page is found, null is returned.
          */
-        fun getFileName(webRootClass: Any, environment: Environment, errorCode: Int): String? {
-            if (true){
-                return null
-            }
+        fun getFileName(
+            webRootClass: Any,
+            environment: Environment,
+            errorCode: Int
+        ): String? {
             val fileReader = FileReaderFactory.create(webRootClass)
             // If environment is not development
             if (environment.isNotDevelopment()) {
