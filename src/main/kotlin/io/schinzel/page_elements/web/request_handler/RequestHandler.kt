@@ -1,6 +1,7 @@
 package io.schinzel.page_elements.web.request_handler
 
 import io.javalin.http.Context
+import io.schinzel.basic_utils_kotlin.printlnWithPrefix
 import io.schinzel.page_elements.web.WebAppConfig
 import io.schinzel.page_elements.web.errors.ErrorPage
 import io.schinzel.page_elements.web.request_handler.log.ErrorLog

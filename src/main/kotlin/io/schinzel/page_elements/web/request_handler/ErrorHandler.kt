@@ -8,9 +8,6 @@ import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
 
 /**
  * TO DO:
- * - Determine if it is a HTML or JSON response.
- *      - Look at the prefix of the path
- *      - If no recognized prefix, look at the Accept header
  * - Add JSON responses
  * - Add logging
  *    - Want that unique id that is displayed in the response to the client also in the log
@@ -19,7 +16,7 @@ import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
 fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
     this
         .exception(Exception::class.java) { e, ctx ->
-            when (getReturnType()) {
+            when (getReturnType(ctx.path())) {
                 ReturnTypeEnum.JSON -> {
                     throw Exception("Not implemented")
                 }
@@ -34,7 +31,7 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
         }
         .error(404) { ctx ->
             val errorId: String = RandomUtil.getRandomString(12)
-            when (getReturnType()) {
+            when (getReturnType(ctx.path())) {
                 ReturnTypeEnum.JSON -> {
                     throw Exception("Not implemented")
                 }
@@ -52,6 +49,10 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
 }
 
 
-private fun getReturnType(): ReturnTypeEnum {
+private fun getReturnType(path: String): ReturnTypeEnum {
+    // If the path starts with /api or /page-api, return JSON
+    if (path.startsWith("/api") || path.startsWith("/page-api")) {
+        return ReturnTypeEnum.JSON
+    }
     return ReturnTypeEnum.HTML
 }
