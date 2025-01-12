@@ -8,7 +8,6 @@ import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
 
 /**
  * TO DO:
- * - Add JSON responses
  * - Add logging
  *    - Want that unique id that is displayed in the response to the client also in the log
  */
@@ -16,14 +15,20 @@ import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
 fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
     this
         .exception(Exception::class.java) { e, ctx ->
+            val errorId: String = RandomUtil.getRandomString(12)
             when (getReturnType(ctx.path())) {
                 ReturnTypeEnum.JSON -> {
-                    throw Exception("Not implemented")
+                    val response = ApiResponse.Error(
+                        message = "Endpoint not found: '${ctx.path()}'",
+                        errorId = errorId
+                    )
+                    ctx.json(response)
                 }
 
                 ReturnTypeEnum.HTML -> {
                     val errorPageHtml = ErrorPage(webAppConfig.webRootClass, webAppConfig.environment)
                         .addData("errorMessage", e.message ?: "Unknown error")
+                        .addData("errorId", errorId)
                         .getErrorPage(500)
                     ctx.html(errorPageHtml)
                 }
@@ -33,7 +38,11 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
             val errorId: String = RandomUtil.getRandomString(12)
             when (getReturnType(ctx.path())) {
                 ReturnTypeEnum.JSON -> {
-                    throw Exception("Not implemented")
+                    val response = ApiResponse.Error(
+                        message = "Endpoint not found: '${ctx.path()}'",
+                        errorId = errorId
+                    )
+                    ctx.json(response)
                 }
 
                 ReturnTypeEnum.HTML -> {
