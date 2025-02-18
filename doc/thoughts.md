@@ -42,6 +42,7 @@
 
 # Name
 Page elements
+Kelements (kotlin page elements)
 WebComponent (no, is already a thing)
 WebComp
 ElementK
