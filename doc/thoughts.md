@@ -3,6 +3,7 @@
 - Expand hard coded error page
 - Let request handler return error pages
 - Add Tests
+- Document error handling / pages
 - How about error logging for JSON requests/responses
 
 
@@ -24,6 +25,7 @@
 - Create a human-readable html page-that contains documentation of all the endpoints
 
 # Maybe to do
+- Test mermaid
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
   - One class the handles requests and responses (if any)

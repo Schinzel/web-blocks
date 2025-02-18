@@ -1,7 +1,7 @@
 # A Web and Component Framework for Kotlin
 
 **Low barrier to entry, high ceiling**  
-This project allows you a low threshold to create web application in Kotlin.
+This project allows you a low threshold to create a web application in Kotlin.
 It is easy to get started with simple pages while supporting complex, maintainable web applications as you scale.
 
 
@@ -25,16 +25,16 @@ and from the JAR file when running the code from a JAR. This way you can have yo
 **Hot reloading of HTML and JavaScript files has a tendency to be slow and break**   
 This is solved by reading HTML and JavaScript files from the source folder of classes when in development which allows for instant updates.
 
-**Writing HTML in Kotlin code is cumbersome.**.  
+**Writing HTML in Kotlin code is cumbersome.**  
 This is solved by a template engine that reads HTML files and replaces placeholders with values.
 
-**In some cases a change on a page should update other parts of the page. One want to do this without reloading the whole page**   
+**In some cases a change in one part of a page should update other parts of the page. One want to do this without reloading the whole page**   
 This is solved by: 
-1. An observer system where a page-element can notify its observers that they should update themselves 
-2. Page-elements inherently and automatically have the ability to update themselves.
+1. Page-elements have the ability to update themselves.
+2. An observer system where a page-element can notify its observing page-elements that they should update themselves.
 
 **You want a feature based architecture**   
-Most frameworks do no allow a feature based architecture. With standalone page-elements, 
+Most frameworks do not allow a feature based architecture. With standalone page-elements, 
 reading resource files from the source folder of classes, 
 and a file system based routing system you can have a feature based architecture. 
 

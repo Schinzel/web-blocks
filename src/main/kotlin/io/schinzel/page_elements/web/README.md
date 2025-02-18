@@ -1,7 +1,7 @@
 # Web Framework
 ## Features
 - File-based routing system.
-- Each endpoint supports both GET and POST requests and the arguments can be passed as:
+- Each endpoint supports both GET and POST requests and the arguments can be passed both as:
     - Query parameters
     - Request body
 
@@ -15,14 +15,14 @@ This intuitive system:
 - Provides a predictable pattern for adding new pages
 
 ## Routes
-Each route is set up with both get and post requests.
+Each route is set up with both GET and POST requests.
 
 ### API response handler
 
 | Attribute  | Description                                 |
 |------------|---------------------------------------------|
-| Returns    | JSON                                        |
 | Implements | `IApiEndpointResponseHandler.getResponse()` |
+| Returns    | JSON                                        |
 | Location   | Located in the `api` directory              |
 
 
@@ -41,8 +41,8 @@ Each route is set up with both get and post requests.
 
 | Attribute  | Description                           |
 |------------|---------------------------------------|
-| Returns    | HTML                                  |
 | Implements | `IIPageResponseHandler.getResponse()` |
+| Returns    | HTML                                  |
 | Location   | Located in the `pages` directory      |
 
 
@@ -61,8 +61,8 @@ Used by pages to for example save data or update an element on a the page.
 
 | Attribute  | Description                                  |
 |------------|----------------------------------------------|
-| Returns    | JSON                                         |
 | Implements | `IPageEndpointResponseHandler.getResponse()` |
+| Returns    | JSON                                         |
 | Location   | Located in the `pages` directory             |
 
 
