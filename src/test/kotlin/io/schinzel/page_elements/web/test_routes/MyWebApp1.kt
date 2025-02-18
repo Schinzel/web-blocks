@@ -1,9 +1,9 @@
 package io.schinzel.page_elements.web.test_routes
 
-import io.schinzel.page_elements.web.WebApp
+import io.schinzel.page_elements.web.AbstractWebApp
 import io.schinzel.page_elements.web.request_handler.log.NoLogger
 
-class MyWebApp1 : WebApp() {
+class MyWebApp1 : AbstractWebApp() {
     override val port: Int = (49152..65535).random()
     override val logger = NoLogger()
     override val prettyFormatHtml = false

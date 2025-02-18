@@ -1,9 +1,12 @@
 package io.schinzel.page_elements.samples.web
 
-import io.schinzel.page_elements.web.WebApp
+import io.schinzel.page_elements.web.AbstractWebApp
 
-class MyWebApp : WebApp()
+class MyWebApp() : AbstractWebApp() {
+    override val port: Int = 5555
+}
 
 fun main() {
-    MyWebApp().start()
+    MyWebApp()
+        .start()
 }
