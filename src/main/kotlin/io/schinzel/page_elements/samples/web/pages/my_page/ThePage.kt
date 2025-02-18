@@ -3,7 +3,7 @@ package io.schinzel.page_elements.samples.web.pages.my_page
 import io.schinzel.page_elements.web.response_handlers.IPageResponseHandler
 
 @Suppress("unused")
-class MyPage : IPageResponseHandler {
+class ThePage : IPageResponseHandler {
     override fun getResponse(): String {
         return """
            |<!DOCTYPE html>

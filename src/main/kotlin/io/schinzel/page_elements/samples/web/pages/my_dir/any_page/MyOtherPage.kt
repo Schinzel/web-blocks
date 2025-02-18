@@ -1,4 +1,4 @@
-package io.schinzel.page_elements.samples.web.pages.my_dir.my_page
+package io.schinzel.page_elements.samples.web.pages.my_dir.any_page
 
 import io.schinzel.page_elements.web.response_handlers.IPageResponseHandler
 

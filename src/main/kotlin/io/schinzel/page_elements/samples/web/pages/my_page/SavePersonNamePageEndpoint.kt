@@ -8,6 +8,6 @@ class SavePersonNamePageEndpoint(
     val firstName: String
 ): IPageEndpointResponseHandler {
     override fun getResponse(): Any {
-        return "Saved $firstName for user $userId"
+        return "Set the first name to be '$firstName' for user '$userId'"
     }
 }
