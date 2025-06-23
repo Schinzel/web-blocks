@@ -5,6 +5,16 @@
     - Include files can contain include files. There is a maximum depth of 10 levels of include files, as to avoid infinite loops.
 
 Example
+
+```kotlin
+TemplateProcessor(this)
+    // Set that variable firstName is Pelle
+    .addData("firstName", "Pelle")
+    // Read the file template file and return HTML
+    .processTemplate("GreetingPe.html")
+```
+
+Below is `GreetingPe.html`
 ```HTML
 <html lang="">
 <head>
