@@ -41,13 +41,18 @@ reading resource files from the source folder of classes,
 and a file system based routing system this framework encourages feature based architecture. 
 
 # Documentation
-- [Getting started](doc/1_getting_started)
-- [Response Handlers](doc/2_response_handlers)
-- [Simple Page](doc/3_simple_page.md)
-- [Page with page elements](doc/4_page_with_page_element)
-- [Page element](doc/5_page_element.md)
-- [Template Engine](doc/7_template_engine)
-- [Building the JAR](doc/10_building_the_jar)
+- [Getting started](doc/user_doc/1_getting_started.md)
+- [Response handlers](doc/user_doc/2_response_handlers.md)
+- [Simple page](doc/user_doc/3_simple_page.md)
+- [Page with page elements](doc/user_doc/4_page_with_page_element.md)
+- [Page element](doc/user_doc/5_page_element.md)
+- [Template engine](doc/user_doc/7_template_engine.md)
+- [Error pages](doc/user_doc/8_error_pages.md)
+- [Building the JAR](doc/user_doc/10_building_the_jar.md)
 
 # Auxiliary Documentation
-- [Custom Response Handlers](doc/11_custom_response_handlers.md)
+- [Custom Response Handlers](doc/user_doc/11_custom_response_handlers.md)
+
+# Code Standards
+For developers and AIs such as Claude
+- [Code Standards](doc/code_standards/code_standards_index.md)
