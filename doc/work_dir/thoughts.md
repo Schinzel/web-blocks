@@ -11,6 +11,9 @@
 
 
 # To do
+- Sample
+  - Page endpoints with observing page elements
+  - api endpoints
 - Make two into one. It is too complicated now
 - Parallel rendering of page elements
 - "/src/main/kotlin/" is hard coded in SourceFileReader
