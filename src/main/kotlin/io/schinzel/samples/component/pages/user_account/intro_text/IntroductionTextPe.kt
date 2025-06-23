@@ -2,7 +2,7 @@ package io.schinzel.samples.component.pages.user_account.intro_text
 
 import io.schinzel.page_elements.component.page.ObservablePageElement
 import io.schinzel.page_elements.component.template_engine.TemplateProcessor
-import io.schinzel.page_elements.samples.component.pages.user_account.NameDao
+import io.schinzel.samples.component.pages.user_account.NameDao
 
 class IntroductionTextPe(val userId: Int) : ObservablePageElement() {
 

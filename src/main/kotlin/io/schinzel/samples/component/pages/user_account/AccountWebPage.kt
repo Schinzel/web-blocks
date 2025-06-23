@@ -1,10 +1,10 @@
 package io.schinzel.samples.component.pages.user_account
 
 import io.schinzel.page_elements.component.page.Page
-import io.schinzel.page_elements.samples.component.pages.user_account.intro_text.IntroductionTextPe
-import io.schinzel.page_elements.samples.component.pages.user_account.update_name_pe.UpdateNamePe
-import io.schinzel.page_elements.samples.component.pages.user_account.welcome_pe.WelcomePe
 import io.schinzel.page_elements.web.response_handlers.IPageResponseHandler
+import io.schinzel.samples.component.pages.user_account.intro_text.IntroductionTextPe
+import io.schinzel.samples.component.pages.user_account.update_name_pe.UpdateNamePe
+import io.schinzel.samples.component.pages.user_account.welcome_pe.WelcomePe
 
 @Suppress("unused")
 class AccountWebPage(private val userId: Int) : IPageResponseHandler {
