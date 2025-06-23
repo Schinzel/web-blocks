@@ -15,7 +15,8 @@ class LandingWebPage(userId: String = "") : IPageResponseHandler {
         return Page()
             .setTitle("Welcome")
             .addRow()
-            .addColumn(12)
+            // The columnSpan determines how wide the column is
+            .addColumn(columnSpan = 12)
             .addPageElement(GreetingPe())
             .getHtml()
     }

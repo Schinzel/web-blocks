@@ -36,11 +36,13 @@ class Page {
 
     /**
      * Adds a column to the last row.
-     * @param span The span of the column
+     *
+     * @param columnSpan The number of Bootstrap grid columns (out of 12) that this column should span.
+     * The columns on a row should have a combined column span of 12.
      * @return This page
      */
-    fun addColumn(span: Int): Page {
-        rows.last().columns.add(Column(span))
+    fun addColumn(columnSpan: Int): Page {
+        rows.last().columns.add(Column(columnSpan))
         return this
     }
 
