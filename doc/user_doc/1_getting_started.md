@@ -1,4 +1,5 @@
-# 1 - Create app
+# The first  page
+## 1 - Create app
 Create a package for where your pages, endpoints and so on will reside.
 In this package, create a class that extends AbstractWebApp.
 This sets the root of the routing.
@@ -23,7 +24,7 @@ com.mycompany/
 └── MyWebApp.kt
 ```
 
-# 2 - Create your first page
+## 2 - Create your first page
 In your new package, create the package `pages`.
 All pages will reside in this package. 
 
@@ -61,7 +62,7 @@ class ThePage : IPageResponseHandler {
 }
 ```
 
-# 3 - Start the project and request the page
+## 3 - Start the project and request the page
 Invoke `MyWebApp().start()`
 
 You should see something along the lines
