@@ -11,6 +11,8 @@
 
 
 # To do
+- Make two into one. It is too complicated now
+- Parallel rendering of page elements
 - "/src/main/kotlin/" is hard coded in SourceFileReader
 - Should resource files be snake-case or camel-case?
 - Session variable? 

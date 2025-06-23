@@ -9,7 +9,7 @@ It is easy to get started with simple pages while supporting complex, maintainab
 The problems this project aims to solve are the following.
 
 **Web pages can easily become very large and hard to read and maintain**   
-This is solved by a component framework that allows for breaking up a web page into small standalone page-elements.
+This is solved by a component framework that encourages breaking up a web page into small standalone page-elements.
 
 **Finding api endpoints and web pages in a large project can be a hassle**   
 This is solved by file system based routing.
@@ -36,7 +36,7 @@ This is solved by:
 **You want a feature based architecture**   
 Most frameworks do not allow a feature based architecture. With standalone page-elements, 
 reading resource files from the source folder of classes, 
-and a file system based routing system you can have a feature based architecture. 
+and a file system based routing system this framework encourages feature based architecture. 
 
 The project consists of two parts:
 - [Web Framework](src/main/kotlin/io/schinzel/page_elements/web/README.md)
