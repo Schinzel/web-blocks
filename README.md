@@ -48,7 +48,7 @@ and a file system based routing system this framework encourages feature based a
 - [Page element](doc/user_doc/5_page_element.md)
 - [Template engine](doc/user_doc/7_template_engine.md)
 - [Error pages](doc/user_doc/8_error_pages.md)
-- [Building the JAR](doc/user_doc/10_building_the_jar.md)
+- [Building the JAR](doc/user_doc/10_building_a_jar)
 
 # Auxiliary Documentation
 - [Custom Response Handlers](doc/user_doc/11_custom_response_handlers.md)
