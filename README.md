@@ -38,7 +38,8 @@ Most frameworks do not allow a feature based architecture. With standalone page-
 reading resource files from the source folder of classes, 
 and a file system based routing system this framework encourages feature based architecture. 
 
-The project consists of two parts:
-- [Web Framework](src/main/kotlin/io/schinzel/page_elements/web/README.md)
-- [Component Framework](src/main/kotlin/io/schinzel/page_elements/component/README.md)
+# Documentation
+- [Getting started](doc/getting_started.md)
+- [Response Handlers](doc/response_handlers.md)
+- [Template Engine](doc/template_engine.md)
 
