@@ -11,6 +11,10 @@
 
 
 # To do
+API Response Handler → API Route ✅
+Page Response Handler → Page Route ✅
+Page Endpoint Response Handler → Page API Route ✅
+
 - Sample
   - Page endpoints with observing page elements
   - api endpoints
