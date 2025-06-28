@@ -1,9 +1,9 @@
 # Routes
 
 There are 3 types of routes:
-- API route - a standalone endpoint that returns JSON
+- API route - a standalone route that returns JSON
 - Page route - an HTML-page which returns HTML
-- Page API route - an endpoint that belongs to an HTML-page and returns JSON
+- Page API route - an route that belongs to an HTML-page and returns JSON
 
 ## API route
 

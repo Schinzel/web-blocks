@@ -19,7 +19,7 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
             when (getReturnType(ctx.path())) {
                 ReturnTypeEnum.JSON -> {
                     val response = ApiResponse.Error(
-                        message = "Endpoint not found: '${ctx.path()}'",
+                        message = e.message ?: "Internal server error",
                         errorId = errorId
                     )
                     ctx.json(response)
@@ -39,7 +39,7 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
             when (getReturnType(ctx.path())) {
                 ReturnTypeEnum.JSON -> {
                     val response = ApiResponse.Error(
-                        message = "Endpoint not found: '${ctx.path()}'",
+                        message = "API or Page API route not found: '${ctx.path()}'",
                         errorId = errorId
                     )
                     ctx.json(response)
@@ -47,7 +47,7 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
 
                 ReturnTypeEnum.HTML -> {
                     val errorPageHtml = ErrorPage(webAppConfig.webRootClass, webAppConfig.environment)
-                        .addData("errorMessage", "Page not found: '${ctx.path()}'")
+                        .addData("errorMessage", "Page route not found: '${ctx.path()}'")
                         .addData("errorId", errorId)
                         .getErrorPage(404)
                     ctx.html(errorPageHtml)

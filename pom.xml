@@ -278,6 +278,21 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    <!-- Run the sample application
+                    mvn compile exec:exec@run-sample
+                    or
+                    mvn compile
+                    mvn exec:exec@run-sample-->
+                    <execution>
+                        <id>run-sample</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <commandlineArgs>-cp %classpath io.schinzel.sample.MyWebAppKt</commandlineArgs>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 

@@ -39,7 +39,7 @@ Example:
  * Input validation happens at this boundary before any business
  * logic is executed.
  *
- * Written by Claude 3.7
+ * Written by Claude Sonnet 4
  */
 interface UserRegistrationPort {
     /**
@@ -61,3 +61,14 @@ interface UserRegistrationPort {
 - **Avoid Cleverness**:
   - The cleverer the code, the less likely the AI is to understand it on first pass
   - Go for clarity over elegance unless you can explain it easily in a prompt
+
+
+## How to start the demo and make a request
+```
+mvn compile
+mvn exec:exec@run-sample
+
+To make an request to an API route
+curl -v http://127.0.0.1:5555/api/user-pets
+```
+
