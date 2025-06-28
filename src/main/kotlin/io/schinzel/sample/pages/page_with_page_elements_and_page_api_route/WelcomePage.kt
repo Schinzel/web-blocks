@@ -12,7 +12,7 @@ import io.schinzel.sample.pages.page_with_page_elements_and_page_api_route.page_
  *
  */
 @Suppress("unused")
-class Page(private val userId: Int) : IPageRoute {
+class WelcomePage(private val userId: Int) : IPageRoute {
     override fun getResponse(): String {
         // Create page elements
         val welcomePe = WelcomePe(userId)
@@ -28,7 +28,7 @@ class Page(private val userId: Int) : IPageRoute {
             // in update-name-page-element
             .addObserver(introTextPe)
 
-        val response = PageBuilder()
+        val pageBuilder = PageBuilder()
             .setTitle("Account")
 
             // Add welcome message page element
@@ -46,7 +46,6 @@ class Page(private val userId: Int) : IPageRoute {
             .addColumn(12)
             .addPageElement(introTextPe)
 
-            .getHtml()
-        return response
+        return pageBuilder.getHtml()
     }
 }
