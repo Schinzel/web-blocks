@@ -1,6 +1,4 @@
 
-# Restart
-- Set which port to start on in MyWebApp
 
 # File, paths and packages needed
 - Expand hard coded error page
@@ -11,21 +9,7 @@
 
 
 # To do
-- Fix
-  - API Response Handler → API Route ✅
-  - Page Response Handler → Page Route ✅
-  - Page Endpoint Response Handler → Page API Route ✅
-- Fixa
-  - Funkar: http://127.0.0.1:5555/api/user-information-endpoint?user-id=123
-  - Säger att den inte hittar. Borde säga att user-id fattas
-    - http://127.0.0.1:5555/api/user-information-endpoint
-- Sample
-  - Page endpoints with observing page elements
-  - api endpoints
-  - Include file in include file
-- Page Endpoint and Page Element have the same abbreviation. Change Page Endpoint?
-- Make two into one. It is too complicated now
-- Parallel rendering of page elements
+**- Parallel rendering of page elements**
 - "/src/main/kotlin/" is hard coded in SourceFileReader
 - Should resource files be snake-case or camel-case?
 - Session variable? 
@@ -37,13 +21,12 @@
   - Success handling
   - browser console logging
 - Make think internal? So is not exposed outside the JAR
-- Create a new public repo
 - Create a project that uses this framework and see if one can make it work. 
   - Preferably on Heroku
 - Create a human-readable html page-that contains documentation of all the endpoints
+- Add Java sample
 
 # Maybe to do
-- Test mermaid
 - Break up ResponseHandlerMapping?
   - One class that handles setting up the routes (if any)
   - One class the handles requests and responses (if any)
@@ -58,3 +41,8 @@
 - Run the JAR: java -jar myJar.jar
 
 
+# Name suggests
+- Blocks
+- Elements
+- Bricks
+- Scaffold
