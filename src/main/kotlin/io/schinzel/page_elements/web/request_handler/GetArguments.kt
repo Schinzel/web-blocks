@@ -3,7 +3,7 @@ package io.schinzel.page_elements.web.request_handler
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.javalin.http.Context
 import io.javalin.http.bodyAsClass
-import io.schinzel.page_elements.web.response_handler_mapping.Parameter
+import io.schinzel.page_elements.web.route_mapping.Parameter
 
 /**
  * @param parameters The parameters as defined by the route. I.e. the parameter names

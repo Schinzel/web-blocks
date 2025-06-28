@@ -5,7 +5,7 @@ import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.page_elements.web.WebAppConfig
 import io.schinzel.page_elements.web.request_handler.RequestHandler
-import io.schinzel.page_elements.web.response_handler_mapping.ResponseHandlerMapping
+import io.schinzel.page_elements.web.route_mapping.RouteMapping
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -22,16 +22,16 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
     }
     // Find all routes and add them Javalin
     findRoutes(webAppConfig.webRootPackage)
-        .forEach { responseHandlerMapping: ResponseHandlerMapping ->
+        .forEach { routeMapping: RouteMapping ->
             if (webAppConfig.printStartupMessages) {
                 // Print the route
-                responseHandlerMapping.println()
+                routeMapping.println()
             }
             // Create request handler
-            val requestHandler = RequestHandler(responseHandlerMapping, webAppConfig)
+            val requestHandler = RequestHandler(routeMapping, webAppConfig)
                 .getHandler()
             // Register both GET and POST handlers for the same path
-            javalin.getAndPost(responseHandlerMapping.path, requestHandler)
+            javalin.getAndPost(routeMapping.path, requestHandler)
         }
     javalin.get("ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())

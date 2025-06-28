@@ -3,7 +3,7 @@ package io.schinzel.page_elements.component.page
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.page_elements.web.request_handler.log.JsonMapper
-import io.schinzel.page_elements.web.response_handlers.IPageEndpointResponseHandler
+import io.schinzel.page_elements.web.routes.IPageApiRoute
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
@@ -21,7 +21,7 @@ import kotlin.reflect.full.primaryConstructor
  * Each page element implements the function getResponse() which returns
  * the HTML and JavaScript of the page element.
  */
-abstract class ObservablePageElement : IPageEndpointResponseHandler, IPageElement {
+abstract class ObservablePageElement : IPageApiRoute, IPageElement {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<ObservablePageElement> = mutableListOf()
 

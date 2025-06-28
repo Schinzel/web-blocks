@@ -1,0 +1,56 @@
+<!-- Display the name of the user-->
+<div class="container mt-4">
+    <div class="mb-3">
+        <label for="first_name" class="form-label">First Name</label>
+        <input type="text"
+               class="form-control"
+               id="first_name"
+               placeholder="Enter your first name"
+               data-user-id="{{userId}}"
+               value="{{firstName}}">
+    </div>
+</div>
+
+<!-- Script for sending changes in user name to the server -->
+<script>
+    $("#first_name").on("change", async function () {
+        // Get the user id and the new name of the user
+        const userId = $(this).data("userId")
+        const firstName = $(this).val()
+
+        try {
+            // Send user id and new name to server
+            const response = await $.ajax({
+                //url: "/page-api/page_with_page_endpoint/update-name-pe/update-first-name",
+                url: "page-api/page-with-page-route/page-elements/update-name-pe/update-first-name",
+
+                method: "POST",
+                data: JSON.stringify({
+                    "user-id": userId,
+                    "first-name": firstName
+                }),
+                contentType: "application/json"
+            })
+
+            // If there was a problem with the request
+            if (!response.success) {
+                // Throw an error
+                throw new Error(response.error || "Failed to update name")
+            } // else, i.e. the call to the server was successful
+            else {
+                // Find the id of the closest page element
+                const containerId = $(this).closest("[data-page-element]").attr("id")
+                console.log(`Updated first name to ${firstName}`)
+                // Notify its' observers that there has been a change
+                window.observer.notify(containerId)
+                console.log(`Notified container ${containerId} of update`)
+            }
+        } catch (error) {
+            console.error("Failed to update name:", error)
+            // Optionally show error to user
+            alert("Failed to save name. Please try again.")
+            // Optionally revert to original value
+            $(this).val($(this).prop("defaultValue"))
+        }
+    })
+</script>

@@ -2,8 +2,8 @@ package io.schinzel.page_elements.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.page_elements.web.request_handler.log.LogEntry
-import io.schinzel.page_elements.web.response_handlers.IResponseHandler
-import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
+import io.schinzel.page_elements.web.routes.IRoute
+import io.schinzel.page_elements.web.routes.ReturnTypeEnum
 import org.jsoup.Jsoup
 
 /**
@@ -11,13 +11,13 @@ import org.jsoup.Jsoup
  */
 fun sendResponse(
     ctx: Context,
-    responseHandler: IResponseHandler,
+    route: IRoute,
     logEntry: LogEntry,
     returnType: ReturnTypeEnum,
     prettyFormatHtml: Boolean
 ) {
     // Get the response
-    val response: Any = responseHandler.getResponse()
+    val response: Any = route.getResponse()
     // Send response
     when (returnType) {
         ReturnTypeEnum.HTML -> {

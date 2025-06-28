@@ -1,9 +1,9 @@
 package io.schinzel.page_elements.web.test_routes.api
 
-import io.schinzel.page_elements.web.response_handlers.IApiEndpointResponseHandler
+import io.schinzel.page_elements.web.routes.IApiRoute
 
 @Suppress("unused")
-class GetPetsEndpoint : IApiEndpointResponseHandler {
+class GetPetsEndpoint : IApiRoute {
     override fun getResponse(): Any {
         return listOf(
             Pet("Fluffy", "Cat"),

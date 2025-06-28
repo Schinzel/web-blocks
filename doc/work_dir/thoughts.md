@@ -11,10 +11,14 @@
 
 
 # To do
-API Response Handler → API Route ✅
-Page Response Handler → Page Route ✅
-Page Endpoint Response Handler → Page API Route ✅
-
+- Fix
+  - API Response Handler → API Route ✅
+  - Page Response Handler → Page Route ✅
+  - Page Endpoint Response Handler → Page API Route ✅
+- Fixa
+  - Funkar: http://127.0.0.1:5555/api/user-information-endpoint?user-id=123
+  - Säger att den inte hittar. Borde säga att user-id fattas
+    - http://127.0.0.1:5555/api/user-information-endpoint
 - Sample
   - Page endpoints with observing page elements
   - api endpoints

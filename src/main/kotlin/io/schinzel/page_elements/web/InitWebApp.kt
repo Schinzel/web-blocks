@@ -3,7 +3,7 @@ package io.schinzel.page_elements.web
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.page_elements.web.request_handler.setUpErrorHandling
-import io.schinzel.page_elements.web.response_handlers.*
+import io.schinzel.page_elements.web.routes.*
 import io.schinzel.page_elements.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
@@ -20,7 +20,7 @@ class InitWebApp(
         Thrower.throwIfFalse(isPortAvailable(port))
             .message("Port $port is not available")
 
-        initializeResponseHandlerDescriptorRegistry(webAppConfig.webRootPackage)
+        initializeRouteDescriptorRegistry(webAppConfig.webRootPackage)
         val javalin = setUpRoutes(webAppConfig)
         javalin.setUpErrorHandling(webAppConfig)
         if (webAppConfig.printStartupMessages) {
@@ -43,13 +43,13 @@ class InitWebApp(
         /**
          * Register the default descriptors
          */
-        fun initializeResponseHandlerDescriptorRegistry(endpointPackage: String) {
-            ResponseHandlerDescriptorRegistry
-                .register(IPageResponseHandler::class, PageResponseHandlerDescriptor(endpointPackage))
-            ResponseHandlerDescriptorRegistry
-                .register(IPageEndpointResponseHandler::class, PageEndpointResponseHandlerDescriptor(endpointPackage))
-            ResponseHandlerDescriptorRegistry
-                .register(IApiEndpointResponseHandler::class, ApiEndpointResponseHandlerDescriptor(endpointPackage))
+        fun initializeRouteDescriptorRegistry(endpointPackage: String) {
+            RouteDescriptorRegistry
+                .register(IPageRoute::class, PageRouteDescriptor(endpointPackage))
+            RouteDescriptorRegistry
+                .register(IPageApiRoute::class, PageApiRouteDescriptor(endpointPackage))
+            RouteDescriptorRegistry
+                .register(IApiRoute::class, ApiRouteDescriptor(endpointPackage))
         }
     }
 }

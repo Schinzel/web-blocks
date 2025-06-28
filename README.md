@@ -42,13 +42,16 @@ and a file system based routing system this framework encourages feature based a
 
 # Documentation
 - [Getting started](doc/user_doc/1_getting_started.md)
-- [Response handlers](doc/user_doc/2_response_handlers.md)
+- [Routes](doc/user_doc/2_routes.md)
 - [Simple page](doc/user_doc/3_simple_page.md)
 - [Page with page elements](doc/user_doc/4_page_with_page_element.md)
 - [Page element](doc/user_doc/5_page_element.md)
 - [Template engine](doc/user_doc/7_template_engine.md)
 - [Error pages](doc/user_doc/8_error_pages.md)
 - [Building the JAR](doc/user_doc/10_building_a_jar)
+
+# Sample
+- [Sample](src/main/kotlin/io/schinzel/sample/README.md)
 
 # Auxiliary Documentation
 - [Custom Response Handlers](doc/user_doc/11_custom_response_handlers.md)

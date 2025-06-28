@@ -4,7 +4,7 @@ import io.javalin.Javalin
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.page_elements.web.WebAppConfig
 import io.schinzel.page_elements.web.errors.ErrorPage
-import io.schinzel.page_elements.web.response_handlers.ReturnTypeEnum
+import io.schinzel.page_elements.web.routes.ReturnTypeEnum
 
 /**
  * TO DO:

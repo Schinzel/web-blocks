@@ -1,13 +1,13 @@
 package io.schinzel.page_elements.web.set_up_routes
 
-import io.schinzel.page_elements.web.response_handlers.IResponseHandler
-import io.schinzel.page_elements.web.response_handler_mapping.ResponseHandlerMapping
+import io.schinzel.page_elements.web.routes.IRoute
+import io.schinzel.page_elements.web.route_mapping.RouteMapping
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
 
 
-fun findRoutes(webRootPackage: String): List<ResponseHandlerMapping> {
+fun findRoutes(webRootPackage: String): List<RouteMapping> {
     val reflections = Reflections(
         ConfigurationBuilder()
             .forPackage(webRootPackage)
@@ -15,14 +15,14 @@ fun findRoutes(webRootPackage: String): List<ResponseHandlerMapping> {
     )
 
     return reflections
-        .getSubTypesOf(IResponseHandler::class.java)
+        .getSubTypesOf(IRoute::class.java)
         // Filter only classes in the base package and subpackages. This is needed because
         // Reflections will scan all classes in the classpath by default.
         .filter { clazz ->
             clazz.packageName.startsWith(webRootPackage) && !clazz.isInterface
         }
         .map {
-            ResponseHandlerMapping(it.kotlin)
+            RouteMapping(it.kotlin)
         }
         .toList()
 }

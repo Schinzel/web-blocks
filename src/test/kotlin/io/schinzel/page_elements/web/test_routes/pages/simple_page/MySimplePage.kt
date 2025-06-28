@@ -1,9 +1,9 @@
 package io.schinzel.page_elements.web.test_routes.pages.simple_page
 
-import io.schinzel.page_elements.web.response_handlers.IPageResponseHandler
+import io.schinzel.page_elements.web.routes.IPageRoute
 
 @Suppress("unused")
-class MySimplePage : IPageResponseHandler {
+class MySimplePage : IPageRoute {
     override fun getResponse(): String {
         return """
             <!DOCTYPE html>

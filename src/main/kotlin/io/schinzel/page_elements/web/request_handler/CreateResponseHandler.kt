@@ -1,20 +1,20 @@
 package io.schinzel.page_elements.web.request_handler
 
 import io.javalin.http.Context
-import io.schinzel.page_elements.web.response_handlers.IResponseHandler
+import io.schinzel.page_elements.web.routes.IRoute
 import io.schinzel.page_elements.web.request_handler.log.LogEntry
-import io.schinzel.page_elements.web.response_handler_mapping.ResponseHandlerMapping
+import io.schinzel.page_elements.web.route_mapping.RouteMapping
 
-fun createResponseHandler(
-    responseHandlerMapping: ResponseHandlerMapping,
+fun createRoute(
+    routeMapping: RouteMapping,
     ctx: Context,
     logEntry: LogEntry
-): IResponseHandler {
+): IRoute {
     // Get arguments from from the request
-    val arguments: Map<String, Any?> = getArguments(responseHandlerMapping.parameters, ctx)
+    val arguments: Map<String, Any?> = getArguments(routeMapping.parameters, ctx)
     // Log the arguments
     logEntry.requestLog.arguments = arguments
-    val constructor = responseHandlerMapping.getPrimaryConstructor()
+    val constructor = routeMapping.getPrimaryConstructor()
     // Create instance of route class with arguments
     return constructor.callBy(
         constructor.parameters.associateWith { param ->
