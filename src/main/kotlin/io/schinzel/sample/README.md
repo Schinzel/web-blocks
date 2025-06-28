@@ -20,8 +20,8 @@ A page with one simple page element.
 A page with three page elements and a page route. 
 Two of the page elements observe one page element. 
 This means if the observed page element changes, the observing page elements update themselves.
-- [pages/page_with_page_route/ThePage.kt](pages/page_with_page_route/Page.kt)
-- http://127.0.0.1:5555/page-with-page-route?user-id=123222
+- [pages/page_with_page_elements_and_page_api_route/Page.kt](pages/page_with_page_elements_and_page_api_route/Page.kt)
+- http://127.0.0.1:5555/page-with-page-elements-and-page-api-route?user-id=123222
 
 
 ## API Routes

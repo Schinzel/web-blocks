@@ -1,11 +1,15 @@
-package io.schinzel.sample.pages.page_with_page_element
+package io.schinzel._old_samples.component.pages.landing
 
+import io.schinzel._old_samples.component.pages.landing.greeting_pe.GreetingPe
+import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.page_elements.component.page.PageBuilder
 import io.schinzel.page_elements.web.routes.IPageRoute
-import io.schinzel.sample.pages.page_with_page_element.greeting_pe.GreetingPe
 
 @Suppress("unused")
-class ThePage(userId: String = "") : IPageRoute {
+class LandingWebPage(userId: String = "") : IPageRoute {
+    init {
+        "LandingPage created with userId: $userId".println()
+    }
 
     override fun getResponse(): String {
         return PageBuilder()
