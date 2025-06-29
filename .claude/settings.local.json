@@ -17,7 +17,9 @@
       "Bash(mvn test:*)",
       "Bash(timeout 5 mvn compile:*)",
       "Bash(rg:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "mcp__zen__listmodels",
+      "mcp__zen__codereview"
     ],
     "deny": []
   }
