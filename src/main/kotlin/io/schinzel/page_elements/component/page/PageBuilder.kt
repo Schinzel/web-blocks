@@ -52,7 +52,7 @@ class PageBuilder {
      * @param pageElement The page element to add
      * @return This page
      */
-    fun addPageElement(pageElement: ObservablePageElement): PageBuilder {
+    fun addPageElement(pageElement: IPageElement): PageBuilder {
         if (rows.isEmpty() || rows.last().columns.isEmpty()) {
             throw Exception("You must add a row and a column before adding a page element")
         }

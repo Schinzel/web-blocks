@@ -6,7 +6,7 @@ import kotlinx.coroutines.*
  * The purpose of this class is to represent a column in a web page.
  */
 class Column(val span: Int) {
-    val elements: MutableList<ObservablePageElement> = mutableListOf()
+    val elements: MutableList<IPageElement> = mutableListOf()
 
     suspend fun getHtml(): String = supervisorScope {
         // Use supervisorScope for error isolation at element level
