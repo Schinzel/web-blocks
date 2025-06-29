@@ -1,8 +1,8 @@
-# WebBlocks - A Web and Component Framework for Kotlin
+# WebBlocks - A Web and Component Framework for JVM Languages
 
 **Low barrier to entry, high ceiling**  
-This project allows you a low threshold to create a web application in Kotlin.
-It is easy to get started with simple pages while supporting complex, maintainable web applications as you scale.
+Build reactive web applications using any JVM language - Kotlin, Java, Scala, Clojure, and more.
+It is easy to get started with simple pages while supporting complex web applications as you scale.
 
 
 ## Problems to solve
