@@ -4,8 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>page-elements-kotlin</artifactId>
+    <groupId>io.schinzel</groupId>
+    <artifactId>web-blocks</artifactId>
+    <name>WebBlocks</name>
+    <description>A Kotlin web framework for building reactive web applications with blocks</description>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -242,7 +244,7 @@
                                 <!-- Produces a manifest file -->
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>io.schinzel.page_elements.samples.component.MainKt</mainClass>
+                                    <mainClass>io.schinzel.sample.MyWebAppKt</mainClass>
                                 </transformer>
                             </transformers>
                             <!-- Set the name of jar file -->

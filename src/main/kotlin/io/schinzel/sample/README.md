@@ -13,15 +13,15 @@ Landing page. Returns the page in the directory `landing`.
 - [pages/landing/LandingPage.kt](pages/landing/LandingPage.kt)
 - http://127.0.0.1:5555/
 
-A page with one simple page element.
-- [pages/page_with_page_element/ThePage.kt](pages/page_with_page_element/ThePage.kt)
-- http://127.0.0.1:5555/page-with-page-element?user-id=123222
+A page with one simple block.
+- [pages/page_with_block/ThePage.kt](pages/page_with_block/ThePage.kt)
+- http://127.0.0.1:5555/page-with-block?user-id=123222
 
-A page with three page elements and a page route. 
-Two of the page elements observe one page element. 
-This means if the observed page element changes, the observing page elements update themselves.
-- [pages/page_with_page_elements_and_page_api_route/Page.kt](pages/page_with_page_elements_and_page_api_route/Page.kt)
-- http://127.0.0.1:5555/page-with-page-elements-and-page-api-route?user-id=123222
+A page with three blocks and a page route. 
+Two of the blocks observe one block. 
+This means if the observed block changes, the observing blocks update themselves.
+- [pages/page_with_blocks_and_page_api_route/WelcomePage.kt](pages/page_with_blocks_and_page_api_route/WelcomePage.kt)
+- http://127.0.0.1:5555/page-with-blocks-and-page-api-route?user-id=123222
 
 
 ## API Routes

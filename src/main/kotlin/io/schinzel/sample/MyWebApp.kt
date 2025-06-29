@@ -1,6 +1,6 @@
 package io.schinzel.sample
 
-import io.schinzel.page_elements.web.AbstractWebApp
+import io.schinzel.web_blocks.web.AbstractWebApp
 
 class MyWebApp() : AbstractWebApp() {
     override val port: Int = 5555

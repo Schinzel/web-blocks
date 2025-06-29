@@ -1,4 +1,4 @@
-# A Web and Component Framework for Kotlin
+# WebBlocks - A Web and Component Framework for Kotlin
 
 **Low barrier to entry, high ceiling**  
 This project allows you a low threshold to create a web application in Kotlin.
@@ -9,7 +9,7 @@ It is easy to get started with simple pages while supporting complex, maintainab
 The problems this project aims to solve are the following.
 
 **Web pages can easily become very large and hard to read and maintain**   
-This is solved by a component framework that encourages breaking up a web page into small standalone page-elements.
+This is solved by a component framework that encourages breaking up a web page into small standalone blocks.
 
 **Finding api endpoints and web pages in a large project can be a hassle**   
 This is solved by file system based routing.
@@ -32,17 +32,17 @@ This is solved by a template engine that reads HTML files and replaces placehold
 **In some cases a change in one part of a page by a user should update other parts of the page. 
 One want to do this without reloading the whole page. **   
 This is solved by: 
-1. Page-elements have the ability to update themselves.
-2. An observer system where a page-element can notify its observing page-elements that they should update themselves.
+1. Blocks have the ability to update themselves.
+2. An observer system where a block can notify its observing blocks that they should update themselves.
 
 **Managing state in both client and server leads to synchronization bugs and complexity**   
 Modern web frameworks often require maintaining the same data in two places: client-side for instant UI updates and server-side for persistence. 
 This dual state management is a common source of bugs including race conditions, stale data, and inconsistent UI states.
 This is solved by maintaining a single source of truth on the server. 
-When data changes, the server updates the database and relevant page-elements automatically update themselves by fetching fresh content from the server, ensuring all components always display consistent, up-to-date information.
+When data changes, the server updates the database and relevant blocks automatically update themselves by fetching fresh content from the server, ensuring all components always display consistent, up-to-date information.
 
 **You want a feature based architecture**   
-Most frameworks do not allow a feature based architecture. With standalone page-elements, 
+Most frameworks do not allow a feature based architecture. With standalone blocks, 
 reading resource files from the source folder of classes, 
 and a file system based routing system this framework enables and encourages feature based architecture. 
 

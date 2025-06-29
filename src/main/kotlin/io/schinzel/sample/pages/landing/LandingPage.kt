@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.landing
 
-import io.schinzel.page_elements.web.routes.IPageRoute
+import io.schinzel.web_blocks.web.routes.IPageRoute
 
 @Suppress("unused")
 class LandingPage : IPageRoute {

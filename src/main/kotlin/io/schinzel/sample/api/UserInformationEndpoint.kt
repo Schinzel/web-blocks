@@ -1,6 +1,6 @@
 package io.schinzel.sample.api
 
-import io.schinzel.page_elements.web.routes.IApiRoute
+import io.schinzel.web_blocks.web.routes.IApiRoute
 
 @Suppress("unused")
 class UserInformationEndpoint(private val userId: String = "") : IApiRoute {

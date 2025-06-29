@@ -20,7 +20,10 @@
       "Bash(grep:*)",
       "mcp__zen__listmodels",
       "mcp__zen__codereview",
-      "WebFetch(domain:kobweb.varabyte.com)"
+      "WebFetch(domain:kobweb.varabyte.com)",
+      "Bash(mv:*)",
+      "Bash(find:*)",
+      "Bash(timeout 10 mvn compile:*)"
     ],
     "deny": []
   }
