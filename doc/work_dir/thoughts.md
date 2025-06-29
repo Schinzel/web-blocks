@@ -9,6 +9,7 @@
 
 
 # To do
+- Annotations instead of implemnation of interface?
 - "/src/main/kotlin/" is hard coded in SourceFileReader
 - Är detta rätt ObservablePageElement : IPageApiRoute, IPageElement?
 - Should resource files be snake-case or camel-case?
