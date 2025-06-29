@@ -17,7 +17,7 @@ class ResponseHandlerUtilTest {
     @DisplayName("removeSuffixes")
     inner class RemoveSuffixes {
         @Test
-        fun `class has one suffix to remove - suffix removed`() {
+        fun `class with one suffix _ suffix removed`() {
             val suffixesToRemove = listOf("Api", "Endpoint")
             val className = "MyClassApi"
             val actual = removeSuffixes(className, suffixesToRemove)
@@ -26,7 +26,7 @@ class ResponseHandlerUtilTest {
         }
 
         @Test
-        fun `class has no suffix to remove - class name unchanged`() {
+        fun `class with no suffix _ class name unchanged`() {
             val suffixesToRemove = listOf("Api", "Endpoint")
             val className = "MyClass"
             val actual = removeSuffixes(className, suffixesToRemove)
@@ -36,7 +36,7 @@ class ResponseHandlerUtilTest {
 
 
         @Test
-        fun `empty list of suffixes - class name unchanged`() {
+        fun `empty list of suffixes _ class name unchanged`() {
             val suffixesToRemove = emptyList<String>()
             val className = "MyClass"
             val actual = removeSuffixes(className, suffixesToRemove)
@@ -45,7 +45,7 @@ class ResponseHandlerUtilTest {
         }
 
         @Test
-        fun `one suffix, case not matching - suffix removed`() {
+        fun `suffix case not matching _ suffix removed`() {
             val suffixesToRemove = listOf("API")
             val className = "MyClassApi"
             val actual = removeSuffixes(className, suffixesToRemove)
@@ -59,7 +59,7 @@ class ResponseHandlerUtilTest {
     inner class ToKebabCase {
 
         @Test
-        fun `Three words - in kebab case`() {
+        fun `three words _ converted to kebab case`() {
             val className = "MyClassName"
             val actual = toKebabCase(className)
             val expected = "my-class-name"
@@ -67,7 +67,7 @@ class ResponseHandlerUtilTest {
         }
 
         @Test
-        fun `One word - in kebab case`() {
+        fun `one word _ converted to kebab case`() {
             val className = "Giraffe"
             val actual = toKebabCase(className)
             val expected = "giraffe"
@@ -81,7 +81,7 @@ class ResponseHandlerUtilTest {
     inner class RemoveSuffixesAndToKebabCase {
 
         @Test
-        fun `Class in pascal case with suffix - in kebab case and suffix removed`() {
+        fun `class in pascal case with suffix _ converted to kebab case and suffix removed`() {
             val actual = removeSuffixesAndToKebabCase(MyClassApi::class, listOf("Api", "Endpoint"))
             val expected = "my-class"
             assertThat(actual).isEqualTo(expected)

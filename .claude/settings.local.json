@@ -15,7 +15,9 @@
       "Bash(timeout 10s mvn compile exec:exec@run-sample)",
       "mcp__zen__chat",
       "Bash(mvn test:*)",
-      "Bash(timeout 5 mvn compile:*)"
+      "Bash(timeout 5 mvn compile:*)",
+      "Bash(rg:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
