@@ -1,4 +1,4 @@
-package io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_pe
+package io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_block
 
 import io.schinzel.web_blocks.component.page.ObservableBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.NameDao

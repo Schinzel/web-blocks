@@ -1,4 +1,4 @@
-package io.schinzel.sample.pages.page_with_block.greeting_pe
+package io.schinzel.sample.pages.page_with_block.greeting_block
 
 import io.schinzel.web_blocks.component.page.ObservableBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor

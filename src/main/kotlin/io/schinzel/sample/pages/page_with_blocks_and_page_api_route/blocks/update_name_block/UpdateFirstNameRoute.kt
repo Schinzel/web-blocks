@@ -1,4 +1,4 @@
-package io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_pe
+package io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block
 
 import io.schinzel.web_blocks.web.routes.IPageApiRoute
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.NameDao

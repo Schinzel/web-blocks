@@ -2,7 +2,7 @@ package io.schinzel.sample.pages.page_with_block
 
 import io.schinzel.web_blocks.component.page.PageBuilder
 import io.schinzel.web_blocks.web.routes.IPageRoute
-import io.schinzel.sample.pages.page_with_block.greeting_pe.GreetingBlock
+import io.schinzel.sample.pages.page_with_block.greeting_block.GreetingBlock
 
 @Suppress("unused")
 class ThePage(userId: String = "") : IPageRoute {

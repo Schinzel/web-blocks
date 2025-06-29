@@ -3,8 +3,8 @@ package io.schinzel.sample.pages.page_with_blocks_and_page_api_route
 import io.schinzel.web_blocks.component.page.PageBuilder
 import io.schinzel.web_blocks.web.routes.IPageRoute
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.intro_text.IntroductionTextBlock
-import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_pe.UpdateNameBlock
-import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_pe.WelcomeBlock
+import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateNameBlock
+import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_block.WelcomeBlock
 
 /**
  * The purpose of this page is to welcome a user and let the
