@@ -43,6 +43,7 @@
 
 # Name suggests
 - Blocks
+- WebBlocks
 - Elements
 - Bricks
 - Scaffold
