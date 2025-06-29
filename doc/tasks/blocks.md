@@ -3,20 +3,25 @@
 ## Overview
 Refactor the framework to use "Block" terminology instead of "PageElement" throughout the codebase. This aligns with the new framework name "WebBlocks" and creates a cleaner, more intuitive API.
 
+## Naming Conventions
+- **Framework name**: WebBlocks (one word for branding)
+- **Artifact ID**: `web-blocks` (hyphenated for clarity)
+- **Package name**: `io.schinzel.web_blocks` (underscore for readability - unconventional but consistent with existing pattern)
+
 ## Renames Required
 
 ### 1. POM Configuration
 Update `pom.xml`:
 ```xml
 <groupId>io.schinzel</groupId>
-<artifactId>webblocks</artifactId>
+<artifactId>web-blocks</artifactId>
 <name>WebBlocks</name>
 <description>A Kotlin web framework for building reactive web applications with blocks</description>
 ```
 
 ### 2. Core Interfaces and Classes
 
-#### In `src/main/kotlin/io/schinzel/page_elements/component/page/`
+#### In `src/main/kotlin/io/schinzel/web_blocks/component/page/`
 
 **File renames:**
 - `IPageElement.kt` → `IBlock.kt`
@@ -133,7 +138,7 @@ override suspend fun getHtml(): String {
 Update JavaScript files that reference `data-page-element`:
 
 **Rename file:**
-- `/src/main/kotlin/io/schinzel/page_elements/component/page/html/page-element-observer.html` → `block-observer.html`
+- `/src/main/kotlin/io/schinzel/web_blocks/component/page/html/page-element-observer.html` → `block-observer.html`
 
 **Update content in `block-observer.html`:**
 ```javascript
@@ -173,7 +178,7 @@ window.observer = new BlockObserver()
 Also check and update any references in:
 - `/src/main/kotlin/io/schinzel/sample/pages/page_with_page_elements_and_page_api_route/page_elements/update_name_pe/template.html`
   - Change `$(this).closest("[data-page-element]")` to `$(this).closest("[data-block]")`
-- `/src/main/kotlin/io/schinzel/page_elements/component/page/html/page-template.html`
+- `/src/main/kotlin/io/schinzel/web_blocks/component/page/html/page-template.html`
   - Change `{{include:page-element-observer.html}}` to `{{include:block-observer.html}}`
 
 ### 6. Sample Code Updates
@@ -244,12 +249,14 @@ PageBuilder()
 - Change all references from "page-elements" to "blocks"
 - Update framework description to mention "WebBlocks"
 
-### 8. Package Structure (Optional - Phase 2)
+### 8. Package Structure
 
-Consider renaming the package structure from:
-- `io.schinzel.page_elements` → `io.schinzel.webblocks`
+Rename the package structure from:
+- `io.schinzel.page_elements` → `io.schinzel.web_blocks`
 
-This would be a larger change and could be done in a second phase.
+This maintains your preferred underscore convention for readability.
+
+**Note**: While underscores in package names are unconventional in Java/Kotlin, they are technically valid and you're already using this pattern consistently throughout the project.
 
 ### 9. Class Name Suffix Updates
 
@@ -293,12 +300,14 @@ Also search for and update:
 - [ ] Sample application runs correctly
 - [ ] Documentation updated consistently
 - [ ] JavaScript observer pattern works with new attribute names
-- [ ] No references to old terminology remain (search for: PageElement, pageElement, page-element, page_element)
+- [ ] No references to old terminology remain (search for: PageElement, pageElement, page-element, page_element, page element)
+- [ ] Build succeeds: `mvn compile -DskipTests`
+- [ ] All tests pass: `mvn test`
 
 ## Notes
 
 - This is a breaking change for users of the framework
 - Consider creating a migration guide for existing users
 - The async implementation should not be affected by this rename
-- Consider renaming the Git repository from `page-elements-kotlin` to `webblocks`
-- The local project directory could also be renamed from `/page-elements-kotlin/` to `/webblocks/`
+- Consider renaming the Git repository from `page-elements-kotlin` to `web-blocks`
+- The local project directory could also be renamed from `/page-elements-kotlin/` to `/web-blocks/`
