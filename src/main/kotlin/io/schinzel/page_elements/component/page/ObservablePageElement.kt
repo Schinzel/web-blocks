@@ -37,7 +37,7 @@ abstract class ObservablePageElement : IPageApiRoute, IPageElement {
      * Returns the HTML of the page element, which is the getResponse() method
      * wrapped in a div element with several data attributes.
      */
-    override fun getHtml(): String {
+    override suspend fun getHtml(): String {
         // Get the HTML of the page element
         val pageElementHtml = this.getResponse()
         // Get the id of the observers

@@ -8,7 +8,7 @@ class MyPage(
     private val myString: String,
     private val myBoolean: Boolean
 ) : IPageRoute {
-    override fun getResponse(): String {
+    override suspend fun getResponse(): String {
         return """
             <!DOCTYPE html>
             <html lang="en">

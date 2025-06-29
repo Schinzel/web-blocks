@@ -10,7 +10,7 @@ import io.schinzel.sample.pages.page_with_page_elements_and_page_api_route.page_
 class UpdateFirstNameRoute(
     val userId: Int, val firstName: String
 ) : IPageApiRoute {
-    override fun getResponse(): Any {
+    override suspend fun getResponse(): Any {
         NameDao(userId).setFirstName(firstName)
         return "First name updated"
     }

@@ -4,7 +4,7 @@ import io.schinzel.page_elements.web.routes.IPageRoute
 
 @Suppress("unused")
 class LandingPage : IPageRoute {
-    override fun getResponse(): String {
+    override suspend fun getResponse(): String {
         return """
             <!DOCTYPE html>
             <html lang="en">

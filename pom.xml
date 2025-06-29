@@ -86,6 +86,14 @@
         </dependency>
 
         <dependency>
+            <!-- Kotlin coroutines core -->
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core</artifactId>
+            <version>1.7.3</version>
+        </dependency>
+
+
+        <dependency>
             <!-- Reflection utilities -->
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>

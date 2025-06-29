@@ -7,7 +7,7 @@ import io.schinzel.sample.pages.page_with_page_elements_and_page_api_route.page_
 class UpdateNamePe(val userId: Int) : ObservablePageElement() {
     private val firstName = NameDao(userId).getFirstName()
 
-    override fun getResponse(): String {
+    override suspend fun getResponse(): String {
         return TemplateProcessor(this)
             .addData("firstName", firstName)
             .addData("userId", userId)

@@ -13,7 +13,7 @@ import io.schinzel.sample.pages.page_with_page_elements_and_page_api_route.page_
  */
 @Suppress("unused")
 class WelcomePage(private val userId: Int) : IPageRoute {
-    override fun getResponse(): String {
+    override suspend fun getResponse(): String {
         // Create page elements
         val welcomePe = WelcomePe(userId)
         val updateNamePe = UpdateNamePe(userId)

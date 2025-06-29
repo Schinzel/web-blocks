@@ -7,7 +7,7 @@ import io.schinzel.sample.pages.page_with_page_element.greeting_pe.GreetingPe
 @Suppress("unused")
 class ThePage(userId: String = "") : IPageRoute {
 
-    override fun getResponse(): String {
+    override suspend fun getResponse(): String {
         return PageBuilder()
             .setTitle("Welcome")
             .addRow()

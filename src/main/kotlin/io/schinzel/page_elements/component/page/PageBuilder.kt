@@ -1,6 +1,7 @@
 package io.schinzel.page_elements.component.page
 
 import io.schinzel.page_elements.component.template_engine.TemplateProcessor
+import kotlinx.coroutines.*
 
 /**
  * The purpose of this class is to represent a web page.
@@ -59,13 +60,17 @@ class PageBuilder {
         return this
     }
 
-    fun getHtml(): String {
-        // The content of the page
-        val content = rows.joinToString("\n") { it.getHtml() }
-        // Insert the title and content into the page template
-        return TemplateProcessor(this)
+    suspend fun getHtml(): String = supervisorScope {
+        // Use supervisorScope for error isolation at row level
+        // If one row fails, other rows continue rendering
+        val rowsHtml = rows
+            .map { async { it.getHtml() } }
+            .awaitAll()
+            .joinToString("\n")
+        
+        return@supervisorScope TemplateProcessor(this@PageBuilder)
             .addData("title", title)
-            .addData("content", content)
+            .addData("content", rowsHtml)
             .processTemplate("html/page-template.html")
     }
 }

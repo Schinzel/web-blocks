@@ -4,7 +4,7 @@ import io.schinzel.page_elements.web.routes.IApiRoute
 
 @Suppress("unused")
 class UserInformationEndpoint(private val userId: String = "") : IApiRoute {
-    override fun getResponse(): Any {
+    override suspend fun getResponse(): Any {
         if (userId.isNotEmpty()) {
             return UserInformation(userId, "Jane Doe", 24)
         }

@@ -4,7 +4,7 @@ import io.schinzel.page_elements.web.routes.IApiRoute
 
 @Suppress("unused")
 class GetPetsEndpoint : IApiRoute {
-    override fun getResponse(): Any {
+    override suspend fun getResponse(): Any {
         return listOf(
             Pet("Fluffy", "Cat"),
             Pet("Rex", "Dog")

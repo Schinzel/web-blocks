@@ -3,7 +3,7 @@ package io.schinzel.page_elements.web.routes
 import kotlin.reflect.KClass
 
 interface IPageRoute : IRoute {
-    override fun getResponse(): String
+    override suspend fun getResponse(): String
 }
 
 

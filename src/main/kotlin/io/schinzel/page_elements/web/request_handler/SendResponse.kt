@@ -9,14 +9,14 @@ import org.jsoup.Jsoup
 /**
  * The purpose of this class is to send a response to a client
  */
-fun sendResponse(
+suspend fun sendResponse(
     ctx: Context,
     route: IRoute,
     logEntry: LogEntry,
     returnType: ReturnTypeEnum,
     prettyFormatHtml: Boolean
 ) {
-    // Get the response
+    // Now awaits the suspend function
     val response: Any = route.getResponse()
     // Send response
     when (returnType) {

@@ -4,7 +4,7 @@ import io.schinzel.page_elements.component.page.ObservablePageElement
 import io.schinzel.page_elements.component.template_engine.TemplateProcessor
 
 class GreetingPe : ObservablePageElement() {
-    override fun getResponse(): String {
+    override suspend fun getResponse(): String {
         return TemplateProcessor(this)
             // Set that variable firstName is Pelle
             .addData("firstName", "Pelle")
@@ -14,6 +14,4 @@ class GreetingPe : ObservablePageElement() {
 
 }
 
-fun main() {
-    GreetingPe().getHtml()
-}
+// Removed main function that calls getHtml() synchronously
