@@ -44,7 +44,6 @@ and a file system based routing system this framework encourages feature based a
 - [Getting started](doc/user_doc/1_getting_started.md)
 - [Routes](doc/user_doc/2_routes.md)
 - [Page builder](doc/user_doc/4_page_builder.md)
-- [Page element](doc/user_doc/5_page_element.md)
 - [Template engine](doc/user_doc/7_template_engine.md)
 - [Error pages](doc/user_doc/8_error_pages.md)
 - [Building the JAR](doc/user_doc/10_building_a_jar)

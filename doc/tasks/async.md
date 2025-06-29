@@ -79,14 +79,15 @@ Maintain the clean delegation pattern while adding async support. Each class han
 #### PageBuilder
 ```kotlin
 class PageBuilder {
-    suspend fun getHtml(): String = coroutineScope {
-        // Simple and clean - delegates to rows
+    suspend fun getHtml(): String = supervisorScope {
+        // Use supervisorScope for error isolation at row level
+        // If one row fails, other rows continue rendering
         val rowsHtml = rows
             .map { async { it.getHtml() } }
             .awaitAll()
             .joinToString("\n")
         
-        return@coroutineScope TemplateProcessor(this@PageBuilder)
+        return@supervisorScope TemplateProcessor(this@PageBuilder)
             .addData("title", title)
             .addData("content", rowsHtml)
             .processTemplate("html/page-template.html")
@@ -99,7 +100,9 @@ class PageBuilder {
 class Row {
     val columns: MutableList<Column> = mutableListOf()
 
-    suspend fun getHtml(): String = coroutineScope {
+    suspend fun getHtml(): String = supervisorScope {
+        // Use supervisorScope for error isolation at column level
+        // If one column fails, other columns continue rendering
         val columnsHtml = columns
             .map { async { it.getHtml() } }
             .awaitAll()
@@ -119,7 +122,9 @@ class Row {
 class Column(val span: Int) {
     val elements: MutableList<ObservablePageElement> = mutableListOf()
 
-    suspend fun getHtml(): String = coroutineScope {
+    suspend fun getHtml(): String = supervisorScope {
+        // Use supervisorScope for error isolation at element level
+        // If one element fails/times out, other elements continue rendering
         val elementsHtml = elements
             .map { element -> 
                 async { 
@@ -127,8 +132,10 @@ class Column(val span: Int) {
                         withTimeout(element.timeoutMs) { // Use element's timeout
                             element.getHtml() 
                         }
+                    } catch (e: TimeoutCancellationException) {
+                        "<div class='error timeout'>Content loading too slow. Please try refreshing.</div>"
                     } catch (e: Exception) {
-                        "<div class='error'>Error loading element: ${e.message}</div>"
+                        "<div class='error exception'>An unexpected error occurred: ${e.message}</div>"
                     }
                 }
             }
@@ -151,41 +158,55 @@ This approach:
 - Error handling is isolated to the element level
 - No large monolithic functions
 
-### 3. Update RequestHandler
+### 3. Implement Request Scope Management
 
-Update RequestHandler to handle async routes using Javalin's future support:
+Create proper request-scoped coroutine management instead of using GlobalScope:
+
+```kotlin
+// Extension function to create/get request-scoped CoroutineScope
+fun Context.requestScope(): CoroutineScope =
+    attribute("requestScope") ?: CoroutineScope(Dispatchers.IO + SupervisorJob()).also {
+        attribute("requestScope", it)
+        onComplete { it.cancel() } // Cancel scope when request completes
+    }
+```
+
+### 4. Update RequestHandler
+
+Update RequestHandler to handle async routes using proper structured concurrency:
 
 ```kotlin
 fun getHandler(): (Context) -> Unit {
     return { ctx: Context ->
-        // Use Javalin's future support for async handling
-        ctx.future(
-            GlobalScope.future {
-                val returnType = routeMapping.returnType
-                val logEntry = LogEntry(
-                    localTimeZone = webAppConfig.localTimezone,
-                    routeType = routeMapping.type,
-                    httpMethod = ctx.method().toString()
-                )
-                
-                val startTime = System.currentTimeMillis()
-                logEntry.requestLog.path = routeMapping.path
-                logEntry.requestLog.requestBody = ctx.body()
-                
-                val hasNoArguments = routeMapping.parameters.isEmpty()
-                val route: IRoute = when {
-                    hasNoArguments -> routeMapping.routeClass.createInstance()
-                    else -> createRoute(routeMapping, ctx, logEntry)
-                }
-                
-                // Now this is a suspend call
-                sendResponse(ctx, route, logEntry, returnType, webAppConfig.prettyFormatHtml)
-                
-                logEntry.responseLog.statusCode = ctx.statusCode()
-                logEntry.executionTimeInMs = System.currentTimeMillis() - startTime
-                webAppConfig.logger.log(logEntry)
+        // Use request-scoped coroutine instead of GlobalScope
+        val completableFuture = ctx.requestScope().future {
+            val returnType = routeMapping.returnType
+            val logEntry = LogEntry(
+                localTimeZone = webAppConfig.localTimezone,
+                routeType = routeMapping.type,
+                httpMethod = ctx.method().toString()
+            )
+            
+            val startTime = System.currentTimeMillis()
+            logEntry.requestLog.path = routeMapping.path
+            logEntry.requestLog.requestBody = ctx.body()
+            
+            val hasNoArguments = routeMapping.parameters.isEmpty()
+            val route: IRoute = when {
+                hasNoArguments -> routeMapping.routeClass.createInstance()
+                else -> createRoute(routeMapping, ctx, logEntry)
             }
-        )
+            
+            // Now this is a suspend call within the request scope
+            sendResponse(ctx, route, logEntry, returnType, webAppConfig.prettyFormatHtml)
+            
+            logEntry.responseLog.statusCode = ctx.statusCode()
+            logEntry.executionTimeInMs = System.currentTimeMillis() - startTime
+            webAppConfig.logger.log(logEntry)
+        }
+        
+        // Javalin will wait for this CompletableFuture to complete
+        ctx.result(completableFuture)
     }
 }
 ```
@@ -285,6 +306,66 @@ class WeatherApiElement : ObservablePageElement() {
 3. Verify that the observer pattern still works correctly with async updates
 4. Performance test to ensure async overhead is minimal for simple elements
 
+## Structured Concurrency Best Practices
+
+### 1. Scope Hierarchy and Error Isolation
+
+The async implementation follows a clear hierarchy for proper structured concurrency:
+
+```
+Request Scope (SupervisorJob)
+├── PageBuilder (supervisorScope)
+│   ├── Row 1 (supervisorScope) 
+│   │   ├── Column 1 (supervisorScope)
+│   │   │   ├── Element 1 (with timeout)
+│   │   │   └── Element 2 (with timeout)
+│   │   └── Column 2 (supervisorScope)
+│   └── Row 2 (supervisorScope)
+└── [Request completes → All scopes cancelled]
+```
+
+### 2. Key Principles
+
+- **Request-scoped lifecycle**: All coroutines are tied to the HTTP request and cancelled when it completes
+- **Error isolation**: `supervisorScope` at each level ensures failures don't cascade upwards
+- **Timeout handling**: Each page element has individual timeout protection
+- **Graceful degradation**: Failed elements show error divs while others continue rendering
+
+### 3. Page Element Internal Parallelism
+
+Page elements can spawn their own child coroutines for internal parallel work:
+
+```kotlin
+class ComplexPageElement : ObservablePageElement() {
+    override suspend fun getResponse(): String = supervisorScope {
+        // Internal parallel data fetching
+        val userDataDeferred = async { fetchUserData() }
+        val orderHistoryDeferred = async { fetchOrderHistory() }
+        val recommendationsDeferred = async { fetchRecommendations() }
+
+        val userData = userDataDeferred.await()
+        val orderHistory = orderHistoryDeferred.await()
+        val recommendations = recommendationsDeferred.await()
+
+        // Combine data into HTML
+        renderTemplate(userData, orderHistory, recommendations)
+    }
+}
+```
+
+### 4. Context Propagation
+
+Ensure request-scoped data (user session, request ID, locale) is properly passed down:
+
+```kotlin
+// Pass context through the rendering pipeline
+suspend fun getHtml(context: Context): String = supervisorScope {
+    // Access request-specific data through context parameter
+    val userId = context.sessionAttribute<String>("userId")
+    // ... use in rendering
+}
+```
+
 ## Important Considerations
 
 1. **Import statements**: Add these imports where needed:
@@ -293,11 +374,15 @@ class WeatherApiElement : ObservablePageElement() {
    import kotlinx.coroutines.future.future
    ```
 
-2. **Error handling**: Each page element should handle its own errors gracefully
+2. **Error handling**: Each page element should handle its own errors gracefully with different strategies for timeouts vs exceptions
 
 3. **Timeouts**: Default timeout is 1_000ms (1 second) to encourage snappy UIs. Elements that need more time (external APIs, complex calculations) should override the `timeoutMs` property.
 
 4. **Backwards compatibility**: This is a breaking change - all existing routes and page elements must be updated
+
+5. **Thread pool management**: Monitor `Dispatchers.IO` and `Dispatchers.Default` thread pool usage under load
+
+6. **Cancellation handling**: Suspend functions are cancellable - ensure proper cleanup in finally blocks if needed
 
 ## Success Criteria
 

@@ -12,7 +12,8 @@
       "Bash(mvn compile:*)",
       "Bash(kill:*)",
       "Bash(curl:*)",
-      "Bash(timeout 10s mvn compile exec:exec@run-sample)"
+      "Bash(timeout 10s mvn compile exec:exec@run-sample)",
+      "mcp__zen__chat"
     ],
     "deny": []
   }
