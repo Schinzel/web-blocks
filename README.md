@@ -44,7 +44,7 @@ When data changes, the server updates the database and relevant page-elements au
 **You want a feature based architecture**   
 Most frameworks do not allow a feature based architecture. With standalone page-elements, 
 reading resource files from the source folder of classes, 
-and a file system based routing system this framework encourages feature based architecture. 
+and a file system based routing system this framework enables and encourages feature based architecture. 
 
 
 # Documentation
@@ -53,7 +53,7 @@ and a file system based routing system this framework encourages feature based a
 - [Page builder](doc/user_doc/4_page_builder.md)
 - [Template engine](doc/user_doc/7_template_engine.md)
 - [Error pages](doc/user_doc/8_error_pages.md)
-- [Building the JAR](doc/user_doc/10_building_a_jar)
+- [Building a JAR](doc/user_doc/10_building_a_jar.md)
 
 # Sample
 - [Sample](src/main/kotlin/io/schinzel/sample/README.md)
