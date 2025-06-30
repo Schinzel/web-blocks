@@ -9,6 +9,7 @@
 
 
 # To do
+- Need to document that both GET and POST are set up automatically for (all three routes?)
 - "/src/main/kotlin/" is hard coded in SourceFileReader
 - Is this correct ObservablePageElement : IPageApiRoute, IPageElement?
 - Should resource files be snake-case or camel-case?
