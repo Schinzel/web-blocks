@@ -23,7 +23,9 @@
       "WebFetch(domain:kobweb.varabyte.com)",
       "Bash(mv:*)",
       "Bash(find:*)",
-      "Bash(timeout 10 mvn compile:*)"
+      "Bash(timeout 10 mvn compile:*)",
+      "mcp__zen__thinkdeep",
+      "Bash(git restore:*)"
     ],
     "deny": []
   }
