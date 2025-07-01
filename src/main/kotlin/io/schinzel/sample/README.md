@@ -23,6 +23,18 @@ This means if the observed block changes, the observing blocks update themselves
 - [pages/page_with_blocks_and_page_api_route/WelcomePage.kt](pages/page_with_blocks_and_page_api_route/WelcomePage.kt)
 - http://127.0.0.1:5555/page-with-blocks-and-page-api-route?user-id=123222
 
+A page with custom status code (201) using HtmlResponseBuilder.
+- [pages/page_with_custom_status/ThePageWithStatus.kt](pages/page_with_custom_status/ThePageWithStatus.kt)
+- http://127.0.0.1:5555/page-with-custom-status
+
+A page with custom headers using HtmlResponseBuilder.
+- [pages/page_with_headers/ThePageWithHeaders.kt](pages/page_with_headers/ThePageWithHeaders.kt)
+- http://127.0.0.1:5555/page-with-headers
+
+A page demonstrating Java-friendly builder usage.
+- [pages/java_style_page/JavaStylePage.kt](pages/java_style_page/JavaStylePage.kt)
+- http://127.0.0.1:5555/java-style-page
+
 
 ## API Routes
 
@@ -37,3 +49,7 @@ An API route with one parameter.
 An API route that throws an error.
 - [api/ApiRouteThatThrowsError.kt](api/ApiRouteThatThrowsError.kt)
 - http://127.0.0.1:5555/api/api-route-that-throws-error
+
+An API route with custom headers using JsonResponseBuilder.
+- [api/UserApiWithHeaders.kt](api/UserApiWithHeaders.kt)
+- http://127.0.0.1:5555/api/user-api-with-headers?user-id=123
