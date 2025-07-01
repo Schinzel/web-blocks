@@ -1,5 +1,19 @@
 # Code Standards for AIs
 
+## CRITICAL: JVM Language Compatibility Required
+**This framework MUST work with ALL JVM languages - Kotlin, Java, Scala, Clojure, and more.**
+
+Before implementing ANY feature, ask yourself:
+- Will this work in Java? (no named parameters, no default values)
+- Will this work in Scala/Clojure? (different paradigms)
+
+Common mistakes to avoid:
+- Using Kotlin-only features (KSP, inline classes)
+- Top-level functions without Java-friendly access
+- Relying on default parameters without @JvmOverloads
+
+**When in doubt, design as if Java developers will use it.**
+
 This is a code standard to be followed by AIs such as Claude, Gemini, ChatGPT and so on.
 
 ## Identification

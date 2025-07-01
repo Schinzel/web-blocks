@@ -4,7 +4,6 @@
 Build reactive web applications using any JVM language - Kotlin, Java, Scala, Clojure, and more.
 It is easy to get started with simple pages while supporting complex web applications as you scale.
 
-
 ## Problems to solve
 The problems this project aims to solve are the following.
 
