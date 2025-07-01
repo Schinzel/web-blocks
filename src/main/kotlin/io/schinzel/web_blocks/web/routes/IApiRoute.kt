@@ -1,9 +1,12 @@
 package io.schinzel.web_blocks.web.routes
 
+import io.schinzel.web_blocks.web.response.WebBlockResponse
 import kotlin.reflect.KClass
 
 
-interface IApiRoute : IRoute
+interface IApiRoute : IRoute {
+    override suspend fun getResponse(): WebBlockResponse
+}
 
 class ApiRouteDescriptor(
     private val endpointPackage: String

@@ -2,14 +2,16 @@ package io.schinzel.sample.pages.page_with_block.greeting_block
 
 import io.schinzel.web_blocks.component.page.ObservableBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
+import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.html
 
 class GreetingBlock : ObservableBlock() {
-    override suspend fun getResponse(): String {
-        return TemplateProcessor(this)
+    override suspend fun getResponse(): WebBlockResponse {
+        return html(TemplateProcessor(this)
             // Set that variable firstName is Pelle
             .addData("firstName", "Pelle")
             // Read the file template file and return HTML
-            .processTemplate("GreetingBlock.html")
+            .processTemplate("GreetingBlock.html"))
     }
 
 }

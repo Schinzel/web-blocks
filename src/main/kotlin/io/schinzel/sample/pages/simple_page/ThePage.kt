@@ -1,11 +1,13 @@
 package io.schinzel.sample.pages.simple_page
 
+import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IPageRoute
 
 @Suppress("unused")
 class ThePage : IPageRoute {
-    override suspend fun getResponse(): String {
-        return """
+    override suspend fun getResponse(): WebBlockResponse {
+        return html("""
            |<!DOCTYPE html>
            |<html lang="en">
            |<head>
@@ -17,6 +19,6 @@ class ThePage : IPageRoute {
            |    <h1>Hello World</h1>
            |</body>
            |</html>
-        """.trimMargin()
+        """.trimMargin())
     }
 }

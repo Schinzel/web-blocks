@@ -7,11 +7,11 @@ There are 3 types of routes:
 
 ## API route
 
-| Attribute  | Description                    |
-|------------|--------------------------------|
-| Implements | `IApiRoute.getResponse()`      |
-| Returns    | JSON                           |
-| Location   | Located in the `api` directory |
+| Attribute  | Description                           |
+|------------|---------------------------------------|
+| Implements | `IApiRoute` extends `WebBlockRoute`   |
+| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
+| Location   | Located in the `api` directory        |
 
 
 
@@ -27,11 +27,11 @@ There are 3 types of routes:
 
 ## Page route
 
-| Attribute  | Description                      |
-|------------|----------------------------------|
-| Implements | `IPageRoute.getResponse()`       |
-| Returns    | HTML                             |
-| Location   | Located in the `pages` directory |
+| Attribute  | Description                           |
+|------------|---------------------------------------|
+| Implements | `IPageRoute` extends `WebBlockRoute`  |
+| Returns    | `WebBlockResponse` (typically `HtmlResponse`) |
+| Location   | Located in the `pages` directory      |
 
 
 | Property     | Description                                                                       |
@@ -47,11 +47,11 @@ There are 3 types of routes:
 These are assume to be tied to pages as opposed to being standalone endpoints like the API routes.
 Used by pages to for example save data or update an element on a the page.
 
-| Attribute  | Description                      |
-|------------|----------------------------------|
-| Implements | `IPageApiRoute.getResponse()`    |
-| Returns    | JSON                             |
-| Location   | Located in the `pages` directory |
+| Attribute  | Description                           |
+|------------|---------------------------------------|
+| Implements | `IPageApiRoute` extends `WebBlockRoute` |
+| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
+| Location   | Located in the `pages` directory      |
 
 
 | Property         | Description                                                                                                               |
@@ -70,3 +70,15 @@ Arguments to pages, api endpoints and page endpoints can be passed as:
 - Request body
 - These are stated a constructor arguments that are declared as `val` and non-private (public)
 - Parameters are converted from camelCase to kebab-case
+
+## Status Code Control
+
+The framework and implementing classes share responsibility for HTTP status codes. When a route successfully executes and returns a WebBlockResponse, the implementing class has final authority over the status code.
+
+| Scenario | Who Controls | Status Code | Example |
+|----------|-------------|-------------|---------|
+| Route not found | Framework | 404 | `GET /does-not-exist` |
+| Uncaught exception in route | Framework | 500 | Route throws `RuntimeException` |
+| Parameter parsing fails | Framework | 400 | Invalid query parameter format |
+| Request body invalid | Framework | 400 | Malformed JSON in POST body |
+| Route returns response | **Implementing Class** | **Any** | `JsonResponse(data, status = 201)` |

@@ -25,7 +25,8 @@
       "Bash(find:*)",
       "Bash(timeout 10 mvn compile:*)",
       "mcp__zen__thinkdeep",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(pkill:*)"
     ],
     "deny": []
   }

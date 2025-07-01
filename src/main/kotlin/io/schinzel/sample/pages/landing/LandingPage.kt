@@ -1,11 +1,13 @@
 package io.schinzel.sample.pages.landing
 
+import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IPageRoute
 
 @Suppress("unused")
 class LandingPage : IPageRoute {
-    override suspend fun getResponse(): String {
-        return """
+    override suspend fun getResponse(): WebBlockResponse {
+        return html("""
            |<!DOCTYPE html>
            |<html lang="en">
            |<head>
@@ -17,6 +19,6 @@ class LandingPage : IPageRoute {
            |    <h1>Landing Page</h1>
            |</body>
            |</html>
-        """.trimMargin()
+        """.trimMargin())
     }
 }

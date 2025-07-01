@@ -2,6 +2,9 @@ package io.schinzel.web_blocks.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.web_blocks.web.request_handler.log.LogEntry
+import io.schinzel.web_blocks.web.response.HtmlResponse
+import io.schinzel.web_blocks.web.response.JsonResponse
+import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import org.jsoup.Jsoup
@@ -16,21 +19,30 @@ suspend fun sendResponse(
     returnType: ReturnTypeEnum,
     prettyFormatHtml: Boolean
 ) {
-    // Now awaits the suspend function
-    val response: Any = route.getResponse()
-    // Send response
-    when (returnType) {
-        ReturnTypeEnum.HTML -> {
+    // Get the WebBlockResponse from the route
+    val response: WebBlockResponse = route.getResponse()
+    
+    // Set custom headers if provided
+    response.headers.forEach { (key, value) ->
+        ctx.header(key, value)
+    }
+    
+    // Set status code
+    ctx.status(response.status)
+    
+    // Send response based on type
+    when (response) {
+        is HtmlResponse -> {
             val formattedHtml = if (prettyFormatHtml) {
-                prettyFormatHtml(response as String)
+                prettyFormatHtml(response.content)
             } else {
-                response as String
+                response.content
             }
             ctx.html(formattedHtml)
         }
 
-        ReturnTypeEnum.JSON -> {
-            val responseObject = ApiResponse.Success(message = response)
+        is JsonResponse -> {
+            val responseObject = ApiResponse.Success(message = response.data)
             ctx.json(responseObject)
             logEntry.responseLog.response = responseObject
         }

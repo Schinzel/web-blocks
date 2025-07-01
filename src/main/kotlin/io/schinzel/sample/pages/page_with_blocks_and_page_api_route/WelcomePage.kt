@@ -1,6 +1,8 @@
 package io.schinzel.sample.pages.page_with_blocks_and_page_api_route
 
 import io.schinzel.web_blocks.component.page.PageBuilder
+import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IPageRoute
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.intro_text.IntroductionTextBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateNameBlock
@@ -13,7 +15,7 @@ import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welco
  */
 @Suppress("unused")
 class WelcomePage(private val userId: Int) : IPageRoute {
-    override suspend fun getResponse(): String {
+    override suspend fun getResponse(): WebBlockResponse {
         // Create blocks
         val welcomeBlock = WelcomeBlock(userId)
         val updateNameBlock = UpdateNameBlock(userId)
@@ -46,6 +48,6 @@ class WelcomePage(private val userId: Int) : IPageRoute {
             .addColumn(12)
             .addBlock(introTextBlock)
 
-        return pageBuilder.getHtml()
+        return html(pageBuilder.getHtml())
     }
 }

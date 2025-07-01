@@ -3,6 +3,8 @@ package io.schinzel.web_blocks.component.page
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_blocks.web.request_handler.log.JsonMapper
+import io.schinzel.web_blocks.web.response.HtmlResponse
+import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.routes.IPageApiRoute
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
@@ -39,7 +41,14 @@ abstract class ObservableBlock : IPageApiRoute, IBlock {
      */
     override suspend fun getHtml(): String {
         // Get the HTML of the block
-        val blockHtml = this.getResponse()
+        val response = this.getResponse()
+        val blockHtml = when (response) {
+            is HtmlResponse -> response.content
+            is JsonResponse -> {
+                // For blocks that return JSON, convert to string
+                response.data.toString()
+            }
+        }
         // Get the id of the observers
         val observersIdsAsString: String = observers.joinToString(",") { it.guid }
         // Get the path of the block

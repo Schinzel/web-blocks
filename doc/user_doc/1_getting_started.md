@@ -44,8 +44,8 @@ com.mycompany/
 For example:
 ```kotlin
 class ThePage : IPageResponseHandler {
-    override fun getResponse(): String {
-        return """
+    override fun getResponse(): WebBlockResponse {
+        return html("""
            |<!DOCTYPE html>
            |<html lang="en">
            |<head>
@@ -57,8 +57,29 @@ class ThePage : IPageResponseHandler {
            |    <h1>Hello World</h1>
            |</body>
            |</html>
-        """.trimMargin()
+        """.trimMargin())
     }
+}
+```
+
+Or with the convenience function:
+```kotlin
+import io.schinzel.web_blocks.web.response.html
+
+class ThePage : IPageResponseHandler {
+    override fun getResponse() = html("""
+        |<!DOCTYPE html>
+        |<html lang="en">
+        |<head>
+        |    <meta charset="UTF-8">
+        |    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        |    <title>Hello World</title>
+        |</head>
+        |<body>
+        |    <h1>Hello World</h1>
+        |</body>
+        |</html>
+    """.trimMargin())
 }
 ```
 
