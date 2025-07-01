@@ -345,6 +345,78 @@ This ensures the framework remains true to its founding principle of JVM languag
 6. **Update documentation** with new patterns
 7. **Validate no regressions** before completion
 
+## Documentation Updates Required
+
+### 1. Update /doc/user_doc/2_routes.md
+This document needs comprehensive updates to reflect the new return type system:
+
+#### Update Route Type Tables
+Replace the existing "Implements" and "Returns" columns with new WebBlockResponse information:
+
+| Attribute  | Description                           |
+|------------|---------------------------------------|
+| Implements | `IApiRoute` extends `WebBlockRoute`   |
+| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
+
+#### Add Status Code Control Section
+Add after the Parameters section:
+
+```markdown
+## Status Code Control
+
+The framework and implementing classes share responsibility for HTTP status codes. When a route successfully executes and returns a WebBlockResponse, the implementing class has final authority over the status code.
+
+| Scenario | Who Controls | Status Code | Example |
+|----------|-------------|-------------|---------|
+| Route not found | Framework | 404 | `GET /does-not-exist` |
+| Uncaught exception in route | Framework | 500 | Route throws `RuntimeException` |
+| Parameter parsing fails | Framework | 400 | Invalid query parameter format |
+| Request body invalid | Framework | 400 | Malformed JSON in POST body |
+| Route returns response | **Implementing Class** | **Any** | `JsonResponse(data, status = 201)` |
+```
+
+### 2. Update /doc/user_doc/1_getting_started.md
+Update the example code to use the new return types:
+
+```kotlin
+class ThePage : IPageResponseHandler {
+    override fun getResponse(): WebBlockResponse {
+        return HtmlResponse("""
+           |<!DOCTYPE html>
+           |<html lang="en">
+           |<head>
+           |    <meta charset="UTF-8">
+           |    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           |    <title>Hello World</title>
+           |</head>
+           |<body>
+           |    <h1>Hello World</h1>
+           |</body>
+           |</html>
+        """.trimMargin())
+    }
+}
+```
+
+Or with convenience functions:
+```kotlin
+class ThePage : IPageResponseHandler {
+    override fun getResponse(): WebBlockResponse = html("""
+        |<!DOCTYPE html>
+        |<html lang="en">
+        |<head>
+        |    <meta charset="UTF-8">
+        |    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        |    <title>Hello World</title>
+        |</head>
+        |<body>
+        |    <h1>Hello World</h1>
+        |</body>
+        |</html>
+    """.trimMargin())
+}
+```
+
 ## Notes
 - This is Phase 1 of a larger refactoring effort
 - Phase 2 will add annotation-based routing (@Page, @Api, @PageApi)
