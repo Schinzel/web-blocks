@@ -49,7 +49,6 @@ import kotlin.reflect.KClass
  * - @WebBlockPageApi: /pages/settings/SaveNameRoute.kt → /page-api/settings/save-name
  * 
  * Example usage:
- * ```kotlin
  * @WebBlockPage
  * class ThePage : WebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
@@ -59,13 +58,12 @@ import kotlin.reflect.KClass
  * class UserPets : WebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
  * }
- * ```
  * 
  * Written by Claude Sonnet 4
  */
 interface WebBlockRoute {
     /**
-     * The purpose of this function is to generate the response content for this route.
+     * Generate the response content for this route.
      * 
      * The response type (HTML or JSON) and Content-Type headers are determined by
      * the route's annotation:
@@ -78,7 +76,7 @@ interface WebBlockRoute {
     suspend fun getResponse(): WebBlockResponse
 
     /**
-     * The purpose of this function is to get the URL path for this route
+     * Get the URL path for this route
      * based on its file system location and annotation type.
      * 
      * Path generation rules:
@@ -114,14 +112,14 @@ import kotlin.reflect.KClass
 object RouteAnnotationUtil {
     
     /**
-     * The purpose of this function is to detect which WebBlock route annotation
+     * Detect which WebBlock route annotation
      * is present on a given class.
      * 
      * @param clazz The class to check for route annotations
-     * @return The route annotation type, or null if no valid annotation found
+     * @return The route annotation type, or UNKNOWN if no valid annotation found
      * @throws IllegalArgumentException if multiple route annotations are present
      */
-    fun detectRouteType(clazz: KClass<*>): RouteType? {
+    fun detectRouteType(clazz: KClass<*>): RouteTypeEnum {
         val hasPage = clazz.annotations.any { it is WebBlockPage }
         val hasApi = clazz.annotations.any { it is WebBlockApi }
         val hasPageApi = clazz.annotations.any { it is WebBlockPageApi }
@@ -129,20 +127,20 @@ object RouteAnnotationUtil {
         val annotationCount = listOf(hasPage, hasApi, hasPageApi).count { it }
         
         return when {
-            annotationCount == 0 -> null
+            annotationCount == 0 -> RouteTypeEnum.UNKNOWN
             annotationCount > 1 -> throw IllegalArgumentException(
                 "Class ${clazz.simpleName} has multiple route annotations. " +
                 "Only one of @WebBlockPage, @WebBlockApi, or @WebBlockPageApi is allowed."
             )
-            hasPage -> RouteType.PAGE
-            hasApi -> RouteType.API
-            hasPageApi -> RouteType.PAGE_API
-            else -> null
+            hasPage -> RouteTypeEnum.PAGE
+            hasApi -> RouteTypeEnum.API
+            hasPageApi -> RouteTypeEnum.PAGE_API
+            else -> RouteTypeEnum.UNKNOWN
         }
     }
     
     /**
-     * The purpose of this function is to validate that a class implementing 
+     * Validate that a class implementing 
      * WebBlockRoute has exactly one valid route annotation.
      * 
      * @param clazz The class to validate
@@ -151,7 +149,7 @@ object RouteAnnotationUtil {
     fun validateRouteAnnotation(clazz: KClass<out WebBlockRoute>) {
         val routeType = detectRouteType(clazz)
         
-        if (routeType == null) {
+        if (routeType == RouteTypeEnum.UNKNOWN) {
             throw IllegalArgumentException(
                 "Class ${clazz.simpleName} implements WebBlockRoute but has no route annotation. " +
                 "Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation."
@@ -165,10 +163,51 @@ object RouteAnnotationUtil {
  * 
  * Written by Claude Sonnet 4
  */
-enum class RouteType {
+enum class RouteTypeEnum {
     PAGE,
     API,
-    PAGE_API
+    PAGE_API,
+    UNKNOWN;
+    
+    /**
+     * The Content-Type header value for this route type.
+     */
+    val contentType: String
+        get() = when (this) {
+            PAGE -> "text/html"
+            API -> "application/json"
+            PAGE_API -> "application/json"
+            UNKNOWN -> "application/octet-stream"
+        }
+    
+    /**
+     * Check if the given response type is valid for this route type.
+     * 
+     * @param response The response to validate
+     * @return true if the response type is valid for this route type
+     */
+    fun isValidResponseType(response: WebBlockResponse): Boolean {
+        return when (this) {
+            PAGE -> response is HtmlResponse
+            API -> response is JsonResponse
+            PAGE_API -> response is JsonResponse
+            UNKNOWN -> false
+        }
+    }
+    
+    /**
+     * Get the expected response type name for this route type.
+     * 
+     * @return The expected response type name
+     */
+    fun getExpectedResponseType(): String {
+        return when (this) {
+            PAGE -> "HtmlResponse"
+            API -> "JsonResponse"
+            PAGE_API -> "JsonResponse"
+            UNKNOWN -> "UnknownResponse"
+        }
+    }
 }
 ```
 
@@ -188,21 +227,21 @@ enum class ReturnTypeEnum {
     
     companion object {
         /**
-         * The purpose of this function is to get the return type based on route annotation.
+         * Get the return type based on route annotation.
          * 
          * @param routeType The route type from annotation detection
          * @return The corresponding return type
          */
-        fun fromRouteType(routeType: RouteType): ReturnTypeEnum {
+        fun getReturnTypeFromRouteType(routeType: RouteTypeEnum): ReturnTypeEnum {
             return when (routeType) {
-                RouteType.PAGE -> HTML
-                RouteType.API -> JSON
-                RouteType.PAGE_API -> JSON
+                RouteTypeEnum.PAGE -> HTML
+                RouteTypeEnum.API -> JSON
+                RouteTypeEnum.PAGE_API -> JSON
             }
         }
         
         /**
-         * The purpose of this function is to get the Content-Type header value
+         * Get the Content-Type header value
          * for this return type.
          * 
          * @return String representing the Content-Type header value
@@ -241,7 +280,7 @@ src/main/kotlin/io/schinzel/web_blocks/web/routes/
 - [ ] Unit tests for `RouteAnnotationUtil.detectRouteType()`
 - [ ] Unit tests for `RouteAnnotationUtil.validateRouteAnnotation()`
 - [ ] Tests for error cases (no annotation, multiple annotations)
-- [ ] Tests for `ReturnTypeEnum.fromRouteType()`
+- [ ] Tests for `ReturnTypeEnum.getReturnTypeFromRouteType()`
 - [ ] Tests for `ReturnTypeEnum.getContentType()`
 - [ ] Mock tests for `WebBlockRoute.getPath()`
 

@@ -30,7 +30,7 @@ The current response processing system works with the typed `WebBlockResponse` s
 package io.schinzel.web_blocks.web.response
 
 import io.schinzel.web_blocks.web.routes.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.RouteType
+import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.WebBlockRoute
 import kotlin.reflect.KClass
 
@@ -43,7 +43,7 @@ import kotlin.reflect.KClass
 class AnnotationResponseProcessor {
     
     /**
-     * The purpose of this function is to process a response from an annotation-based route
+     * Process a response from an annotation-based route
      * and ensure it has the correct Content-Type header based on the route's annotation.
      * 
      * @param response The response from the route
@@ -55,11 +55,14 @@ class AnnotationResponseProcessor {
         routeClass: KClass<out WebBlockRoute>
     ): WebBlockResponse {
         val routeType = RouteAnnotationUtil.detectRouteType(routeClass)
-            ?: throw IllegalArgumentException(
+        
+        if (routeType == RouteTypeEnum.UNKNOWN) {
+            throw IllegalArgumentException(
                 "Route class ${routeClass.simpleName} has no WebBlock annotation"
             )
+        }
         
-        val expectedContentType = getContentTypeForRouteType(routeType)
+        val expectedContentType = routeType.contentType
         
         // Validate response type matches annotation
         validateResponseType(response, routeType, routeClass)
@@ -68,23 +71,9 @@ class AnnotationResponseProcessor {
         return addContentTypeHeader(response, expectedContentType)
     }
     
-    /**
-     * The purpose of this function is to get the appropriate Content-Type header
-     * value based on the route type annotation.
-     * 
-     * @param routeType The route type from annotation detection
-     * @return Content-Type header value
-     */
-    private fun getContentTypeForRouteType(routeType: RouteType): String {
-        return when (routeType) {
-            RouteType.PAGE -> "text/html"
-            RouteType.API -> "application/json"
-            RouteType.PAGE_API -> "application/json"
-        }
-    }
     
     /**
-     * The purpose of this function is to validate that the response type
+     * Validate that the response type
      * matches the expected type based on the route annotation.
      * 
      * @param response The response to validate
@@ -93,21 +82,11 @@ class AnnotationResponseProcessor {
      */
     private fun validateResponseType(
         response: WebBlockResponse,
-        routeType: RouteType,
+        routeType: RouteTypeEnum,
         routeClass: KClass<out WebBlockRoute>
     ) {
-        val isValidResponse = when (routeType) {
-            RouteType.PAGE -> response is HtmlResponse
-            RouteType.API -> response is JsonResponse
-            RouteType.PAGE_API -> response is JsonResponse
-        }
-        
-        if (!isValidResponse) {
-            val expectedType = when (routeType) {
-                RouteType.PAGE -> "HtmlResponse"
-                RouteType.API -> "JsonResponse"
-                RouteType.PAGE_API -> "JsonResponse"
-            }
+        if (!routeType.isValidResponseType(response)) {
+            val expectedType = routeType.getExpectedResponseType()
             val actualType = response::class.simpleName
             
             throw IllegalArgumentException(
@@ -118,7 +97,7 @@ class AnnotationResponseProcessor {
     }
     
     /**
-     * The purpose of this function is to add or update the Content-Type header
+     * Add or update the Content-Type header
      * on a response while preserving existing headers.
      * 
      * @param response The original response
@@ -132,10 +111,7 @@ class AnnotationResponseProcessor {
         val updatedHeaders = response.headers.toMutableMap()
         updatedHeaders["Content-Type"] = contentType
         
-        return when (response) {
-            is HtmlResponse -> response.copy(headers = updatedHeaders)
-            is JsonResponse -> response.copy(headers = updatedHeaders)
-        }
+        return response.copy(headers = updatedHeaders)
     }
 }
 ```
@@ -160,7 +136,7 @@ class ResponseHandler {
     private val annotationProcessor = AnnotationResponseProcessor()
     
     /**
-     * The purpose of this function is to process a response from any route type
+     * Process a response from any route type
      * and ensure it has appropriate headers based on the route system used.
      * 
      * @param response The response from the route
@@ -190,7 +166,7 @@ class ResponseHandler {
 ```kotlin
 package io.schinzel.web_blocks.web.response
 
-import io.schinzel.web_blocks.web.routes.RouteType
+import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 
 /**
  * The purpose of this object is to provide utilities for validating responses
@@ -201,49 +177,37 @@ import io.schinzel.web_blocks.web.routes.RouteType
 object ResponseValidationUtil {
     
     /**
-     * The purpose of this function is to check if a response type is compatible
+     * Check if a response type is compatible
      * with a given route type.
      * 
      * @param response The response to check
      * @param routeType The route type to check against
      * @return true if response is compatible with route type
      */
-    fun isResponseCompatible(response: WebBlockResponse, routeType: RouteType): Boolean {
-        return when (routeType) {
-            RouteType.PAGE -> response is HtmlResponse
-            RouteType.API -> response is JsonResponse
-            RouteType.PAGE_API -> response is JsonResponse
-        }
+    fun isResponseCompatible(response: WebBlockResponse, routeType: RouteTypeEnum): Boolean {
+        return routeType.isValidResponseType(response)
     }
     
     /**
-     * The purpose of this function is to get the expected response type name
+     * Get the expected response type name
      * for a given route type.
      * 
      * @param routeType The route type
      * @return The expected response type name
      */
-    fun getExpectedResponseType(routeType: RouteType): String {
-        return when (routeType) {
-            RouteType.PAGE -> "HtmlResponse"
-            RouteType.API -> "JsonResponse"
-            RouteType.PAGE_API -> "JsonResponse"
-        }
+    fun getExpectedResponseType(routeType: RouteTypeEnum): String {
+        return routeType.getExpectedResponseType()
     }
     
     /**
-     * The purpose of this function is to get the expected Content-Type header
+     * Get the expected Content-Type header
      * for a given route type.
      * 
      * @param routeType The route type
      * @return The expected Content-Type header value
      */
-    fun getExpectedContentType(routeType: RouteType): String {
-        return when (routeType) {
-            RouteType.PAGE -> "text/html"
-            RouteType.API -> "application/json"
-            RouteType.PAGE_API -> "application/json"
-        }
+    fun getExpectedContentType(routeType: RouteTypeEnum): String {
+        return routeType.contentType
     }
 }
 ```
@@ -271,7 +235,7 @@ class HttpResponseBuilder {
     private val responseHandler = ResponseHandler()
     
     /**
-     * The purpose of this function is to build an HTTP response from a WebBlockResponse
+     * Build an HTTP response from a WebBlockResponse
      * ensuring proper headers are set based on the route type.
      * 
      * @param response The WebBlockResponse from the route
@@ -293,7 +257,7 @@ class HttpResponseBuilder {
     }
     
     /**
-     * The purpose of this function is to extract the response body content
+     * Extract the response body content
      * from a WebBlockResponse.
      * 
      * @param response The WebBlockResponse
@@ -307,7 +271,7 @@ class HttpResponseBuilder {
     }
     
     /**
-     * The purpose of this function is to serialize data to JSON format.
+     * Serialize data to JSON format.
      * 
      * @param data The data to serialize
      * @return JSON string representation
@@ -404,7 +368,7 @@ src/main/kotlin/io/schinzel/web_blocks/web/response/
 
 ## Dependencies
 - **Phase 1**: Requires annotation classes
-- **Phase 2**: Requires `RouteAnnotationUtil` and `RouteType`
+- **Phase 2**: Requires `RouteAnnotationUtil` and `RouteTypeEnum`
 - **Existing**: Uses `WebBlockResponse`, `HtmlResponse`, `JsonResponse`
 - **JSON**: Depends on JSON serialization library
 

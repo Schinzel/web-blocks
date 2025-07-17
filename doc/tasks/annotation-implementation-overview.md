@@ -60,8 +60,3 @@ class UserPets : WebBlockRoute {
 ### Annotation System Benefits
 1. **Future Extensibility**: Enables future annotation parameters like `@WebBlockPage(cacheable = true)`
 
-## Notes & Decisions Log
-
-- **2025-01-17**: Decided on WebBlock prefix for annotations to avoid naming collisions
-- **2025-01-17**: Chose to maintain WebBlockResponse system instead of raw strings for better type safety
-- **2025-01-17**: Created phased approach with 7 distinct tasks for better project management

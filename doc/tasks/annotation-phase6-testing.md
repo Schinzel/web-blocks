@@ -54,14 +54,14 @@ import kotlin.reflect.full.findAnnotation
 class WebBlockPageTest {
     
     @Test
-    fun annotation_hasCorrectTarget_canBeAppliedToClass() {
+    fun findAnnotation_webBlockPageAnnotation_returnsAnnotation() {
         val annotation = TestPageRoute::class.findAnnotation<WebBlockPage>()
         
         assertThat(annotation).isNotNull
     }
     
     @Test
-    fun annotation_hasRuntimeRetention_canBeDetectedAtRuntime() {
+    fun annotations_webBlockPageAnnotation_isDetectedAtRuntime() {
         val annotations = TestPageRoute::class.annotations
         val webBlockPageAnnotation = annotations.find { it is WebBlockPage }
         
@@ -69,7 +69,7 @@ class WebBlockPageTest {
     }
     
     @Test
-    fun annotation_cannotBeAppliedToMethods_compilationError() {
+    fun webBlockPageAnnotation_appliedToClass_compilesSuccessfully() {
         // This test validates through compilation - if it compiles, the test passes
         // The annotation should not be applicable to methods due to @Target(AnnotationTarget.CLASS)
         assertThat(true).isTrue
@@ -93,14 +93,14 @@ import kotlin.reflect.full.findAnnotation
 class WebBlockApiTest {
     
     @Test
-    fun annotation_hasCorrectTarget_canBeAppliedToClass() {
+    fun findAnnotation_webBlockApiAnnotation_returnsAnnotation() {
         val annotation = TestApiRoute::class.findAnnotation<WebBlockApi>()
         
         assertThat(annotation).isNotNull
     }
     
     @Test
-    fun annotation_hasRuntimeRetention_canBeDetectedAtRuntime() {
+    fun annotations_webBlockApiAnnotation_isDetectedAtRuntime() {
         val annotations = TestApiRoute::class.annotations
         val webBlockApiAnnotation = annotations.find { it is WebBlockApi }
         
@@ -125,14 +125,14 @@ import kotlin.reflect.full.findAnnotation
 class WebBlockPageApiTest {
     
     @Test
-    fun annotation_hasCorrectTarget_canBeAppliedToClass() {
+    fun findAnnotation_webBlockPageApiAnnotation_returnsAnnotation() {
         val annotation = TestPageApiRoute::class.findAnnotation<WebBlockPageApi>()
         
         assertThat(annotation).isNotNull
     }
     
     @Test
-    fun annotation_hasRuntimeRetention_canBeDetectedAtRuntime() {
+    fun annotations_webBlockPageApiAnnotation_isDetectedAtRuntime() {
         val annotations = TestPageApiRoute::class.annotations
         val webBlockPageApiAnnotation = annotations.find { it is WebBlockPageApi }
         
@@ -161,35 +161,35 @@ import org.junit.jupiter.api.Test
 class RouteAnnotationUtilTest {
     
     @Test
-    fun detectRouteType_pageAnnotation_returnsPageType() {
+    fun detectRouteType_webBlockPageAnnotation_returnsPageType() {
         val routeType = RouteAnnotationUtil.detectRouteType(TestPageRoute::class)
         
-        assertThat(routeType).isEqualTo(RouteType.PAGE)
+        assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE)
     }
     
     @Test
-    fun detectRouteType_apiAnnotation_returnsApiType() {
+    fun detectRouteType_webBlockApiAnnotation_returnsApiType() {
         val routeType = RouteAnnotationUtil.detectRouteType(TestApiRoute::class)
         
-        assertThat(routeType).isEqualTo(RouteType.API)
+        assertThat(routeType).isEqualTo(RouteTypeEnum.API)
     }
     
     @Test
-    fun detectRouteType_pageApiAnnotation_returnsPageApiType() {
+    fun detectRouteType_webBlockPageApiAnnotation_returnsPageApiType() {
         val routeType = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
         
-        assertThat(routeType).isEqualTo(RouteType.PAGE_API)
+        assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE_API)
     }
     
     @Test
-    fun detectRouteType_noAnnotation_returnsNull() {
+    fun detectRouteType_noAnnotation_returnsUnknown() {
         val routeType = RouteAnnotationUtil.detectRouteType(TestNoAnnotationRoute::class)
         
-        assertThat(routeType).isNull()
+        assertThat(routeType).isEqualTo(RouteTypeEnum.UNKNOWN)
     }
     
     @Test
-    fun detectRouteType_multipleAnnotations_throwsException() {
+    fun detectRouteType_multipleAnnotations_throwsIllegalArgumentException() {
         assertThatThrownBy { 
             RouteAnnotationUtil.detectRouteType(TestMultipleAnnotationsRoute::class)
         }.isInstanceOf(IllegalArgumentException::class.java)
@@ -197,13 +197,13 @@ class RouteAnnotationUtilTest {
     }
     
     @Test
-    fun validateRouteAnnotation_validAnnotation_doesNotThrow() {
+    fun validateRouteAnnotation_validWebBlockPageAnnotation_doesNotThrow() {
         // Should not throw any exception
         RouteAnnotationUtil.validateRouteAnnotation(TestPageRoute::class)
     }
     
     @Test
-    fun validateRouteAnnotation_noAnnotation_throwsException() {
+    fun validateRouteAnnotation_noAnnotation_throwsIllegalArgumentException() {
         assertThatThrownBy { 
             RouteAnnotationUtil.validateRouteAnnotation(TestNoAnnotationRoute::class)
         }.isInstanceOf(IllegalArgumentException::class.java)
@@ -334,7 +334,7 @@ class AnnotationResponseProcessorTest {
     private val processor = AnnotationResponseProcessor()
     
     @Test
-    fun processResponse_pageRoute_setsHtmlContentType() {
+    fun processResponse_pageRouteWithHtmlResponse_setsHtmlContentType() {
         val response = html("test content")
         val processed = processor.processResponse(response, TestPageRoute::class)
         
@@ -342,7 +342,7 @@ class AnnotationResponseProcessorTest {
     }
     
     @Test
-    fun processResponse_apiRoute_setsJsonContentType() {
+    fun processResponse_apiRouteWithJsonResponse_setsJsonContentType() {
         val response = json("test data")
         val processed = processor.processResponse(response, TestApiRoute::class)
         
@@ -350,7 +350,7 @@ class AnnotationResponseProcessorTest {
     }
     
     @Test
-    fun processResponse_preservesCustomHeaders() {
+    fun processResponse_responseWithCustomHeaders_preservesCustomHeaders() {
         val customHeaders = mapOf("X-Custom" to "value")
         val response = HtmlResponse("test", headers = customHeaders)
         val processed = processor.processResponse(response, TestPageRoute::class)
@@ -360,7 +360,7 @@ class AnnotationResponseProcessorTest {
     }
     
     @Test
-    fun processResponse_preservesStatusCode() {
+    fun processResponse_responseWithCustomStatus_preservesStatusCode() {
         val response = HtmlResponse("test", status = 201)
         val processed = processor.processResponse(response, TestPageRoute::class)
         
@@ -368,7 +368,7 @@ class AnnotationResponseProcessorTest {
     }
     
     @Test
-    fun processResponse_wrongResponseType_throwsException() {
+    fun processResponse_wrongResponseType_throwsIllegalArgumentException() {
         val response = json("test")
         
         assertThatThrownBy { 
@@ -378,7 +378,7 @@ class AnnotationResponseProcessorTest {
     }
     
     @Test
-    fun processResponse_noAnnotation_throwsException() {
+    fun processResponse_noAnnotation_throwsIllegalArgumentException() {
         val response = html("test")
         
         assertThatThrownBy { 

@@ -39,12 +39,10 @@ package io.schinzel.web_blocks.web.routes.annotations
  * - snake_case directories become kebab-case URLs
  * 
  * Example:
- * ```kotlin
  * @WebBlockPage
  * class ThePage : WebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
  * }
- * ```
  * 
  * Written by Claude Sonnet 4
  */
@@ -71,12 +69,10 @@ package io.schinzel.web_blocks.web.routes.annotations
  * - PascalCase class names become kebab-case, "Route" suffix removed
  * 
  * Example:
- * ```kotlin
  * @WebBlockApi
  * class UserPets : WebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
  * }
- * ```
  * 
  * Written by Claude Sonnet 4
  */
@@ -104,12 +100,10 @@ package io.schinzel.web_blocks.web.routes.annotations
  * - PascalCase class names become kebab-case, "Route" suffix removed
  * 
  * Example:
- * ```kotlin
  * @WebBlockPageApi
  * class SaveNameRoute : WebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
  * }
- * ```
  * 
  * Written by Claude Sonnet 4
  */

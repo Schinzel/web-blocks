@@ -6,20 +6,20 @@
 **Overview**: [annotation-implementation-overview.md](annotation-implementation-overview.md)
 
 ## Objective
-Update the route discovery system to work with annotation-based route identification while maintaining the existing file-system based path generation and supporting both old and new route systems during transition.
+Replace the interface-based route discovery system with annotation-based route identification while maintaining the existing file-system based path generation. This creates a simpler, cleaner system without the complexity of supporting dual systems.
 
 ## Background
-The current route discovery system uses reflection to find classes implementing `IPageRoute`, `IApiRoute`, and `IPageApiRoute`. The new system needs to:
+The current route discovery system uses reflection to find classes implementing `IPageRoute`, `IApiRoute`, and `IPageApiRoute`. The new system will:
 1. Find classes annotated with `@WebBlockPage`, `@WebBlockApi`, `@WebBlockPageApi`
 2. Validate that annotated classes implement `WebBlockRoute`
 3. Maintain existing path generation logic
-4. Support both old and new systems during migration
+4. Completely replace the old interface-based system
 
 ## Current System Analysis
-- **`RouteDescriptorRegistry`**: Stores route descriptors mapped to interface types
-- **`FindRoutes`**: Scans for classes implementing route interfaces
-- **Route Descriptors**: `PageRouteDescriptor`, `ApiRouteDescriptor`, `PageApiRouteDescriptor`
-- **Path Generation**: Uses file system structure with snake_case → kebab-case conversion
+- **`RouteDescriptorRegistry`**: Currently stores route descriptors mapped to interface types - will be simplified
+- **`FindRoutes`**: Currently scans for classes implementing route interfaces - will be updated for annotations
+- **Route Descriptors**: Current `PageRouteDescriptor`, `ApiRouteDescriptor`, `PageApiRouteDescriptor` will be replaced
+- **Path Generation**: Uses file system structure with snake_case → kebab-case conversion - will be preserved
 
 ## Implementation Requirements
 
@@ -51,7 +51,7 @@ class WebBlockPageRouteDescriptor(
         RouteAnnotationUtil.validateRouteAnnotation(clazz)
         
         // Ensure class has @WebBlockPage annotation
-        if (RouteAnnotationUtil.detectRouteType(clazz) != RouteType.PAGE) {
+        if (RouteAnnotationUtil.detectRouteType(clazz) != RouteTypeEnum.PAGE) {
             throw IllegalArgumentException(
                 "Class ${clazz.simpleName} is not annotated with @WebBlockPage"
             )
@@ -101,7 +101,7 @@ class WebBlockApiRouteDescriptor(
         RouteAnnotationUtil.validateRouteAnnotation(clazz)
         
         // Ensure class has @WebBlockApi annotation
-        if (RouteAnnotationUtil.detectRouteType(clazz) != RouteType.API) {
+        if (RouteAnnotationUtil.detectRouteType(clazz) != RouteTypeEnum.API) {
             throw IllegalArgumentException(
                 "Class ${clazz.simpleName} is not annotated with @WebBlockApi"
             )
@@ -142,7 +142,7 @@ class WebBlockPageApiRouteDescriptor(
         RouteAnnotationUtil.validateRouteAnnotation(clazz)
         
         // Ensure class has @WebBlockPageApi annotation
-        if (RouteAnnotationUtil.detectRouteType(clazz) != RouteType.PAGE_API) {
+        if (RouteAnnotationUtil.detectRouteType(clazz) != RouteTypeEnum.PAGE_API) {
             throw IllegalArgumentException(
                 "Class ${clazz.simpleName} is not annotated with @WebBlockPageApi"
             )
@@ -168,67 +168,43 @@ package io.schinzel.web_blocks.web.routes
 import kotlin.reflect.KClass
 
 /**
- * The purpose of this class is to store and manage route descriptors for both
- * interface-based and annotation-based route discovery systems.
+ * The purpose of this class is to store and manage route descriptors for
+ * annotation-based route discovery system.
  * 
- * Updated to support both legacy interfaces and new annotation-based routes
- * during the migration period.
+ * Simplified to support only the new annotation-based routes.
  * 
  * Written by Claude Sonnet 4
  */
 object RouteDescriptorRegistry {
-    private val interfaceDescriptors = 
-        mutableMapOf<KClass<out IRoute>, IRouteDescriptor<out IRoute>>()
-    
     private val annotationDescriptors = 
-        mutableMapOf<RouteType, IRouteDescriptor<WebBlockRoute>>()
+        mutableMapOf<RouteTypeEnum, IRouteDescriptor<WebBlockRoute>>()
 
     /**
-     * Register a descriptor for interface-based routes (legacy system)
-     */
-    fun <T : IRoute> registerInterface(
-        processorType: KClass<T>,
-        descriptor: IRouteDescriptor<T>
-    ) {
-        interfaceDescriptors[processorType] = descriptor
-    }
-    
-    /**
-     * Register a descriptor for annotation-based routes (new system)
+     * Register a descriptor for annotation-based routes
      */
     fun registerAnnotation(
-        routeType: RouteType,
+        routeType: RouteTypeEnum,
         descriptor: IRouteDescriptor<WebBlockRoute>
     ) {
         annotationDescriptors[routeType] = descriptor
     }
 
     /**
-     * Get route descriptor for any route class (interface or annotation based)
+     * Get route descriptor for annotation-based route class
      */
     @Suppress("UNCHECKED_CAST")
-    fun getRouteDescriptor(clazz: KClass<out IRoute>): IRouteDescriptor<IRoute> {
-        // First try annotation-based system
-        if (WebBlockRoute::class.java.isAssignableFrom(clazz.java)) {
-            val webBlockRouteClass = clazz as KClass<out WebBlockRoute>
-            val routeType = RouteAnnotationUtil.detectRouteType(webBlockRouteClass)
-            
-            if (routeType != null) {
-                return annotationDescriptors[routeType] as? IRouteDescriptor<IRoute>
-                    ?: throw IllegalArgumentException(
-                        "No annotation-based descriptor registered for route type $routeType"
-                    )
-            }
+    fun getRouteDescriptor(clazz: KClass<out WebBlockRoute>): IRouteDescriptor<WebBlockRoute> {
+        val routeType = RouteAnnotationUtil.detectRouteType(clazz)
+        
+        if (routeType == RouteTypeEnum.UNKNOWN) {
+            throw IllegalArgumentException(
+                "Route class ${clazz.simpleName} has no WebBlock annotation"
+            )
         }
         
-        // Fall back to interface-based system
-        return interfaceDescriptors.entries
-            .find { (interfaceType, _) ->
-                interfaceType.java.isAssignableFrom(clazz.java)
-            }
-            ?.value as? IRouteDescriptor<IRoute>
+        return annotationDescriptors[routeType]
             ?: throw IllegalArgumentException(
-                "No route descriptor registered for ${clazz.simpleName}"
+                "No descriptor registered for route type $routeType"
             )
     }
 }
@@ -246,11 +222,10 @@ import org.reflections.Reflections
 import kotlin.reflect.KClass
 
 /**
- * The purpose of this class is to discover and register both interface-based
- * and annotation-based routes in the WebBlocks framework.
+ * The purpose of this class is to discover and register annotation-based routes
+ * in the WebBlocks framework.
  * 
- * Updated to support both legacy interfaces and new annotation-based routes
- * during the migration period.
+ * Simplified to support only the new annotation-based system.
  * 
  * Written by Claude Sonnet 4
  */
@@ -259,47 +234,20 @@ class FindRoutes(private val endpointPackage: String) {
     private val reflections = Reflections(endpointPackage)
     
     /**
-     * Discover and register all routes (both interface and annotation based)
+     * Discover and register all annotation-based routes
      */
     fun registerRoutes() {
-        registerInterfaceBasedRoutes()
-        registerAnnotationBasedRoutes()
-    }
-    
-    /**
-     * Register legacy interface-based routes
-     */
-    private fun registerInterfaceBasedRoutes() {
-        // Register descriptors for legacy interfaces
-        RouteDescriptorRegistry.registerInterface(
-            IPageRoute::class,
-            PageRouteDescriptor(endpointPackage)
-        )
-        RouteDescriptorRegistry.registerInterface(
-            IApiRoute::class,
-            ApiRouteDescriptor(endpointPackage)
-        )
-        RouteDescriptorRegistry.registerInterface(
-            IPageApiRoute::class,
-            PageApiRouteDescriptor(endpointPackage)
-        )
-    }
-    
-    /**
-     * Register new annotation-based routes
-     */
-    private fun registerAnnotationBasedRoutes() {
         // Register descriptors for annotation-based routes
         RouteDescriptorRegistry.registerAnnotation(
-            RouteType.PAGE,
+            RouteTypeEnum.PAGE,
             WebBlockPageRouteDescriptor(endpointPackage)
         )
         RouteDescriptorRegistry.registerAnnotation(
-            RouteType.API,
+            RouteTypeEnum.API,
             WebBlockApiRouteDescriptor(endpointPackage)
         )
         RouteDescriptorRegistry.registerAnnotation(
-            RouteType.PAGE_API,
+            RouteTypeEnum.PAGE_API,
             WebBlockPageApiRouteDescriptor(endpointPackage)
         )
     }
@@ -340,33 +288,6 @@ class FindRoutes(private val endpointPackage: String) {
                 }
             }
     }
-    
-    /**
-     * Get all legacy interface-based route classes
-     */
-    fun getInterfaceBasedRoutes(): List<KClass<out IRoute>> {
-        val routes = mutableListOf<KClass<out IRoute>>()
-        
-        routes.addAll(getSubtypesOf<IPageRoute>())
-        routes.addAll(getSubtypesOf<IApiRoute>())
-        routes.addAll(getSubtypesOf<IPageApiRoute>())
-        
-        return routes
-    }
-    
-    /**
-     * Get subtypes of a specific interface
-     */
-    private inline fun <reified T : IRoute> getSubtypesOf(): List<KClass<out T>> {
-        return reflections.getSubTypesOf(T::class.java)
-            .filter { clazz ->
-                !clazz.isInterface && !clazz.isAbstract
-            }
-            .map { clazz ->
-                @Suppress("UNCHECKED_CAST")
-                clazz.kotlin as KClass<out T>
-            }
-    }
 }
 ```
 
@@ -376,16 +297,17 @@ src/main/kotlin/io/schinzel/web_blocks/web/routes/
 ├── WebBlockPageRouteDescriptor.kt
 ├── WebBlockApiRouteDescriptor.kt
 ├── WebBlockPageApiRouteDescriptor.kt
-├── RouteDescriptorRegistry.kt (updated)
-└── FindRoutes.kt (updated)
+├── RouteDescriptorRegistry.kt (simplified)
+└── FindRoutes.kt (simplified)
 ```
 
 ## Acceptance Criteria
 - [ ] Three new route descriptors created for annotation-based routes
-- [ ] `RouteDescriptorRegistry` updated to support both interface and annotation-based routes
-- [ ] `FindRoutes` updated to discover annotation-based routes
+- [ ] `RouteDescriptorRegistry` simplified to support only annotation-based routes
+- [ ] `FindRoutes` simplified to discover only annotation-based routes
 - [ ] Validation ensures annotated classes implement `WebBlockRoute`
 - [ ] Path generation logic preserved from existing descriptors
+- [ ] Old interface-based system completely removed
 - [ ] All code follows WebBlocks coding standards
 - [ ] Classes are under 250 lines each
 - [ ] Functions are under 10 lines each
@@ -396,34 +318,34 @@ src/main/kotlin/io/schinzel/web_blocks/web/routes/
 - [ ] Tests for path generation with annotation-based routes
 - [ ] Tests for route validation (annotation present, implements interface)
 - [ ] Tests for error cases (missing annotation, wrong annotation type)
-- [ ] Tests for `RouteDescriptorRegistry` with both systems
+- [ ] Tests for simplified `RouteDescriptorRegistry`
 - [ ] Tests for `FindRoutes` discovering annotation-based routes
-- [ ] Integration tests ensuring both systems work together
+- [ ] Integration tests ensuring annotation system works correctly
 
 ## Migration Strategy
-1. **Phase 1**: Create new descriptors alongside existing ones
-2. **Phase 2**: Update registry to support both systems
-3. **Phase 3**: Update discovery to find both route types
-4. **Phase 4**: Migrate routes one by one from interface to annotation
-5. **Phase 5**: Deprecate interface-based system once migration complete
+1. **Phase 1**: Create new descriptors to replace existing ones
+2. **Phase 2**: Update registry to support only annotation-based routes
+3. **Phase 3**: Update discovery to find only annotation-based routes
+4. **Phase 4**: Convert all existing routes from interface to annotation in one focused effort
+5. **Phase 5**: Remove old interface-based system completely
 
 ## Integration Points
 - **Phase 1**: Uses annotations created in Phase 1
 - **Phase 2**: Uses `WebBlockRoute` interface and `RouteAnnotationUtil`
 - **Phase 4**: Response processing will use new descriptors
-- **Phase 5**: Sample migration will use this discovery system
+- **Phase 5**: Route conversion will migrate all existing routes at once
 
 ## Error Handling
 - Validation ensures annotated classes implement `WebBlockRoute`
 - Clear error messages for missing or incorrect annotations
-- Graceful fallback to interface-based system during migration
 - Proper exception handling for reflection operations
+- Fail-fast approach when annotations are missing or invalid
 
 ## Performance Considerations
 - Route discovery happens at startup, not runtime
 - Caching of discovered routes to avoid repeated reflection
 - Efficient annotation detection using reflection API
-- Minimal overhead for existing interface-based routes
+- Improved startup time with single discovery mechanism
 
 ## JVM Language Compatibility
 - Reflection works identically across all JVM languages
@@ -444,10 +366,11 @@ src/main/kotlin/io/schinzel/web_blocks/web/routes/
 - **Phase 2**: Requires `WebBlockRoute` interface and utilities
 - **Existing**: Uses `RouteUtil`, `IRouteDescriptor`, `ReturnTypeEnum`
 - **Reflection**: Uses Reflections library for class scanning
+- **Migration**: Requires conversion of all existing routes
 
 ## Notes
-- Dual system support allows gradual migration
+- Simplified single-system approach reduces complexity
 - Annotation validation ensures proper usage
 - Path generation logic preserved from existing system
-- Clear separation between interface and annotation-based discovery
+- Clean, focused implementation with no legacy baggage
 - Error handling provides clear guidance for developers
