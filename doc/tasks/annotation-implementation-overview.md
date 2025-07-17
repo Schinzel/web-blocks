@@ -8,6 +8,8 @@ Transform the web-blocks framework from interface-based routing to annotation-ba
 - **Response System**: Maintain existing `WebBlockResponse` with `HtmlResponse`/`JsonResponse` (not raw strings)
 - **Interface Unification**: Single `WebBlockRoute` interface instead of three separate interfaces
 - **Path Generation**: Annotations mark type only, paths still come from file/directory structure
+- **Path Collision Prevention**: `@WebBlockPageApi` uses `/page-api/` prefix to avoid conflicts with `/api/` routes
+- **Block Architecture**: Pages contain blocks (components), some blocks need API endpoints for operations
 - **Backward Compatibility**: Support migration from existing interface-based approach
 
 ## Task Status and Navigation
@@ -50,6 +52,12 @@ class ThePage : WebBlockRoute {
 class UserPets : WebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
 }
+
+// In /pages/user_profile/SaveNameRoute.kt - Block API for name update form
+@WebBlockPageApi
+class SaveNameRoute : WebBlockRoute {
+    override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
+}
 ```
 
 ## Benefits of This Approach
@@ -59,4 +67,7 @@ class UserPets : WebBlockRoute {
 
 ### Annotation System Benefits
 1. **Future Extensibility**: Enables future annotation parameters like `@WebBlockPage(cacheable = true)`
+2. **Clear Route Types**: Distinguishes between pages, standalone APIs, and block APIs
+3. **Path Collision Prevention**: Separate namespaces prevent conflicts between API types
+4. **Block Architecture**: Supports component-based page development with block-specific APIs
 
