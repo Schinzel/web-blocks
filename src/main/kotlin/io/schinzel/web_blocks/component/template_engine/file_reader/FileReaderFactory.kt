@@ -8,24 +8,24 @@ package io.schinzel.web_blocks.component.template_engine.file_reader
  * a [SourceFileReader] is created.
  */
 object FileReaderFactory {
-
     /**
      * Creates a file reader.
      * @param caller The class that is calling this method.
      * @return A file reader.
      */
-    fun create(caller: Any): IFileReader = when {
-        isRunningFromJar() -> JarFileReader(caller)
-        else -> SourceFileReader(caller)
-    }
-
-
+    fun create(caller: Any): IFileReader =
+        when {
+            isRunningFromJar() -> JarFileReader(caller)
+            else -> SourceFileReader(caller)
+        }
 
     /**
      * @return True if the caller is running from a jar file.
      */
     private fun isRunningFromJar(): Boolean {
-        val location = this::class.java.protectionDomain.codeSource.location.toString()
+        val location =
+            this::class.java.protectionDomain.codeSource.location
+                .toString()
         return location.endsWith(".jar")
     }
 }

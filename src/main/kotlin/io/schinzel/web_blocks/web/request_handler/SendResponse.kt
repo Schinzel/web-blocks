@@ -17,27 +17,28 @@ suspend fun sendResponse(
     route: IRoute,
     logEntry: LogEntry,
     returnType: ReturnTypeEnum,
-    prettyFormatHtml: Boolean
+    prettyFormatHtml: Boolean,
 ) {
     // Get the WebBlockResponse from the route
     val response: WebBlockResponse = route.getResponse()
-    
+
     // Set custom headers if provided
     response.headers.forEach { (key, value) ->
         ctx.header(key, value)
     }
-    
+
     // Set status code
     ctx.status(response.status)
-    
+
     // Send response based on type
     when (response) {
         is HtmlResponse -> {
-            val formattedHtml = if (prettyFormatHtml) {
-                prettyFormatHtml(response.content)
-            } else {
-                response.content
-            }
+            val formattedHtml =
+                if (prettyFormatHtml) {
+                    prettyFormatHtml(response.content)
+                } else {
+                    response.content
+                }
             ctx.html(formattedHtml)
         }
 
@@ -51,7 +52,8 @@ suspend fun sendResponse(
 
 private fun prettyFormatHtml(htmlString: String): String {
     val document = Jsoup.parse(htmlString)
-    document.outputSettings()
+    document
+        .outputSettings()
         .prettyPrint(true)
         .indentAmount(2)
     return document.outerHtml()

@@ -19,7 +19,7 @@ sealed interface WebBlockResponse {
 data class HtmlResponse(
     val content: String,
     override val status: Int = 200,
-    override val headers: Map<String, String> = emptyMap()
+    override val headers: Map<String, String> = emptyMap(),
 ) : WebBlockResponse {
     companion object {
         /**
@@ -39,7 +39,7 @@ data class HtmlResponse(
 data class JsonResponse(
     val data: Any,
     override val status: Int = 200,
-    override val headers: Map<String, String> = emptyMap()
+    override val headers: Map<String, String> = emptyMap(),
 ) : WebBlockResponse {
     companion object {
         /**

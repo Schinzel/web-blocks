@@ -12,18 +12,17 @@ abstract class AbstractWebApp {
     open val printStartupMessages: Boolean = true
     open val environment: Environment = Environment.DEVELOPMENT
 
-
-
     fun start() {
-        val webAppConfig = WebAppConfig(
-            webRootClass = this,
-            port = port,
-            logger = logger,
-            localTimezone = localTimezone,
-            prettyFormatHtml = prettyFormatHtml,
-            printStartupMessages = printStartupMessages,
-            environment = environment,
-        )
+        val webAppConfig =
+            WebAppConfig(
+                webRootClass = this,
+                port = port,
+                logger = logger,
+                localTimezone = localTimezone,
+                prettyFormatHtml = prettyFormatHtml,
+                printStartupMessages = printStartupMessages,
+                environment = environment,
+            )
         InitWebApp(webAppConfig)
     }
 }

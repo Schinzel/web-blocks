@@ -1,18 +1,18 @@
 package io.schinzel.web_blocks.web.set_up_routes
 
-import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
+import io.schinzel.web_blocks.web.routes.IRoute
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 import org.reflections.util.ConfigurationBuilder
 
-
 fun findRoutes(webRootPackage: String): List<RouteMapping> {
-    val reflections = Reflections(
-        ConfigurationBuilder()
-            .forPackage(webRootPackage)
-            .setScanners(Scanners.SubTypes)
-    )
+    val reflections =
+        Reflections(
+            ConfigurationBuilder()
+                .forPackage(webRootPackage)
+                .setScanners(Scanners.SubTypes),
+        )
 
     return reflections
         .getSubTypesOf(IRoute::class.java)
@@ -20,10 +20,7 @@ fun findRoutes(webRootPackage: String): List<RouteMapping> {
         // Reflections will scan all classes in the classpath by default.
         .filter { clazz ->
             clazz.packageName.startsWith(webRootPackage) && !clazz.isInterface
-        }
-        .map {
+        }.map {
             RouteMapping(it.kotlin)
-        }
-        .toList()
+        }.toList()
 }
-

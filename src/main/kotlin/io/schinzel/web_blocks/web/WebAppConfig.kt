@@ -21,27 +21,30 @@ data class WebAppConfig(
     val localTimezone: String = "Europe/Stockholm",
     val prettyFormatHtml: Boolean = true,
     val printStartupMessages: Boolean = true,
-    val environment: Environment = Environment.DEVELOPMENT
+    val environment: Environment = Environment.DEVELOPMENT,
 ) {
     val webRootPackage: String = webRootClass::class.java.packageName
 
     init {
-        Thrower.throwIfFalse(port in 1..65535)
+        Thrower
+            .throwIfFalse(port in 1..65535)
             .message("Incorrect port '$port'. Port must be between 1 and 65535.")
-        Thrower.throwIfFalse(isValidTimezone(localTimezone))
+        Thrower
+            .throwIfFalse(isValidTimezone(localTimezone))
             .message("'$localTimezone' is not a valid timezone")
-        Thrower.throwIfFalse(isValidPackage(webRootPackage))
+        Thrower
+            .throwIfFalse(isValidPackage(webRootPackage))
             .message("'$webRootPackage' is not a valid package")
     }
 
     companion object {
         fun isValidPackage(packageName: String): Boolean {
             val path = packageName.replace('.', '/')
-            return ClassLoader.getSystemClassLoader()
+            return ClassLoader
+                .getSystemClassLoader()
                 .getResources(path)
                 .hasMoreElements()
         }
-
 
         private fun isValidTimezone(timezone: String): Boolean =
             try {

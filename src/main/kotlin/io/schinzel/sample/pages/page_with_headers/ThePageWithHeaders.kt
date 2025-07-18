@@ -12,9 +12,11 @@ import io.schinzel.web_blocks.web.routes.IPageRoute
  */
 @Suppress("unused")
 class ThePageWithHeaders : IPageRoute {
-    override suspend fun getResponse(): WebBlockResponse {
-        return HtmlResponse.builder()
-            .setContent("""
+    override suspend fun getResponse(): WebBlockResponse =
+        HtmlResponse
+            .builder()
+            .setContent(
+                """
                 |<!DOCTYPE html>
                 |<html lang="en">
                 |<head>
@@ -33,11 +35,10 @@ class ThePageWithHeaders : IPageRoute {
                 |    </ul>
                 |</body>
                 |</html>
-            """.trimMargin())
-            .setStatus(200)
+                """.trimMargin(),
+            ).setStatus(200)
             .addHeader("X-Page-Type", "advanced")
             .addHeader("Cache-Control", "no-cache")
             .addHeader("X-Framework", "web-blocks")
             .build()
-    }
 }

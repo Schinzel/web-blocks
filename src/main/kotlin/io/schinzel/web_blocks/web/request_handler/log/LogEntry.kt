@@ -35,23 +35,25 @@ data class ResponseLog(
 )
 
 @Suppress("unused")
-class ErrorLog(e: Exception) {
+class ErrorLog(
+    e: Exception,
+) {
     // A unique id for this error
     val errorId: String = RandomUtil.getRandomString(12)
     val errorMessage: String = e.message ?: ""
-    val stackTrace: List<String> = e.stackTraceToString()
-        .split("\n")
-        .take(5)
-        .map { it.replace("\t", "") }
+    val stackTrace: List<String> =
+        e
+            .stackTraceToString()
+            .split("\n")
+            .take(5)
+            .map { it.replace("\t", "") }
 }
-
 
 object TimeProvider {
     fun nowUtc(): String = now("UTC")
 
-    fun now(timeZone: String): String {
-        return LocalDateTime
+    fun now(timeZone: String): String =
+        LocalDateTime
             .now(ZoneId.of(timeZone))
             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-    }
 }

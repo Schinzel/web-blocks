@@ -9,7 +9,7 @@ import io.schinzel.web_blocks.web.Environment
  */
 class ErrorPage(
     private val webRootClass: Any,
-    private val environment: Environment
+    private val environment: Environment,
 ) {
     private val data: MutableMap<String, String> = mutableMapOf()
 
@@ -18,15 +18,19 @@ class ErrorPage(
         this.addData("environment", environment.getEnvironmentName())
     }
 
-    fun addData(key: String, value: String): ErrorPage {
+    fun addData(
+        key: String,
+        value: String,
+    ): ErrorPage {
         data[key] = value
         return this
     }
 
     fun getErrorPage(errorCode: Int): String {
-        val fileName = getFileName(webRootClass, environment, errorCode)
-        // If no error page is found, return default error page
-            ?: return getDefaultErrorPage(errorCode)
+        val fileName =
+            getFileName(webRootClass, environment, errorCode)
+                // If no error page is found, return default error page
+                ?: return getDefaultErrorPage(errorCode)
         return TemplateProcessor(webRootClass)
             .addDataSet(data)
             .addData("errorCode", errorCode)
@@ -36,12 +40,11 @@ class ErrorPage(
     /**
      * @return The default error page.
      */
-    private fun getDefaultErrorPage(errorCode: Int): String {
-        return TemplateProcessor(this)
+    private fun getDefaultErrorPage(errorCode: Int): String =
+        TemplateProcessor(this)
             .addDataSet(data)
             .addData("errorCode", errorCode)
             .processTemplate("default_error_page.html")
-    }
 
     companion object {
         /**
@@ -54,7 +57,7 @@ class ErrorPage(
         fun getFileName(
             webRootClass: Any,
             environment: Environment,
-            errorCode: Int
+            errorCode: Int,
         ): String? {
             val fileReader = FileReaderFactory.create(webRootClass)
             // If environment is not development

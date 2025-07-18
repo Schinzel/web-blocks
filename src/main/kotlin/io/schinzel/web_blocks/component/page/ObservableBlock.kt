@@ -23,7 +23,9 @@ import kotlin.reflect.full.primaryConstructor
  * Each block implements the function getResponse() which returns
  * the HTML and JavaScript of the block.
  */
-abstract class ObservableBlock : IPageApiRoute, IBlock {
+abstract class ObservableBlock :
+    IPageApiRoute,
+    IBlock {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<ObservableBlock> = mutableListOf()
 
@@ -42,33 +44,35 @@ abstract class ObservableBlock : IPageApiRoute, IBlock {
     override suspend fun getHtml(): String {
         // Get the HTML of the block
         val response = this.getResponse()
-        val blockHtml = when (response) {
-            is HtmlResponse -> response.content
-            is JsonResponse -> {
-                // For blocks that return JSON, convert to string
-                response.data.toString()
+        val blockHtml =
+            when (response) {
+                is HtmlResponse -> response.content
+                is JsonResponse -> {
+                    // For blocks that return JSON, convert to string
+                    response.data.toString()
+                }
             }
-        }
         // Get the id of the observers
         val observersIdsAsString: String = observers.joinToString(",") { it.guid }
         // Get the path of the block
         val blockEndpointPath = this.getPath()
         // Get the arguments of the block (i.e. parameters with values)
-        val constructorArguments = JsonMapper.noIndentMapper
-            .writeValueAsString(this.getConstructorArguments())
-            .replace("\"", "&quot;")
+        val constructorArguments =
+            JsonMapper.noIndentMapper
+                .writeValueAsString(this.getConstructorArguments())
+                .replace("\"", "&quot;")
         return "<div id=\"$guid\" " +
-                // Mark the div as a block so that all blocks on the page are easily found
-                "data-block " +
-                // Add the ids of the observers of this block
-                "data-observer-ids=\"$observersIdsAsString\" " +
-                // The path to the endpoint of this block
-                "data-path=\"$blockEndpointPath\" " +
-                // The constructor arguments of this block
-                "data-arguments=\"$constructorArguments\"" +
-                ">\n" +
-                blockHtml +
-                "</div>"
+            // Mark the div as a block so that all blocks on the page are easily found
+            "data-block " +
+            // Add the ids of the observers of this block
+            "data-observer-ids=\"$observersIdsAsString\" " +
+            // The path to the endpoint of this block
+            "data-path=\"$blockEndpointPath\" " +
+            // The constructor arguments of this block
+            "data-arguments=\"$constructorArguments\"" +
+            ">\n" +
+            blockHtml +
+            "</div>"
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -78,16 +82,20 @@ abstract class ObservableBlock : IPageApiRoute, IBlock {
         // Get the names of the constructor parameters
         val constructorParamNames = constructorParams.map { it.name }.toSet()
         // Get the values of the constructor parameters
-        return this::class.memberProperties
+        return this::class
+            .memberProperties
             // Filter out the properties that are not constructor parameters
             .filter { it.name in constructorParamNames }
             .associate { prop ->
                 val property = prop as KProperty1<ObservableBlock, *>
                 // Convert the parameter name to kebab case
-                val parameterNameInKebabCase = StandardTextCases.SOFT_CAMEL_CASE
-                    .convertTo(StandardTextCases.KEBAB_CASE, prop.name)
-                parameterNameInKebabCase to (property.get(this)
-                    ?: throw IllegalStateException("Property ${prop.name} is null"))
+                val parameterNameInKebabCase =
+                    StandardTextCases.SOFT_CAMEL_CASE
+                        .convertTo(StandardTextCases.KEBAB_CASE, prop.name)
+                parameterNameInKebabCase to (
+                    property.get(this)
+                        ?: throw IllegalStateException("Property ${prop.name} is null")
+                )
             }
     }
 }

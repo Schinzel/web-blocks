@@ -1,13 +1,14 @@
 package io.schinzel.web_blocks.web.test_routes.pages.page_in_dirs.my_sub_dir_1.my_sub_dir_2
 
-import io.schinzel.web_blocks.web.routes.IPageRoute
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
+import io.schinzel.web_blocks.web.routes.IPageRoute
 
 @Suppress("unused")
 class MySimplePage : IPageRoute {
-    override suspend fun getResponse(): WebBlockResponse {
-        return html("""
+    override suspend fun getResponse(): WebBlockResponse =
+        html(
+            """
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -18,6 +19,6 @@ class MySimplePage : IPageRoute {
                <h1>Hello sub dir world!</h1>
             </body>
             </html>
-        """.trimIndent())
-    }
+            """.trimIndent(),
+        )
 }

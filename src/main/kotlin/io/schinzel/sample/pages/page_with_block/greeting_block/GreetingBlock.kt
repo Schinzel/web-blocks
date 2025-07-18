@@ -6,14 +6,14 @@ import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
 
 class GreetingBlock : ObservableBlock() {
-    override suspend fun getResponse(): WebBlockResponse {
-        return html(TemplateProcessor(this)
-            // Set that variable firstName is Pelle
-            .addData("firstName", "Pelle")
-            // Read the file template file and return HTML
-            .processTemplate("GreetingBlock.html"))
-    }
-
+    override suspend fun getResponse(): WebBlockResponse =
+        html(
+            TemplateProcessor(this)
+                // Set that variable firstName is Pelle
+                .addData("firstName", "Pelle")
+                // Read the file template file and return HTML
+                .processTemplate("GreetingBlock.html"),
+        )
 }
 
 // Removed main function that calls getHtml() synchronously

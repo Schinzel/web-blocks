@@ -8,11 +8,8 @@ import io.schinzel.web_blocks.web.response.WebBlockResponse
 interface IRoute {
     suspend fun getResponse(): WebBlockResponse
 
-    fun getPath(): String {
-        return RouteDescriptorRegistry
+    fun getPath(): String =
+        RouteDescriptorRegistry
             .getRouteDescriptor(this::class)
             .getRoutePath(this::class)
-    }
 }
-
-

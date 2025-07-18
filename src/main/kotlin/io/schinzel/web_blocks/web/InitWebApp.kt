@@ -3,7 +3,13 @@ package io.schinzel.web_blocks.web
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web_blocks.web.request_handler.setUpErrorHandling
-import io.schinzel.web_blocks.web.routes.*
+import io.schinzel.web_blocks.web.routes.ApiRouteDescriptor
+import io.schinzel.web_blocks.web.routes.IApiRoute
+import io.schinzel.web_blocks.web.routes.IPageApiRoute
+import io.schinzel.web_blocks.web.routes.IPageRoute
+import io.schinzel.web_blocks.web.routes.PageApiRouteDescriptor
+import io.schinzel.web_blocks.web.routes.PageRouteDescriptor
+import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
@@ -12,12 +18,12 @@ import java.net.ServerSocket
  * The purpose of this class is to initialize the web app.
  */
 class InitWebApp(
-    webAppConfig: WebAppConfig
+    webAppConfig: WebAppConfig,
 ) {
-
     init {
         val port = webAppConfig.port
-        Thrower.throwIfFalse(isPortAvailable(port))
+        Thrower
+            .throwIfFalse(isPortAvailable(port))
             .message("Port $port is not available")
 
         initializeRouteDescriptorRegistry(webAppConfig.webRootPackage)
@@ -30,9 +36,7 @@ class InitWebApp(
         }
     }
 
-
     companion object {
-
         private fun isPortAvailable(port: Int): Boolean =
             try {
                 ServerSocket(port).use { true }

@@ -2,7 +2,6 @@ package io.schinzel.web_blocks.web.routes
 
 import kotlin.reflect.KClass
 
-
 /**
  * The purpose of this class is to store route generators.
  *
@@ -14,20 +13,16 @@ object RouteDescriptorRegistry {
 
     fun <T : IRoute> register(
         processorType: KClass<T>,
-        generator: IRouteDescriptor<T>
+        generator: IRouteDescriptor<T>,
     ) {
         generators[processorType] = generator
     }
 
-
     @Suppress("UNCHECKED_CAST")
-    fun getRouteDescriptor(clazz: KClass<out IRoute>): IRouteDescriptor<IRoute> {
-        return generators.entries
+    fun getRouteDescriptor(clazz: KClass<out IRoute>): IRouteDescriptor<IRoute> =
+        generators.entries
             .find { (interfaceType, _) ->
                 interfaceType.java.isAssignableFrom(clazz.java)
-            }
-            ?.value as? IRouteDescriptor<IRoute>
+            }?.value as? IRouteDescriptor<IRoute>
             ?: throw IllegalArgumentException("No route generator registered for ${clazz.simpleName}")
-    }
-
 }

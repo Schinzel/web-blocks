@@ -12,14 +12,15 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
-    val javalin = Javalin.create { config ->
-        // Serve static files at /static/*
-        config.staticFiles.add {
-            it.directory = "/static"
-            it.location = Location.CLASSPATH
-            it.hostedPath = "/static"
+    val javalin =
+        Javalin.create { config ->
+            // Serve static files at /static/*
+            config.staticFiles.add {
+                it.directory = "/static"
+                it.location = Location.CLASSPATH
+                it.hostedPath = "/static"
+            }
         }
-    }
     // Find all routes and add them Javalin
     findRoutes(webAppConfig.webRootPackage)
         .forEach { routeMapping: RouteMapping ->
@@ -28,8 +29,9 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
                 routeMapping.println()
             }
             // Create request handler
-            val requestHandler = RequestHandler(routeMapping, webAppConfig)
-                .getHandler()
+            val requestHandler =
+                RequestHandler(routeMapping, webAppConfig)
+                    .getHandler()
             // Register both GET and POST handlers for the same path
             javalin.getAndPost(routeMapping.path, requestHandler)
         }
@@ -40,14 +42,16 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
     return javalin
 }
 
-
 private fun Instant.toIsoString(): String? {
     val zonedDateTime = ZonedDateTime.ofInstant(this, ZoneId.of("Europe/Stockholm"))
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     return zonedDateTime.format(formatter)
 }
 
-private fun Javalin.getAndPost(path: String, handler: (ctx: io.javalin.http.Context) -> Unit) {
+private fun Javalin.getAndPost(
+    path: String,
+    handler: (ctx: io.javalin.http.Context) -> Unit,
+) {
     this.get(path, handler)
     this.post(path, handler)
 }

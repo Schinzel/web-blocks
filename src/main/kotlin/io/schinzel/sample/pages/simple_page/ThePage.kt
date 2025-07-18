@@ -6,8 +6,9 @@ import io.schinzel.web_blocks.web.routes.IPageRoute
 
 @Suppress("unused")
 class ThePage : IPageRoute {
-    override suspend fun getResponse(): WebBlockResponse {
-        return html("""
+    override suspend fun getResponse(): WebBlockResponse =
+        html(
+            """
            |<!DOCTYPE html>
            |<html lang="en">
            |<head>
@@ -19,6 +20,6 @@ class ThePage : IPageRoute {
            |    <h1>Hello World</h1>
            |</body>
            |</html>
-        """.trimMargin())
-    }
+            """.trimMargin(),
+        )
 }

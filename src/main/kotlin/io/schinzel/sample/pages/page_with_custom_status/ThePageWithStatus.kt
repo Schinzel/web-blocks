@@ -12,9 +12,11 @@ import io.schinzel.web_blocks.web.routes.IPageRoute
  */
 @Suppress("unused")
 class ThePageWithStatus : IPageRoute {
-    override suspend fun getResponse(): WebBlockResponse {
-        return HtmlResponse.builder()
-            .setContent("""
+    override suspend fun getResponse(): WebBlockResponse =
+        HtmlResponse
+            .builder()
+            .setContent(
+                """
                 |<!DOCTYPE html>
                 |<html lang="en">
                 |<head>
@@ -28,8 +30,7 @@ class ThePageWithStatus : IPageRoute {
                 |    <p>Check the response headers in your browser's developer tools to see the 201 status.</p>
                 |</body>
                 |</html>
-            """.trimMargin())
-            .setStatus(201)
+                """.trimMargin(),
+            ).setStatus(201)
             .build()
-    }
 }

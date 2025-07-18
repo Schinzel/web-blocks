@@ -7,9 +7,8 @@ interface IPageRoute : IRoute {
     override suspend fun getResponse(): WebBlockResponse
 }
 
-
 class PageRouteDescriptor(
-    private val endpointPackage: String
+    private val endpointPackage: String,
 ) : IRouteDescriptor<IPageRoute> {
     private val systemPaths = listOf("api", "page-api", "static")
 
@@ -19,13 +18,16 @@ class PageRouteDescriptor(
         val returnPath = if (pagePathWithoutPages == "landing") "/" else pagePathWithoutPages
         systemPaths.forEach { systemPath ->
             if (returnPath.startsWith(systemPath)) {
-                throw IllegalArgumentException("Page path cannot start with '$systemPath'. " +
-                        "Page path: '$returnPath'")
+                throw IllegalArgumentException(
+                    "Page path cannot start with '$systemPath'. " +
+                        "Page path: '$returnPath'",
+                )
             }
         }
         return returnPath
     }
 
     override fun getTypeName() = "PageRoute"
+
     override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.HTML
 }

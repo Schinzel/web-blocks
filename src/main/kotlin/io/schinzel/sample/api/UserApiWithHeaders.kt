@@ -11,10 +11,13 @@ import io.schinzel.web_blocks.web.routes.IApiRoute
  * Written by Claude Sonnet 4
  */
 @Suppress("unused")
-class UserApiWithHeaders(val userId: Int = 123) : IApiRoute {
+class UserApiWithHeaders(
+    val userId: Int = 123,
+) : IApiRoute {
     override suspend fun getResponse(): WebBlockResponse {
         val user = fetchUser(userId)
-        return JsonResponse.builder()
+        return JsonResponse
+            .builder()
             .setData(user)
             .setStatus(200)
             .addHeader("X-Total-Count", "1")
@@ -22,20 +25,19 @@ class UserApiWithHeaders(val userId: Int = 123) : IApiRoute {
             .addHeader("X-User-Type", user.type)
             .build()
     }
-    
-    private fun fetchUser(id: Int): User {
-        return User(
+
+    private fun fetchUser(id: Int): User =
+        User(
             id = id,
             name = "Sample User $id",
             email = "user$id@example.com",
-            type = "premium"
+            type = "premium",
         )
-    }
-    
+
     data class User(
         val id: Int,
         val name: String,
         val email: String,
-        val type: String
+        val type: String,
     )
 }

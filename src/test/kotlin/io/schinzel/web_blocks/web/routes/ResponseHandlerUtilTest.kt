@@ -34,7 +34,6 @@ class ResponseHandlerUtilTest {
             assertThat(actual).isEqualTo(expected)
         }
 
-
         @Test
         fun `empty list of suffixes _ class name unchanged`() {
             val suffixesToRemove = emptyList<String>()
@@ -57,7 +56,6 @@ class ResponseHandlerUtilTest {
     @Nested
     @DisplayName("toKebabCase")
     inner class ToKebabCase {
-
         @Test
         fun `three words _ converted to kebab case`() {
             val className = "MyClassName"
@@ -75,18 +73,16 @@ class ResponseHandlerUtilTest {
         }
     }
 
-
     @Nested
     @DisplayName("removeSuffixesAndToKebabCase")
     inner class RemoveSuffixesAndToKebabCase {
-
         @Test
         fun `class in pascal case with suffix _ converted to kebab case and suffix removed`() {
             val actual = removeSuffixesAndToKebabCase(MyClassApi::class, listOf("Api", "Endpoint"))
             val expected = "my-class"
             assertThat(actual).isEqualTo(expected)
         }
-
     }
+
     private class MyClassApi
 }

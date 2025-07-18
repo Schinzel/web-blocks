@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class InitWebAppTest2 {
-
     @Nested
     inner class Start {
-        
         @Test
         fun `page named api _ throws error`() {
             assertThrows<Exception> {

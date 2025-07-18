@@ -8,7 +8,6 @@ import kotlin.reflect.KClass
  * we do not have instances, just classes.
  */
 interface IRouteDescriptor<T : IRoute> {
-
     /**
      * @param clazz The class of the route
      * @return The path of the route

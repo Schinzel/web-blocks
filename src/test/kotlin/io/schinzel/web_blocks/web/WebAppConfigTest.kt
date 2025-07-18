@@ -6,10 +6,8 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class WebAppConfigTest {
-
     @Nested
     inner class Constructor {
-        
         @Test
         fun `existing package _ no error`() {
             assertDoesNotThrow { WebAppConfig(this@WebAppConfigTest) }

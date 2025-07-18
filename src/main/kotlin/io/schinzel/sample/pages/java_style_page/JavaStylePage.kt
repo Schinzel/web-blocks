@@ -12,16 +12,16 @@ import io.schinzel.web_blocks.web.routes.IPageRoute
  */
 @Suppress("unused")
 class JavaStylePage : IPageRoute {
-    override suspend fun getResponse(): WebBlockResponse {
-        return HtmlResponse.builder()
+    override suspend fun getResponse(): WebBlockResponse =
+        HtmlResponse
+            .builder()
             .setContent(generateContent())
             .setStatus(200)
             .addHeaders(getDefaultHeaders())
             .build()
-    }
-    
-    private fun generateContent(): String {
-        return """
+
+    private fun generateContent(): String =
+        """
             |<!DOCTYPE html>
             |<html lang="en">
             |<head>
@@ -42,13 +42,11 @@ class JavaStylePage : IPageRoute {
             |</body>
             |</html>
         """.trimMargin()
-    }
-    
-    private fun getDefaultHeaders(): Map<String, String> {
-        return mapOf(
+
+    private fun getDefaultHeaders(): Map<String, String> =
+        mapOf(
             "X-Framework" to "web-blocks",
             "X-Language-Friendly" to "true",
-            "X-Builder-Pattern" to "demonstrated"
+            "X-Builder-Pattern" to "demonstrated",
         )
-    }
 }

@@ -1,7 +1,9 @@
 package io.schinzel.web_blocks.component.page
 
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.supervisorScope
 
 /**
  * The purpose of this class is to represent a web page.
@@ -56,21 +58,28 @@ class PageBuilder {
         if (rows.isEmpty() || rows.last().columns.isEmpty()) {
             throw Exception("You must add a row and a column before adding a block")
         }
-        rows.last().columns.last().blocks.add(block)
+        rows
+            .last()
+            .columns
+            .last()
+            .blocks
+            .add(block)
         return this
     }
 
-    suspend fun getHtml(): String = supervisorScope {
-        // Use supervisorScope for error isolation at row level
-        // If one row fails, other rows continue rendering
-        val rowsHtml = rows
-            .map { async { it.getHtml() } }
-            .awaitAll()
-            .joinToString("\n")
-        
-        return@supervisorScope TemplateProcessor(this@PageBuilder)
-            .addData("title", title)
-            .addData("content", rowsHtml)
-            .processTemplate("html/page-template.html")
-    }
+    suspend fun getHtml(): String =
+        supervisorScope {
+            // Use supervisorScope for error isolation at row level
+            // If one row fails, other rows continue rendering
+            val rowsHtml =
+                rows
+                    .map { async { it.getHtml() } }
+                    .awaitAll()
+                    .joinToString("\n")
+
+            return@supervisorScope TemplateProcessor(this@PageBuilder)
+                .addData("title", title)
+                .addData("content", rowsHtml)
+                .processTemplate("html/page-template.html")
+        }
 }

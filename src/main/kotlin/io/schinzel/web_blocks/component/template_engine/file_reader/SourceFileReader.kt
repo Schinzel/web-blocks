@@ -6,7 +6,9 @@ import java.io.File
  * The purpose of this class is to read a file from the source code directory.
  * @param caller The class that is calling this class.
  */
-class SourceFileReader(private val caller: Any) : IFileReader {
+class SourceFileReader(
+    private val caller: Any,
+) : IFileReader {
     override val pathToCaller: String
 
     init {
@@ -16,7 +18,6 @@ class SourceFileReader(private val caller: Any) : IFileReader {
         val absolutePathToProjectRoot = File("").absolutePath
         // For example: /Users/schinzel/code/page-elements-kotlin/io/schinzel/page_elements/samples/component/pages
         pathToCaller = "$absolutePathToProjectRoot/src/main/kotlin/$pathFromProjectRootToCaller"
-
     }
 
     /**

@@ -11,16 +11,14 @@ import org.junit.jupiter.api.Test
  * Written by Claude Sonnet 4
  */
 class ResponseBuildersTest {
-
     @Nested
     @DisplayName("html function")
     inner class HtmlFunction {
-
         @Test
         fun `html _ with content only _ creates HtmlResponse with default values`() {
             val content = "<h1>Hello World</h1>"
             val response = html(content)
-            
+
             assertThat(response).isInstanceOf(HtmlResponse::class.java)
         }
 
@@ -28,14 +26,14 @@ class ResponseBuildersTest {
         fun `html _ with content only _ content is set correctly`() {
             val content = "<p>Test content</p>"
             val response = html(content)
-            
+
             assertThat(response.content).isEqualTo(content)
         }
 
         @Test
         fun `html _ with content only _ default status is 200`() {
             val response = html("<p>Test</p>")
-            
+
             assertThat(response.status).isEqualTo(200)
         }
 
@@ -43,7 +41,7 @@ class ResponseBuildersTest {
         fun `html _ with custom status _ status is set correctly`() {
             val expectedStatus = 201
             val response = html("<p>Created</p>", status = expectedStatus)
-            
+
             assertThat(response.status).isEqualTo(expectedStatus)
         }
 
@@ -51,7 +49,7 @@ class ResponseBuildersTest {
         fun `html _ with custom headers _ headers are set correctly`() {
             val expectedHeaders = mapOf("Cache-Control" to "no-cache")
             val response = html("<p>Test</p>", headers = expectedHeaders)
-            
+
             assertThat(response.headers).isEqualTo(expectedHeaders)
         }
 
@@ -61,7 +59,7 @@ class ResponseBuildersTest {
             val status = 418
             val headers = mapOf("X-Tea-Pot" to "true")
             val response = html(content, status, headers)
-            
+
             assertThat(response.content).isEqualTo(content)
             assertThat(response.status).isEqualTo(status)
             assertThat(response.headers).isEqualTo(headers)
@@ -71,12 +69,11 @@ class ResponseBuildersTest {
     @Nested
     @DisplayName("json function")
     inner class JsonFunction {
-
         @Test
         fun `json _ with data only _ creates JsonResponse with default values`() {
             val data = mapOf("key" to "value")
             val response = json(data)
-            
+
             assertThat(response).isInstanceOf(JsonResponse::class.java)
         }
 
@@ -84,14 +81,14 @@ class ResponseBuildersTest {
         fun `json _ with data only _ data is set correctly`() {
             val data = listOf("item1", "item2")
             val response = json(data)
-            
+
             assertThat(response.data).isEqualTo(data)
         }
 
         @Test
         fun `json _ with data only _ default status is 200`() {
             val response = json("test")
-            
+
             assertThat(response.status).isEqualTo(200)
         }
 
@@ -99,7 +96,7 @@ class ResponseBuildersTest {
         fun `json _ with custom status _ status is set correctly`() {
             val expectedStatus = 404
             val response = json("Not found", status = expectedStatus)
-            
+
             assertThat(response.status).isEqualTo(expectedStatus)
         }
 
@@ -107,7 +104,7 @@ class ResponseBuildersTest {
         fun `json _ with custom headers _ headers are set correctly`() {
             val expectedHeaders = mapOf("Content-Type" to "application/json")
             val response = json("test", headers = expectedHeaders)
-            
+
             assertThat(response.headers).isEqualTo(expectedHeaders)
         }
 
@@ -115,7 +112,7 @@ class ResponseBuildersTest {
         fun `json _ with string data _ preserves string value`() {
             val data = "Simple string response"
             val response = json(data)
-            
+
             assertThat(response.data).isEqualTo(data)
         }
 
@@ -123,7 +120,7 @@ class ResponseBuildersTest {
         fun `json _ with complex object _ preserves object structure`() {
             val complexData = TestResponse("success", 123, listOf("a", "b"))
             val response = json(complexData)
-            
+
             assertThat(response.data).isEqualTo(complexData)
         }
     }
@@ -131,18 +128,17 @@ class ResponseBuildersTest {
     @Nested
     @DisplayName("function return types")
     inner class FunctionReturnTypes {
-
         @Test
         fun `html function _ returns WebBlockResponse type _ can be assigned to interface`() {
             val response: WebBlockResponse = html("<p>Test</p>")
-            
+
             assertThat(response).isNotNull()
         }
 
         @Test
         fun `json function _ returns WebBlockResponse type _ can be assigned to interface`() {
             val response: WebBlockResponse = json("test data")
-            
+
             assertThat(response).isNotNull()
         }
 
@@ -150,7 +146,7 @@ class ResponseBuildersTest {
         fun `both functions _ return different implementations _ are distinguishable`() {
             val htmlResponse = html("<p>HTML</p>")
             val jsonResponse = json("JSON")
-            
+
             assertThat(htmlResponse).isInstanceOf(HtmlResponse::class.java)
             assertThat(jsonResponse).isInstanceOf(JsonResponse::class.java)
         }
@@ -162,6 +158,6 @@ class ResponseBuildersTest {
     private data class TestResponse(
         val status: String,
         val count: Int,
-        val items: List<String>
+        val items: List<String>,
     )
 }
