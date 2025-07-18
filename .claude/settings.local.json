@@ -27,7 +27,8 @@
       "mcp__zen__thinkdeep",
       "Bash(git restore:*)",
       "Bash(pkill:*)",
-      "Bash(TZ='Europe/Stockholm' date)"
+      "Bash(TZ='Europe/Stockholm' date)",
+      "Bash(./gradlew:*)"
     ],
     "deny": []
   }

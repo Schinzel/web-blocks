@@ -1,0 +1,223 @@
+package io.schinzel.web_blocks.web.routes
+
+import io.schinzel.web_blocks.web.response.HtmlResponse
+import io.schinzel.web_blocks.web.response.JsonResponse
+import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+
+/**
+ * The purpose of this class is to test RouteAnnotationUtil for route type detection and validation.
+ *
+ * Written by Claude Sonnet 4
+ */
+class RouteAnnotationUtilTest {
+    @Nested
+    @DisplayName("detectRouteType")
+    inner class DetectRouteTypeTests {
+        @Test
+        fun `detectRouteType _ WebBlockPage annotated class _ returns PAGE`() {
+            val result = RouteAnnotationUtil.detectRouteType(TestPageRoute::class)
+
+            assertThat(result).isEqualTo(RouteTypeEnum.PAGE)
+        }
+
+        @Test
+        fun `detectRouteType _ WebBlockApi annotated class _ returns API`() {
+            val result = RouteAnnotationUtil.detectRouteType(TestApiRoute::class)
+
+            assertThat(result).isEqualTo(RouteTypeEnum.API)
+        }
+
+        @Test
+        fun `detectRouteType _ WebBlockPageApi annotated class _ returns PAGE_API`() {
+            val result = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
+
+            assertThat(result).isEqualTo(RouteTypeEnum.PAGE_API)
+        }
+
+        @Test
+        fun `detectRouteType _ no annotation _ returns UNKNOWN`() {
+            val result = RouteAnnotationUtil.detectRouteType(TestNoAnnotationRoute::class)
+
+            assertThat(result).isEqualTo(RouteTypeEnum.UNKNOWN)
+        }
+
+        @Test
+        fun `detectRouteType _ multiple annotations _ throws IllegalArgumentException`() {
+            assertThatThrownBy {
+                RouteAnnotationUtil.detectRouteType(TestMultipleAnnotationsRoute::class)
+            }.isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("TestMultipleAnnotationsRoute has multiple route annotations")
+                .hasMessageContaining("Only one of @WebBlockPage, @WebBlockApi, or @WebBlockPageApi is allowed")
+        }
+    }
+
+    @Nested
+    @DisplayName("validateRouteAnnotation")
+    inner class ValidateRouteAnnotationTests {
+        @Test
+        fun `validateRouteAnnotation _ WebBlockPage annotated route _ passes validation`() {
+            RouteAnnotationUtil.validateRouteAnnotation(TestPageRoute::class)
+        }
+
+        @Test
+        fun `validateRouteAnnotation _ WebBlockApi annotated route _ passes validation`() {
+            RouteAnnotationUtil.validateRouteAnnotation(TestApiRoute::class)
+        }
+
+        @Test
+        fun `validateRouteAnnotation _ WebBlockPageApi annotated route _ passes validation`() {
+            RouteAnnotationUtil.validateRouteAnnotation(TestPageApiRoute::class)
+        }
+
+        @Test
+        fun `validateRouteAnnotation _ no annotation _ throws IllegalArgumentException`() {
+            assertThatThrownBy {
+                RouteAnnotationUtil.validateRouteAnnotation(TestNoAnnotationRoute::class)
+            }.isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("TestNoAnnotationRoute implements WebBlockRoute but has no route annotation")
+                .hasMessageContaining("Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation")
+        }
+
+        @Test
+        fun `validateRouteAnnotation _ multiple annotations _ throws IllegalArgumentException`() {
+            assertThatThrownBy {
+                RouteAnnotationUtil.validateRouteAnnotation(TestMultipleAnnotationsRoute::class)
+            }.isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("TestMultipleAnnotationsRoute has multiple route annotations")
+        }
+    }
+
+    @Nested
+    @DisplayName("RouteTypeEnum")
+    inner class RouteTypeEnumTests {
+        @Test
+        fun `contentType _ PAGE _ returns text slash html`() {
+            assertThat(RouteTypeEnum.PAGE.contentType).isEqualTo("text/html")
+        }
+
+        @Test
+        fun `contentType _ API _ returns application slash json`() {
+            assertThat(RouteTypeEnum.API.contentType).isEqualTo("application/json")
+        }
+
+        @Test
+        fun `contentType _ PAGE_API _ returns application slash json`() {
+            assertThat(RouteTypeEnum.PAGE_API.contentType).isEqualTo("application/json")
+        }
+
+        @Test
+        fun `contentType _ UNKNOWN _ returns application slash octet-stream`() {
+            assertThat(RouteTypeEnum.UNKNOWN.contentType).isEqualTo("application/octet-stream")
+        }
+
+        @Test
+        fun `isValidResponseType _ PAGE with HtmlResponse _ returns true`() {
+            val response = HtmlResponse("<h1>Test</h1>")
+
+            assertThat(RouteTypeEnum.PAGE.isValidResponseType(response)).isTrue
+        }
+
+        @Test
+        fun `isValidResponseType _ PAGE with JsonResponse _ returns false`() {
+            val response = JsonResponse(mapOf("test" to "value"))
+
+            assertThat(RouteTypeEnum.PAGE.isValidResponseType(response)).isFalse
+        }
+
+        @Test
+        fun `isValidResponseType _ API with JsonResponse _ returns true`() {
+            val response = JsonResponse(mapOf("test" to "value"))
+
+            assertThat(RouteTypeEnum.API.isValidResponseType(response)).isTrue
+        }
+
+        @Test
+        fun `isValidResponseType _ API with HtmlResponse _ returns false`() {
+            val response = HtmlResponse("<h1>Test</h1>")
+
+            assertThat(RouteTypeEnum.API.isValidResponseType(response)).isFalse
+        }
+
+        @Test
+        fun `isValidResponseType _ PAGE_API with JsonResponse _ returns true`() {
+            val response = JsonResponse(mapOf("test" to "value"))
+
+            assertThat(RouteTypeEnum.PAGE_API.isValidResponseType(response)).isTrue
+        }
+
+        @Test
+        fun `isValidResponseType _ PAGE_API with HtmlResponse _ returns false`() {
+            val response = HtmlResponse("<h1>Test</h1>")
+
+            assertThat(RouteTypeEnum.PAGE_API.isValidResponseType(response)).isFalse
+        }
+
+        @Test
+        fun `isValidResponseType _ UNKNOWN with any response _ returns false`() {
+            val htmlResponse = HtmlResponse("<h1>Test</h1>")
+            val jsonResponse = JsonResponse(mapOf("test" to "value"))
+
+            assertThat(RouteTypeEnum.UNKNOWN.isValidResponseType(htmlResponse)).isFalse
+            assertThat(RouteTypeEnum.UNKNOWN.isValidResponseType(jsonResponse)).isFalse
+        }
+
+        @Test
+        fun `getExpectedResponseType _ PAGE _ returns HtmlResponse`() {
+            assertThat(RouteTypeEnum.PAGE.getExpectedResponseType()).isEqualTo("HtmlResponse")
+        }
+
+        @Test
+        fun `getExpectedResponseType _ API _ returns JsonResponse`() {
+            assertThat(RouteTypeEnum.API.getExpectedResponseType()).isEqualTo("JsonResponse")
+        }
+
+        @Test
+        fun `getExpectedResponseType _ PAGE_API _ returns JsonResponse`() {
+            assertThat(RouteTypeEnum.PAGE_API.getExpectedResponseType()).isEqualTo("JsonResponse")
+        }
+
+        @Test
+        fun `getExpectedResponseType _ UNKNOWN _ returns UnknownResponse`() {
+            assertThat(RouteTypeEnum.UNKNOWN.getExpectedResponseType()).isEqualTo("UnknownResponse")
+        }
+    }
+
+    // Test classes for route annotation testing
+    @WebBlockPage
+    private class TestPageRoute : WebBlockRoute {
+        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+        override fun getPath(): String = "/test-page"
+    }
+
+    @WebBlockApi
+    private class TestApiRoute : WebBlockRoute {
+        override suspend fun getResponse(): WebBlockResponse = JsonResponse(mapOf("test" to "value"))
+        override fun getPath(): String = "/api/test"
+    }
+
+    @WebBlockPageApi
+    private class TestPageApiRoute : WebBlockRoute {
+        override suspend fun getResponse(): WebBlockResponse = JsonResponse(mapOf("test" to "value"))
+        override fun getPath(): String = "/page-api/test"
+    }
+
+    private class TestNoAnnotationRoute : WebBlockRoute {
+        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+        override fun getPath(): String = "/test"
+    }
+
+    @WebBlockPage
+    @WebBlockApi
+    private class TestMultipleAnnotationsRoute : WebBlockRoute {
+        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+        override fun getPath(): String = "/test"
+    }
+}

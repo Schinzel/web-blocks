@@ -22,7 +22,7 @@
 [Specify how to solve the problems]
 
 ## AI Instructions for writing code
-Follow the [code standards](_index.md)
+Follow the [code standards](../code_standards/_index.md)
 - Especially follow to use defensive programming principles
 - Make sure to write elegant code
 - Follow the naming standards for tests:
@@ -33,7 +33,7 @@ Follow the [code standards](_index.md)
 [Add specific criteria for this task]
 
 ### Standard Acceptance Criteria
-- Go through [code standards](_index.md) and verify that the code and the tests added follow the standards
+- Go through [code standards](../code_standards/_index.md) and verify that the code and the tests added follow the standards
 - mvn ktlint:format
 - ktlint:check
 - mvn compile -DskipTests
