@@ -16,7 +16,7 @@ Transform the web-blocks framework from interface-based routing to annotation-ba
 
 | Task | Status | Description | Date Completed |
 |------|--------|-------------|----------------|
-| **[Phase 1: Annotations](annotation-phase1-annotations.md)** | To-Do | Create `@WebBlockPage`, `@WebBlockApi`, `@WebBlockPageApi` annotations | - |
+| **[Phase 1: Annotations](annotation-phase1-annotations.md)** | ✅ Complete | Create `@WebBlockPage`, `@WebBlockApi`, `@WebBlockPageApi` annotations | 2025-07-18 |
 | **[Phase 2: Interface](annotation-phase2-interface.md)** | To-Do | Create unified `WebBlockRoute` interface | - |
 | **[Phase 3: Discovery](annotation-phase3-discovery.md)** | To-Do | Update route discovery system for annotations | - |
 | **[Phase 4: Response](annotation-phase4-response.md)** | To-Do | Update response processing for annotation-based headers | - |
@@ -70,4 +70,32 @@ class SaveNameRoute : WebBlockRoute {
 2. **Clear Route Types**: Distinguishes between pages, standalone APIs, and block APIs
 3. **Path Collision Prevention**: Separate namespaces prevent conflicts between API types
 4. **Block Architecture**: Supports component-based page development with block-specific APIs
+
+## Phase Completion Guidelines
+
+When completing each phase, update the documentation as follows:
+
+### 1. Update Overview Document (`annotation-implementation-overview.md`)
+- Change status from "To-Do" to "✅ Complete" in the Task Status table
+- Add completion date in YYYY-MM-DD format
+- Update any affected sections or examples
+
+### 2. Update Individual Phase Documents
+- Change status from "To-Do" to "✅ Complete" at the top of the document
+- Add completion date and brief completion summary
+- Check all boxes under "Acceptance Criteria" section (✅)
+- Check all boxes under "Testing Requirements" section (✅)
+- Add any notes about implementation decisions or deviations
+
+### 3. Code Standards Compliance
+- Ensure all code follows standards in `doc/code_standards/`
+- Run ktlint to verify formatting compliance
+- Update any related tests or documentation
+- Verify all acceptance criteria are met before marking complete
+
+### 4. Documentation Quality
+- Maintain consistent formatting across all phase documents
+- Include specific examples and code snippets where helpful
+- Update cross-references between documents as needed
+- Keep the overview document as the single source of truth for project status
 
