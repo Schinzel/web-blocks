@@ -30,3 +30,5 @@ We are currently adding annotations to Web Blocks
 See: /Users/schinzel/code/web-blocks/doc/tasks/annotation-implementation-overview.md
 Get started on the next phase please
 
+
+Get the diagrams in doc/work_dir to mermaid
