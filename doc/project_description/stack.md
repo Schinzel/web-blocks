@@ -10,17 +10,19 @@ reference for both human developers and AI assistants working on the codebase.
 ### Programming Language
 
 - **Kotlin** - Primary programming language
-  - Version: 2.0.20
+  - Version: 2.1.20 (latest stable release)
+  - **K2 Compiler Benefits**: Up to 94% faster compilation speeds, improved IDE performance, and enhanced language features like smart casts
+  - **Ecosystem Alignment**: Uses current industry standard version to ensure compatibility with modern frameworks and tooling
 - **Java** - Runtime environment
-  - Version: 11 (target platform)
+  - Version: 17 (target platform - industry standard LTS baseline for modern frameworks)
 
 ### Web Framework
 
-- **Javalin** - Lightweight web framework for JVM (version 6.4.0)
+- **Javalin** - Lightweight web framework for JVM
 
 ### Logging
 
-- **SLF4J Simple** - Logging framework (version 2.0.6)
+- **SLF4J Simple** - Logging framework
 
 ## Frontend
 

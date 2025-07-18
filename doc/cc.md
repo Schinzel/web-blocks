@@ -1,13 +1,12 @@
 
 
+IPageApiRoute remove?
+Where are the new descriptors
+
 
 Should they return WebBlockResponse or HtmlResponse JsonResponse???
 
-Change kotlin version to Version: 2.1.x? Or better to have it lower
-for backward compatability
 
-
-IPageApiRoute remove?
 
 PageApi change to return raw html. Good idea. No success
 or future error message to display
