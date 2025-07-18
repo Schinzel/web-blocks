@@ -9,11 +9,10 @@ There are 3 types of routes:
 
 | Attribute  | Description                           |
 |------------|---------------------------------------|
-| Implements | `IApiRoute` extends `WebBlockRoute`   |
+| Annotation | `@WebBlockApi`                        |
+| Interface  | `WebBlockRoute`                       |
 | Returns    | `WebBlockResponse` (typically `JsonResponse`) |
 | Location   | Located in the `api` directory        |
-
-
 
 | Property         | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
@@ -24,15 +23,21 @@ There are 3 types of routes:
 | Prefix           | Api paths are prefixed with `api`                                           |
 | Example          | `/api/my_dir/MyPersonRoute.kt` will receive the path `api/my-dir/my-person` |
 
+```kotlin
+@WebBlockApi
+class UserPets : WebBlockRoute {
+    override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
+}
+```
 
 ## Page route
 
 | Attribute  | Description                           |
 |------------|---------------------------------------|
-| Implements | `IPageRoute` extends `WebBlockRoute`  |
+| Annotation | `@WebBlockPage`                       |
+| Interface  | `WebBlockRoute`                       |
 | Returns    | `WebBlockResponse` (typically `HtmlResponse`) |
 | Location   | Located in the `pages` directory      |
-
 
 | Property     | Description                                                                       |
 |--------------|-----------------------------------------------------------------------------------|
@@ -41,6 +46,12 @@ There are 3 types of routes:
 | Special case | A that page resides in the directory `landing` it will be served as the root page |
 | Example      | `/pages/my_dir/my_page/ThePage.kt` will receive the path `/my-dir/my-page`        |
 
+```kotlin
+@WebBlockPage
+class ThePage : WebBlockRoute {
+    override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
+}
+```
 
 ## Page API route
 
@@ -49,10 +60,10 @@ Used by pages to for example save data or update an element on a the page.
 
 | Attribute  | Description                           |
 |------------|---------------------------------------|
-| Implements | `IPageApiRoute` extends `WebBlockRoute` |
+| Annotation | `@WebBlockPageApi`                    |
+| Interface  | `WebBlockRoute`                       |
 | Returns    | `WebBlockResponse` (typically `JsonResponse`) |
 | Location   | Located in the `pages` directory      |
-
 
 | Property         | Description                                                                                                               |
 |------------------|---------------------------------------------------------------------------------------------------------------------------|
@@ -62,6 +73,13 @@ Used by pages to for example save data or update an element on a the page.
 | Suffixes removed | Suffixes `Route`are removed                                                                                               |
 | Prefix           | Prefixed with `page-api`                                                                                                  |
 | Example          | `/pages/user_pages/settings/SavePersonNameRoute.kt` will receive the path `page-api/user-pages/settings/save-person-name` |
+
+```kotlin
+@WebBlockPageApi
+class SavePersonNameRoute : WebBlockRoute {
+    override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
+}
+```
 
 
 ## Parameters
