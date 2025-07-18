@@ -1,4 +1,4 @@
-# The first  page
+# Create your first page
 ## 1 - Create app
 Create a package for where your pages, endpoints and so on will reside.
 In this package, create a class that extends AbstractWebApp.
@@ -26,11 +26,11 @@ com.mycompany/
 
 ## 2 - Create your first page
 In your new package, create the package `pages`.
-All pages will reside in this package. 
+All pages will reside in this package.
 
 Create a package for you first page, `simple_page`.
 In this package create a class that extends `IPageResponseHandler`.
-The class can have any name.  
+The class can have any name.
 
 Your project structure should now look like:
 ```
@@ -43,7 +43,8 @@ com.mycompany/
 
 For example:
 ```kotlin
-class ThePage : IPageResponseHandler {
+@WebBlockPage
+class ThePage : WebBlockRoute {
     override fun getResponse(): WebBlockResponse {
         return html("""
            |<!DOCTYPE html>
@@ -62,26 +63,6 @@ class ThePage : IPageResponseHandler {
 }
 ```
 
-Or with the convenience function:
-```kotlin
-import io.schinzel.web_blocks.web.response.html
-
-class ThePage : IPageResponseHandler {
-    override fun getResponse() = html("""
-        |<!DOCTYPE html>
-        |<html lang="en">
-        |<head>
-        |    <meta charset="UTF-8">
-        |    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        |    <title>Hello World</title>
-        |</head>
-        |<body>
-        |    <h1>Hello World</h1>
-        |</body>
-        |</html>
-    """.trimMargin())
-}
-```
 
 ## 3 - Start the project and request the page
 Invoke `MyWebApp().start()`
