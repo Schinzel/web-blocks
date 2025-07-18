@@ -47,19 +47,11 @@ and a file system based routing system this framework enables and encourages fea
 
 
 # Documentation
-- [Getting started](doc/user_doc/1_getting_started.md)
-- [Routes](doc/user_doc/2_routes.md)
-- [Page builder](doc/user_doc/4_page_builder.md)
-- [Template engine](doc/user_doc/7_template_engine.md)
-- [Error pages](doc/user_doc/8_error_pages.md)
-- [Building a JAR](doc/user_doc/10_building_a_jar.md)
+- [User Documentation](doc/user_doc/0_index.md)
 
 # Sample
 - [Sample](src/main/kotlin/io/schinzel/sample/README.md)
 
-# Auxiliary Documentation
-- [Custom Response Handlers](doc/user_doc/11_custom_response_handlers.md)
-
 # Code Standards
 For developers and AIs such as Claude
-- [Code Standards](doc/code_standards/code_standards_index.md)
+- [Code Standards](doc/code_standards/_index.md)

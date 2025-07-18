@@ -1,4 +1,4 @@
-# Code Standards v1.0
+# Code Standards
 
 This document serves as the central reference point for all code standards in the project.
 
