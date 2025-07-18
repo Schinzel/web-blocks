@@ -1,9 +1,5 @@
 
 
-under user_doc add a stack.md document (nej, det är för användare)
-project_description
-- stack
-
 
 Should they return WebBlockResponse or HtmlResponse JsonResponse???
 
