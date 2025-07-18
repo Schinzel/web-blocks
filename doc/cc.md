@@ -7,6 +7,9 @@ project_description
 
 Should they return WebBlockResponse or HtmlResponse JsonResponse???
 
+Change kotlin version to Version: 2.1.x? Or better to have it lower
+for backward compatability
+
 
 IPageApiRoute remove?
 
@@ -26,9 +29,7 @@ modules/logic/db/src/test/kotlin/
 
 Mermaid diagram, from request to response.
 
-We are currently adding annotations to Web Blocks
-See: /Users/schinzel/code/web-blocks/doc/tasks/annotation-implementation-overview.md
-Get started on the next phase please
-
-
 Get the diagrams in doc/work_dir to mermaid
+
+
+Workflow management in a separate project or ok for now in here??
