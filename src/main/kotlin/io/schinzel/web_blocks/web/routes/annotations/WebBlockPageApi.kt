@@ -23,7 +23,7 @@ package io.schinzel.web_blocks.web.routes.annotations
  *
  * Example - User profile page with name update block:
  * @WebBlockPageApi
- * class SaveNameRoute : WebBlockRoute {
+ * class SaveNameRoute : IWebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
  * }
  *

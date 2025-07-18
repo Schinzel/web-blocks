@@ -18,7 +18,7 @@ Transform the web-blocks framework from interface-based routing to annotation-ba
 |------|--------|-------------|----------------|
 | **[Phase 1: Annotations](annotation-phase1-annotations.md)** | ✅ Complete | Create `@WebBlockPage`, `@WebBlockApi`, `@WebBlockPageApi` annotations | 2025-07-18 |
 | **[Phase 2: Interface](annotation-phase2-interface.md)** | ✅ Complete | Create unified `WebBlockRoute` interface | 2025-07-18 |
-| **[Phase 3: Discovery](annotation-phase3-discovery.md)** | To-Do | Update route discovery system for annotations | - |
+| **[Phase 3: Discovery](annotation-phase3-discovery.md)** | ✅ Complete | Update route discovery system for annotations | 2025-07-18 |
 | **[Phase 4: Response](annotation-phase4-response.md)** | To-Do | Update response processing for annotation-based headers | - |
 | **[Phase 5: Migration](annotation-phase5-migration.md)** | To-Do | Convert all sample routes to new annotation system | - |
 | **[Phase 6: Testing](annotation-phase6-testing.md)** | To-Do | Create comprehensive test suite for annotation system | - |
@@ -88,6 +88,7 @@ When completing each phase, update the documentation as follows:
 - Add any notes about implementation decisions or deviations
 
 ### 3. Code Standards Compliance
+- Read the [user doc](../user_doc/0_index.md) to understand the structure of the framework
 - Ensure all code follows standards in [code standards](../code_standards/_index.md)`
 - Run ktlint to verify formatting compliance
 - Update any related tests or documentation

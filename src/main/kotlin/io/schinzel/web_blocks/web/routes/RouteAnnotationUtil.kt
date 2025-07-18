@@ -45,17 +45,17 @@ object RouteAnnotationUtil {
 
     /**
      * Validate that a class implementing
-     * WebBlockRoute has exactly one valid route annotation.
+     * IWebBlockRoute has exactly one valid route annotation.
      *
      * @param clazz The class to validate
      * @throws IllegalArgumentException if validation fails
      */
-    fun validateRouteAnnotation(clazz: KClass<out WebBlockRoute>) {
+    fun validateRouteAnnotation(clazz: KClass<out IWebBlockRoute>) {
         val routeType = detectRouteType(clazz)
 
         if (routeType == RouteTypeEnum.UNKNOWN) {
             throw IllegalArgumentException(
-                "Class ${clazz.simpleName} implements WebBlockRoute but has no route annotation. " +
+                "Class ${clazz.simpleName} implements IWebBlockRoute but has no route annotation. " +
                     "Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation.",
             )
         }

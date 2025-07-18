@@ -14,7 +14,7 @@ package io.schinzel.web_blocks.web.routes.annotations
  *
  * Example:
  * @WebBlockPage
- * class ThePage : WebBlockRoute {
+ * class ThePage : IWebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
  * }
  *

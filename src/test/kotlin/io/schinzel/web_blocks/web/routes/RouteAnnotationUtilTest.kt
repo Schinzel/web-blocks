@@ -82,7 +82,7 @@ class RouteAnnotationUtilTest {
             assertThatThrownBy {
                 RouteAnnotationUtil.validateRouteAnnotation(TestNoAnnotationRoute::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestNoAnnotationRoute implements WebBlockRoute but has no route annotation")
+                .hasMessageContaining("TestNoAnnotationRoute implements IWebBlockRoute but has no route annotation")
                 .hasMessageContaining("Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation")
         }
 
@@ -192,32 +192,37 @@ class RouteAnnotationUtilTest {
 
     // Test classes for route annotation testing
     @WebBlockPage
-    private class TestPageRoute : WebBlockRoute {
+    private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+
         override fun getPath(): String = "/test-page"
     }
 
     @WebBlockApi
-    private class TestApiRoute : WebBlockRoute {
+    private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse(mapOf("test" to "value"))
+
         override fun getPath(): String = "/api/test"
     }
 
     @WebBlockPageApi
-    private class TestPageApiRoute : WebBlockRoute {
+    private class TestPageApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse(mapOf("test" to "value"))
+
         override fun getPath(): String = "/page-api/test"
     }
 
-    private class TestNoAnnotationRoute : WebBlockRoute {
+    private class TestNoAnnotationRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+
         override fun getPath(): String = "/test"
     }
 
     @WebBlockPage
     @WebBlockApi
-    private class TestMultipleAnnotationsRoute : WebBlockRoute {
+    private class TestMultipleAnnotationsRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+
         override fun getPath(): String = "/test"
     }
 }

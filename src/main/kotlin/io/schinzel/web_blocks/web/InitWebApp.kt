@@ -3,13 +3,11 @@ package io.schinzel.web_blocks.web
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web_blocks.web.request_handler.setUpErrorHandling
-import io.schinzel.web_blocks.web.routes.ApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.IApiRoute
-import io.schinzel.web_blocks.web.routes.IPageApiRoute
-import io.schinzel.web_blocks.web.routes.IPageRoute
-import io.schinzel.web_blocks.web.routes.PageApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.PageRouteDescriptor
 import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
+import io.schinzel.web_blocks.web.routes.RouteTypeEnum
+import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
+import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
+import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
 import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
@@ -48,12 +46,19 @@ class InitWebApp(
          * Register the default descriptors
          */
         fun initializeRouteDescriptorRegistry(endpointPackage: String) {
-            RouteDescriptorRegistry
-                .register(IPageRoute::class, PageRouteDescriptor(endpointPackage))
-            RouteDescriptorRegistry
-                .register(IPageApiRoute::class, PageApiRouteDescriptor(endpointPackage))
-            RouteDescriptorRegistry
-                .register(IApiRoute::class, ApiRouteDescriptor(endpointPackage))
+            // Register annotation-based route descriptors
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.PAGE,
+                WebBlockPageRouteDescriptor(endpointPackage),
+            )
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.API,
+                WebBlockApiRouteDescriptor(endpointPackage),
+            )
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.PAGE_API,
+                WebBlockPageApiRouteDescriptor(endpointPackage),
+            )
         }
     }
 }

@@ -17,18 +17,18 @@ import io.schinzel.web_blocks.web.response.WebBlockResponse
  *
  * Example usage:
  * @WebBlockPage
- * class ThePage : WebBlockRoute {
+ * class ThePage : IWebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
  * }
  *
  * @WebBlockApi
- * class UserPets : WebBlockRoute {
+ * class UserPets : IWebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
  * }
  *
  * Written by Claude Sonnet 4
  */
-interface WebBlockRoute {
+interface IWebBlockRoute : IRoute {
     /**
      * Generate the response content for this route.
      *
@@ -40,7 +40,7 @@ interface WebBlockRoute {
      *
      * @return WebBlockResponse containing the route's response data, status code, and headers
      */
-    suspend fun getResponse(): WebBlockResponse
+    override suspend fun getResponse(): WebBlockResponse
 
     /**
      * Get the URL path for this route
@@ -53,5 +53,5 @@ interface WebBlockRoute {
      *
      * @return String representing the URL path for this route
      */
-    fun getPath(): String
+    override fun getPath(): String
 }

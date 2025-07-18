@@ -14,7 +14,7 @@ package io.schinzel.web_blocks.web.routes.annotations
  *
  * Example:
  * @WebBlockApi
- * class UserPets : WebBlockRoute {
+ * class UserPets : IWebBlockRoute {
  *     override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
  * }
  *
