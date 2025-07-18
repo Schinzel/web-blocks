@@ -30,7 +30,9 @@
       "Bash(TZ='Europe/Stockholm' date)",
       "Bash(./gradlew:*)",
       "Bash(./mvnw test)",
-      "mcp__zen__analyze"
+      "mcp__zen__analyze",
+      "Bash(java:*)",
+      "Bash(kotlinc:*)"
     ],
     "deny": []
   }

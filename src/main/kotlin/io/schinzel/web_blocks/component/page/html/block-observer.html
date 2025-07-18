@@ -58,15 +58,16 @@
                     url: `/${endpointPath}`,
                     method: "POST",
                     data: JSON.stringify(args),
-                    contentType: "application/json"
+                    contentType: "application/json",
+                    dataType: "text"  // Expect HTML response, not JSON
                 })
                 console.log(`Update response for ${id}:`, response)
-                // noinspection JSUnresolvedReference
-                if (response.success) {
-                    const newBlockHtml = response.message
-                    // Replace the html of the block with the html from the response
-                    $(`#${id}`).html(newBlockHtml)
-                }
+                // Response is HTML, so extract just the body content
+                const parser = new DOMParser()
+                const doc = parser.parseFromString(response, "text/html")
+                const bodyContent = doc.body.innerHTML
+                // Replace the content of the block with the new HTML
+                $(`#${id}`).html(bodyContent)
             } catch (error) {
                 console.error(`Failed to update ${id}:`, error)
             }

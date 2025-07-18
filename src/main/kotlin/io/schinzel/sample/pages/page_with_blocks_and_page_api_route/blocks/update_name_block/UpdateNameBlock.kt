@@ -5,7 +5,9 @@ import io.schinzel.web_blocks.component.page.ObservableBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 
+@WebBlockPageApi
 class UpdateNameBlock(
     val userId: Int,
 ) : ObservableBlock() {

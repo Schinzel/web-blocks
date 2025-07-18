@@ -5,7 +5,8 @@ import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_blocks.web.request_handler.log.JsonMapper
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.JsonResponse
-import io.schinzel.web_blocks.web.routes.IPageApiRoute
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
@@ -24,7 +25,7 @@ import kotlin.reflect.full.primaryConstructor
  * the HTML and JavaScript of the block.
  */
 abstract class ObservableBlock :
-    IPageApiRoute,
+    IWebBlockRoute,
     IBlock {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<ObservableBlock> = mutableListOf()
