@@ -53,5 +53,6 @@ interface IWebBlockRoute : IRoute {
      *
      * @return String representing the URL path for this route
      */
-    override fun getPath(): String
+    // Override commented out to use default implementation from IRoute
+    // override fun getPath(): String
 }

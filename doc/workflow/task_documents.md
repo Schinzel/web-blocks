@@ -6,6 +6,11 @@ Task documents reside in the directory `doc/tasks`
 # Creating a task document
 Simpler tasks just require one document.
 
+Each task must be stand alone. This means that after a task is completed:
+- the problem described should be fully solved
+- the code compiles and the tests pass
+
+
 Use the [task_template.md](task_template.md) as a starting point. Copy it to `doc/tasks/[task_name].md` and fill in the details.
 
 Instructions for writing a task document:
