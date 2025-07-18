@@ -4,12 +4,14 @@ import io.schinzel.sample.pages.page_with_block.greeting_block.GreetingBlock
 import io.schinzel.web_blocks.component.page.PageBuilder
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
-import io.schinzel.web_blocks.web.routes.IPageRoute
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
 
+@WebBlockPage
 @Suppress("unused")
 class ThePage(
     userId: String = "",
-) : IPageRoute {
+) : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse =
         html(
             PageBuilder()

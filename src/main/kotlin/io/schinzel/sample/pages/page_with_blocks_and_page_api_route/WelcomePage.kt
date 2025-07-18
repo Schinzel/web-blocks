@@ -6,17 +6,19 @@ import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welco
 import io.schinzel.web_blocks.component.page.PageBuilder
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
-import io.schinzel.web_blocks.web.routes.IPageRoute
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
 
 /**
  * The purpose of this page is to welcome a user and let the
  * user update its' name
  *
  */
+@WebBlockPage
 @Suppress("unused")
 class WelcomePage(
     private val userId: Int,
-) : IPageRoute {
+) : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse {
         // Create blocks
         val welcomeBlock = WelcomeBlock(userId)

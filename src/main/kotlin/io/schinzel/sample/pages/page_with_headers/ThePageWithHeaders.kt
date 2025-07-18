@@ -2,7 +2,8 @@ package io.schinzel.sample.pages.page_with_headers
 
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.IPageRoute
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
 
 /**
  * The purpose of this class is to demonstrate using HtmlResponseBuilder
@@ -10,8 +11,9 @@ import io.schinzel.web_blocks.web.routes.IPageRoute
  *
  * Written by Claude Sonnet 4
  */
+@WebBlockPage
 @Suppress("unused")
-class ThePageWithHeaders : IPageRoute {
+class ThePageWithHeaders : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse =
         HtmlResponse
             .builder()
