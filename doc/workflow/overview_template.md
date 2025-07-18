@@ -4,7 +4,8 @@
 [Describe the overall problem that requires breaking down into multiple tasks]
 
 ## Instructions on how to use and fill out this document
-[Provide specific instructions for managing this multi-task project]
+- When a task is started and completed, change the status below
+
 
 ## Tasks
 

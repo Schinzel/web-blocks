@@ -5,11 +5,15 @@
 - Date started: [YYYY-MM-DD HH:MM Stockholm time zone - Command: TZ='Europe/Stockholm' date]
 - Date finished: [YYYY-MM-DD HH:MM Stockholm time zone]
 
-## Task Summary
+## Task summary
 [Fill out after task completion - be concise and to the point]
 - Include major changes made and files affected
 - Document key decisions and their rationale
 - Highlight any items that might affect future tasks
+
+## Instructions on how to use and fill out this document
+- When a task is started or completed, fill out section Current state
+- When a task is completed fill out section Task summary
 
 ## Problem to solve
 [Specify the problem that is to be solved with this task]
