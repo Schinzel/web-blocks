@@ -26,7 +26,8 @@
       "Bash(timeout 10 mvn compile:*)",
       "mcp__zen__thinkdeep",
       "Bash(git restore:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(TZ='Europe/Stockholm' date)"
     ],
     "deny": []
   }
