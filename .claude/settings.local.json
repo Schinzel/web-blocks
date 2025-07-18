@@ -28,7 +28,9 @@
       "Bash(git restore:*)",
       "Bash(pkill:*)",
       "Bash(TZ='Europe/Stockholm' date)",
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Bash(./mvnw test)",
+      "mcp__zen__analyze"
     ],
     "deny": []
   }

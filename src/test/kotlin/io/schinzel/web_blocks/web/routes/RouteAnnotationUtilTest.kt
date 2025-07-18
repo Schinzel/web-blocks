@@ -22,35 +22,35 @@ class RouteAnnotationUtilTest {
     @DisplayName("detectRouteType")
     inner class DetectRouteTypeTests {
         @Test
-        fun `detectRouteType _ WebBlockPage annotated class _ returns PAGE`() {
+        fun `WebBlockPage annotated class _ returns PAGE`() {
             val result = RouteAnnotationUtil.detectRouteType(TestPageRoute::class)
 
             assertThat(result).isEqualTo(RouteTypeEnum.PAGE)
         }
 
         @Test
-        fun `detectRouteType _ WebBlockApi annotated class _ returns API`() {
+        fun `WebBlockApi annotated class _ returns API`() {
             val result = RouteAnnotationUtil.detectRouteType(TestApiRoute::class)
 
             assertThat(result).isEqualTo(RouteTypeEnum.API)
         }
 
         @Test
-        fun `detectRouteType _ WebBlockPageApi annotated class _ returns PAGE_API`() {
+        fun `WebBlockPageApi annotated class _ returns PAGE_API`() {
             val result = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
 
             assertThat(result).isEqualTo(RouteTypeEnum.PAGE_API)
         }
 
         @Test
-        fun `detectRouteType _ no annotation _ returns UNKNOWN`() {
+        fun `no annotation _ returns UNKNOWN`() {
             val result = RouteAnnotationUtil.detectRouteType(TestNoAnnotationRoute::class)
 
             assertThat(result).isEqualTo(RouteTypeEnum.UNKNOWN)
         }
 
         @Test
-        fun `detectRouteType _ multiple annotations _ throws IllegalArgumentException`() {
+        fun `multiple annotations _ throws IllegalArgumentException`() {
             assertThatThrownBy {
                 RouteAnnotationUtil.detectRouteType(TestMultipleAnnotationsRoute::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
@@ -63,22 +63,22 @@ class RouteAnnotationUtilTest {
     @DisplayName("validateRouteAnnotation")
     inner class ValidateRouteAnnotationTests {
         @Test
-        fun `validateRouteAnnotation _ WebBlockPage annotated route _ passes validation`() {
+        fun `WebBlockPage annotated route _ passes validation`() {
             RouteAnnotationUtil.validateRouteAnnotation(TestPageRoute::class)
         }
 
         @Test
-        fun `validateRouteAnnotation _ WebBlockApi annotated route _ passes validation`() {
+        fun `WebBlockApi annotated route _ passes validation`() {
             RouteAnnotationUtil.validateRouteAnnotation(TestApiRoute::class)
         }
 
         @Test
-        fun `validateRouteAnnotation _ WebBlockPageApi annotated route _ passes validation`() {
+        fun `WebBlockPageApi annotated route _ passes validation`() {
             RouteAnnotationUtil.validateRouteAnnotation(TestPageApiRoute::class)
         }
 
         @Test
-        fun `validateRouteAnnotation _ no annotation _ throws IllegalArgumentException`() {
+        fun `no annotation _ throws IllegalArgumentException`() {
             assertThatThrownBy {
                 RouteAnnotationUtil.validateRouteAnnotation(TestNoAnnotationRoute::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
@@ -87,7 +87,7 @@ class RouteAnnotationUtilTest {
         }
 
         @Test
-        fun `validateRouteAnnotation _ multiple annotations _ throws IllegalArgumentException`() {
+        fun `multiple annotations _ throws IllegalArgumentException`() {
             assertThatThrownBy {
                 RouteAnnotationUtil.validateRouteAnnotation(TestMultipleAnnotationsRoute::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
@@ -99,69 +99,69 @@ class RouteAnnotationUtilTest {
     @DisplayName("RouteTypeEnum")
     inner class RouteTypeEnumTests {
         @Test
-        fun `contentType _ PAGE _ returns text slash html`() {
+        fun `PAGE _ returns text slash html`() {
             assertThat(RouteTypeEnum.PAGE.contentType).isEqualTo("text/html")
         }
 
         @Test
-        fun `contentType _ API _ returns application slash json`() {
+        fun `API _ returns application slash json`() {
             assertThat(RouteTypeEnum.API.contentType).isEqualTo("application/json")
         }
 
         @Test
-        fun `contentType _ PAGE_API _ returns application slash json`() {
+        fun `PAGE_API _ returns application slash json`() {
             assertThat(RouteTypeEnum.PAGE_API.contentType).isEqualTo("application/json")
         }
 
         @Test
-        fun `contentType _ UNKNOWN _ returns application slash octet-stream`() {
+        fun `UNKNOWN _ returns application slash octet-stream`() {
             assertThat(RouteTypeEnum.UNKNOWN.contentType).isEqualTo("application/octet-stream")
         }
 
         @Test
-        fun `isValidResponseType _ PAGE with HtmlResponse _ returns true`() {
+        fun `PAGE with HtmlResponse _ returns true`() {
             val response = HtmlResponse("<h1>Test</h1>")
 
             assertThat(RouteTypeEnum.PAGE.isValidResponseType(response)).isTrue
         }
 
         @Test
-        fun `isValidResponseType _ PAGE with JsonResponse _ returns false`() {
+        fun `PAGE with JsonResponse _ returns false`() {
             val response = JsonResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.PAGE.isValidResponseType(response)).isFalse
         }
 
         @Test
-        fun `isValidResponseType _ API with JsonResponse _ returns true`() {
+        fun `API with JsonResponse _ returns true`() {
             val response = JsonResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.API.isValidResponseType(response)).isTrue
         }
 
         @Test
-        fun `isValidResponseType _ API with HtmlResponse _ returns false`() {
+        fun `API with HtmlResponse _ returns false`() {
             val response = HtmlResponse("<h1>Test</h1>")
 
             assertThat(RouteTypeEnum.API.isValidResponseType(response)).isFalse
         }
 
         @Test
-        fun `isValidResponseType _ PAGE_API with JsonResponse _ returns true`() {
+        fun `PAGE_API with JsonResponse _ returns true`() {
             val response = JsonResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.PAGE_API.isValidResponseType(response)).isTrue
         }
 
         @Test
-        fun `isValidResponseType _ PAGE_API with HtmlResponse _ returns false`() {
+        fun `PAGE_API with HtmlResponse _ returns false`() {
             val response = HtmlResponse("<h1>Test</h1>")
 
             assertThat(RouteTypeEnum.PAGE_API.isValidResponseType(response)).isFalse
         }
 
         @Test
-        fun `isValidResponseType _ UNKNOWN with any response _ returns false`() {
+        fun `UNKNOWN with any response _ returns false`() {
             val htmlResponse = HtmlResponse("<h1>Test</h1>")
             val jsonResponse = JsonResponse(mapOf("test" to "value"))
 
@@ -170,22 +170,22 @@ class RouteAnnotationUtilTest {
         }
 
         @Test
-        fun `getExpectedResponseType _ PAGE _ returns HtmlResponse`() {
+        fun `PAGE _ returns HtmlResponse`() {
             assertThat(RouteTypeEnum.PAGE.getExpectedResponseType()).isEqualTo("HtmlResponse")
         }
 
         @Test
-        fun `getExpectedResponseType _ API _ returns JsonResponse`() {
+        fun `API _ returns JsonResponse`() {
             assertThat(RouteTypeEnum.API.getExpectedResponseType()).isEqualTo("JsonResponse")
         }
 
         @Test
-        fun `getExpectedResponseType _ PAGE_API _ returns JsonResponse`() {
+        fun `PAGE_API _ returns JsonResponse`() {
             assertThat(RouteTypeEnum.PAGE_API.getExpectedResponseType()).isEqualTo("JsonResponse")
         }
 
         @Test
-        fun `getExpectedResponseType _ UNKNOWN _ returns UnknownResponse`() {
+        fun `UNKNOWN _ returns UnknownResponse`() {
             assertThat(RouteTypeEnum.UNKNOWN.getExpectedResponseType()).isEqualTo("UnknownResponse")
         }
     }

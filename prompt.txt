@@ -1,0 +1,13 @@
+Now I have all the pieces. Please analyze the actual path generation logic:
+
+1. **WebBlockPageRouteDescriptor**: Look at lines 39-41. It gets relativePath, removes "pages/" prefix, and returns special case "/" for "landing", otherwise returns the path as-is. NO class name is included.
+
+2. **WebBlockApiRouteDescriptor**: Look at lines 37-41. It gets relativePath, gets classNameKebabCase, and returns "$relativePath/$classNameKebabCase". Class name IS included.
+
+3. **WebBlockPageApiRouteDescriptor**: Look at lines 37-42. It gets relativePath, removes "pages/" prefix, gets classNameKebabCase, and returns "page-api/$pagePathWithoutPages/$classNameKebabCase". Class name IS included.
+
+4. **RouteUtil.getRelativePath**: Look at lines 50-59. It takes the class package, removes the webRootPackage prefix, and converts to path format.
+
+Based on this analysis, the DOCUMENTATION is CORRECT and my TESTS are WRONG for Page Routes. Page routes should NOT include class names in the path, only directory structure. 
+
+Please confirm this analysis and identify what needs to be corrected in my tests.
