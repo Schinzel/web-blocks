@@ -52,6 +52,10 @@ and a file system based routing system this framework enables and encourages fea
 # Sample
 - [Sample](src/main/kotlin/io/schinzel/sample/README.md)
 
+# How to create task document
+For AIs
+- [Instructions](doc/workflow/task_documents.md)
+
 # Code Standards
 For developers and AIs such as Claude
 - [Code Standards](doc/code_standards/_index.md)
