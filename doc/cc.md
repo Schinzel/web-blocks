@@ -15,7 +15,7 @@ project_description
 IPageApiRoute remove?
 
 PageApi change to return raw html. Good idea. No success
-or future error message to display.
+or future error message to display
 
 Is observable block a good name?
 
