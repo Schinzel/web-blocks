@@ -9,11 +9,12 @@
 
 
 # To do
+- getResponse or something probably need to get it hands on the request object
 - Need to document that both GET and POST are set up automatically for (all three routes?)
 - "/src/main/kotlin/" is hard coded in SourceFileReader
 - Is this correct ObservablePageElement : IPageApiRoute, IPageElement?
 - Should resource files be snake-case or camel-case?
-- Session variable? 
+- Session variable?
 - Actually, for classpath resources you should always use forward slash '/', even on Windows!
   - Check where I use File.separator if this is correct!
 - Check how next does file routing when using the app router
@@ -36,7 +37,7 @@
 
 
 # How to build and run a JAR
-- Build a JAR: mvn clean package 
+- Build a JAR: mvn clean package
 - Run the JAR: java -jar myJar.jar
 
 
