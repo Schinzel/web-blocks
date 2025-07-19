@@ -1,9 +1,9 @@
 package io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block
 
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.NameDao
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.jsonSuccess
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 
 /**
@@ -14,8 +14,8 @@ import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 class UpdateFirstNameRoute(
     val userId: Int,
     val firstName: String,
-) : IWebBlockRoute {
-    override suspend fun getResponse(): IWebBlockResponse {
+) : IApiRoute {
+    override suspend fun getResponse(): IJsonResponse {
         NameDao(userId).setFirstName(firstName)
         return jsonSuccess("First name updated")
     }

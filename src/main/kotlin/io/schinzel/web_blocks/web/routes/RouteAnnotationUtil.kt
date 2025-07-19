@@ -1,8 +1,9 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.HtmlContentResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
@@ -50,7 +51,7 @@ object RouteAnnotationUtil {
      * @param clazz The class to validate
      * @throws IllegalArgumentException if validation fails
      */
-    fun validateRouteAnnotation(clazz: KClass<out IWebBlockRoute>) {
+    fun validateRouteAnnotation(clazz: KClass<out IWebBlockRoute<*>>) {
         val routeType = detectRouteType(clazz)
 
         if (routeType == RouteTypeEnum.UNKNOWN) {
@@ -94,9 +95,9 @@ enum class RouteTypeEnum {
      */
     fun isValidResponseType(response: IWebBlockResponse): Boolean =
         when (this) {
-            PAGE -> response is HtmlContentResponse
-            API -> response is JsonSuccessResponse
-            PAGE_API -> response is JsonSuccessResponse
+            PAGE -> response is IHtmlResponse
+            API -> response is IJsonResponse
+            PAGE_API -> response is IJsonResponse
             UNKNOWN -> false
         }
 

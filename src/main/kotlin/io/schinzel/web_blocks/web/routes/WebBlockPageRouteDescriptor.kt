@@ -24,7 +24,7 @@ class WebBlockPageRouteDescriptor(
         }
 
         @Suppress("UNCHECKED_CAST")
-        val webBlockRouteClass = clazz as KClass<out IWebBlockRoute>
+        val webBlockRouteClass = clazz as KClass<out IWebBlockRoute<*>>
 
         // Validate annotation
         RouteAnnotationUtil.validateRouteAnnotation(webBlockRouteClass)

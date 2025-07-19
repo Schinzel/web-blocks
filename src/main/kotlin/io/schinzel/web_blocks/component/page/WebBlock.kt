@@ -4,7 +4,9 @@ import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_blocks.web.request_handler.log.JsonMapper
 import io.schinzel.web_blocks.web.response.HtmlContentResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.HtmlErrorResponse
+import io.schinzel.web_blocks.web.response.HtmlRedirectResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
@@ -24,7 +26,7 @@ import kotlin.reflect.full.primaryConstructor
  * the HTML and JavaScript of the block.
  */
 abstract class WebBlock :
-    IWebBlockRoute,
+    IWebBlockRoute<IHtmlResponse>,
     IBlock {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<WebBlock> = mutableListOf()
@@ -47,9 +49,14 @@ abstract class WebBlock :
         val blockHtml =
             when (response) {
                 is HtmlContentResponse -> response.content
-                is JsonSuccessResponse -> {
-                    // For blocks that return JSON, convert to string
-                    response.data.toString()
+                is HtmlRedirectResponse -> {
+                    // For redirects in blocks, we might want to handle this differently
+                    // For now, just show a message
+                    "<p>Redirecting to: ${response.location}</p>"
+                }
+                is HtmlErrorResponse -> {
+                    // Display error content
+                    response.content
                 }
             }
         // Get the id of the observers
