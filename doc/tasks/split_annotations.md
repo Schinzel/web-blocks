@@ -1,4 +1,4 @@
-# Rename annotations
+# [Task Name]
 
 ## Current state
 - Current state: [To do / Doing / Done]
@@ -21,11 +21,24 @@ Focus on: /Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
 Look through the sample: /Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample
 
 ## Problem to solve
-Rename from:
-- @WebBlockApi to @Api - Works as before in all other aspects
-- @WebBlockPage → @Page - Works as before in all other aspects
-- Update documentation /Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
-- Update the sample that uses renamed annotations
+Split @WebBlockPageApi into to two types of routes:
+- @WebBlock
+  - HTML components. Returns HTML.
+  - Change the start of the route path from "page-api" -> "web-block"
+- @WebBlockApi
+  - JSON APIs for WebBlocks
+  - Typically does CRUD operations Returns JSON.
+  - Change the start of the route path from "page-api" -> "web-block-api"
+
+This would be a @WebBlock:
+/Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample/pages/page_with_blocks_and_page_api_route/blocks/update_name_block/UpdateNameBlock.kt
+
+This would be a @WebBlockApi:
+/Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample/pages/page_with_blocks_and_page_api_route/blocks/update_name_block/UpdateFirstNameRoute.kt
+
+- Update documentation: /Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
+- Make sure all links in the sample works:
+  - /Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample
   - /Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample/README.md
 
 ## AI Instructions for writing code
@@ -37,6 +50,7 @@ Follow the [code standards](../code_standards/_index.md)
   - `constructor _ valid asset class _ creates object with correct id`
 
 ## Acceptance Criteria
+- The annotation has been split into two
 - All links in the sample works
 - Documentation has been updated
 

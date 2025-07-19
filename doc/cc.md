@@ -4,10 +4,6 @@
 Read /Users/schinzel/code/web-blocks/doc/user_doc/0_index.md
 Focus on: /Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
 
-So currently there are 3 types of routes:
-- @WebBlockApi
-- @WebBlockPage
-- @WebBlockPageApi
 
 Rename from:
 - @WebBlockApi to @Api - Works as before in all other aspects
