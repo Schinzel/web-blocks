@@ -8,8 +8,8 @@ import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
 import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
 import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import org.reflections.Reflections
 import kotlin.reflect.KClass
@@ -53,8 +53,8 @@ class FindRoutes(
         val routes = mutableListOf<KClass<out IWebBlockRoute>>()
 
         // Find classes annotated with WebBlock route annotations
-        routes.addAll(findAnnotatedRoutes<WebBlockPage>())
-        routes.addAll(findAnnotatedRoutes<WebBlockApi>())
+        routes.addAll(findAnnotatedRoutes<Page>())
+        routes.addAll(findAnnotatedRoutes<Api>())
         routes.addAll(findAnnotatedRoutes<WebBlockPageApi>())
 
         return routes

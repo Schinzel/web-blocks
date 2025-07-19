@@ -23,7 +23,9 @@ import kotlin.reflect.full.primaryConstructor
  * Each block implements the function getResponse() which returns
  * the HTML and JavaScript of the block.
  */
-abstract class WebBlock : IWebBlockRoute, IBlock {
+abstract class WebBlock :
+    IWebBlockRoute,
+    IBlock {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<WebBlock> = mutableListOf()
 
@@ -93,7 +95,7 @@ abstract class WebBlock : IWebBlockRoute, IBlock {
                 parameterNameInKebabCase to (
                     property.get(this)
                         ?: throw IllegalStateException("Property ${prop.name} is null")
-                    )
+                )
             }
     }
 }

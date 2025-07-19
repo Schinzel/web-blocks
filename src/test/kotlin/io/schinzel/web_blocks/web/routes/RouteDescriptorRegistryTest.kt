@@ -3,8 +3,8 @@ package io.schinzel.web_blocks.web.routes
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -129,14 +129,14 @@ class RouteDescriptorRegistryTest {
     }
 
     // Test classes for descriptor registry testing
-    @WebBlockPage
+    @Page
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
 
         override fun getPath(): String = "/test-page"
     }
 
-    @WebBlockApi
+    @Api
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
 
@@ -156,7 +156,7 @@ class RouteDescriptorRegistryTest {
         override fun getPath(): String = "/test"
     }
 
-    @WebBlockApi
+    @Api
     private class TestUnregisteredTypeRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
 

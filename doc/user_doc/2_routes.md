@@ -7,12 +7,12 @@ There are 3 types of routes:
 
 ## API route
 
-| Attribute  | Description                           |
-|------------|---------------------------------------|
-| Annotation | `@WebBlockApi`                        |
-| Interface  | `WebBlockRoute`                       |
+| Attribute  | Description                                   |
+|------------|-----------------------------------------------|
+| Annotation | `@Api`                                        |
+| Interface  | `WebBlockRoute`                               |
 | Returns    | `WebBlockResponse` (typically `JsonResponse`) |
-| Location   | Located in the `api` directory        |
+| Location   | Located in the `api` directory                |
 
 | Property         | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
@@ -32,12 +32,12 @@ class UserPets : WebBlockRoute {
 
 ## Page route
 
-| Attribute  | Description                           |
-|------------|---------------------------------------|
-| Annotation | `@WebBlockPage`                       |
-| Interface  | `WebBlockRoute`                       |
+| Attribute  | Description                                   |
+|------------|-----------------------------------------------|
+| Annotation | `@Page`                                       |
+| Interface  | `WebBlockRoute`                               |
 | Returns    | `WebBlockResponse` (typically `HtmlResponse`) |
-| Location   | Located in the `pages` directory      |
+| Location   | Located in the `pages` directory              |
 
 | Property     | Description                                                                       |
 |--------------|-----------------------------------------------------------------------------------|

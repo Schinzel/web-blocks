@@ -22,5 +22,4 @@ package io.schinzel.web_blocks.web.routes.annotations
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-@Suppress("unused")
-annotation class WebBlockApi
+annotation class Api

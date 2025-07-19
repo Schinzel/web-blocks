@@ -2,8 +2,8 @@ package io.schinzel.web_blocks.web.routes
 
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -69,14 +69,14 @@ class WebBlockPageRouteDescriptorSimpleTest {
     }
 
     // Test classes for descriptor testing
-    @WebBlockPage
+    @Page
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
 
         override fun getPath(): String = "/test-page"
     }
 
-    @WebBlockApi
+    @Api
     private class TestWrongAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
 

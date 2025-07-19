@@ -3,7 +3,7 @@ package io.schinzel.web_blocks.web.routes
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
+import io.schinzel.web_blocks.web.routes.annotations.Api
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -114,7 +114,7 @@ class WebBlockPageRouteDescriptorTest {
 
     // Test classes for descriptor testing - these tests use the main test descriptor
     // For validation tests, we use specific test routes in appropriate package structures
-    @WebBlockApi
+    @Api
     private class TestWrongAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
 

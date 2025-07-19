@@ -11,8 +11,8 @@ import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
 import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
 import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import io.schinzel.web_blocks.web.set_up_routes.FindRoutes
 import kotlinx.coroutines.runBlocking
@@ -153,14 +153,14 @@ class AnnotationRoutingIntegrationTest {
     }
 
     // Test classes for integration testing
-    @WebBlockPage
+    @Page
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test page")
 
         override fun getPath(): String = "/test-page"
     }
 
-    @WebBlockApi
+    @Api
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test api")
 

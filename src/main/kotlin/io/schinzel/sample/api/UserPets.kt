@@ -3,10 +3,10 @@ package io.schinzel.sample.api
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.json
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
+import io.schinzel.web_blocks.web.routes.annotations.Api
 
-@WebBlockApi
 @Suppress("unused")
+@Api
 class UserPets : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse =
         json(

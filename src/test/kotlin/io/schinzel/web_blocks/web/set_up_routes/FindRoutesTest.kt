@@ -6,8 +6,8 @@ import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -133,14 +133,14 @@ class FindRoutesTest {
     }
 
     // Test classes for route discovery testing
-    @WebBlockPage
+    @Page
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test page")
 
         override fun getPath(): String = "/test-page"
     }
 
-    @WebBlockApi
+    @Api
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test api")
 
@@ -160,6 +160,6 @@ class FindRoutesTest {
         override fun getPath(): String = "/test"
     }
 
-    @WebBlockPage
+    @Page
     private class TestNonRouteClass
 }

@@ -3,9 +3,9 @@ package io.schinzel.sample.pages.landing
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Page
 
-@WebBlockPage
+@Page
 @Suppress("unused")
 class LandingPage : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse =

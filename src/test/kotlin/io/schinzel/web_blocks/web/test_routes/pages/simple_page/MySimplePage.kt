@@ -3,10 +3,10 @@ package io.schinzel.web_blocks.web.test_routes.pages.simple_page
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Page
 
 @Suppress("unused")
-@WebBlockPage
+@Page
 class MySimplePage : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse =
         html(

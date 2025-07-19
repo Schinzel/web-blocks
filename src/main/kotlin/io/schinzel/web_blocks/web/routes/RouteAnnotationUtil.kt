@@ -3,8 +3,8 @@ package io.schinzel.web_blocks.web.routes
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import kotlin.reflect.KClass
 
@@ -24,8 +24,8 @@ object RouteAnnotationUtil {
      * @throws IllegalArgumentException if multiple route annotations are present
      */
     fun detectRouteType(clazz: KClass<*>): RouteTypeEnum {
-        val hasPage = clazz.annotations.any { it is WebBlockPage }
-        val hasApi = clazz.annotations.any { it is WebBlockApi }
+        val hasPage = clazz.annotations.any { it is Page }
+        val hasApi = clazz.annotations.any { it is Api }
         val hasPageApi = clazz.annotations.any { it is WebBlockPageApi }
 
         val annotationCount = listOf(hasPage, hasApi, hasPageApi).count { it }

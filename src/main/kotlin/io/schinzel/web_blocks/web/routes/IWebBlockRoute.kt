@@ -28,6 +28,7 @@ import io.schinzel.web_blocks.web.response.WebBlockResponse
  *
  * Written by Claude Sonnet 4
  */
+
 interface IWebBlockRoute : IRoute {
     /**
      * Generate the response content for this route.

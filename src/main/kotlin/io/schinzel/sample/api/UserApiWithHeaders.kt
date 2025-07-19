@@ -3,7 +3,7 @@ package io.schinzel.sample.api
 import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
+import io.schinzel.web_blocks.web.routes.annotations.Api
 
 /**
  * The purpose of this class is to demonstrate using JsonResponseBuilder
@@ -11,8 +11,8 @@ import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
  *
  * Written by Claude Sonnet 4
  */
-@WebBlockApi
 @Suppress("unused")
+@Api
 class UserApiWithHeaders(
     val userId: Int = 123,
 ) : IWebBlockRoute {

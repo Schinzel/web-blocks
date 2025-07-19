@@ -3,7 +3,7 @@ package io.schinzel.sample.pages.java_style_page
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
+import io.schinzel.web_blocks.web.routes.annotations.Page
 
 /**
  * The purpose of this class is to demonstrate builder usage
@@ -11,7 +11,7 @@ import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
  *
  * Written by Claude Sonnet 4
  */
-@WebBlockPage
+@Page
 @Suppress("unused")
 class JavaStylePage : IWebBlockRoute {
     override suspend fun getResponse(): WebBlockResponse =
