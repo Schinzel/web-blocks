@@ -1,8 +1,10 @@
 
-
+Test failiing?
 
 IPageApiRoute remove?
 Where are the new descriptors
+
+Om tog bort getPath från IRoute. Kan vi då göra auto doc?
 
 
 Should they return WebBlockResponse or HtmlResponse JsonResponse???

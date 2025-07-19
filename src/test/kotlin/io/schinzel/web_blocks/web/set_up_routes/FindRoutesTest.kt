@@ -6,12 +6,10 @@ import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
-import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPage
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -96,11 +94,11 @@ class FindRoutesTest {
         fun `validates multiple annotations throw exception`() {
             val testPackage = "io.schinzel.web_blocks.web.set_up_routes.invalid"
             val testFindRoutes = FindRoutes(testPackage)
-            
+
             // This test would need a separate package with test classes that have multiple annotations
             // For now, we'll just verify the validation logic works by checking the test classes exist
             val routes = testFindRoutes.getAnnotationBasedRoutes()
-            
+
             assertThat(routes).isNotNull
         }
     }
@@ -138,23 +136,27 @@ class FindRoutesTest {
     @WebBlockPage
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test page")
+
         override fun getPath(): String = "/test-page"
     }
 
     @WebBlockApi
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test api")
+
         override fun getPath(): String = "/api/test"
     }
 
     @WebBlockPageApi
     private class TestPageApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test page api")
+
         override fun getPath(): String = "page-api/test"
     }
 
     private class TestNoAnnotationRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+
         override fun getPath(): String = "/test"
     }
 

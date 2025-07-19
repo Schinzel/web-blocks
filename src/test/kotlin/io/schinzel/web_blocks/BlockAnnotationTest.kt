@@ -15,15 +15,15 @@ class BlockAnnotationTest {
         // Test GreetingBlock
         val greetingBlockType = RouteAnnotationUtil.detectRouteType(GreetingBlock::class)
         assertThat(greetingBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
-        
+
         // Test IntroductionTextBlock
         val introBlockType = RouteAnnotationUtil.detectRouteType(IntroductionTextBlock::class)
         assertThat(introBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
-        
+
         // Test UpdateNameBlock
         val updateBlockType = RouteAnnotationUtil.detectRouteType(UpdateNameBlock::class)
         assertThat(updateBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
-        
+
         // Test WelcomeBlock
         val welcomeBlockType = RouteAnnotationUtil.detectRouteType(WelcomeBlock::class)
         assertThat(welcomeBlockType).isEqualTo(RouteTypeEnum.PAGE_API)

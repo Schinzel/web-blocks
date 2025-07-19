@@ -6,7 +6,6 @@ import io.schinzel.web_blocks.web.request_handler.log.JsonMapper
 import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor

@@ -35,6 +35,6 @@ Follow the [code standards](../code_standards/_index.md)
 ### Standard Acceptance Criteria
 - Go through [code standards](../code_standards/_index.md) and verify that the code and the tests added follow the standards
 - mvn ktlint:format
-- ktlint:check
+- mvn ktlint:check
 - mvn compile -DskipTests
 - mvn test

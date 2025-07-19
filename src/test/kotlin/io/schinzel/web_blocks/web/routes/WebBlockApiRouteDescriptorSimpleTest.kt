@@ -39,7 +39,7 @@ class WebBlockApiRouteDescriptorSimpleTest {
         fun `api annotated route _ does not throw exception`() {
             // This test verifies that the method can be called without throwing an exception
             val path = descriptor.getRoutePath(TestApiRoute::class)
-            
+
             assertThat(path).isNotNull
         }
 
@@ -72,22 +72,26 @@ class WebBlockApiRouteDescriptorSimpleTest {
     @WebBlockApi
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/api/test"
     }
 
     @WebBlockPage
     private class TestWrongAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/test"
     }
 
     private class TestNoAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/test"
     }
 
     private class TestNonRouteClass : IRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/test"
     }
 }

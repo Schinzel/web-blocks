@@ -35,15 +35,15 @@ class AnnotationRoutingIntegrationTest {
         // Register route descriptors for integration tests
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE,
-            WebBlockPageRouteDescriptor(endpointPackage)
+            WebBlockPageRouteDescriptor(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.API,
-            WebBlockApiRouteDescriptor(endpointPackage)
+            WebBlockApiRouteDescriptor(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE_API,
-            WebBlockPageApiRouteDescriptor(endpointPackage)
+            WebBlockPageApiRouteDescriptor(endpointPackage),
         )
     }
 
@@ -61,7 +61,7 @@ class AnnotationRoutingIntegrationTest {
             // Verify route works end-to-end
             assertThat(response).isInstanceOf(HtmlResponse::class.java)
             assertThat((response as HtmlResponse).content).isEqualTo("test page")
-            
+
             // Verify route type detection works
             val routeType = RouteAnnotationUtil.detectRouteType(TestPageRoute::class)
             assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE)
@@ -78,7 +78,7 @@ class AnnotationRoutingIntegrationTest {
             // Verify route works end-to-end
             assertThat(response).isInstanceOf(JsonResponse::class.java)
             assertThat((response as JsonResponse).data).isEqualTo("test api")
-            
+
             // Verify route type detection works
             val routeType = RouteAnnotationUtil.detectRouteType(TestApiRoute::class)
             assertThat(routeType).isEqualTo(RouteTypeEnum.API)
@@ -95,7 +95,7 @@ class AnnotationRoutingIntegrationTest {
             // Verify route works end-to-end
             assertThat(response).isInstanceOf(JsonResponse::class.java)
             assertThat((response as JsonResponse).data).isEqualTo("test page api")
-            
+
             // Verify route type detection works
             val routeType = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
             assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE_API)
@@ -152,23 +152,25 @@ class AnnotationRoutingIntegrationTest {
         }
     }
 
-
     // Test classes for integration testing
     @WebBlockPage
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test page")
+
         override fun getPath(): String = "/test-page"
     }
 
     @WebBlockApi
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test api")
+
         override fun getPath(): String = "/api/test"
     }
 
     @WebBlockPageApi
     private class TestPageApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test page api")
+
         override fun getPath(): String = "page-api/test"
     }
 }

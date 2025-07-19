@@ -39,7 +39,7 @@ class WebBlockPageRouteDescriptorSimpleTest {
         fun `page annotated route _ does not throw exception`() {
             // This test verifies that the method can be called without throwing an exception
             val path = descriptor.getRoutePath(TestPageRoute::class)
-            
+
             assertThat(path).isNotNull
         }
 
@@ -72,22 +72,26 @@ class WebBlockPageRouteDescriptorSimpleTest {
     @WebBlockPage
     private class TestPageRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+
         override fun getPath(): String = "/test-page"
     }
 
     @WebBlockApi
     private class TestWrongAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+
         override fun getPath(): String = "/test"
     }
 
     private class TestNoAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+
         override fun getPath(): String = "/test"
     }
 
     private class TestNonRouteClass : IRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+
         override fun getPath(): String = "/test"
     }
 }

@@ -1,6 +1,5 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.HtmlResponse
 import io.schinzel.web_blocks.web.response.JsonResponse
 import io.schinzel.web_blocks.web.response.WebBlockResponse
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
@@ -82,34 +81,40 @@ class WebBlockPageApiRouteDescriptorTest {
     @WebBlockPageApi
     private class TestSimplePageApi : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "page-api/simple-page/simple-page-api"
     }
 
     @WebBlockPageApi
     private class TestPageApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "page-api/user-profile/test-page-api"
     }
 
     @WebBlockPageApi
     private class TestSubdirPageApi : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "page-api/user-profile/subdir/test-subdir-page-api"
     }
 
     @WebBlockApi
     private class TestWrongAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/api/test"
     }
 
     private class TestNoAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "page-api/test"
     }
 
     private class TestNonRouteClass : IRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/test"
     }
 }

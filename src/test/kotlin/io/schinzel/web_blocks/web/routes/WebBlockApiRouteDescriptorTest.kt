@@ -94,34 +94,40 @@ class WebBlockApiRouteDescriptorTest {
     @WebBlockApi
     private class TestSimpleApi : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/api/simple-api"
     }
 
     @WebBlockApi
     private class TestApiRoute : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/api/test-api"
     }
 
     @WebBlockApi
     private class TestSubdirApi : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/api/subdir/test-subdir-api"
     }
 
     @WebBlockPage
     private class TestWrongAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+
         override fun getPath(): String = "/test"
     }
 
     private class TestNoAnnotation : IWebBlockRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/api/test"
     }
 
     private class TestNonRouteClass : IRoute {
         override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+
         override fun getPath(): String = "/test"
     }
 }

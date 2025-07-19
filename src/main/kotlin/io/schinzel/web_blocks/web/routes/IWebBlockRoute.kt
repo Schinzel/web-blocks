@@ -41,18 +41,4 @@ interface IWebBlockRoute : IRoute {
      * @return WebBlockResponse containing the route's response data, status code, and headers
      */
     override suspend fun getResponse(): WebBlockResponse
-
-    /**
-     * Get the URL path for this route
-     * based on its file system location and annotation type.
-     *
-     * Path generation rules:
-     * - @WebBlockPage: Uses directory structure from /pages
-     * - @WebBlockApi: Uses directory structure from /api + class name
-     * - @WebBlockPageApi: Uses directory structure from /pages + class name with /page-api prefix
-     *
-     * @return String representing the URL path for this route
-     */
-    // Override commented out to use default implementation from IRoute
-    // override fun getPath(): String
 }
