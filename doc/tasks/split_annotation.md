@@ -1,4 +1,4 @@
-# [Task Name]
+# Split WebBlockPageApi Annotation
 
 ## Current state
 - Current state: [To do / Doing / Done]
@@ -14,6 +14,10 @@
 ## Instructions on how to use and fill out this document
 - When a task is started or completed, fill out section Current state
 - When a task is completed fill out section Task summary
+
+## Dependencies
+- This task depends on the completion of task: rename_annotations.md
+- Assumes @WebBlockPageApi has been renamed to @WebBlockApi in that task
 
 ## Background
 Read /Users/schinzel/code/web-blocks/doc/user_doc/0_index.md
@@ -51,6 +55,8 @@ Follow the [code standards](../code_standards/_index.md)
 
 ## Acceptance Criteria
 - The annotation has been split into two
+- UpdateNameBlock should be accessible at: /web-block/page-with-blocks-and-page-api-route/blocks/update-name-block/update-name-block
+- UpdateFirstNameRoute should be accessible at: /web-block-api/page-with-blocks-and-page-api-route/blocks/update-name-block/update-first-name
 - All links in the sample works
 - Documentation has been updated
 
