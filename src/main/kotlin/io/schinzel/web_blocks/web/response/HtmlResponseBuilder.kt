@@ -37,8 +37,8 @@ class HtmlResponseBuilder {
     /**
      * The purpose of this function is to build the final HtmlResponse object.
      */
-    fun build(): HtmlResponse {
+    fun build(): HtmlContentResponse {
         require(content.isNotEmpty()) { "HTML content cannot be empty" }
-        return HtmlResponse(content, status, headers.toMap())
+        return HtmlContentResponse(content, status, headers.toMap())
     }
 }

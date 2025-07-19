@@ -1,10 +1,10 @@
 package io.schinzel.sample.api
 
-import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 
 @Api
-class ApiRouteThatThrowsError : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = throw RuntimeException("Something went wrong!!")
+class ApiRouteThatThrowsError : IApiRoute {
+    override suspend fun getResponse(): IJsonResponse = throw RuntimeException("Something went wrong!!")
 }

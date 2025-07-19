@@ -1,14 +1,16 @@
 package io.schinzel.sample.pages.simple_page
 
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.html
+import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
 
 @Page
 @Suppress("unused")
-class ThePage : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse =
+class ThePage : IHtmlRoute {
+    override suspend fun getResponse(): IHtmlResponse =
         html(
             """
            |<!DOCTYPE html>

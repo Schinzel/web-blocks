@@ -1,7 +1,9 @@
 package io.schinzel.sample.api
 
-import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.response.json
+import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.jsonSuccess
+import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 
@@ -9,12 +11,12 @@ import io.schinzel.web_blocks.web.routes.annotations.Api
 @Api
 class UserInformationEndpoint(
     private val userId: String = "",
-) : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse {
+) : IApiRoute {
+    override suspend fun getResponse(): IJsonResponse {
         if (userId.isNotEmpty()) {
-            return json(UserInformation(userId, "Jane Doe", 24))
+            return jsonSuccess(UserInformation(userId, "Jane Doe", 24))
         }
-        return json(UserInformation("", "", 0))
+        return jsonSuccess(UserInformation("", "", 0))
     }
 
     data class UserInformation(

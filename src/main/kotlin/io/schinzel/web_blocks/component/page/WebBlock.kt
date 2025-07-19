@@ -3,8 +3,8 @@ package io.schinzel.web_blocks.component.page
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil
 import io.schinzel.web_blocks.web.request_handler.log.JsonMapper
-import io.schinzel.web_blocks.web.response.HtmlResponse
-import io.schinzel.web_blocks.web.response.JsonResponse
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
@@ -46,8 +46,8 @@ abstract class WebBlock :
         val response = this.getResponse()
         val blockHtml =
             when (response) {
-                is HtmlResponse -> response.content
-                is JsonResponse -> {
+                is HtmlContentResponse -> response.content
+                is JsonSuccessResponse -> {
                     // For blocks that return JSON, convert to string
                     response.data.toString()
                 }

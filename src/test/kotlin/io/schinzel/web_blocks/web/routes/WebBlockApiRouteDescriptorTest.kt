@@ -1,8 +1,8 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.HtmlResponse
-import io.schinzel.web_blocks.web.response.JsonResponse
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import org.assertj.core.api.Assertions.assertThat
@@ -93,40 +93,40 @@ class WebBlockApiRouteDescriptorTest {
     // Test classes for descriptor testing
     @Api
     private class TestSimpleApi : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
 
         override fun getPath(): String = "/api/simple-api"
     }
 
     @Api
     private class TestApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
 
         override fun getPath(): String = "/api/test-api"
     }
 
     @Api
     private class TestSubdirApi : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
 
         override fun getPath(): String = "/api/subdir/test-subdir-api"
     }
 
     @Page
     private class TestWrongAnnotation : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("test")
+        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
 
         override fun getPath(): String = "/test"
     }
 
     private class TestNoAnnotation : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
 
         override fun getPath(): String = "/api/test"
     }
 
     private class TestNonRouteClass : IRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse("test")
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
 
         override fun getPath(): String = "/test"
     }

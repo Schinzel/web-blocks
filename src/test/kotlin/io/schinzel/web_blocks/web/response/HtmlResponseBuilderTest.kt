@@ -19,7 +19,7 @@ class HtmlResponseBuilderTest {
         fun `setContent _ with valid content _ content is set correctly`() {
             val content = "<h1>Hello World</h1>"
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent(content)
                     .build()
@@ -30,7 +30,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `setContent _ called twice _ second call replaces first`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<h1>First</h1>")
                     .setContent("<h1>Second</h1>")
@@ -41,7 +41,7 @@ class HtmlResponseBuilderTest {
 
         @Test
         fun `setContent _ returns builder _ allows method chaining`() {
-            val builder = HtmlResponse.builder()
+            val builder = HtmlContentResponse.builder()
             val result = builder.setContent("<p>Test</p>")
 
             assertThat(result).isSameAs(builder)
@@ -55,7 +55,7 @@ class HtmlResponseBuilderTest {
         fun `setStatus _ with custom status _ status is set correctly`() {
             val expectedStatus = 201
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Created</p>")
                     .setStatus(expectedStatus)
@@ -67,7 +67,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `setStatus _ called twice _ second call replaces first`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .setStatus(201)
@@ -80,7 +80,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `setStatus _ not called _ defaults to 200`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .build()
@@ -95,7 +95,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `addHeader _ single header _ header is added correctly`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeader("X-Custom-Header", "test-value")
@@ -109,7 +109,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `addHeader _ called multiple times _ all headers are included`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeader("X-First", "1")
@@ -125,7 +125,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `addHeader _ same key twice _ second value replaces first`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeader("X-Value", "first")
@@ -145,7 +145,7 @@ class HtmlResponseBuilderTest {
         fun `addHeaders _ with map _ all headers are added`() {
             val headersToAdd = mapOf("X-First" to "1", "X-Second" to "2")
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeaders(headersToAdd)
@@ -160,7 +160,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `addHeaders _ merges with existing headers _ all headers present`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeader("X-Existing", "existing")
@@ -176,7 +176,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `addHeaders _ with empty map _ no headers added`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeaders(emptyMap())
@@ -192,7 +192,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `build _ content not set _ throws IllegalArgumentException`() {
             val builder =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setStatus(200)
 
@@ -204,7 +204,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `build _ empty content _ throws IllegalArgumentException`() {
             val builder =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("")
 
@@ -220,7 +220,7 @@ class HtmlResponseBuilderTest {
             val headers = mapOf("X-Custom" to "value")
 
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent(content)
                     .setStatus(status)
@@ -235,7 +235,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `build _ headers are immutable _ original builder not affected by changes`() {
             val builder =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Test</p>")
                     .addHeader("X-Original", "value")
@@ -255,7 +255,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `builder _ java style method calls _ works without named parameters`() {
             val response =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<h1>Java Style</h1>")
                     .setStatus(201)
@@ -270,7 +270,7 @@ class HtmlResponseBuilderTest {
         @Test
         fun `builder _ method chaining order independence _ any order works`() {
             val response1 =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .setContent("<p>Content first</p>")
                     .setStatus(200)
@@ -278,7 +278,7 @@ class HtmlResponseBuilderTest {
                     .build()
 
             val response2 =
-                HtmlResponse
+                HtmlContentResponse
                     .builder()
                     .addHeader("X-Order", "2")
                     .setStatus(200)

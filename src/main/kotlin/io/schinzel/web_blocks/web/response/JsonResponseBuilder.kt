@@ -37,8 +37,8 @@ class JsonResponseBuilder {
     /**
      * The purpose of this function is to build the final JsonResponse object.
      */
-    fun build(): JsonResponse {
+    fun build(): JsonSuccessResponse {
         requireNotNull(data) { "JSON data cannot be null" }
-        return JsonResponse(data!!, status, headers.toMap())
+        return JsonSuccessResponse(data!!, status, headers.toMap())
     }
 }

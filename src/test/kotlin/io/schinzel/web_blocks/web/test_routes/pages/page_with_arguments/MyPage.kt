@@ -1,6 +1,6 @@
 package io.schinzel.web_blocks.web.test_routes.pages.page_with_arguments
 
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
@@ -12,7 +12,7 @@ class MyPage(
     private val myString: String,
     private val myBoolean: Boolean,
 ) : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse =
+    override suspend fun getResponse(): IWebBlockResponse =
         html(
             """
             <!DOCTYPE html>

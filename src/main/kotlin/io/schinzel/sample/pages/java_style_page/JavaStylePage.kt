@@ -1,8 +1,8 @@
 package io.schinzel.sample.pages.java_style_page
 
-import io.schinzel.web_blocks.web.response.HtmlResponse
-import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
 
 /**
@@ -13,9 +13,9 @@ import io.schinzel.web_blocks.web.routes.annotations.Page
  */
 @Page
 @Suppress("unused")
-class JavaStylePage : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse =
-        HtmlResponse
+class JavaStylePage : IHtmlRoute {
+    override suspend fun getResponse(): IHtmlResponse =
+        HtmlContentResponse
             .builder()
             .setContent(generateContent())
             .setStatus(200)

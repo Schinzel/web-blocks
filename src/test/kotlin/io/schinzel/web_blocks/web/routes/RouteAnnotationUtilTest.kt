@@ -1,8 +1,8 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.HtmlResponse
-import io.schinzel.web_blocks.web.response.JsonResponse
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
@@ -120,53 +120,53 @@ class RouteAnnotationUtilTest {
 
         @Test
         fun `PAGE with HtmlResponse _ returns true`() {
-            val response = HtmlResponse("<h1>Test</h1>")
+            val response = HtmlContentResponse("<h1>Test</h1>")
 
             assertThat(RouteTypeEnum.PAGE.isValidResponseType(response)).isTrue
         }
 
         @Test
         fun `PAGE with JsonResponse _ returns false`() {
-            val response = JsonResponse(mapOf("test" to "value"))
+            val response = JsonSuccessResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.PAGE.isValidResponseType(response)).isFalse
         }
 
         @Test
         fun `API with JsonResponse _ returns true`() {
-            val response = JsonResponse(mapOf("test" to "value"))
+            val response = JsonSuccessResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.API.isValidResponseType(response)).isTrue
         }
 
         @Test
         fun `API with HtmlResponse _ returns false`() {
-            val response = HtmlResponse("<h1>Test</h1>")
+            val response = HtmlContentResponse("<h1>Test</h1>")
 
             assertThat(RouteTypeEnum.API.isValidResponseType(response)).isFalse
         }
 
         @Test
         fun `PAGE_API with JsonResponse _ returns true`() {
-            val response = JsonResponse(mapOf("test" to "value"))
+            val response = JsonSuccessResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.PAGE_API.isValidResponseType(response)).isTrue
         }
 
         @Test
         fun `PAGE_API with HtmlResponse _ returns false`() {
-            val response = HtmlResponse("<h1>Test</h1>")
+            val response = HtmlContentResponse("<h1>Test</h1>")
 
             assertThat(RouteTypeEnum.PAGE_API.isValidResponseType(response)).isFalse
         }
 
         @Test
         fun `UNKNOWN with any response _ returns false`() {
-            val htmlResponse = HtmlResponse("<h1>Test</h1>")
-            val jsonResponse = JsonResponse(mapOf("test" to "value"))
+            val htmlResponse = HtmlContentResponse("<h1>Test</h1>")
+            val jsonSuccessResponse = JsonSuccessResponse(mapOf("test" to "value"))
 
             assertThat(RouteTypeEnum.UNKNOWN.isValidResponseType(htmlResponse)).isFalse
-            assertThat(RouteTypeEnum.UNKNOWN.isValidResponseType(jsonResponse)).isFalse
+            assertThat(RouteTypeEnum.UNKNOWN.isValidResponseType(jsonSuccessResponse)).isFalse
         }
 
         @Test
@@ -193,27 +193,27 @@ class RouteAnnotationUtilTest {
     // Test classes for route annotation testing
     @Page
     private class TestPageRoute : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("<h1>Test</h1>")
 
         override fun getPath(): String = "/test-page"
     }
 
     @Api
     private class TestApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse(mapOf("test" to "value"))
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse(mapOf("test" to "value"))
 
         override fun getPath(): String = "/api/test"
     }
 
     @WebBlockPageApi
     private class TestPageApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = JsonResponse(mapOf("test" to "value"))
+        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse(mapOf("test" to "value"))
 
         override fun getPath(): String = "/page-api/test"
     }
 
     private class TestNoAnnotationRoute : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("<h1>Test</h1>")
 
         override fun getPath(): String = "/test"
     }
@@ -221,7 +221,7 @@ class RouteAnnotationUtilTest {
     @Page
     @Api
     private class TestMultipleAnnotationsRoute : IWebBlockRoute {
-        override suspend fun getResponse(): WebBlockResponse = HtmlResponse("<h1>Test</h1>")
+        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("<h1>Test</h1>")
 
         override fun getPath(): String = "/test"
     }

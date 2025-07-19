@@ -1,8 +1,8 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.HtmlResponse
-import io.schinzel.web_blocks.web.response.JsonResponse
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
@@ -92,11 +92,11 @@ enum class RouteTypeEnum {
      * @param response The response to validate
      * @return true if the response type is valid for this route type
      */
-    fun isValidResponseType(response: WebBlockResponse): Boolean =
+    fun isValidResponseType(response: IWebBlockResponse): Boolean =
         when (this) {
-            PAGE -> response is HtmlResponse
-            API -> response is JsonResponse
-            PAGE_API -> response is JsonResponse
+            PAGE -> response is HtmlContentResponse
+            API -> response is JsonSuccessResponse
+            PAGE_API -> response is JsonSuccessResponse
             UNKNOWN -> false
         }
 

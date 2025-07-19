@@ -2,9 +2,9 @@ package io.schinzel.web_blocks.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.web_blocks.web.request_handler.log.LogEntry
-import io.schinzel.web_blocks.web.response.HtmlResponse
-import io.schinzel.web_blocks.web.response.JsonResponse
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import org.jsoup.Jsoup
@@ -20,7 +20,7 @@ suspend fun sendResponse(
     prettyFormatHtml: Boolean,
 ) {
     // Get the WebBlockResponse from the route
-    val response: WebBlockResponse = route.getResponse()
+    val response: IWebBlockResponse = route.getResponse()
 
     // Set custom headers if provided
     response.headers.forEach { (key, value) ->
@@ -32,7 +32,7 @@ suspend fun sendResponse(
 
     // Send response based on type
     when (response) {
-        is HtmlResponse -> {
+        is HtmlContentResponse -> {
             val formattedHtml =
                 if (prettyFormatHtml) {
                     prettyFormatHtml(response.content)
@@ -42,7 +42,7 @@ suspend fun sendResponse(
             ctx.html(formattedHtml)
         }
 
-        is JsonResponse -> {
+        is JsonSuccessResponse -> {
             val responseObject = ApiResponse.Success(message = response.data)
             ctx.json(responseObject)
             logEntry.responseLog.response = responseObject

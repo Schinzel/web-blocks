@@ -4,8 +4,10 @@ import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.intro
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateNameBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_block.WelcomeBlock
 import io.schinzel.web_blocks.component.page.PageBuilder
-import io.schinzel.web_blocks.web.response.WebBlockResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.html
+import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
 
@@ -18,8 +20,8 @@ import io.schinzel.web_blocks.web.routes.annotations.Page
 @Suppress("unused")
 class WelcomePage(
     private val userId: Int,
-) : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse {
+) : IHtmlRoute {
+    override suspend fun getResponse(): IHtmlResponse {
         // Create blocks
         val welcomeBlock = WelcomeBlock(userId)
         val updateNameBlock = UpdateNameBlock(userId)

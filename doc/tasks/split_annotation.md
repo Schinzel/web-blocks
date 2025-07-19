@@ -20,9 +20,9 @@
 - Assumes @WebBlockPageApi has been renamed to @WebBlockApi in that task
 
 ## Background
-Read /Users/schinzel/code/web-blocks/doc/user_doc/0_index.md
-Focus on: /Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
-Look through the sample: /Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample
+- Read /Users/schinzel/code/web-blocks/doc/user_doc/0_index.md
+- Focus on: /Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
+- Look through the sample: /Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample
 
 ## Problem to solve
 Split @WebBlockPageApi into to two types of routes:

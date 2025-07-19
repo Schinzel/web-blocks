@@ -1,15 +1,17 @@
 package io.schinzel.sample.api
 
-import io.schinzel.web_blocks.web.response.WebBlockResponse
-import io.schinzel.web_blocks.web.response.json
+import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.jsonSuccess
+import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 
 @Suppress("unused")
 @Api
-class UserPets : IWebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse =
-        json(
+class UserPets : IApiRoute {
+    override suspend fun getResponse(): IJsonResponse =
+        jsonSuccess(
             listOf(
                 Pet("Fluffy", "Cat"),
                 Pet("Rex", "Dog"),

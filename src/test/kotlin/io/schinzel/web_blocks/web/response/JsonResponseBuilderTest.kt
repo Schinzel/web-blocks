@@ -19,7 +19,7 @@ class JsonResponseBuilderTest {
         fun `setData _ with string data _ data is set correctly`() {
             val data = "test string"
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(data)
                     .build()
@@ -31,7 +31,7 @@ class JsonResponseBuilderTest {
         fun `setData _ with map data _ data is set correctly`() {
             val data = mapOf("key" to "value", "count" to 42)
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(data)
                     .build()
@@ -43,7 +43,7 @@ class JsonResponseBuilderTest {
         fun `setData _ with list data _ data is set correctly`() {
             val data = listOf("item1", "item2", "item3")
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(data)
                     .build()
@@ -54,7 +54,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `setData _ called twice _ second call replaces first`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("first")
                     .setData("second")
@@ -65,7 +65,7 @@ class JsonResponseBuilderTest {
 
         @Test
         fun `setData _ returns builder _ allows method chaining`() {
-            val builder = JsonResponse.builder()
+            val builder = JsonSuccessResponse.builder()
             val result = builder.setData("test")
 
             assertThat(result).isSameAs(builder)
@@ -75,7 +75,7 @@ class JsonResponseBuilderTest {
         fun `setData _ with custom object _ preserves object structure`() {
             val user = TestUser("John", 30)
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(user)
                     .build()
@@ -91,7 +91,7 @@ class JsonResponseBuilderTest {
         fun `setStatus _ with custom status _ status is set correctly`() {
             val expectedStatus = 201
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("created")
                     .setStatus(expectedStatus)
@@ -103,7 +103,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `setStatus _ called twice _ second call replaces first`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .setStatus(201)
@@ -116,7 +116,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `setStatus _ not called _ defaults to 200`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .build()
@@ -131,7 +131,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `addHeader _ single header _ header is added correctly`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeader("X-Custom-Header", "test-value")
@@ -145,7 +145,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `addHeader _ called multiple times _ all headers are included`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeader("X-First", "1")
@@ -161,7 +161,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `addHeader _ same key twice _ second value replaces first`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeader("X-Value", "first")
@@ -181,7 +181,7 @@ class JsonResponseBuilderTest {
         fun `addHeaders _ with map _ all headers are added`() {
             val headersToAdd = mapOf("X-First" to "1", "X-Second" to "2")
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeaders(headersToAdd)
@@ -196,7 +196,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `addHeaders _ merges with existing headers _ all headers present`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeader("X-Existing", "existing")
@@ -212,7 +212,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `addHeaders _ with empty map _ no headers added`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeaders(emptyMap())
@@ -228,7 +228,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `build _ data not set _ throws IllegalArgumentException`() {
             val builder =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setStatus(200)
 
@@ -244,7 +244,7 @@ class JsonResponseBuilderTest {
             val headers = mapOf("X-Custom" to "value")
 
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(data)
                     .setStatus(status)
@@ -259,7 +259,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `build _ headers are immutable _ original builder not affected by changes`() {
             val builder =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .addHeader("X-Original", "value")
@@ -280,7 +280,7 @@ class JsonResponseBuilderTest {
         fun `builder _ java style method calls _ works without named parameters`() {
             val data = mapOf("user" to "john", "role" to "admin")
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(data)
                     .setStatus(201)
@@ -295,7 +295,7 @@ class JsonResponseBuilderTest {
         @Test
         fun `builder _ method chaining order independence _ any order works`() {
             val response1 =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("data first")
                     .setStatus(200)
@@ -303,7 +303,7 @@ class JsonResponseBuilderTest {
                     .build()
 
             val response2 =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .addHeader("X-Order", "2")
                     .setStatus(200)
@@ -325,7 +325,7 @@ class JsonResponseBuilderTest {
                 )
 
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData(complexData)
                     .build()
@@ -339,8 +339,8 @@ class JsonResponseBuilderTest {
     inner class StaticFactoryMethod {
         @Test
         fun `JsonResponse builder _ creates new instance _ each call independent`() {
-            val builder1 = JsonResponse.builder()
-            val builder2 = JsonResponse.builder()
+            val builder1 = JsonSuccessResponse.builder()
+            val builder2 = JsonSuccessResponse.builder()
 
             assertThat(builder1).isNotSameAs(builder2)
         }
@@ -348,12 +348,12 @@ class JsonResponseBuilderTest {
         @Test
         fun `JsonResponse builder _ from companion object _ works correctly`() {
             val response =
-                JsonResponse
+                JsonSuccessResponse
                     .builder()
                     .setData("test")
                     .build()
 
-            assertThat(response).isInstanceOf(JsonResponse::class.java)
+            assertThat(response).isInstanceOf(JsonSuccessResponse::class.java)
             assertThat(response.data).isEqualTo("test")
         }
     }
