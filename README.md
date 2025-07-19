@@ -49,9 +49,6 @@ and a file system based routing system this framework enables and encourages fea
 # Documentation
 - [User Documentation](doc/user_doc/0_index.md)
 
-# Sample
-- [Sample](src/main/kotlin/io/schinzel/sample/README.md)
-
 # Stack
 - [Stack](doc/project_description/stack.md)
 
