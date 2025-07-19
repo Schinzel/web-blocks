@@ -23,16 +23,14 @@ import kotlin.reflect.full.primaryConstructor
  * Each block implements the function getResponse() which returns
  * the HTML and JavaScript of the block.
  */
-abstract class ObservableBlock :
-    IWebBlockRoute,
-    IBlock {
+abstract class WebBlock : IWebBlockRoute, IBlock {
     private val guid: String = RandomUtil.getRandomString(15)
-    private val observers: MutableList<ObservableBlock> = mutableListOf()
+    private val observers: MutableList<WebBlock> = mutableListOf()
 
     /**
      * Adds an observer to the list of observers.
      */
-    fun addObserver(observer: ObservableBlock): ObservableBlock {
+    fun addObserver(observer: WebBlock): WebBlock {
         observers.add(observer)
         return this
     }
@@ -87,7 +85,7 @@ abstract class ObservableBlock :
             // Filter out the properties that are not constructor parameters
             .filter { it.name in constructorParamNames }
             .associate { prop ->
-                val property = prop as KProperty1<ObservableBlock, *>
+                val property = prop as KProperty1<WebBlock, *>
                 // Convert the parameter name to kebab case
                 val parameterNameInKebabCase =
                     StandardTextCases.SOFT_CAMEL_CASE
@@ -95,7 +93,7 @@ abstract class ObservableBlock :
                 parameterNameInKebabCase to (
                     property.get(this)
                         ?: throw IllegalStateException("Property ${prop.name} is null")
-                )
+                    )
             }
     }
 }
