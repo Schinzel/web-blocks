@@ -33,7 +33,7 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
                 RequestHandler(routeMapping, webAppConfig)
                     .getHandler()
             // Register both GET and POST handlers for the same path
-            javalin.getAndPost(routeMapping.path, requestHandler)
+            javalin.getAndPost(routeMapping.routePath, requestHandler)
         }
     javalin.get("ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())

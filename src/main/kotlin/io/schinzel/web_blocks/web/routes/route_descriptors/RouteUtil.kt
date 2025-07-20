@@ -1,7 +1,6 @@
 package io.schinzel.web_blocks.web.routes.route_descriptors
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
-import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_blocks.web.routes.IRoute
 import java.io.File
 import kotlin.reflect.KClass
@@ -19,13 +18,6 @@ object RouteUtil {
         return toKebabCase(classNameWithoutSuffixes)
     }
 
-    fun removeSuffixesAndToKebabCase(
-        clazzSimpleName: String,
-        suffixesToRemove: List<String>,
-    ): String {
-        val classNameWithoutSuffixes = removeSuffixes(clazzSimpleName, suffixesToRemove)
-        return toKebabCase(classNameWithoutSuffixes)
-    }
 
     /**
      * Removes the suffixes from a string
@@ -60,24 +52,11 @@ object RouteUtil {
     fun getRelativePath(
         webRootPackage: String,
         clazz: KClass<out IRoute>,
-    ): String = getRelativePath(webRootPackage, clazz.java.packageName)
-
-
-    fun getRelativePath(
-        webRootPackage: String,
-        classPackageName: String,
-    ): String =
-        "/" + classPackageName
-            .removePrefix(webRootPackage)
-            .removePrefix(".")
-            .replace(".", File.separatorChar.toString())
-            .replace("_", "-")
-}
-
-fun main() {
-    RouteUtil
-        .getRelativePath("io.schinzel.samples.component", "io.schinzel.samples.component.settings.address")
-        .println()
+    ): String = clazz.java.packageName
+        .removePrefix(webRootPackage)
+        .removePrefix(".")
+        .replace(".", File.separatorChar.toString())
+        .replace("_", "-")
 }
 
 

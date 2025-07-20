@@ -28,7 +28,7 @@ class RequestHandler(
                     )
 
                 val startTime = System.currentTimeMillis()
-                logEntry.requestLog.path = routeMapping.path
+                logEntry.requestLog.path = routeMapping.routePath
                 logEntry.requestLog.requestBody = ctx.body()
 
                 val hasNoArguments = routeMapping.parameters.isEmpty()

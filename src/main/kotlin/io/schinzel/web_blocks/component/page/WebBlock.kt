@@ -7,6 +7,7 @@ import io.schinzel.web_blocks.web.response.HtmlContentResponse
 import io.schinzel.web_blocks.web.response.HtmlErrorResponse
 import io.schinzel.web_blocks.web.response.HtmlRedirectResponse
 import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
@@ -26,7 +27,7 @@ import kotlin.reflect.full.primaryConstructor
  * the HTML and JavaScript of the block.
  */
 abstract class WebBlock :
-    IWebBlockRoute<IHtmlResponse>,
+    IHtmlRoute,
     IBlock {
     private val guid: String = RandomUtil.getRandomString(15)
     private val observers: MutableList<WebBlock> = mutableListOf()

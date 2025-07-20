@@ -15,17 +15,15 @@ class RouteMapping(
     val routeClass: KClass<out IRoute>,
 ) {
     val parameters: List<Parameter> = getConstructorParameters(routeClass)
-    val path: String
+    val routePath: String
 
     // WebPage, API and so on
     val type: String
     val returnType: ReturnTypeEnum
 
     init {
-        val routeDescriptor =
-            RouteDescriptorRegistry
-                .getRouteDescriptor(routeClass)
-        path = routeDescriptor.getRoutePath(routeClass)
+        val routeDescriptor = RouteDescriptorRegistry.getRouteDescriptor(routeClass)
+        routePath = routeDescriptor.getRoutePath(routeClass)
         type = routeDescriptor.getTypeName()
         returnType = routeDescriptor.getReturnType()
     }
@@ -34,5 +32,5 @@ class RouteMapping(
         routeClass.primaryConstructor
             ?: throw IllegalStateException("No primary constructor found for ${routeClass.simpleName}")
 
-    override fun toString(): String = "RouteMapping(type='$type', path='$path', parameters=$parameters)"
+    override fun toString(): String = "RouteMapping(type='$type', path='$routePath', parameters=$parameters)"
 }
