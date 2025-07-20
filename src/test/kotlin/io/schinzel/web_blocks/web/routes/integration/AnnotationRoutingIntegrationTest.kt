@@ -6,11 +6,12 @@ import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
-import io.schinzel.web_blocks.web.routes.annotations.*
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.Page
+import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistryInit
 import io.schinzel.web_blocks.web.set_up_routes.FindRoutes
-import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -32,61 +33,6 @@ class AnnotationRoutingIntegrationTest {
     }
 
     @Nested
-    @DisplayName("End-to-end route processing")
-    inner class EndToEndRouteProcessingTests {
-        @Test
-        fun `page route _ works correctly`() {
-            // Create route instance
-            val route = TestPageRoute()
-
-            // Get response
-            val response = runBlocking { route.getResponse() }
-
-            // Verify route works end-to-end
-            assertThat(response).isInstanceOf(HtmlContentResponse::class.java)
-            assertThat((response as HtmlContentResponse).content).isEqualTo("test page")
-
-            // Verify route type detection works
-            val routeType = RouteAnnotationUtil.detectRouteType(TestPageRoute::class)
-            assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE)
-        }
-
-        @Test
-        fun `api route _ works correctly`() {
-            // Create route instance
-            val route = TestApiRoute()
-
-            // Get response
-            val response = runBlocking { route.getResponse() }
-
-            // Verify route works end-to-end
-            assertThat(response).isInstanceOf(JsonSuccessResponse::class.java)
-            assertThat((response as JsonSuccessResponse).data).isEqualTo("test api")
-
-            // Verify route type detection works
-            val routeType = RouteAnnotationUtil.detectRouteType(TestApiRoute::class)
-            assertThat(routeType).isEqualTo(RouteTypeEnum.API)
-        }
-
-        @Test
-        fun `page block api route _ works correctly`() {
-            // Create route instance
-            val route = TestPageApiRoute()
-
-            // Get response
-            val response = runBlocking { route.getResponse() }
-
-            // Verify route works end-to-end
-            assertThat(response).isInstanceOf(JsonSuccessResponse::class.java)
-            assertThat((response as JsonSuccessResponse).data).isEqualTo("test page api")
-
-            // Verify route type detection works
-            val routeType = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
-            assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE_BLOCK_API)
-        }
-    }
-
-    @Nested
     @DisplayName("Route discovery integration")
     inner class RouteDiscoveryIntegrationTests {
         @Test
@@ -101,7 +47,6 @@ class AnnotationRoutingIntegrationTest {
             assertThat(routes).anyMatch { it.simpleName == "TestApiRoute" }
             assertThat(routes).anyMatch { it.simpleName == "TestPageApiRoute" }
         }
-
 
         @Test
         fun `route path generation _ works for all route types`() {

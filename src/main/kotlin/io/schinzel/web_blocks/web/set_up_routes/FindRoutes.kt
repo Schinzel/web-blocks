@@ -9,7 +9,6 @@ import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
-import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistryInit
 import org.reflections.Reflections

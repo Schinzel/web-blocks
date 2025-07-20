@@ -17,9 +17,7 @@ object RouteDescriptorRegistry {
     /**
      * Register a descriptor for annotation-based routes
      */
-    fun registerAnnotation(
-        descriptor: IRouteDescriptor<IRoute>,
-    ): RouteDescriptorRegistry {
+    fun registerAnnotation(descriptor: IRouteDescriptor<IRoute>): RouteDescriptorRegistry {
         routeDescriptors.add(descriptor)
         return this
     }
@@ -31,5 +29,4 @@ object RouteDescriptorRegistry {
         routeDescriptors.find { descriptor ->
             clazz.annotations.any { it.annotationClass == descriptor.annotation }
         } ?: throw RuntimeException("No route descriptor found for $clazz")
-
 }

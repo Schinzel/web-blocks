@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
  * Written by Claude Sonnet 4
  */
 class ReturnTypeEnumTest {
-
     @Nested
     @DisplayName("getContentType")
     inner class GetContentTypeTests {

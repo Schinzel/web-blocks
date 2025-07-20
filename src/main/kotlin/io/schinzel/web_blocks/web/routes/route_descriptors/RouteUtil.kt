@@ -18,7 +18,6 @@ object RouteUtil {
         return toKebabCase(classNameWithoutSuffixes)
     }
 
-
     /**
      * Removes the suffixes from a string
      */
@@ -52,11 +51,10 @@ object RouteUtil {
     fun getRelativePath(
         webRootPackage: String,
         clazz: KClass<out IRoute>,
-    ): String = clazz.java.packageName
-        .removePrefix(webRootPackage)
-        .removePrefix(".")
-        .replace(".", File.separatorChar.toString())
-        .replace("_", "-")
+    ): String =
+        clazz.java.packageName
+            .removePrefix(webRootPackage)
+            .removePrefix(".")
+            .replace(".", File.separatorChar.toString())
+            .replace("_", "-")
 }
-
-

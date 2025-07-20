@@ -33,7 +33,6 @@ interface IRouteDescriptor<T : IRoute> {
      */
     fun getTypeName(): String
 
-
     fun validateRouteAnnotation(routeClass: KClass<out IRoute>) {
         // Ensure class has correct annotation
         if (!routeClass.annotations.any { it.annotationClass == annotation }) {

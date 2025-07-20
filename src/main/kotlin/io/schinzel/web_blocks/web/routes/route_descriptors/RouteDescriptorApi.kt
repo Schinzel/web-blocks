@@ -5,8 +5,6 @@ import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.Api
-import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
 
 /**
@@ -33,22 +31,25 @@ class RouteDescriptorApi(
         val relativePathRouteClass = RouteUtil.getRelativePath(endpointPackage, routeClass)
         return getRoutePathFromRelativePath(
             relativePathRouteClass,
-            routeClass.simpleName!!
+            routeClass.simpleName!!,
         )
     }
 
     override fun getRoutePathFromRelativePath(
         relativePathRouteClass: String,
-        classSimpleName: String
+        classSimpleName: String,
     ): String {
-        val relativePathRouteClassKebabCase = StandardTextCases.SNAKE_CASE
-            .convertTo(StandardTextCases.KEBAB_CASE, relativePathRouteClass)
+        val relativePathRouteClassKebabCase =
+            StandardTextCases.SNAKE_CASE
+                .convertTo(StandardTextCases.KEBAB_CASE, relativePathRouteClass)
         // Remove suffixes
-        val clazzSimpleNameNoSuffixes = RouteUtil
-            .removeSuffixes(classSimpleName, suffixesToRemove)
+        val clazzSimpleNameNoSuffixes =
+            RouteUtil
+                .removeSuffixes(classSimpleName, suffixesToRemove)
         // Convert to kebab case
-        val classNameNoSuffixesKebabCase = RouteUtil
-            .toKebabCase(clazzSimpleNameNoSuffixes)
+        val classNameNoSuffixesKebabCase =
+            RouteUtil
+                .toKebabCase(clazzSimpleNameNoSuffixes)
         // Compile route path
         return "/$relativePathRouteClassKebabCase/$classNameNoSuffixesKebabCase"
     }

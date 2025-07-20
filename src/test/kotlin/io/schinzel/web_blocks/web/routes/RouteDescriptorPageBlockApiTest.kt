@@ -24,10 +24,11 @@ class RouteDescriptorPageBlockApiTest {
     inner class GetRoutePathFromRelativePathTests {
         @Test
         fun `page api path _ returns page-block-api prefixed path with directory and class name`() {
-            val path = descriptor.getRoutePathFromRelativePath(
-                "pages/page_with_blocks_and_page_api_route/blocks/update_name_block",
-                "UpdateFirstNamePageBlockApi"
-            )
+            val path =
+                descriptor.getRoutePathFromRelativePath(
+                    "pages/page_with_blocks_and_page_api_route/blocks/update_name_block",
+                    "UpdateFirstNamePageBlockApi",
+                )
             assertThat(path).isEqualTo("/page-block-api/page-with-blocks-and-page-api-route/blocks/update-name-block/update-first-name")
         }
 

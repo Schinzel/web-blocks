@@ -5,8 +5,6 @@ import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.Page
-import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
 
 /**
@@ -36,13 +34,13 @@ class RouteDescriptorPage(
         return getRoutePathFromRelativePath(relativePathRouteClass, "")
     }
 
-
     override fun getRoutePathFromRelativePath(
         relativePathRouteClass: String,
         classSimpleName: String,
     ): String {
-        val relativePathRouteClassKebabCase = StandardTextCases.SNAKE_CASE
-            .convertTo(StandardTextCases.KEBAB_CASE, relativePathRouteClass)
+        val relativePathRouteClassKebabCase =
+            StandardTextCases.SNAKE_CASE
+                .convertTo(StandardTextCases.KEBAB_CASE, relativePathRouteClass)
         // Remove pages/ from start of path
         val pagePathWithoutPages = relativePathRouteClassKebabCase.removePrefix("pages/")
         val returnPath = if (pagePathWithoutPages == "landing") "/" else "/$pagePathWithoutPages"
@@ -59,5 +57,4 @@ class RouteDescriptorPage(
     }
 
     override fun getTypeName() = "PageRoute"
-
 }
