@@ -9,7 +9,6 @@ sealed interface IWebBlockResponse {
     val headers: Map<String, String> get() = emptyMap()
 }
 
-
 /**
  * The purpose of this interface is to group all HTML-related responses
  * including content, redirects, and errors.
@@ -39,7 +38,7 @@ data class HtmlContentResponse(
 data class HtmlRedirectResponse(
     val location: String,
     override val status: Int = 302,
-    override val headers: Map<String, String> = emptyMap()
+    override val headers: Map<String, String> = emptyMap(),
 ) : IHtmlResponse
 
 /**
@@ -49,9 +48,8 @@ data class HtmlErrorResponse(
     val content: String,
     override val status: Int,
     val errorCode: String? = null,
-    override val headers: Map<String, String> = emptyMap()
+    override val headers: Map<String, String> = emptyMap(),
 ) : IHtmlResponse
-
 
 /**
  * The purpose of this interface is to group all JSON-related responses
@@ -85,7 +83,6 @@ data class JsonErrorResponse(
     override val status: Int = 500,
     override val headers: Map<String, String> = emptyMap(),
 ) : IJsonResponse {
-
     /**
      * The purpose of this class is to structure error information
      * in a consistent format for API consumers.

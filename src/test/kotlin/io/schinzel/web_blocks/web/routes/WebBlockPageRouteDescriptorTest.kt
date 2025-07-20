@@ -1,8 +1,9 @@
 package io.schinzel.web_blocks.web.routes
 
 import io.schinzel.web_blocks.web.response.HtmlContentResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -115,21 +116,13 @@ class WebBlockPageRouteDescriptorTest {
     // Test classes for descriptor testing - these tests use the main test descriptor
     // For validation tests, we use specific test routes in appropriate package structures
     @Api
-    private class TestWrongAnnotation : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
-
-        override fun getPath(): String = "/api/test"
+    private class TestWrongAnnotation : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
-    private class TestNoAnnotation : IWebBlockRoute {
+    private class TestNoAnnotation : IWebBlockRoute<IWebBlockResponse> {
         override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
     }
 
-    private class TestNonRouteClass : IRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
-    }
+    private class TestNonRouteClass : IRoute
 }

@@ -1,18 +1,19 @@
 # Routes
 
 There are 3 types of routes:
+
 - API route - a standalone route that returns JSON
 - Page route - an HTML-page which returns HTML
 - Page API route - an route that belongs to an HTML-page and returns JSON
 
 ## API route
 
-| Attribute  | Description                                   |
-|------------|-----------------------------------------------|
-| Annotation | `@Api`                                        |
-| Interface  | `WebBlockRoute`                               |
-| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
-| Location   | Located in the `api` directory                |
+| Attribute  | Description                    |
+|------------|--------------------------------|
+| Annotation | `@Api`                         |
+| Interface  | `IApiRoute`                    |
+| Returns    | `IJsonResponse`                |
+| Location   | Located in the `api` directory |
 
 | Property         | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
@@ -26,18 +27,18 @@ There are 3 types of routes:
 ```kotlin
 @WebBlockApi
 class UserPets : WebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
+  override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
 }
 ```
 
 ## Page route
 
-| Attribute  | Description                                   |
-|------------|-----------------------------------------------|
-| Annotation | `@Page`                                       |
-| Interface  | `WebBlockRoute`                               |
-| Returns    | `WebBlockResponse` (typically `HtmlResponse`) |
-| Location   | Located in the `pages` directory              |
+| Attribute  | Description                      |
+|------------|----------------------------------|
+| Annotation | `@Page`                          |
+| Interface  | `IHtmlRoute`                     |
+| Returns    | ``IHtmlResponse`                 |
+| Location   | Located in the `pages` directory |
 
 | Property     | Description                                                                       |
 |--------------|-----------------------------------------------------------------------------------|
@@ -49,7 +50,7 @@ class UserPets : WebBlockRoute {
 ```kotlin
 @WebBlockPage
 class ThePage : WebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
+  override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
 }
 ```
 
@@ -58,12 +59,12 @@ class ThePage : WebBlockRoute {
 These are assume to be tied to pages as opposed to being standalone endpoints like the API routes.
 Used by pages to for example save data or update an element on a the page.
 
-| Attribute  | Description                           |
-|------------|---------------------------------------|
-| Annotation | `@WebBlockPageApi`                    |
-| Interface  | `WebBlockRoute`                       |
-| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
-| Location   | Located in the `pages` directory      |
+| Attribute  | Description                                    |
+|------------|------------------------------------------------|
+| Annotation | `@WebBlockPageApi`                             |
+| Interface  | `IWebBlockRoute`                               |
+| Returns    | `IWebBlockResponse` (typically `JsonResponse`) |
+| Location   | Located in the `pages` directory               |
 
 | Property         | Description                                                                                                               |
 |------------------|---------------------------------------------------------------------------------------------------------------------------|
@@ -77,13 +78,14 @@ Used by pages to for example save data or update an element on a the page.
 ```kotlin
 @WebBlockPageApi
 class SavePersonNameRoute : WebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
+  override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
 }
 ```
 
-
 ## Parameters
+
 Arguments to pages, api endpoints and page endpoints can be passed as:
+
 - Query parameters
 - Request body
 - These are stated a constructor arguments that are declared as `val` and non-private (public)
@@ -91,12 +93,13 @@ Arguments to pages, api endpoints and page endpoints can be passed as:
 
 ## Status Code Control
 
-The framework and implementing classes share responsibility for HTTP status codes. When a route successfully executes and returns a WebBlockResponse, the implementing class has final authority over the status code.
+The framework and implementing classes share responsibility for HTTP status codes. When a route successfully executes
+and returns a WebBlockResponse, the implementing class has final authority over the status code.
 
-| Scenario | Who Controls | Status Code | Example |
-|----------|-------------|-------------|---------|
-| Route not found | Framework | 404 | `GET /does-not-exist` |
-| Uncaught exception in route | Framework | 500 | Route throws `RuntimeException` |
-| Parameter parsing fails | Framework | 400 | Invalid query parameter format |
-| Request body invalid | Framework | 400 | Malformed JSON in POST body |
-| Route returns response | **Implementing Class** | **Any** | `JsonResponse(data, status = 201)` |
+| Scenario                    | Who Controls           | Status Code | Example                            |
+|-----------------------------|------------------------|-------------|------------------------------------|
+| Route not found             | Framework              | 404         | `GET /does-not-exist`              |
+| Uncaught exception in route | Framework              | 500         | Route throws `RuntimeException`    |
+| Parameter parsing fails     | Framework              | 400         | Invalid query parameter format     |
+| Request body invalid        | Framework              | 400         | Malformed JSON in POST body        |
+| Route returns response      | **Implementing Class** | **Any**     | `JsonResponse(data, status = 201)` |

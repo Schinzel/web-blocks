@@ -18,10 +18,6 @@ import org.reflections.Reflections
 import kotlin.reflect.KClass
 import kotlin.reflect.full.hasAnnotation
 import kotlin.reflect.full.isSubclassOf
-import kotlin.reflect.full.hasAnnotation
-import kotlin.reflect.full.isSubclassOf
-import kotlin.reflect.full.hasAnnotation
-import kotlin.reflect.full.isSubclassOf
 
 /**
  * The purpose of this class is to discover and register annotation-based routes
@@ -89,13 +85,19 @@ class FindRoutes(
                     // Then validate interface requirements
                     when {
                         route.hasAnnotation<Page>() && !route.isSubclassOf(IHtmlRoute::class) ->
-                            throw IllegalStateException("@Page annotated class ${route.simpleName} must implement IHtmlRoute")
+                            throw IllegalStateException(
+                                "@Page annotated class ${route.simpleName} must implement IHtmlRoute",
+                            )
 
                         route.hasAnnotation<Api>() && !route.isSubclassOf(IApiRoute::class) ->
-                            throw IllegalStateException("@Api annotated class ${route.simpleName} must implement IApiRoute")
-                        
+                            throw IllegalStateException(
+                                "@Api annotated class ${route.simpleName} must implement IApiRoute",
+                            )
+
                         route.hasAnnotation<WebBlockPageApi>() && !route.isSubclassOf(IApiRoute::class) ->
-                            throw IllegalStateException("@WebBlockPageApi annotated class ${route.simpleName} must implement IApiRoute")
+                            throw IllegalStateException(
+                                "@WebBlockPageApi annotated class ${route.simpleName} must implement IApiRoute",
+                            )
                     }
                 }
             }

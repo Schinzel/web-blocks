@@ -63,7 +63,10 @@ class JsonErrorResponseBuilder {
      * @param value Header value
      * @return This builder for method chaining
      */
-    fun withHeader(name: String, value: String): JsonErrorResponseBuilder {
+    fun withHeader(
+        name: String,
+        value: String,
+    ): JsonErrorResponseBuilder {
         this.headers[name] = value
         return this
     }
@@ -82,15 +85,15 @@ class JsonErrorResponseBuilder {
      * Builds the JsonErrorResponse with the configured values.
      * @return A new JsonErrorResponse instance
      */
-    fun build(): JsonErrorResponse {
-        return JsonErrorResponse(
-            error = JsonErrorResponse.ErrorData(
-                code = code,
-                message = message,
-                details = details
-            ),
+    fun build(): JsonErrorResponse =
+        JsonErrorResponse(
+            error =
+                JsonErrorResponse.ErrorData(
+                    code = code,
+                    message = message,
+                    details = details,
+                ),
             status = status,
-            headers = headers.toMap() // Return immutable copy
+            headers = headers.toMap(), // Return immutable copy
         )
-    }
 }

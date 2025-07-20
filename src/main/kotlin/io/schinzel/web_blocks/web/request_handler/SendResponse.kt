@@ -5,9 +5,9 @@ import io.schinzel.web_blocks.web.request_handler.log.LogEntry
 import io.schinzel.web_blocks.web.response.HtmlContentResponse
 import io.schinzel.web_blocks.web.response.HtmlErrorResponse
 import io.schinzel.web_blocks.web.response.HtmlRedirectResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
-import io.schinzel.web_blocks.web.response.JsonErrorResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.JsonErrorResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
@@ -24,9 +24,10 @@ suspend fun sendResponse(
     prettyFormatHtml: Boolean,
 ) {
     // Cast route to IWebBlockRoute to get response
-    val webBlockRoute = route as? IWebBlockRoute<*>
-        ?: throw IllegalArgumentException("Route must implement IWebBlockRoute")
-    
+    val webBlockRoute =
+        route as? IWebBlockRoute<*>
+            ?: throw IllegalArgumentException("Route must implement IWebBlockRoute")
+
     // Get the WebBlockResponse from the route
     val response: IWebBlockResponse = webBlockRoute.getResponse()
 
@@ -73,10 +74,11 @@ suspend fun sendResponse(
         }
 
         is JsonErrorResponse -> {
-            val responseObject = ApiResponse.Error(
-                message = response.error.message,
-                errorId = response.error.code
-            )
+            val responseObject =
+                ApiResponse.Error(
+                    message = response.error.message,
+                    errorId = response.error.code,
+                )
             ctx.json(responseObject)
             logEntry.responseLog.response = responseObject
         }

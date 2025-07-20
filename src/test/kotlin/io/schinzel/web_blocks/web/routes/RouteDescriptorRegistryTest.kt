@@ -1,8 +1,10 @@
 package io.schinzel.web_blocks.web.routes
 
 import io.schinzel.web_blocks.web.response.HtmlContentResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
@@ -130,42 +132,28 @@ class RouteDescriptorRegistryTest {
 
     // Test classes for descriptor registry testing
     @Page
-    private class TestPageRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test-page"
+    private class TestPageRoute : IHtmlRoute {
+        override suspend fun getResponse(): IHtmlResponse = HtmlContentResponse("test")
     }
 
     @Api
-    private class TestApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
-
-        override fun getPath(): String = "/api/test"
+    private class TestApiRoute : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
     @WebBlockPageApi
-    private class TestPageApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
-
-        override fun getPath(): String = "page-api/test"
+    private class TestPageApiRoute : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
-    private class TestNoAnnotationRoute : IWebBlockRoute {
+    private class TestNoAnnotationRoute : IWebBlockRoute<IWebBlockResponse> {
         override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
     }
 
     @Api
-    private class TestUnregisteredTypeRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
-
-        override fun getPath(): String = "/api/unregistered"
+    private class TestUnregisteredTypeRoute : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
-    private class TestNonRouteClass : IRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
-    }
+    private class TestNonRouteClass : IRoute
 }

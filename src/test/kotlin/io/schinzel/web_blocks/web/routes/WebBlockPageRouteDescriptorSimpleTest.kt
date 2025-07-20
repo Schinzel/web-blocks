@@ -1,7 +1,10 @@
 package io.schinzel.web_blocks.web.routes
 
 import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import org.assertj.core.api.Assertions.assertThat
@@ -70,28 +73,18 @@ class WebBlockPageRouteDescriptorSimpleTest {
 
     // Test classes for descriptor testing
     @Page
-    private class TestPageRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test-page"
+    private class TestPageRoute : IHtmlRoute {
+        override suspend fun getResponse(): IHtmlResponse = HtmlContentResponse("test")
     }
 
     @Api
-    private class TestWrongAnnotation : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
+    private class TestWrongAnnotation : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
-    private class TestNoAnnotation : IWebBlockRoute {
+    private class TestNoAnnotation : IWebBlockRoute<IWebBlockResponse> {
         override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
     }
 
-    private class TestNonRouteClass : IRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
-    }
+    private class TestNonRouteClass : IRoute
 }

@@ -1,14 +1,14 @@
 package io.schinzel.web_blocks.web.test_routes.pages.simple_page
 
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
 
 @Suppress("unused")
 @Page
-class MySimplePage : IWebBlockRoute {
-    override suspend fun getResponse(): IWebBlockResponse =
+class MySimplePage : IHtmlRoute {
+    override suspend fun getResponse(): IHtmlResponse =
         html(
             """
             <!DOCTYPE html>
