@@ -8,7 +8,7 @@ import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 
 @PageBlock
-class UpdateNameBlock(
+class UpdateNamePageBlock(
     val userId: Int,
 ) : WebBlock() {
     private val firstName = NameDao(userId).getFirstName()

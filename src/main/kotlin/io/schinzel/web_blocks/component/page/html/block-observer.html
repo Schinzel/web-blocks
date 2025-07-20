@@ -55,7 +55,7 @@
 
             try {
                 const response = await $.ajax({
-                    url: `/${endpointPath}`,
+                    url: `${endpointPath}`,
                     method: "POST",
                     data: JSON.stringify(args),
                     contentType: "application/json",

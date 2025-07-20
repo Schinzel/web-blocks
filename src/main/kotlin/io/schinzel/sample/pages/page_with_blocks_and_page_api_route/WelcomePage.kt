@@ -1,7 +1,7 @@
 package io.schinzel.sample.pages.page_with_blocks_and_page_api_route
 
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.intro_text.IntroductionTextBlock
-import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateNameBlock
+import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateNamePageBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_block.WelcomeBlock
 import io.schinzel.web_blocks.component.page.PageBuilder
 import io.schinzel.web_blocks.web.response.IHtmlResponse
@@ -22,7 +22,7 @@ class WelcomePage(
     override suspend fun getResponse(): IHtmlResponse {
         // Create blocks
         val welcomeBlock = WelcomeBlock(userId)
-        val updateNameBlock = UpdateNameBlock(userId)
+        val updateNameBlock = UpdateNamePageBlock(userId)
         val introTextBlock = IntroductionTextBlock(userId)
 
         // Set up observers

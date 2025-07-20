@@ -11,7 +11,7 @@ import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
  */
 @Suppress("unused")
 @PageBlockApi
-class UpdateFirstNameRoute(
+class UpdateFirstNamePageBlockApi(
     val userId: Int,
     val firstName: String,
 ) : IApiRoute {

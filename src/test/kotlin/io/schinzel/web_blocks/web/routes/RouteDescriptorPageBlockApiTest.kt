@@ -1,6 +1,5 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateFirstNameRoute
 import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
@@ -8,7 +7,6 @@ import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPageBlockApi
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
