@@ -1,12 +1,9 @@
-package io.schinzel.web_blocks.web.routes
+package io.schinzel.web_blocks.web.routes.annotations
 
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.annotations.Api
-import io.schinzel.web_blocks.web.routes.annotations.Page
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import kotlin.reflect.KClass
 
 /**

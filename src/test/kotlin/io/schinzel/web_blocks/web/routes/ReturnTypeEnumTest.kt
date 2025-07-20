@@ -1,5 +1,6 @@
 package io.schinzel.web_blocks.web.routes
 
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName

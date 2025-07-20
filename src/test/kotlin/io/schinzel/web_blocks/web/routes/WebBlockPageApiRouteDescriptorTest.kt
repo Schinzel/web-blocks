@@ -5,6 +5,7 @@ import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorApi
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.Test
  * Written by Claude Sonnet 4
  */
 class WebBlockPageApiRouteDescriptorTest {
-    private val descriptor = WebBlockPageApiRouteDescriptor("io.schinzel.sample")
+    private val descriptor = RouteDescriptorApi("io.schinzel.sample")
 
     @Nested
     @DisplayName("getRoutePath")

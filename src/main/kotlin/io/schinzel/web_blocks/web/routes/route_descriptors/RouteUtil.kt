@@ -1,6 +1,7 @@
-package io.schinzel.web_blocks.web.routes
+package io.schinzel.web_blocks.web.routes.route_descriptors
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
+import io.schinzel.web_blocks.web.routes.IRoute
 import java.io.File
 import kotlin.reflect.KClass
 

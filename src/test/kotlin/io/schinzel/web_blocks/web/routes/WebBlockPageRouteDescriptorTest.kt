@@ -5,6 +5,7 @@ import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPage
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.Test
  * Written by Claude Sonnet 4
  */
 class WebBlockPageRouteDescriptorTest {
-    private val descriptor = WebBlockPageRouteDescriptor("io.schinzel.web_blocks.web.test_routes")
+    private val descriptor = RouteDescriptorPage("io.schinzel.web_blocks.web.test_routes")
 
     @Nested
     @DisplayName("getRoutePath")
@@ -38,7 +39,7 @@ class WebBlockPageRouteDescriptorTest {
 
         @Test
         fun `page class with api prefix _ throws exception`() {
-            val testDescriptor = WebBlockPageRouteDescriptor("io.schinzel.web_blocks.web.test_routes2")
+            val testDescriptor = RouteDescriptorPage("io.schinzel.web_blocks.web.test_routes2")
             assertThatThrownBy {
                 testDescriptor.getRoutePath(io.schinzel.web_blocks.web.test_routes2.pages.api.MyPage::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
@@ -48,7 +49,7 @@ class WebBlockPageRouteDescriptorTest {
 
         @Test
         fun `page class with page-api prefix _ throws exception`() {
-            val testDescriptor = WebBlockPageRouteDescriptor("io.schinzel.web_blocks.web.test_routes4")
+            val testDescriptor = RouteDescriptorPage("io.schinzel.web_blocks.web.test_routes4")
             assertThatThrownBy {
                 testDescriptor.getRoutePath(io.schinzel.web_blocks.web.test_routes4.page_api.static.MyPage::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
@@ -58,7 +59,7 @@ class WebBlockPageRouteDescriptorTest {
 
         @Test
         fun `page class with static prefix _ throws exception`() {
-            val testDescriptor = WebBlockPageRouteDescriptor("io.schinzel.web_blocks.web.test_routes3")
+            val testDescriptor = RouteDescriptorPage("io.schinzel.web_blocks.web.test_routes3")
             assertThatThrownBy {
                 testDescriptor.getRoutePath(io.schinzel.web_blocks.web.test_routes3.pages.static.MyPage::class)
             }.isInstanceOf(IllegalArgumentException::class.java)

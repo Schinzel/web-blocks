@@ -1,16 +1,21 @@
-package io.schinzel.web_blocks.web.routes
+package io.schinzel.web_blocks.web.routes.route_descriptors
 
+import io.schinzel.web_blocks.web.routes.IRoute
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
+import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
 
 /**
- * The purpose of this class is to generate route paths for classes annotated with @WebBlockPageApi.
+ * The purpose of this class is to generate route paths for classes annotated with @WebBlockApi.
  *
- * Page API routes use directory structure from /pages directory plus the class name
- * with kebab-case conversion and "Route" suffix removal, prefixed with "page-api".
+ * API routes use directory structure from /api directory plus the class name
+ * with kebab-case conversion and "Route" suffix removal.
  *
  * Written by Claude Sonnet 4
  */
-class WebBlockPageApiRouteDescriptor(
+class RouteDescriptorWebBlockApi(
     private val endpointPackage: String,
 ) : IRouteDescriptor<IRoute> {
     override fun getRoutePath(clazz: KClass<out IRoute>): String {
@@ -27,22 +32,21 @@ class WebBlockPageApiRouteDescriptor(
         // Validate annotation
         RouteAnnotationUtil.validateRouteAnnotation(webBlockRouteClass)
 
-        // Ensure class has @WebBlockPageApi annotation
-        if (RouteAnnotationUtil.detectRouteType(webBlockRouteClass) != RouteTypeEnum.PAGE_API) {
+        // Ensure class has @WebBlockApi annotation
+        if (RouteAnnotationUtil.detectRouteType(webBlockRouteClass) != RouteTypeEnum.API) {
             throw IllegalArgumentException(
-                "Class ${clazz.simpleName} is not annotated with @WebBlockPageApi",
+                "Class ${clazz.simpleName} is not annotated with @WebBlockApi",
             )
         }
 
         val relativePath = RouteUtil.getRelativePath(endpointPackage, clazz)
-        val pagePathWithoutPages = relativePath.removePrefix("pages/")
         val classNameKebabCase =
             RouteUtil
                 .removeSuffixesAndToKebabCase(clazz, listOf("Route"))
-        return "page-api/$pagePathWithoutPages/$classNameKebabCase"
+        return "$relativePath/$classNameKebabCase"
     }
 
-    override fun getTypeName() = "WebBlockPageApiRoute"
+    override fun getTypeName() = "WebBlockApiRoute"
 
     override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.JSON
 }

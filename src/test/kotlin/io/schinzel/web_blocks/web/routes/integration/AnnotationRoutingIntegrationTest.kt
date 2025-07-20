@@ -7,15 +7,15 @@ import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
-import io.schinzel.web_blocks.web.routes.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
-import io.schinzel.web_blocks.web.routes.RouteTypeEnum
-import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
+import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPage
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorWebBlockApi
 import io.schinzel.web_blocks.web.set_up_routes.FindRoutes
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
@@ -37,15 +37,15 @@ class AnnotationRoutingIntegrationTest {
         // Register route descriptors for integration tests
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE,
-            WebBlockPageRouteDescriptor(endpointPackage),
+            RouteDescriptorPage(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.API,
-            WebBlockApiRouteDescriptor(endpointPackage),
+            RouteDescriptorWebBlockApi(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE_API,
-            WebBlockPageApiRouteDescriptor(endpointPackage),
+            RouteDescriptorApi(endpointPackage),
         )
     }
 

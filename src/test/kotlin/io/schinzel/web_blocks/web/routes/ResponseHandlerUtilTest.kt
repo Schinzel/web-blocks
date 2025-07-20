@@ -1,8 +1,8 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.routes.RouteUtil.removeSuffixes
-import io.schinzel.web_blocks.web.routes.RouteUtil.removeSuffixesAndToKebabCase
-import io.schinzel.web_blocks.web.routes.RouteUtil.toKebabCase
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteUtil.removeSuffixes
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteUtil.removeSuffixesAndToKebabCase
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteUtil.toKebabCase
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

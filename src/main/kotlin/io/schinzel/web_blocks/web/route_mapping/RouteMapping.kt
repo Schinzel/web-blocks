@@ -2,7 +2,7 @@ package io.schinzel.web_blocks.web.route_mapping
 
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
-import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.primaryConstructor

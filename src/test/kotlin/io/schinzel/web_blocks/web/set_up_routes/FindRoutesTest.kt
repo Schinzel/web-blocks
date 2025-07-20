@@ -9,10 +9,10 @@ import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
-import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName

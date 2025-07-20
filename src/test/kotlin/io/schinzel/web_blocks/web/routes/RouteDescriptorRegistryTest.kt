@@ -7,7 +7,12 @@ import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPage
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorWebBlockApi
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
@@ -21,15 +26,15 @@ import org.junit.jupiter.api.Test
  * Written by Claude Sonnet 4
  */
 class RouteDescriptorRegistryTest {
-    private lateinit var pageDescriptor: WebBlockPageRouteDescriptor
-    private lateinit var apiDescriptor: WebBlockApiRouteDescriptor
-    private lateinit var pageApiDescriptor: WebBlockPageApiRouteDescriptor
+    private lateinit var pageDescriptor: RouteDescriptorPage
+    private lateinit var apiDescriptor: RouteDescriptorWebBlockApi
+    private lateinit var pageApiDescriptor: RouteDescriptorApi
 
     @BeforeEach
     fun setUp() {
-        pageDescriptor = WebBlockPageRouteDescriptor("com.example")
-        apiDescriptor = WebBlockApiRouteDescriptor("com.example")
-        pageApiDescriptor = WebBlockPageApiRouteDescriptor("com.example")
+        pageDescriptor = RouteDescriptorPage("com.example")
+        apiDescriptor = RouteDescriptorWebBlockApi("com.example")
+        pageApiDescriptor = RouteDescriptorApi("com.example")
     }
 
     @Nested

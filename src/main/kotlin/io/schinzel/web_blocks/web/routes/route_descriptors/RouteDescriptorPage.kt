@@ -1,5 +1,10 @@
-package io.schinzel.web_blocks.web.routes
+package io.schinzel.web_blocks.web.routes.route_descriptors
 
+import io.schinzel.web_blocks.web.routes.IRoute
+import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
+import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
 
 /**
@@ -10,7 +15,7 @@ import kotlin.reflect.KClass
  *
  * Written by Claude Sonnet 4
  */
-class WebBlockPageRouteDescriptor(
+class RouteDescriptorPage(
     private val endpointPackage: String,
 ) : IRouteDescriptor<IRoute> {
     private val systemPaths = listOf("api", "page-api", "static")

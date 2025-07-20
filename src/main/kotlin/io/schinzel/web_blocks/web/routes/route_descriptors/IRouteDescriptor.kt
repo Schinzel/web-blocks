@@ -1,5 +1,7 @@
-package io.schinzel.web_blocks.web.routes
+package io.schinzel.web_blocks.web.routes.route_descriptors
 
+import io.schinzel.web_blocks.web.routes.IRoute
+import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import kotlin.reflect.KClass
 
 /**

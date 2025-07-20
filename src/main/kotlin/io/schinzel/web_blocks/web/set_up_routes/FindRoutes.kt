@@ -5,15 +5,15 @@ import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
-import io.schinzel.web_blocks.web.routes.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
-import io.schinzel.web_blocks.web.routes.RouteTypeEnum
-import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
+import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPage
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorWebBlockApi
 import org.reflections.Reflections
 import kotlin.reflect.KClass
 import kotlin.reflect.full.hasAnnotation
@@ -39,15 +39,15 @@ class FindRoutes(
         // Register descriptors for annotation-based routes
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE,
-            WebBlockPageRouteDescriptor(endpointPackage),
+            RouteDescriptorPage(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.API,
-            WebBlockApiRouteDescriptor(endpointPackage),
+            RouteDescriptorWebBlockApi(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE_API,
-            WebBlockPageApiRouteDescriptor(endpointPackage),
+            RouteDescriptorApi(endpointPackage),
         )
     }
 

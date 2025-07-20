@@ -1,5 +1,7 @@
 package io.schinzel.web_blocks.web.routes
 
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
+
 /**
  * The purpose of this enum is to represent the different return types
  * that WebBlock routes can produce.

@@ -4,8 +4,8 @@ import io.schinzel.sample.pages.page_with_block.greeting_block.GreetingBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.intro_text.IntroductionTextBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateNameBlock
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_block.WelcomeBlock
-import io.schinzel.web_blocks.web.routes.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.RouteTypeEnum
+import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
+import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
