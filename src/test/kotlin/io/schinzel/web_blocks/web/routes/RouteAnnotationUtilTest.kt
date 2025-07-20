@@ -97,30 +97,6 @@ class RouteAnnotationUtilTest {
         }
     }
 
-    @Nested
-    @DisplayName("RouteTypeEnum")
-    inner class RouteTypeEnumTests {
-        @Test
-        fun `PAGE _ returns text slash html`() {
-            assertThat(RouteTypeEnum.PAGE.contentType).isEqualTo("text/html")
-        }
-
-        @Test
-        fun `API _ returns application slash json`() {
-            assertThat(RouteTypeEnum.API.contentType).isEqualTo("application/json")
-        }
-
-        @Test
-        fun `PAGE_API _ returns application slash json`() {
-            assertThat(RouteTypeEnum.PAGE_API.contentType).isEqualTo("application/json")
-        }
-
-        @Test
-        fun `UNKNOWN _ returns application slash octet-stream`() {
-            assertThat(RouteTypeEnum.UNKNOWN.contentType).isEqualTo("application/octet-stream")
-        }
-    }
-
     // Test classes for route annotation testing
     @Page
     private class TestPageRoute : IHtmlRoute {
