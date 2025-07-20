@@ -1,7 +1,6 @@
 package io.schinzel.web_blocks.web.routes.route_descriptors
 
 import io.schinzel.web_blocks.web.routes.IRoute
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
 import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
@@ -33,26 +32,18 @@ object RouteDescriptorRegistry {
      */
     @Suppress("UNCHECKED_CAST")
     fun getRouteDescriptor(clazz: KClass<out IRoute>): IRouteDescriptor<IRoute> {
-        // Check if it's a IWebBlockRoute with annotation
-        if (IWebBlockRoute::class.java.isAssignableFrom(clazz.java)) {
-            val routeType = RouteAnnotationUtil.detectRouteType(clazz)
+        val routeType: RouteTypeEnum = RouteAnnotationUtil.detectRouteType(clazz)
 
-            if (routeType == RouteTypeEnum.UNKNOWN) {
-                throw IllegalArgumentException(
-                    "Route class ${clazz.simpleName} has no WebBlock annotation",
-                )
-            }
-
-            return annotationDescriptors[routeType]
-                ?: throw IllegalArgumentException(
-                    "No descriptor registered for route type $routeType",
-                )
+        if (routeType == RouteTypeEnum.UNKNOWN) {
+            throw IllegalArgumentException(
+                "Route class ${clazz.simpleName} has no WebBlock annotation",
+            )
         }
 
-        // For legacy interface-based routes, use the old system
-        throw IllegalArgumentException(
-            "Legacy interface-based routes are not supported in this version. " +
-                "Please use IWebBlockRoute with annotations instead.",
-        )
+        return annotationDescriptors[routeType]
+            ?: throw IllegalArgumentException(
+                "No descriptor registered for route type $routeType",
+            )
+
     }
 }
