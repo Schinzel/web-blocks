@@ -14,6 +14,7 @@ interface IRouteDescriptor<T : IRoute> {
     val suffixesToRemove: List<String>
     val returnType: ReturnTypeEnum
     val annotation: KClass<out Annotation>
+
     /**
      * @param routeClass The class of the route
      * @return The path of the route
@@ -31,4 +32,14 @@ interface IRouteDescriptor<T : IRoute> {
      * For user notification and logging purposes
      */
     fun getTypeName(): String
+
+
+    fun validateRouteAnnotation(routeClass: KClass<out IRoute>) {
+        // Ensure class has correct annotation
+        if (!routeClass.annotations.any { it.annotationClass == annotation }) {
+            throw IllegalArgumentException(
+                "Class ${routeClass.simpleName} is not annotated with @Api",
+            )
+        }
+    }
 }

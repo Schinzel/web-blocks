@@ -29,18 +29,8 @@ class RouteDescriptorPageBlock(
             )
         }
 
-        @Suppress("UNCHECKED_CAST")
-        val webBlockRouteClass = routeClass as KClass<out IWebBlockRoute<*>>
-
-        // Validate annotation
-        RouteAnnotationUtil.validateRouteAnnotation(webBlockRouteClass)
-
         // Ensure class has correct annotation
-        if (!routeClass.annotations.any{it.annotationClass == annotation }){
-            throw IllegalArgumentException(
-                "Class ${routeClass.simpleName} is not annotated with @Api",
-            )
-        }
+        validateRouteAnnotation(routeClass)
 
         val relativePathRouteClass = RouteUtil.getRelativePath(endpointPackage, routeClass)
         return getRoutePathFromRelativePath(

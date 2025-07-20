@@ -39,23 +39,5 @@ object RouteAnnotationUtil {
             else -> RouteTypeEnum.UNKNOWN
         }
     }
-
-    /**
-     * Validate that a class implementing
-     * IWebBlockRoute has exactly one valid route annotation.
-     *
-     * @param clazz The class to validate
-     * @throws IllegalArgumentException if validation fails
-     */
-    fun validateRouteAnnotation(clazz: KClass<out IWebBlockRoute<*>>) {
-        val routeType = detectRouteType(clazz)
-
-        if (routeType == RouteTypeEnum.UNKNOWN) {
-            throw IllegalArgumentException(
-                "Class ${clazz.simpleName} implements IWebBlockRoute but has no route annotation. " +
-                    "Add @Api, @Page, @PageBlock, @or @PageBlockApi annotation.",
-            )
-        }
-    }
 }
 

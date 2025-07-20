@@ -62,41 +62,6 @@ class RouteAnnotationUtilTest {
         }
     }
 
-    @Nested
-    @DisplayName("validateRouteAnnotation")
-    inner class ValidateRouteAnnotationTests {
-        @Test
-        fun `WebBlockPage annotated route _ passes validation`() {
-            RouteAnnotationUtil.validateRouteAnnotation(TestPageRoute::class)
-        }
-
-        @Test
-        fun `WebBlockApi annotated route _ passes validation`() {
-            RouteAnnotationUtil.validateRouteAnnotation(TestApiRoute::class)
-        }
-
-        @Test
-        fun `WebBlockPageApi annotated route _ passes validation`() {
-            RouteAnnotationUtil.validateRouteAnnotation(TestPageApiRoute::class)
-        }
-
-        @Test
-        fun `no annotation _ throws IllegalArgumentException`() {
-            assertThatThrownBy {
-                RouteAnnotationUtil.validateRouteAnnotation(TestNoAnnotationRoute::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestNoAnnotationRoute implements IWebBlockRoute but has no route annotation")
-        }
-
-        @Test
-        fun `multiple annotations _ throws IllegalArgumentException`() {
-            assertThatThrownBy {
-                RouteAnnotationUtil.validateRouteAnnotation(TestMultipleAnnotationsRoute::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestMultipleAnnotationsRoute has multiple route annotations")
-        }
-    }
-
     // Test classes for route annotation testing
     @Page
     private class TestPageRoute : IHtmlRoute {
