@@ -1,6 +1,7 @@
 package io.schinzel.web_blocks.web.routes.route_descriptors
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
+import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_blocks.web.routes.IRoute
 import java.io.File
 import kotlin.reflect.KClass
@@ -15,6 +16,14 @@ object RouteUtil {
     ): String {
         val className = clazz.simpleName!!
         val classNameWithoutSuffixes = removeSuffixes(className, suffixesToRemove)
+        return toKebabCase(classNameWithoutSuffixes)
+    }
+
+    fun removeSuffixesAndToKebabCase(
+        clazzSimpleName: String,
+        suffixesToRemove: List<String>,
+    ): String {
+        val classNameWithoutSuffixes = removeSuffixes(clazzSimpleName, suffixesToRemove)
         return toKebabCase(classNameWithoutSuffixes)
     }
 
@@ -46,16 +55,29 @@ object RouteUtil {
      *
      * For example if the endpoint package is "io.schinzel.samples.component" a
      * and the class resides in "io.schinzel.samples.component.settings.address"
-     * this function returns "pages/settings/address"
+     * this function returns "/settings/address"
      */
     fun getRelativePath(
         webRootPackage: String,
         clazz: KClass<out IRoute>,
+    ): String = getRelativePath(webRootPackage, clazz.java.packageName)
+
+
+    fun getRelativePath(
+        webRootPackage: String,
+        classPackageName: String,
     ): String =
-        clazz.java
-            .packageName
+        "/" + classPackageName
             .removePrefix(webRootPackage)
             .removePrefix(".")
             .replace(".", File.separatorChar.toString())
             .replace("_", "-")
 }
+
+fun main() {
+    RouteUtil
+        .getRelativePath("io.schinzel.samples.component", "io.schinzel.samples.component.settings.address")
+        .println()
+}
+
+

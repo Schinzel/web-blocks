@@ -22,21 +22,23 @@ object RouteAnnotationUtil {
      * @throws IllegalArgumentException if multiple route annotations are present
      */
     fun detectRouteType(clazz: KClass<*>): RouteTypeEnum {
-        val hasPage = clazz.annotations.any { it is Page }
         val hasApi = clazz.annotations.any { it is Api }
-        val hasPageApi = clazz.annotations.any { it is WebBlockPageApi }
+        val hasPage = clazz.annotations.any { it is Page }
+        val hasPageBlock = clazz.annotations.any { it is PageBlock }
+        val hasPageBlockApi = clazz.annotations.any { it is PageBlockApi }
 
-        val annotationCount = listOf(hasPage, hasApi, hasPageApi).count { it }
+        val annotationCount = listOf(hasPage, hasApi, hasPageBlock, hasPageBlockApi).count { it }
 
         return when {
             annotationCount == 0 -> RouteTypeEnum.UNKNOWN
             annotationCount > 1 -> throw IllegalArgumentException(
                 "Class ${clazz.simpleName} has multiple route annotations. " +
-                    "Only one of @WebBlockPage, @WebBlockApi, or @WebBlockPageApi is allowed.",
+                    "Only one of @Api, @Page, @PageBlock, @or @PageBlockApi is allowed.",
             )
             hasPage -> RouteTypeEnum.PAGE
             hasApi -> RouteTypeEnum.API
-            hasPageApi -> RouteTypeEnum.PAGE_API
+            hasPageBlock -> RouteTypeEnum.PAGE_BLOCK
+            hasPageBlockApi -> RouteTypeEnum.PAGE_BLOCK_API
             else -> RouteTypeEnum.UNKNOWN
         }
     }
@@ -54,7 +56,7 @@ object RouteAnnotationUtil {
         if (routeType == RouteTypeEnum.UNKNOWN) {
             throw IllegalArgumentException(
                 "Class ${clazz.simpleName} implements IWebBlockRoute but has no route annotation. " +
-                    "Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation.",
+                    "Add @Api, @Page, @PageBlock, @or @PageBlockApi annotation.",
             )
         }
     }
@@ -68,6 +70,8 @@ object RouteAnnotationUtil {
 enum class RouteTypeEnum {
     PAGE,
     API,
+    PAGE_BLOCK,
+    PAGE_BLOCK_API,
     PAGE_API,
     UNKNOWN,
     ;
@@ -80,6 +84,8 @@ enum class RouteTypeEnum {
             when (this) {
                 PAGE -> "text/html"
                 API -> "application/json"
+                PAGE_BLOCK -> "text/html"
+                PAGE_BLOCK_API -> "application/json"
                 PAGE_API -> "application/json"
                 UNKNOWN -> "application/octet-stream"
             }
@@ -94,6 +100,8 @@ enum class RouteTypeEnum {
         when (this) {
             PAGE -> response is IHtmlResponse
             API -> response is IJsonResponse
+            PAGE_BLOCK -> response is IHtmlResponse
+            PAGE_BLOCK_API -> response is IJsonResponse
             PAGE_API -> response is IJsonResponse
             UNKNOWN -> false
         }
@@ -107,6 +115,8 @@ enum class RouteTypeEnum {
         when (this) {
             PAGE -> "HtmlResponse"
             API -> "JsonResponse"
+            PAGE_BLOCK -> "HtmlResponse"
+            PAGE_BLOCK_API -> "JsonResponse"
             PAGE_API -> "JsonResponse"
             UNKNOWN -> "UnknownResponse"
         }

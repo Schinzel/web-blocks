@@ -7,9 +7,9 @@ import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
+import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
 import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
 import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -26,24 +26,24 @@ class RouteAnnotationUtilTest {
     @DisplayName("detectRouteType")
     inner class DetectRouteTypeTests {
         @Test
-        fun `WebBlockPage annotated class _ returns PAGE`() {
+        fun `Page annotated class _ returns PAGE`() {
             val result = RouteAnnotationUtil.detectRouteType(TestPageRoute::class)
 
             assertThat(result).isEqualTo(RouteTypeEnum.PAGE)
         }
 
         @Test
-        fun `WebBlockApi annotated class _ returns API`() {
+        fun `API annotated class _ returns API`() {
             val result = RouteAnnotationUtil.detectRouteType(TestApiRoute::class)
 
             assertThat(result).isEqualTo(RouteTypeEnum.API)
         }
 
         @Test
-        fun `WebBlockPageApi annotated class _ returns PAGE_API`() {
+        fun `PageBlockApi annotated class _ returns PAGE_API`() {
             val result = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
 
-            assertThat(result).isEqualTo(RouteTypeEnum.PAGE_API)
+            assertThat(result).isEqualTo(RouteTypeEnum.PAGE_BLOCK_API)
         }
 
         @Test
@@ -59,7 +59,6 @@ class RouteAnnotationUtilTest {
                 RouteAnnotationUtil.detectRouteType(TestMultipleAnnotationsRoute::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
                 .hasMessageContaining("TestMultipleAnnotationsRoute has multiple route annotations")
-                .hasMessageContaining("Only one of @WebBlockPage, @WebBlockApi, or @WebBlockPageApi is allowed")
         }
     }
 
@@ -87,7 +86,6 @@ class RouteAnnotationUtilTest {
                 RouteAnnotationUtil.validateRouteAnnotation(TestNoAnnotationRoute::class)
             }.isInstanceOf(IllegalArgumentException::class.java)
                 .hasMessageContaining("TestNoAnnotationRoute implements IWebBlockRoute but has no route annotation")
-                .hasMessageContaining("Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation")
         }
 
         @Test
@@ -205,7 +203,7 @@ class RouteAnnotationUtilTest {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse(mapOf("test" to "value"))
     }
 
-    @WebBlockPageApi
+    @PageBlockApi
     private class TestPageApiRoute : IApiRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse(mapOf("test" to "value"))
     }

@@ -10,11 +10,11 @@ import kotlin.reflect.KClass
 
 /**
  */
-class RouteDescriptorApi(
+class RouteDescriptorPageBlockApi(
     private val endpointPackage: String,
 ) : IRouteDescriptor<IRoute> {
-    override val pathPrefix: String = "api"
-    override val suffixesToRemove: List<String> = listOf("ApiRoute", "Api", "API", "Route")
+    override val pathPrefix: String = "page-block-api"
+    override val suffixesToRemove: List<String> = listOf("PageBlockApi", "Api")
 
     override fun getRoutePath(routeClass: KClass<out IRoute>): String {
         // Ensure class implements IWebBlockRoute
@@ -23,44 +23,44 @@ class RouteDescriptorApi(
                 "Class ${routeClass.simpleName} must implement IWebBlockRoute",
             )
         }
-
         @Suppress("UNCHECKED_CAST")
         val webBlockRouteClass = routeClass as KClass<out IWebBlockRoute<*>>
 
         // Validate annotation
         RouteAnnotationUtil.validateRouteAnnotation(webBlockRouteClass)
 
-        // Ensure class has @WebBlockPageApi annotation
-        if (RouteAnnotationUtil.detectRouteType(webBlockRouteClass) != RouteTypeEnum.API) {
+        // Ensure class has @WebBlockApi annotation
+        if (RouteAnnotationUtil.detectRouteType(webBlockRouteClass) != RouteTypeEnum.PAGE_BLOCK_API) {
             throw IllegalArgumentException(
-                "Class ${routeClass.simpleName} is not annotated with @Api",
+                "Class ${routeClass.simpleName} is not annotated with @WebBlockApi",
             )
         }
 
-        val relativePathRouteClass = RouteUtil.getRelativePath(endpointPackage, routeClass)
-        return getRoutePathFromRelativePath(
-            relativePathRouteClass,
-            routeClass.simpleName!!
-        )
+        val relativePath = RouteUtil.getRelativePath(endpointPackage, routeClass)
+        return getRoutePathFromRelativePath(relativePath, routeClass.simpleName!!)
     }
 
     override fun getRoutePathFromRelativePath(
         relativePathRouteClass: String,
-        classSimpleName: String
+        classSimpleName: String,
     ): String {
-        val relativePathRouteClassKebabCase = StandardTextCases.SNAKE_CASE
-            .convertTo(StandardTextCases.KEBAB_CASE, relativePathRouteClass)
         // Remove suffixes
         val clazzSimpleNameNoSuffixes = RouteUtil
             .removeSuffixes(classSimpleName, suffixesToRemove)
         // Convert to kebab case
         val classNameNoSuffixesKebabCase = RouteUtil
             .toKebabCase(clazzSimpleNameNoSuffixes)
+        val relativePathRouteClassKebabCase = StandardTextCases.SNAKE_CASE
+            .convertTo(StandardTextCases.KEBAB_CASE, relativePathRouteClass)
+        // Remove pages/ from path
+        val relativePathRouteClassWithoutPages = relativePathRouteClassKebabCase
+            .removePrefix("pages/")
         // Compile route path
-        return "/$relativePathRouteClassKebabCase/$classNameNoSuffixesKebabCase"
+        return "/page-block-api/$relativePathRouteClassWithoutPages/$classNameNoSuffixesKebabCase"
     }
 
-    override fun getTypeName() = "ApiRoute"
+
+    override fun getTypeName() = "PageBlockApiRoute"
 
     override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.JSON
 }

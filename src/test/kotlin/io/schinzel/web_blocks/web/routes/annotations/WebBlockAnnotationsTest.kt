@@ -104,11 +104,11 @@ class WebBlockAnnotationsTest {
     }
 
     @Nested
-    @DisplayName("WebBlockPageApi annotation")
-    inner class WebBlockPageApiTests {
+    @DisplayName("PageBlockApi annotation")
+    inner class PageBlockApiTests {
         @Test
         fun `annotation _ when applied to class _ annotation is present`() {
-            val annotationClass = WebBlockPageApi::class
+            val annotationClass = PageBlockApi::class
 
             assertThat(annotationClass).isNotNull
         }
@@ -116,7 +116,7 @@ class WebBlockAnnotationsTest {
         @Test
         fun `annotation _ runtime retention _ is discoverable at runtime`() {
             val testClass = TestPageApiClass::class
-            val annotation = testClass.annotations.find { it is WebBlockPageApi }
+            val annotation = testClass.annotations.find { it is PageBlockApi }
 
             assertThat(annotation).isNotNull
         }
@@ -124,7 +124,7 @@ class WebBlockAnnotationsTest {
         @Test
         fun `annotation _ target class only _ has correct target`() {
             val annotation =
-                WebBlockPageApi::class
+                PageBlockApi::class
                     .annotations
                     .find { it.annotationClass.simpleName == "Target" }
 
@@ -134,7 +134,7 @@ class WebBlockAnnotationsTest {
         @Test
         fun `annotation _ retention runtime _ has correct retention`() {
             val annotation =
-                WebBlockPageApi::class
+                PageBlockApi::class
                     .annotations
                     .find { it.annotationClass.simpleName == "Retention" }
 
@@ -143,7 +143,7 @@ class WebBlockAnnotationsTest {
 
         @Test
         fun `annotation _ applied to test class _ can be retrieved using reflection`() {
-            val isAnnotated = TestPageApiClass::class.java.isAnnotationPresent(WebBlockPageApi::class.java)
+            val isAnnotated = TestPageApiClass::class.java.isAnnotationPresent(PageBlockApi::class.java)
 
             assertThat(isAnnotated).isTrue
         }
@@ -160,15 +160,15 @@ class WebBlockAnnotationsTest {
 
             assertThat(pageClass.isAnnotationPresent(Page::class.java)).isTrue
             assertThat(pageClass.isAnnotationPresent(Api::class.java)).isFalse
-            assertThat(pageClass.isAnnotationPresent(WebBlockPageApi::class.java)).isFalse
+            assertThat(pageClass.isAnnotationPresent(PageBlockApi::class.java)).isFalse
 
             assertThat(apiClass.isAnnotationPresent(Page::class.java)).isFalse
             assertThat(apiClass.isAnnotationPresent(Api::class.java)).isTrue
-            assertThat(apiClass.isAnnotationPresent(WebBlockPageApi::class.java)).isFalse
+            assertThat(apiClass.isAnnotationPresent(PageBlockApi::class.java)).isFalse
 
             assertThat(pageApiClass.isAnnotationPresent(Page::class.java)).isFalse
             assertThat(pageApiClass.isAnnotationPresent(Api::class.java)).isFalse
-            assertThat(pageApiClass.isAnnotationPresent(WebBlockPageApi::class.java)).isTrue
+            assertThat(pageApiClass.isAnnotationPresent(PageBlockApi::class.java)).isTrue
         }
 
         @Test
@@ -177,7 +177,7 @@ class WebBlockAnnotationsTest {
 
             assertThat(unannotatedClass.isAnnotationPresent(Page::class.java)).isFalse
             assertThat(unannotatedClass.isAnnotationPresent(Api::class.java)).isFalse
-            assertThat(unannotatedClass.isAnnotationPresent(WebBlockPageApi::class.java)).isFalse
+            assertThat(unannotatedClass.isAnnotationPresent(PageBlockApi::class.java)).isFalse
         }
     }
 
@@ -188,11 +188,11 @@ class WebBlockAnnotationsTest {
         fun `getAnnotation _ on annotated class _ returns annotation instance`() {
             val pageAnnotation = TestPageClass::class.java.getAnnotation(Page::class.java)
             val apiAnnotation = TestApiClass::class.java.getAnnotation(Api::class.java)
-            val pageApiAnnotation = TestPageApiClass::class.java.getAnnotation(WebBlockPageApi::class.java)
+            val pageBlockApiAnnotation = TestPageApiClass::class.java.getAnnotation(PageBlockApi::class.java)
 
             assertThat(pageAnnotation).isNotNull
             assertThat(apiAnnotation).isNotNull
-            assertThat(pageApiAnnotation).isNotNull
+            assertThat(pageBlockApiAnnotation).isNotNull
         }
 
         @Test
@@ -214,11 +214,11 @@ class WebBlockAnnotationsTest {
 
             val pageClasses = testClasses.filter { it.isAnnotationPresent(Page::class.java) }
             val apiClasses = testClasses.filter { it.isAnnotationPresent(Api::class.java) }
-            val pageApiClasses = testClasses.filter { it.isAnnotationPresent(WebBlockPageApi::class.java) }
+            val pageBlockApiClasses = testClasses.filter { it.isAnnotationPresent(PageBlockApi::class.java) }
 
             assertThat(pageClasses).hasSize(1)
             assertThat(apiClasses).hasSize(1)
-            assertThat(pageApiClasses).hasSize(1)
+            assertThat(pageBlockApiClasses).hasSize(1)
         }
     }
 
@@ -229,7 +229,7 @@ class WebBlockAnnotationsTest {
     @Api
     private class TestApiClass
 
-    @WebBlockPageApi
+    @PageBlockApi
     private class TestPageApiClass
 
     private class UnannotatedClass

@@ -14,18 +14,18 @@ class BlockAnnotationTest {
     fun `blocks should have WebBlockPageApi annotation`() {
         // Test GreetingBlock
         val greetingBlockType = RouteAnnotationUtil.detectRouteType(GreetingBlock::class)
-        assertThat(greetingBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
+        assertThat(greetingBlockType).isEqualTo(RouteTypeEnum.PAGE_BLOCK)
 
         // Test IntroductionTextBlock
         val introBlockType = RouteAnnotationUtil.detectRouteType(IntroductionTextBlock::class)
-        assertThat(introBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
+        assertThat(introBlockType).isEqualTo(RouteTypeEnum.PAGE_BLOCK)
 
         // Test UpdateNameBlock
         val updateBlockType = RouteAnnotationUtil.detectRouteType(UpdateNameBlock::class)
-        assertThat(updateBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
+        assertThat(updateBlockType).isEqualTo(RouteTypeEnum.PAGE_BLOCK)
 
         // Test WelcomeBlock
         val welcomeBlockType = RouteAnnotationUtil.detectRouteType(WelcomeBlock::class)
-        assertThat(welcomeBlockType).isEqualTo(RouteTypeEnum.PAGE_API)
+        assertThat(welcomeBlockType).isEqualTo(RouteTypeEnum.PAGE_BLOCK)
     }
 }

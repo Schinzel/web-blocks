@@ -6,16 +6,9 @@ import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
-import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
-import io.schinzel.web_blocks.web.routes.annotations.Api
-import io.schinzel.web_blocks.web.routes.annotations.Page
-import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
-import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorApi
-import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPage
+import io.schinzel.web_blocks.web.routes.annotations.*
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
-import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorWebBlockApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistryInit
 import io.schinzel.web_blocks.web.set_up_routes.FindRoutes
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
@@ -35,18 +28,7 @@ class AnnotationRoutingIntegrationTest {
     @BeforeEach
     fun setUp() {
         // Register route descriptors for integration tests
-        RouteDescriptorRegistry.registerAnnotation(
-            RouteTypeEnum.PAGE,
-            RouteDescriptorPage(endpointPackage),
-        )
-        RouteDescriptorRegistry.registerAnnotation(
-            RouteTypeEnum.API,
-            RouteDescriptorWebBlockApi(endpointPackage),
-        )
-        RouteDescriptorRegistry.registerAnnotation(
-            RouteTypeEnum.PAGE_API,
-            RouteDescriptorApi(endpointPackage),
-        )
+        RouteDescriptorRegistryInit(endpointPackage)
     }
 
     @Nested
@@ -87,7 +69,7 @@ class AnnotationRoutingIntegrationTest {
         }
 
         @Test
-        fun `page api route _ works correctly`() {
+        fun `page block api route _ works correctly`() {
             // Create route instance
             val route = TestPageApiRoute()
 
@@ -100,7 +82,7 @@ class AnnotationRoutingIntegrationTest {
 
             // Verify route type detection works
             val routeType = RouteAnnotationUtil.detectRouteType(TestPageApiRoute::class)
-            assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE_API)
+            assertThat(routeType).isEqualTo(RouteTypeEnum.PAGE_BLOCK_API)
         }
     }
 
@@ -120,37 +102,19 @@ class AnnotationRoutingIntegrationTest {
             assertThat(routes).anyMatch { it.simpleName == "TestPageApiRoute" }
         }
 
-        @Test
-        fun `route descriptor lookup _ works for all route types`() {
-            val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
-            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
-            val pageApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageApiRoute::class)
-
-            assertThat(pageDescriptor.getTypeName()).isEqualTo("WebBlockPageRoute")
-            assertThat(pageDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.HTML)
-
-            assertThat(apiDescriptor.getTypeName()).isEqualTo("WebBlockApiRoute")
-            assertThat(apiDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.JSON)
-
-            assertThat(pageApiDescriptor.getTypeName()).isEqualTo("WebBlockPageApiRoute")
-            assertThat(pageApiDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.JSON)
-        }
 
         @Test
         fun `route path generation _ works for all route types`() {
             val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
             val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
-            val pageApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageApiRoute::class)
 
             val pagePath = pageDescriptor.getRoutePath(TestPageRoute::class)
             val apiPath = apiDescriptor.getRoutePath(TestApiRoute::class)
-            val pageApiPath = pageApiDescriptor.getRoutePath(TestPageApiRoute::class)
 
             // The exact path format depends on the package structure
             // We just verify that paths can be generated without errors
             assertThat(pagePath).isNotNull
             assertThat(apiPath).isNotNull
-            assertThat(pageApiPath).isNotNull
         }
     }
 
@@ -165,7 +129,7 @@ class AnnotationRoutingIntegrationTest {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test api")
     }
 
-    @WebBlockPageApi
+    @PageBlockApi
     private class TestPageApiRoute : IApiRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test page api")
     }

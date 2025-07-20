@@ -10,11 +10,18 @@ import kotlin.reflect.KClass
  * we do not have instances, just classes.
  */
 interface IRouteDescriptor<T : IRoute> {
+    val pathPrefix: String
+    val suffixesToRemove: List<String>
     /**
-     * @param clazz The class of the route
+     * @param routeClass The class of the route
      * @return The path of the route
      */
-    fun getRoutePath(clazz: KClass<out T>): String
+    fun getRoutePath(routeClass: KClass<out T>): String
+
+    fun getRoutePathFromRelativePath(
+        relativePathRouteClass: String,
+        classSimpleName: String,
+    ): String
 
     /**
      * @return The return type of IRoute.getResponse().

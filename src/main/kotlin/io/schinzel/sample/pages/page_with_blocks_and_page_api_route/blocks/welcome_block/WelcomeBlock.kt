@@ -4,9 +4,9 @@ import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.NameD
 import io.schinzel.web_blocks.component.page.WebBlock
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 
-@WebBlockPageApi
+@PageBlock
 class WelcomeBlock(
     val userId: Int,
 ) : WebBlock() {

@@ -26,13 +26,13 @@
 
 ## Problem to solve
 Split @WebBlockPageApi into to two types of routes:
-- @WebBlock
+- @Block
   - HTML components. Returns HTML.
-  - Change the start of the route path from "page-api" -> "web-block"
-- @WebBlockApi
+  - Change the start of the route path from "page-api" -> "block"
+- @BlockApi
   - JSON APIs for WebBlocks
   - Typically does CRUD operations Returns JSON.
-  - Change the start of the route path from "page-api" -> "web-block-api"
+  - Change the start of the route path from "page-api" -> "block-api"
 
 This would be a @WebBlock:
 /Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/sample/pages/page_with_blocks_and_page_api_route/blocks/update_name_block/UpdateNameBlock.kt
@@ -55,8 +55,8 @@ Follow the [code standards](../code_standards/_index.md)
 
 ## Acceptance Criteria
 - The annotation has been split into two
-- UpdateNameBlock should be accessible at: /web-block/page-with-blocks-and-page-api-route/blocks/update-name-block/update-name-block
-- UpdateFirstNameRoute should be accessible at: /web-block-api/page-with-blocks-and-page-api-route/blocks/update-name-block/update-first-name
+- UpdateNameBlock should be accessible at: /block/page-with-blocks-and-page-api-route/blocks/update-name-block/update-name-block
+- UpdateFirstNameRoute should be accessible at: /block-api/page-with-blocks-and-page-api-route/blocks/update-name-block/update-first-name
 - All links in the sample works
 - Documentation has been updated
 

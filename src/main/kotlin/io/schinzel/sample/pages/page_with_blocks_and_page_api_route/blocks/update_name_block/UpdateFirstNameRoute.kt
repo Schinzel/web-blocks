@@ -4,13 +4,13 @@ import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.NameD
 import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.jsonSuccess
 import io.schinzel.web_blocks.web.routes.IApiRoute
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
 
 /**
  * The purpose of this class is to save a updated name to database
  */
-@WebBlockPageApi
 @Suppress("unused")
+@PageBlockApi
 class UpdateFirstNameRoute(
     val userId: Int,
     val firstName: String,

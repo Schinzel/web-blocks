@@ -1,11 +1,12 @@
 package io.schinzel.web_blocks.web.routes
 
+import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateFirstNameRoute
 import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
 import io.schinzel.web_blocks.web.routes.annotations.Api
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
-import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorApi
+import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorPageBlockApi
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -17,43 +18,37 @@ import org.junit.jupiter.api.Test
  *
  * Written by Claude Sonnet 4
  */
-class WebBlockPageApiRouteDescriptorTest {
-    private val descriptor = RouteDescriptorApi("io.schinzel.sample")
+class RouteDescriptorPageBlockApiTest {
+    private val descriptor = RouteDescriptorPageBlockApi("io.schinzel.sample")
 
     @Nested
-    @DisplayName("getRoutePath")
-    inner class GetRoutePathTests {
+    @DisplayName("getRoutePathFromRelativePath")
+    inner class GetRoutePathFromRelativePathTests {
         @Test
-        fun `page api class _ returns page-api prefixed path with directory and class name`() {
-            val path = descriptor.getRoutePath(io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.update_name_block.UpdateFirstNameRoute::class)
-
-            assertThat(path).isEqualTo("page-api/page-with-blocks-and-page-api-route/blocks/update-name-block/update-first-name")
-        }
-
-        // Additional tests would require more sample PageApi routes
-
-        @Test
-        fun `wrong annotation _ throws exception`() {
-            assertThatThrownBy {
-                descriptor.getRoutePath(TestWrongAnnotation::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestWrongAnnotation is not annotated with @WebBlockPageApi")
+        fun `page api path _ returns page-block-api prefixed path with directory and class name`() {
+            val path = descriptor.getRoutePathFromRelativePath(
+                "pages/page_with_blocks_and_page_api_route/blocks/update_name_block",
+                "UpdateFirstNamePageBlockApi"
+            )
+            assertThat(path).isEqualTo("/page-block-api/page-with-blocks-and-page-api-route/blocks/update-name-block/update-first-name")
         }
 
         @Test
-        fun `no annotation _ throws exception`() {
-            assertThatThrownBy {
-                descriptor.getRoutePath(TestNoAnnotation::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestNoAnnotation implements IWebBlockRoute but has no route annotation")
+        fun `simple page api path _ returns page-block-api prefixed path`() {
+            val path = descriptor.getRoutePathFromRelativePath("pages/user_page", "SaveNameApi")
+            assertThat(path).isEqualTo("/page-block-api/user-page/save-name")
         }
 
         @Test
-        fun `non-route class _ throws exception`() {
-            assertThatThrownBy {
-                descriptor.getRoutePath(TestNonRouteClass::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestNonRouteClass must implement IWebBlockRoute")
+        fun `class name with suffix _ removes suffix`() {
+            val path = descriptor.getRoutePathFromRelativePath("pages/settings", "UpdateSettingsPageBlockApi")
+            assertThat(path).isEqualTo("/page-block-api/settings/update-settings")
+        }
+
+        @Test
+        fun `nested directory path _ converts to kebab case`() {
+            val path = descriptor.getRoutePathFromRelativePath("pages/user_pages/admin_settings", "DeleteUserApi")
+            assertThat(path).isEqualTo("/page-block-api/user-pages/admin-settings/delete-user")
         }
     }
 
@@ -64,7 +59,7 @@ class WebBlockPageApiRouteDescriptorTest {
         fun `returns correct name`() {
             val typeName = descriptor.getTypeName()
 
-            assertThat(typeName).isEqualTo("WebBlockPageApiRoute")
+            assertThat(typeName).isEqualTo("PageBlockApiRoute")
         }
     }
 
@@ -80,17 +75,17 @@ class WebBlockPageApiRouteDescriptorTest {
     }
 
     // Test classes for descriptor testing
-    @WebBlockPageApi
+    @PageBlockApi
     private class TestSimplePageApi : IApiRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
-    @WebBlockPageApi
+    @PageBlockApi
     private class TestPageApiRoute : IApiRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
-    @WebBlockPageApi
+    @PageBlockApi
     private class TestSubdirPageApi : IApiRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }

@@ -4,9 +4,9 @@ import io.schinzel.web_blocks.component.page.WebBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 
-@WebBlockPageApi
+@PageBlock
 class GreetingBlock : WebBlock() {
     override suspend fun getResponse(): IHtmlResponse =
         html(

@@ -20,14 +20,14 @@ There are 3 types of routes:
 | Path             | The path is decided by the directory structure and the Class name           |
 | Case             | Directory names are converted from snake_case to kebab-case                 |
 | Case             | Class names are converted from PascalCase to kebab-case                     |
-| Suffixes removed | Suffixes `Route` are removed                                                |
+| Suffixes removed | Suffixes `ApiRoute`, `Route`, `API` and `Api` are removed                   |
 | Prefix           | Api paths are prefixed with `api`                                           |
 | Example          | `/api/my_dir/MyPersonRoute.kt` will receive the path `api/my-dir/my-person` |
 
 ```kotlin
 @WebBlockApi
-class UserPets : WebBlockRoute {
-  override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
+class UserPets : IApiRoute {
+  override suspend fun getResponse(): IJsonResponse = json(listOf("cat", "dog"))
 }
 ```
 
@@ -37,7 +37,7 @@ class UserPets : WebBlockRoute {
 |------------|----------------------------------|
 | Annotation | `@Page`                          |
 | Interface  | `IHtmlRoute`                     |
-| Returns    | ``IHtmlResponse`                 |
+| Returns    | `IHtmlResponse`                  |
 | Location   | Located in the `pages` directory |
 
 | Property     | Description                                                                       |
@@ -49,36 +49,61 @@ class UserPets : WebBlockRoute {
 
 ```kotlin
 @WebBlockPage
-class ThePage : WebBlockRoute {
-  override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
+class ThePage : IHtmlRoute {
+  override suspend fun getResponse(): IHtmlResponse = html("<h1>Hello</h1>")
 }
 ```
 
-## Page API route
+## Page Block route
 
-These are assume to be tied to pages as opposed to being standalone endpoints like the API routes.
-Used by pages to for example save data or update an element on a the page.
+| Attribute  | Description                      |
+|------------|----------------------------------|
+| Annotation | `@PageBlock`                     |
+| Interface  | `IHtmlRoute`                     |
+| Returns    | `IHtmlResponse`                  |
+| Location   | Located in the `pages` directory |
 
-| Attribute  | Description                                    |
-|------------|------------------------------------------------|
-| Annotation | `@WebBlockPageApi`                             |
-| Interface  | `IWebBlockRoute`                               |
-| Returns    | `IWebBlockResponse` (typically `JsonResponse`) |
-| Location   | Located in the `pages` directory               |
-
-| Property         | Description                                                                                                               |
-|------------------|---------------------------------------------------------------------------------------------------------------------------|
-| Path             | The path is decided by the directory structure and the Class name                                                         |
-| Case             | Directory names are converted from snake_case to kebab-case                                                               |
-| Case             | Class names are converted from PascalCase to kebab-case                                                                   |
-| Suffixes removed | Suffixes `Route`are removed                                                                                               |
-| Prefix           | Prefixed with `page-api`                                                                                                  |
-| Example          | `/pages/user_pages/settings/SavePersonNameRoute.kt` will receive the path `page-api/user-pages/settings/save-person-name` |
+| Property         | Description                                                                                                                 |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Path             | The path is decided by the directory structure and the Class name                                                           |
+| Case             | Directory names are converted from snake_case to kebab-case                                                                 |
+| Case             | Class names are converted from PascalCase to kebab-case                                                                     |
+| Suffixes removed | Suffixes `PageBlock`, `Pb`, `PB` and `Block` are removed                                                                    |
+| Prefix           | Prefixed with `page-block`                                                                                                  |
+| Example          | `/pages/user_pages/settings/SavePersonNameRoute.kt` will receive the path `page-block/user-pages/settings/save-person-name` |
 
 ```kotlin
-@WebBlockPageApi
-class SavePersonNameRoute : WebBlockRoute {
-  override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
+@PageBlock
+class ThePageBlock : IHtmlRoute {
+  override suspend fun getResponse(): IHtmlResponse = html("<h1>Hello</h1>")
+}
+```
+
+## Page Block API route
+
+These are assume to be tied to pages as opposed to being standalone endpoints like the API routes.
+Used by blocks typically for CRUD operations.
+
+| Attribute  | Description                      |
+|------------|----------------------------------|
+| Annotation | `@PageBlockApi`                  |
+| Interface  | `IApiRoute`                      |
+| Returns    | `IJsonResponse`                  |
+| Location   | Located in the `pages` directory |
+
+| Property         | Description                                                                                                                     |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| Path             | The path is decided by the directory structure and the Class name                                                               |
+| Case             | Directory names are converted from snake_case to kebab-case                                                                     |
+| Case             | Class names are converted from PascalCase to kebab-case                                                                         |
+| Suffixes removed | Suffixes `PageBlockApi`and `Api` are removed                                                                                    |
+| Prefix           | Prefixed with `page-block-api`                                                                                                  |
+| Example          | `/pages/user_pages/settings/SavePersonNameRoute.kt` will receive the path `page-block-api/user-pages/settings/save-person-name` |
+
+```kotlin
+@PageBlockApi
+class ThePageBlockApi : IApiRoute {
+  override suspend fun getResponse(): IJsonResponse = json(listOf("cat", "dog"))
 }
 ```
 
