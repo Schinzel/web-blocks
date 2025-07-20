@@ -66,8 +66,7 @@ class RouteDescriptorPageBlockApiTest {
     inner class GetReturnTypeTests {
         @Test
         fun `returns JSON`() {
-            val returnType = descriptor.getReturnType()
-
+            val returnType = descriptor.returnType
             assertThat(returnType).isEqualTo(ReturnTypeEnum.JSON)
         }
     }

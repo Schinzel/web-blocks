@@ -25,7 +25,7 @@ class RouteMapping(
         val routeDescriptor = RouteDescriptorRegistry.getRouteDescriptor(routeClass)
         routePath = routeDescriptor.getRoutePath(routeClass)
         type = routeDescriptor.getTypeName()
-        returnType = routeDescriptor.getReturnType()
+        returnType = routeDescriptor.returnType
     }
 
     fun getPrimaryConstructor(): KFunction<IRoute> =

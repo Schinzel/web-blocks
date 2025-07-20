@@ -12,6 +12,7 @@ import kotlin.reflect.KClass
 interface IRouteDescriptor<T : IRoute> {
     val pathPrefix: String
     val suffixesToRemove: List<String>
+    val returnType: ReturnTypeEnum
     /**
      * @param routeClass The class of the route
      * @return The path of the route
@@ -22,12 +23,6 @@ interface IRouteDescriptor<T : IRoute> {
         relativePathRouteClass: String,
         classSimpleName: String,
     ): String
-
-    /**
-     * @return The return type of IRoute.getResponse().
-     * For example HTML or JSON
-     */
-    fun getReturnType(): ReturnTypeEnum
 
     /**
      * @return The type name of the route.

@@ -80,8 +80,7 @@ class RouteDescriptorPageTest {
     inner class GetReturnTypeTests {
         @Test
         fun `returns HTML`() {
-            val returnType = descriptor.getReturnType()
-
+            val returnType = descriptor.returnType
             assertThat(returnType).isEqualTo(ReturnTypeEnum.HTML)
         }
     }

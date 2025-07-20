@@ -20,21 +20,18 @@ class RouteDescriptorPageSimpleTest {
         @Test
         fun `returns correct name`() {
             val typeName = descriptor.getTypeName()
-
             assertThat(typeName).isEqualTo("PageRoute")
         }
 
         @Test
         fun `returns HTML`() {
-            val returnType = descriptor.getReturnType()
-
+            val returnType = descriptor.returnType
             assertThat(returnType).isEqualTo(ReturnTypeEnum.HTML)
         }
 
         @Test
         fun `simple page path _ returns path`() {
             val path = descriptor.getRoutePathFromRelativePath("pages/simple_page", "MyPage")
-
             assertThat(path).isNotNull
         }
     }

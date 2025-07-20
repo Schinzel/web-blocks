@@ -15,6 +15,7 @@ class RouteDescriptorPageBlockApi(
 ) : IRouteDescriptor<IRoute> {
     override val pathPrefix: String = "page-block-api"
     override val suffixesToRemove: List<String> = listOf("PageBlockApi", "Api")
+    override val returnType = ReturnTypeEnum.JSON
 
     override fun getRoutePath(routeClass: KClass<out IRoute>): String {
         // Ensure class implements IWebBlockRoute
@@ -61,6 +62,4 @@ class RouteDescriptorPageBlockApi(
 
 
     override fun getTypeName() = "PageBlockApiRoute"
-
-    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.JSON
 }

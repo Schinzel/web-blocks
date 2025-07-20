@@ -47,19 +47,19 @@ class FindRoutesTest {
 
             assertThat(pageDescriptor).isNotNull
             assertThat(pageDescriptor.getTypeName()).isEqualTo("PageRoute")
-            assertThat(pageDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.HTML)
+            assertThat(pageDescriptor.returnType).isEqualTo(ReturnTypeEnum.HTML)
 
             assertThat(apiDescriptor).isNotNull
             assertThat(apiDescriptor.getTypeName()).isEqualTo("ApiRoute")
-            assertThat(apiDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.JSON)
+            assertThat(apiDescriptor.returnType).isEqualTo(ReturnTypeEnum.JSON)
 
             assertThat(pageBlockDescriptor).isNotNull
             assertThat(pageBlockDescriptor.getTypeName()).isEqualTo("PageBlockRoute")
-            assertThat(pageBlockDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.HTML)
+            assertThat(pageBlockDescriptor.returnType).isEqualTo(ReturnTypeEnum.HTML)
 
             assertThat(pageBlockApiDescriptor).isNotNull
             assertThat(pageBlockApiDescriptor.getTypeName()).isEqualTo("PageBlockApiRoute")
-            assertThat(pageBlockApiDescriptor.getReturnType()).isEqualTo(ReturnTypeEnum.JSON)
+            assertThat(pageBlockApiDescriptor.returnType).isEqualTo(ReturnTypeEnum.JSON)
         }
     }
 

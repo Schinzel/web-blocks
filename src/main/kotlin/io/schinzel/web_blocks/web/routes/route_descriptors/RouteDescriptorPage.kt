@@ -15,6 +15,7 @@ class RouteDescriptorPage(
 ) : IRouteDescriptor<IRoute> {
     override val pathPrefix: String = ""
     override val suffixesToRemove: List<String> = emptyList()
+    override val returnType = ReturnTypeEnum.HTML
 
     // Static and the start of the route-paths
     private val systemPaths = listOf("static", "api", "page-block", "page-block-api")
@@ -68,5 +69,4 @@ class RouteDescriptorPage(
 
     override fun getTypeName() = "PageRoute"
 
-    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.HTML
 }

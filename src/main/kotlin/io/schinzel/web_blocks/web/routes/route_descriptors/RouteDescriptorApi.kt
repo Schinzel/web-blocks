@@ -15,6 +15,7 @@ class RouteDescriptorApi(
 ) : IRouteDescriptor<IRoute> {
     override val pathPrefix: String = "api"
     override val suffixesToRemove: List<String> = listOf("ApiRoute", "Api", "API", "Route")
+    override val returnType = ReturnTypeEnum.JSON
 
     override fun getRoutePath(routeClass: KClass<out IRoute>): String {
         // Ensure class implements IWebBlockRoute
@@ -61,6 +62,4 @@ class RouteDescriptorApi(
     }
 
     override fun getTypeName() = "ApiRoute"
-
-    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.JSON
 }

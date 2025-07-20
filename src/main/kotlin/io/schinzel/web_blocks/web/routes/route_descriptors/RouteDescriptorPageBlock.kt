@@ -15,6 +15,8 @@ class RouteDescriptorPageBlock(
 ) : IRouteDescriptor<IRoute> {
     override val pathPrefix: String = "page-block"
     override val suffixesToRemove: List<String> = listOf("PageBlock", "Pb", "PB", "Block")
+    override val returnType = ReturnTypeEnum.HTML
+
 
     override fun getRoutePath(routeClass: KClass<out IRoute>): String {
         // Ensure class implements IWebBlockRoute
@@ -65,6 +67,4 @@ class RouteDescriptorPageBlock(
     }
 
     override fun getTypeName() = "PageBlockRoute"
-
-    override fun getReturnType(): ReturnTypeEnum = ReturnTypeEnum.HTML
 }
