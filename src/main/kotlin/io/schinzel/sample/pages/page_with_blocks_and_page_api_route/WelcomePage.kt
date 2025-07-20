@@ -5,10 +5,8 @@ import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.updat
 import io.schinzel.sample.pages.page_with_blocks_and_page_api_route.blocks.welcome_block.WelcomeBlock
 import io.schinzel.web_blocks.component.page.PageBuilder
 import io.schinzel.web_blocks.web.response.IHtmlResponse
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
 
 /**

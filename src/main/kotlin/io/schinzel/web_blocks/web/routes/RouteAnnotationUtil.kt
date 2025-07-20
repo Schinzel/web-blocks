@@ -1,13 +1,14 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
 import kotlin.reflect.KClass
+import io.schinzel.web_blocks.web.routes.annotations.WebBlock as WebBlockAnnotation
 
 /**
  * The purpose of this object is to provide utilities for detecting and validating
@@ -27,19 +28,21 @@ object RouteAnnotationUtil {
     fun detectRouteType(clazz: KClass<*>): RouteTypeEnum {
         val hasPage = clazz.annotations.any { it is Page }
         val hasApi = clazz.annotations.any { it is Api }
-        val hasPageApi = clazz.annotations.any { it is WebBlockPageApi }
+        val hasWebBlock = clazz.annotations.any { it is WebBlockAnnotation }
+        val hasWebBlockApi = clazz.annotations.any { it is WebBlockApi }
 
-        val annotationCount = listOf(hasPage, hasApi, hasPageApi).count { it }
+        val annotationCount = listOf(hasPage, hasApi, hasWebBlock, hasWebBlockApi).count { it }
 
         return when {
             annotationCount == 0 -> RouteTypeEnum.UNKNOWN
             annotationCount > 1 -> throw IllegalArgumentException(
                 "Class ${clazz.simpleName} has multiple route annotations. " +
-                    "Only one of @WebBlockPage, @WebBlockApi, or @WebBlockPageApi is allowed.",
+                    "Only one of @Page, @Api, @WebBlock, or @WebBlockApi is allowed.",
             )
             hasPage -> RouteTypeEnum.PAGE
             hasApi -> RouteTypeEnum.API
-            hasPageApi -> RouteTypeEnum.PAGE_API
+            hasWebBlock -> RouteTypeEnum.WEB_BLOCK
+            hasWebBlockApi -> RouteTypeEnum.WEB_BLOCK_API
             else -> RouteTypeEnum.UNKNOWN
         }
     }
@@ -57,7 +60,7 @@ object RouteAnnotationUtil {
         if (routeType == RouteTypeEnum.UNKNOWN) {
             throw IllegalArgumentException(
                 "Class ${clazz.simpleName} implements IWebBlockRoute but has no route annotation. " +
-                    "Add @WebBlockPage, @WebBlockApi, or @WebBlockPageApi annotation.",
+                    "Add @Page, @Api, @WebBlock, or @WebBlockApi annotation.",
             )
         }
     }
@@ -71,7 +74,8 @@ object RouteAnnotationUtil {
 enum class RouteTypeEnum {
     PAGE,
     API,
-    PAGE_API,
+    WEB_BLOCK,
+    WEB_BLOCK_API,
     UNKNOWN,
     ;
 
@@ -83,7 +87,8 @@ enum class RouteTypeEnum {
             when (this) {
                 PAGE -> "text/html"
                 API -> "application/json"
-                PAGE_API -> "application/json"
+                WEB_BLOCK -> "text/html"
+                WEB_BLOCK_API -> "application/json"
                 UNKNOWN -> "application/octet-stream"
             }
 
@@ -97,7 +102,8 @@ enum class RouteTypeEnum {
         when (this) {
             PAGE -> response is IHtmlResponse
             API -> response is IJsonResponse
-            PAGE_API -> response is IJsonResponse
+            WEB_BLOCK -> response is IHtmlResponse
+            WEB_BLOCK_API -> response is IJsonResponse
             UNKNOWN -> false
         }
 
@@ -110,7 +116,8 @@ enum class RouteTypeEnum {
         when (this) {
             PAGE -> "HtmlResponse"
             API -> "JsonResponse"
-            PAGE_API -> "JsonResponse"
+            WEB_BLOCK -> "HtmlResponse"
+            WEB_BLOCK_API -> "JsonResponse"
             UNKNOWN -> "UnknownResponse"
         }
 }

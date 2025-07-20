@@ -28,8 +28,9 @@ fun jsonError(
     status: Int = 500,
     details: Map<String, Any>? = null,
     headers: Map<String, String> = emptyMap(),
-): JsonErrorResponse = JsonErrorResponse(
-    JsonErrorResponse.ErrorData(code, message, details),
-    status,
-    headers
-)
+): JsonErrorResponse =
+    JsonErrorResponse(
+        JsonErrorResponse.ErrorData(code, message, details),
+        status,
+        headers,
+    )

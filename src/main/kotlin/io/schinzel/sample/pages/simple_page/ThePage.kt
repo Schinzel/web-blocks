@@ -1,10 +1,8 @@
 package io.schinzel.sample.pages.simple_page
 
 import io.schinzel.web_blocks.web.response.IHtmlResponse
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Page
 
 @Page

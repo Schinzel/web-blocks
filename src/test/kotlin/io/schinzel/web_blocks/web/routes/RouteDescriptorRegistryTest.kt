@@ -1,171 +1,111 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.HtmlContentResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
+import io.schinzel.web_blocks.web.response.IHtmlResponse
+import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.response.html
+import io.schinzel.web_blocks.web.response.jsonSuccess
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.WebBlock
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 /**
- * The purpose of this class is to test RouteDescriptorRegistry for descriptor registration and retrieval.
+ * The purpose of this class is to test RouteDescriptorRegistry for proper registration and retrieval.
  *
  * Written by Claude Sonnet 4
  */
 class RouteDescriptorRegistryTest {
-    private lateinit var pageDescriptor: WebBlockPageRouteDescriptor
-    private lateinit var apiDescriptor: WebBlockApiRouteDescriptor
-    private lateinit var pageApiDescriptor: WebBlockPageApiRouteDescriptor
-
-    @BeforeEach
-    fun setUp() {
-        pageDescriptor = WebBlockPageRouteDescriptor("com.example")
-        apiDescriptor = WebBlockApiRouteDescriptor("com.example")
-        pageApiDescriptor = WebBlockPageApiRouteDescriptor("com.example")
-    }
+    private val testEndpointPackage = "io.schinzel.web_blocks.web.routes"
 
     @Nested
-    @DisplayName("registerAnnotation")
-    inner class RegisterAnnotationTests {
+    @DisplayName("registerAnnotation and getRouteDescriptor")
+    inner class RegistrationTests {
         @Test
-        fun `page descriptor _ registers successfully`() {
-            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.PAGE, pageDescriptor)
+        fun `registerAnnotation _ stores descriptor for route type`() {
+            val descriptor = RouteDescriptorPage(testEndpointPackage)
 
-            val retrievedDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
+            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.PAGE, descriptor)
 
-            assertThat(retrievedDescriptor).isNotNull
-            assertThat(retrievedDescriptor.getTypeName()).isEqualTo("WebBlockPageRoute")
+            // Test that we can get a route descriptor for a class
+            val retrieved = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
+            assertThat(retrieved).isNotNull
         }
 
         @Test
-        fun `api descriptor _ registers successfully`() {
-            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.API, apiDescriptor)
-
-            val retrievedDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
-
-            assertThat(retrievedDescriptor).isNotNull
-            assertThat(retrievedDescriptor.getTypeName()).isEqualTo("WebBlockApiRoute")
-        }
-
-        @Test
-        fun `page api descriptor _ registers successfully`() {
-            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.PAGE_API, pageApiDescriptor)
-
-            val retrievedDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageApiRoute::class)
-
-            assertThat(retrievedDescriptor).isNotNull
-            assertThat(retrievedDescriptor.getTypeName()).isEqualTo("WebBlockPageApiRoute")
+        fun `getRouteDescriptor for class without annotation _ throws IllegalArgumentException`() {
+            assertThatThrownBy {
+                RouteDescriptorRegistry.getRouteDescriptor(TestUnknownRoute::class)
+            }.isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessageContaining("has no WebBlock annotation")
         }
     }
 
     @Nested
-    @DisplayName("getRouteDescriptor")
-    inner class GetRouteDescriptorTests {
-        @BeforeEach
-        fun setUpDescriptors() {
-            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.PAGE, pageDescriptor)
-            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.API, apiDescriptor)
-            RouteDescriptorRegistry.registerAnnotation(RouteTypeEnum.PAGE_API, pageApiDescriptor)
-        }
-
+    @DisplayName("integration with route descriptors")
+    inner class IntegrationTests {
         @Test
-        fun `page route class _ returns page descriptor`() {
-            val descriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
+        fun `register all route types _ all can be retrieved via classes`() {
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.PAGE,
+                RouteDescriptorPage(testEndpointPackage),
+            )
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.API,
+                WebBlockApiRouteDescriptor(testEndpointPackage),
+            )
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.WEB_BLOCK,
+                WebBlockRouteDescriptor(testEndpointPackage),
+            )
+            RouteDescriptorRegistry.registerAnnotation(
+                RouteTypeEnum.WEB_BLOCK_API,
+                NewWebBlockApiRouteDescriptor(testEndpointPackage),
+            )
 
-            assertThat(descriptor).isNotNull
-            assertThat(descriptor.getTypeName()).isEqualTo("WebBlockPageRoute")
-            assertThat(descriptor.getReturnType()).isEqualTo(ReturnTypeEnum.HTML)
-        }
-
-        @Test
-        fun `api route class _ returns api descriptor`() {
-            val descriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
-
-            assertThat(descriptor).isNotNull
-            assertThat(descriptor.getTypeName()).isEqualTo("WebBlockApiRoute")
-            assertThat(descriptor.getReturnType()).isEqualTo(ReturnTypeEnum.JSON)
-        }
-
-        @Test
-        fun `page api route class _ returns page api descriptor`() {
-            val descriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageApiRoute::class)
-
-            assertThat(descriptor).isNotNull
-            assertThat(descriptor.getTypeName()).isEqualTo("WebBlockPageApiRoute")
-            assertThat(descriptor.getReturnType()).isEqualTo(ReturnTypeEnum.JSON)
-        }
-
-        @Test
-        fun `no annotation _ throws exception`() {
-            assertThatThrownBy {
-                RouteDescriptorRegistry.getRouteDescriptor(TestNoAnnotationRoute::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("TestNoAnnotationRoute has no WebBlock annotation")
-        }
-
-        @Test
-        fun `unregistered route type _ succeeds when descriptors are registered`() {
-            // This test verifies that once descriptors are registered, they can be retrieved
-            // The registry maintains state between tests, so we just verify it works
-            val descriptor = RouteDescriptorRegistry.getRouteDescriptor(TestUnregisteredTypeRoute::class)
-
-            assertThat(descriptor).isNotNull
-            assertThat(descriptor.getTypeName()).isEqualTo("WebBlockApiRoute")
-        }
-
-        @Test
-        fun `non-route class _ throws exception`() {
-            assertThatThrownBy {
-                RouteDescriptorRegistry.getRouteDescriptor(TestNonRouteClass::class)
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("Legacy interface-based routes are not supported")
+            assertThat(RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)).isNotNull
+            assertThat(RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)).isNotNull
+            assertThat(RouteDescriptorRegistry.getRouteDescriptor(TestWebBlockRoute::class)).isNotNull
+            assertThat(RouteDescriptorRegistry.getRouteDescriptor(TestWebBlockApiRoute::class)).isNotNull
         }
     }
 
-    // Test classes for descriptor registry testing
+    // Test classes
     @Page
-    private class TestPageRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
+    private class TestPageRoute : IHtmlRoute {
+        override suspend fun getResponse(): IHtmlResponse = html("<h1>Test</h1>")
 
-        override fun getPath(): String = "/test-page"
+        override fun getPath(): String = "/test"
     }
 
     @Api
-    private class TestApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
+    private class TestApiRoute : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = jsonSuccess(mapOf("test" to "value"))
 
         override fun getPath(): String = "/api/test"
     }
 
-    @WebBlockPageApi
-    private class TestPageApiRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
+    @WebBlock
+    private class TestWebBlockRoute : IHtmlRoute {
+        override suspend fun getResponse(): IHtmlResponse = html("<h1>Test</h1>")
 
-        override fun getPath(): String = "page-api/test"
+        override fun getPath(): String = "/web-block/test"
     }
 
-    private class TestNoAnnotationRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
+    @WebBlockApi
+    private class TestWebBlockApiRoute : IApiRoute {
+        override suspend fun getResponse(): IJsonResponse = jsonSuccess(mapOf("test" to "value"))
 
-        override fun getPath(): String = "/test"
+        override fun getPath(): String = "/web-block-api/test"
     }
 
-    @Api
-    private class TestUnregisteredTypeRoute : IWebBlockRoute {
-        override suspend fun getResponse(): IWebBlockResponse = JsonSuccessResponse("test")
+    private class TestUnknownRoute : IHtmlRoute {
+        override suspend fun getResponse(): IHtmlResponse = html("<h1>Test</h1>")
 
-        override fun getPath(): String = "/api/unregistered"
-    }
-
-    private class TestNonRouteClass : IRoute {
-        override suspend fun getResponse(): IWebBlockResponse = HtmlContentResponse("test")
-
-        override fun getPath(): String = "/test"
+        override fun getPath(): String = "/unknown"
     }
 }

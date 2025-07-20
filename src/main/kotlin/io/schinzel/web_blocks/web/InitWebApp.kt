@@ -3,11 +3,10 @@ package io.schinzel.web_blocks.web
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web_blocks.web.request_handler.setUpErrorHandling
+import io.schinzel.web_blocks.web.routes.RouteDescriptorPage
 import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
 import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
@@ -49,15 +48,11 @@ class InitWebApp(
             // Register annotation-based route descriptors
             RouteDescriptorRegistry.registerAnnotation(
                 RouteTypeEnum.PAGE,
-                WebBlockPageRouteDescriptor(endpointPackage),
+                RouteDescriptorPage(endpointPackage),
             )
             RouteDescriptorRegistry.registerAnnotation(
                 RouteTypeEnum.API,
                 WebBlockApiRouteDescriptor(endpointPackage),
-            )
-            RouteDescriptorRegistry.registerAnnotation(
-                RouteTypeEnum.PAGE_API,
-                WebBlockPageApiRouteDescriptor(endpointPackage),
             )
         }
     }

@@ -22,7 +22,8 @@ enum class ReturnTypeEnum {
             when (routeType) {
                 RouteTypeEnum.PAGE -> HTML
                 RouteTypeEnum.API -> JSON
-                RouteTypeEnum.PAGE_API -> JSON
+                RouteTypeEnum.WEB_BLOCK -> HTML
+                RouteTypeEnum.WEB_BLOCK_API -> JSON
                 RouteTypeEnum.UNKNOWN -> throw IllegalArgumentException(
                     "Cannot determine return type for unknown route type",
                 )

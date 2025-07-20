@@ -1,17 +1,19 @@
 # Routes
 
-There are 3 types of routes:
+There are 5 types of routes:
 - API route - a standalone route that returns JSON
 - Page route - an HTML-page which returns HTML
 - Page API route - an route that belongs to an HTML-page and returns JSON
+- WebBlock route - a standalone HTML component that can be embedded in pages
+- WebBlock API route - an API route that serves WebBlock components and returns JSON
 
 ## API route
 
 | Attribute  | Description                                   |
 |------------|-----------------------------------------------|
 | Annotation | `@Api`                                        |
-| Interface  | `WebBlockRoute`                               |
-| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
+| Interface  | `IApiRoute`                                   |
+| Returns    | `IJsonResponse`                               |
 | Location   | Located in the `api` directory                |
 
 | Property         | Description                                                                 |
@@ -24,9 +26,9 @@ There are 3 types of routes:
 | Example          | `/api/my_dir/MyPersonRoute.kt` will receive the path `api/my-dir/my-person` |
 
 ```kotlin
-@WebBlockApi
-class UserPets : WebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = json(listOf("cat", "dog"))
+@Api
+class UserPets : IApiRoute {
+    override suspend fun getResponse(): IJsonResponse = json(listOf("cat", "dog"))
 }
 ```
 
@@ -35,8 +37,8 @@ class UserPets : WebBlockRoute {
 | Attribute  | Description                                   |
 |------------|-----------------------------------------------|
 | Annotation | `@Page`                                       |
-| Interface  | `WebBlockRoute`                               |
-| Returns    | `WebBlockResponse` (typically `HtmlResponse`) |
+| Interface  | `IHtmlRoute`                                  |
+| Returns    | `IHtmlResponse`                               |
 | Location   | Located in the `pages` directory              |
 
 | Property     | Description                                                                       |
@@ -47,22 +49,23 @@ class UserPets : WebBlockRoute {
 | Example      | `/pages/my_dir/my_page/ThePage.kt` will receive the path `/my-dir/my-page`        |
 
 ```kotlin
-@WebBlockPage
-class ThePage : WebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = html("<h1>Hello</h1>")
+@Page
+class ThePage : IHtmlRoute {
+    override suspend fun getResponse(): IHtmlResponse = html("<h1>Hello</h1>")
 }
 ```
 
-## Page API route
 
-These are assume to be tied to pages as opposed to being standalone endpoints like the API routes.
-Used by pages to for example save data or update an element on a the page.
+## WebBlock route
+
+Standalone HTML components that can be embedded in pages. These are reusable UI components 
+that return HTML and can update themselves independently.
 
 | Attribute  | Description                           |
 |------------|---------------------------------------|
-| Annotation | `@WebBlockPageApi`                    |
-| Interface  | `WebBlockRoute`                       |
-| Returns    | `WebBlockResponse` (typically `JsonResponse`) |
+| Annotation | `@WebBlock`                           |
+| Interface  | `IHtmlRoute`                          |
+| Returns    | `IHtmlResponse`                       |
 | Location   | Located in the `pages` directory      |
 
 | Property         | Description                                                                                                               |
@@ -70,14 +73,42 @@ Used by pages to for example save data or update an element on a the page.
 | Path             | The path is decided by the directory structure and the Class name                                                         |
 | Case             | Directory names are converted from snake_case to kebab-case                                                               |
 | Case             | Class names are converted from PascalCase to kebab-case                                                                   |
-| Suffixes removed | Suffixes `Route`are removed                                                                                               |
-| Prefix           | Prefixed with `page-api`                                                                                                  |
-| Example          | `/pages/user_pages/settings/SavePersonNameRoute.kt` will receive the path `page-api/user-pages/settings/save-person-name` |
+| Suffixes removed | No suffixes are removed (full class name is used)                                                                         |
+| Prefix           | Prefixed with `web-block`                                                                                                 |
+| Example          | `/pages/user_profile/blocks/avatar_block/AvatarBlock.kt` will receive the path `web-block/user-profile/blocks/avatar-block/avatar-block` |
 
 ```kotlin
-@WebBlockPageApi
-class SavePersonNameRoute : WebBlockRoute {
-    override suspend fun getResponse(): WebBlockResponse = json(mapOf("success" to true))
+@WebBlock
+class AvatarBlock(val userId: Int) : IHtmlRoute {
+    override suspend fun getResponse(): IHtmlResponse = html("<div>Avatar for user $userId</div>")
+}
+```
+
+## WebBlock API route
+
+API routes that serve WebBlock components. These handle CRUD operations, form submissions, 
+and AJAX requests for WebBlock components.
+
+| Attribute  | Description                           |
+|------------|---------------------------------------|
+| Annotation | `@WebBlockApi`                        |
+| Interface  | `IApiRoute`                           |
+| Returns    | `IJsonResponse`                       |
+| Location   | Located in the `pages` directory      |
+
+| Property         | Description                                                                                                               |
+|------------------|---------------------------------------------------------------------------------------------------------------------------|
+| Path             | The path is decided by the directory structure and the Class name                                                         |
+| Case             | Directory names are converted from snake_case to kebab-case                                                               |
+| Case             | Class names are converted from PascalCase to kebab-case                                                                   |
+| Suffixes removed | Suffixes `Route` are removed                                                                                              |
+| Prefix           | Prefixed with `web-block-api`                                                                                             |
+| Example          | `/pages/user_profile/blocks/avatar_block/UpdateAvatarRoute.kt` will receive the path `web-block-api/user-profile/blocks/avatar-block/update-avatar` |
+
+```kotlin
+@WebBlockApi
+class UpdateAvatarRoute(val userId: Int, val avatarUrl: String) : IApiRoute {
+    override suspend fun getResponse(): IJsonResponse = json(mapOf("success" to true))
 }
 ```
 

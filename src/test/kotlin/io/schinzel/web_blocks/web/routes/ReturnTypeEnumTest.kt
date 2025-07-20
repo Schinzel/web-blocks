@@ -30,13 +30,6 @@ class ReturnTypeEnumTest {
         }
 
         @Test
-        fun `getReturnTypeFromRouteType _ PAGE_API route type _ returns JSON`() {
-            val result = ReturnTypeEnum.getReturnTypeFromRouteType(RouteTypeEnum.PAGE_API)
-
-            assertThat(result).isEqualTo(ReturnTypeEnum.JSON)
-        }
-
-        @Test
         fun `getReturnTypeFromRouteType _ UNKNOWN route type _ throws IllegalArgumentException`() {
             assertThatThrownBy {
                 ReturnTypeEnum.getReturnTypeFromRouteType(RouteTypeEnum.UNKNOWN)
@@ -85,17 +78,8 @@ class ReturnTypeEnumTest {
         }
 
         @Test
-        fun `route type to content type _ PAGE_API annotation _ produces application slash json`() {
-            val routeType = RouteTypeEnum.PAGE_API
-            val returnType = ReturnTypeEnum.getReturnTypeFromRouteType(routeType)
-            val contentType = returnType.getContentType()
-
-            assertThat(contentType).isEqualTo("application/json")
-        }
-
-        @Test
         fun `all route types _ except UNKNOWN _ map to valid return types`() {
-            val validRouteTypes = listOf(RouteTypeEnum.PAGE, RouteTypeEnum.API, RouteTypeEnum.PAGE_API)
+            val validRouteTypes = listOf(RouteTypeEnum.PAGE, RouteTypeEnum.API, RouteTypeEnum.WEB_BLOCK, RouteTypeEnum.WEB_BLOCK_API)
 
             validRouteTypes.forEach { routeType ->
                 val returnType = ReturnTypeEnum.getReturnTypeFromRouteType(routeType)

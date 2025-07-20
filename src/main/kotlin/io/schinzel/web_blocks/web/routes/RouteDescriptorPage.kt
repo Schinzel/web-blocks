@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
  *
  * Written by Claude Sonnet 4
  */
-class WebBlockPageRouteDescriptor(
+class RouteDescriptorPage(
     private val endpointPackage: String,
 ) : IRouteDescriptor<IRoute> {
     private val systemPaths = listOf("api", "page-api", "static")

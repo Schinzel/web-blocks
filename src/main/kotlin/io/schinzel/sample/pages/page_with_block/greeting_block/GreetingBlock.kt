@@ -1,13 +1,13 @@
 package io.schinzel.sample.pages.page_with_block.greeting_block
 
-import io.schinzel.web_blocks.component.page.WebBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.WebBlock
+import io.schinzel.web_blocks.component.page.WebBlock as WebBlockComponent
 
-@WebBlockPageApi
-class GreetingBlock : WebBlock() {
+@WebBlock
+class GreetingBlock : WebBlockComponent() {
     override suspend fun getResponse(): IHtmlResponse =
         html(
             TemplateProcessor(this)

@@ -1,8 +1,8 @@
 package io.schinzel.web_blocks.web.routes
 
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.IJsonResponse
+import io.schinzel.web_blocks.web.response.IWebBlockResponse
 
 /**
  * The purpose of this interface is to define the generic contract for all web routes
@@ -31,7 +31,7 @@ interface IWebBlockRoute<T : IWebBlockResponse> : IRoute {
  * Example usage:
  * @Page
  * class HomePage : IHtmlRoute {
- *     override suspend fun getResponse(): IHtmlResponse = 
+ *     override suspend fun getResponse(): IHtmlResponse =
  *         HtmlContentResponse("<h1>Welcome</h1>")
  * }
  *
@@ -48,7 +48,7 @@ interface IHtmlRoute : IWebBlockRoute<IHtmlResponse>
  * Example usage:
  * @Api
  * class UserApi : IApiRoute {
- *     override suspend fun getResponse(): IJsonResponse = 
+ *     override suspend fun getResponse(): IJsonResponse =
  *         JsonSuccessResponse(listOf("user1", "user2"))
  * }
  *

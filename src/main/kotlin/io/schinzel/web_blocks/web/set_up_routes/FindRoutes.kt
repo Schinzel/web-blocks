@@ -5,23 +5,21 @@ import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
+import io.schinzel.web_blocks.web.routes.NewWebBlockApiRouteDescriptor
 import io.schinzel.web_blocks.web.routes.RouteAnnotationUtil
+import io.schinzel.web_blocks.web.routes.RouteDescriptorPage
 import io.schinzel.web_blocks.web.routes.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.RouteTypeEnum
 import io.schinzel.web_blocks.web.routes.WebBlockApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageApiRouteDescriptor
-import io.schinzel.web_blocks.web.routes.WebBlockPageRouteDescriptor
+import io.schinzel.web_blocks.web.routes.WebBlockRouteDescriptor
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
-import io.schinzel.web_blocks.web.routes.annotations.WebBlockPageApi
+import io.schinzel.web_blocks.web.routes.annotations.WebBlockApi
 import org.reflections.Reflections
 import kotlin.reflect.KClass
 import kotlin.reflect.full.hasAnnotation
 import kotlin.reflect.full.isSubclassOf
-import kotlin.reflect.full.hasAnnotation
-import kotlin.reflect.full.isSubclassOf
-import kotlin.reflect.full.hasAnnotation
-import kotlin.reflect.full.isSubclassOf
+import io.schinzel.web_blocks.web.routes.annotations.WebBlock as WebBlockAnnotation
 
 /**
  * The purpose of this class is to discover and register annotation-based routes
@@ -43,15 +41,19 @@ class FindRoutes(
         // Register descriptors for annotation-based routes
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.PAGE,
-            WebBlockPageRouteDescriptor(endpointPackage),
+            RouteDescriptorPage(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
             RouteTypeEnum.API,
             WebBlockApiRouteDescriptor(endpointPackage),
         )
         RouteDescriptorRegistry.registerAnnotation(
-            RouteTypeEnum.PAGE_API,
-            WebBlockPageApiRouteDescriptor(endpointPackage),
+            RouteTypeEnum.WEB_BLOCK,
+            WebBlockRouteDescriptor(endpointPackage),
+        )
+        RouteDescriptorRegistry.registerAnnotation(
+            RouteTypeEnum.WEB_BLOCK_API,
+            NewWebBlockApiRouteDescriptor(endpointPackage),
         )
     }
 
@@ -64,7 +66,8 @@ class FindRoutes(
         // Find classes annotated with WebBlock route annotations
         routes.addAll(findAnnotatedRoutes<Page>())
         routes.addAll(findAnnotatedRoutes<Api>())
-        routes.addAll(findAnnotatedRoutes<WebBlockPageApi>())
+        routes.addAll(findAnnotatedRoutes<WebBlockAnnotation>())
+        routes.addAll(findAnnotatedRoutes<WebBlockApi>())
 
         return routes
     }
@@ -89,13 +92,24 @@ class FindRoutes(
                     // Then validate interface requirements
                     when {
                         route.hasAnnotation<Page>() && !route.isSubclassOf(IHtmlRoute::class) ->
-                            throw IllegalStateException("@Page annotated class ${route.simpleName} must implement IHtmlRoute")
+                            throw IllegalStateException(
+                                "@Page annotated class ${route.simpleName} must implement IHtmlRoute",
+                            )
 
                         route.hasAnnotation<Api>() && !route.isSubclassOf(IApiRoute::class) ->
-                            throw IllegalStateException("@Api annotated class ${route.simpleName} must implement IApiRoute")
-                        
-                        route.hasAnnotation<WebBlockPageApi>() && !route.isSubclassOf(IApiRoute::class) ->
-                            throw IllegalStateException("@WebBlockPageApi annotated class ${route.simpleName} must implement IApiRoute")
+                            throw IllegalStateException(
+                                "@Api annotated class ${route.simpleName} must implement IApiRoute",
+                            )
+
+                        route.hasAnnotation<WebBlockAnnotation>() && !route.isSubclassOf(IHtmlRoute::class) ->
+                            throw IllegalStateException(
+                                "@WebBlock annotated class ${route.simpleName} must implement IHtmlRoute",
+                            )
+
+                        route.hasAnnotation<WebBlockApi>() && !route.isSubclassOf(IApiRoute::class) ->
+                            throw IllegalStateException(
+                                "@WebBlockApi annotated class ${route.simpleName} must implement IApiRoute",
+                            )
                     }
                 }
             }
