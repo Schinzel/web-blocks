@@ -4,6 +4,7 @@ import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
+import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
 import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
@@ -16,6 +17,7 @@ class RouteDescriptorApi(
     override val pathPrefix: String = "api"
     override val suffixesToRemove: List<String> = listOf("ApiRoute", "Api", "API", "Route")
     override val returnType = ReturnTypeEnum.JSON
+    override val annotation: KClass<out Annotation> = Api::class
 
     override fun getRoutePath(routeClass: KClass<out IRoute>): String {
         // Ensure class implements IWebBlockRoute
@@ -31,8 +33,8 @@ class RouteDescriptorApi(
         // Validate annotation
         RouteAnnotationUtil.validateRouteAnnotation(webBlockRouteClass)
 
-        // Ensure class has @WebBlockPageApi annotation
-        if (RouteAnnotationUtil.detectRouteType(webBlockRouteClass) != RouteTypeEnum.API) {
+        // Ensure class has correct annotation
+        if (!routeClass.annotations.any{it.annotationClass == annotation }){
             throw IllegalArgumentException(
                 "Class ${routeClass.simpleName} is not annotated with @Api",
             )

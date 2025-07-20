@@ -4,6 +4,8 @@ import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
+import io.schinzel.web_blocks.web.routes.annotations.Api
+import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
 import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
@@ -16,6 +18,7 @@ class RouteDescriptorPageBlock(
     override val pathPrefix: String = "page-block"
     override val suffixesToRemove: List<String> = listOf("PageBlock", "Pb", "PB", "Block")
     override val returnType = ReturnTypeEnum.HTML
+    override val annotation: KClass<out Annotation> = PageBlock::class
 
 
     override fun getRoutePath(routeClass: KClass<out IRoute>): String {
@@ -32,10 +35,10 @@ class RouteDescriptorPageBlock(
         // Validate annotation
         RouteAnnotationUtil.validateRouteAnnotation(webBlockRouteClass)
 
-        // Ensure class has @WebBlockApi annotation
-        if (RouteAnnotationUtil.detectRouteType(webBlockRouteClass) != RouteTypeEnum.PAGE_BLOCK) {
+        // Ensure class has correct annotation
+        if (!routeClass.annotations.any{it.annotationClass == annotation }){
             throw IllegalArgumentException(
-                "Class ${routeClass.simpleName} is not annotated with @WebBlockApi",
+                "Class ${routeClass.simpleName} is not annotated with @Api",
             )
         }
 

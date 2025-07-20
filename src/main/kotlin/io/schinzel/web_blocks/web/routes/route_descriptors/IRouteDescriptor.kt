@@ -13,6 +13,7 @@ interface IRouteDescriptor<T : IRoute> {
     val pathPrefix: String
     val suffixesToRemove: List<String>
     val returnType: ReturnTypeEnum
+    val annotation: KClass<out Annotation>
     /**
      * @param routeClass The class of the route
      * @return The path of the route
