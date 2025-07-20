@@ -10,7 +10,6 @@ enum class RouteTypeEnum {
     API,
     PAGE_BLOCK,
     PAGE_BLOCK_API,
-    PAGE_API,
     UNKNOWN,
     ;
 }
