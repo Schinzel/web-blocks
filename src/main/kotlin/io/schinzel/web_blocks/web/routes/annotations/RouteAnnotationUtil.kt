@@ -1,6 +1,5 @@
 package io.schinzel.web_blocks.web.routes.annotations
 
-import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import kotlin.reflect.KClass
 
 /**
@@ -32,6 +31,7 @@ object RouteAnnotationUtil {
                 "Class ${clazz.simpleName} has multiple route annotations. " +
                     "Only one of @Api, @Page, @PageBlock, @or @PageBlockApi is allowed.",
             )
+
             hasPage -> RouteTypeEnum.PAGE
             hasApi -> RouteTypeEnum.API
             hasPageBlock -> RouteTypeEnum.PAGE_BLOCK

@@ -1,8 +1,6 @@
 package io.schinzel.web_blocks.web.routes.route_descriptors
 
 import io.schinzel.web_blocks.web.routes.IRoute
-import io.schinzel.web_blocks.web.routes.annotations.RouteAnnotationUtil
-import io.schinzel.web_blocks.web.routes.annotations.RouteTypeEnum
 import kotlin.reflect.KClass
 
 /**
@@ -14,36 +12,24 @@ import kotlin.reflect.KClass
  * Written by Claude Sonnet 4
  */
 object RouteDescriptorRegistry {
-    private val annotationDescriptors =
-        mutableMapOf<RouteTypeEnum, IRouteDescriptor<IRoute>>()
+    private val routeDescriptors = mutableListOf<IRouteDescriptor<IRoute>>()
 
     /**
      * Register a descriptor for annotation-based routes
      */
     fun registerAnnotation(
-        routeType: RouteTypeEnum,
         descriptor: IRouteDescriptor<IRoute>,
-    ) {
-        annotationDescriptors[routeType] = descriptor
+    ): RouteDescriptorRegistry {
+        routeDescriptors.add(descriptor)
+        return this
     }
 
     /**
      * Get route descriptor for annotation-based route class
      */
-    @Suppress("UNCHECKED_CAST")
-    fun getRouteDescriptor(clazz: KClass<out IRoute>): IRouteDescriptor<IRoute> {
-        val routeType: RouteTypeEnum = RouteAnnotationUtil.detectRouteType(clazz)
+    fun getRouteDescriptor(clazz: KClass<out IRoute>): IRouteDescriptor<IRoute> =
+        routeDescriptors.find { descriptor ->
+            clazz.annotations.any { it.annotationClass == descriptor.annotation }
+        } ?: throw RuntimeException("No route descriptor found for $clazz")
 
-        if (routeType == RouteTypeEnum.UNKNOWN) {
-            throw IllegalArgumentException(
-                "Route class ${clazz.simpleName} has no WebBlock annotation",
-            )
-        }
-
-        return annotationDescriptors[routeType]
-            ?: throw IllegalArgumentException(
-                "No descriptor registered for route type $routeType",
-            )
-
-    }
 }
