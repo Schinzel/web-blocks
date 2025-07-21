@@ -1,5 +1,10 @@
 
 
+
+IApiRoute
+IHtmlRoute
+Is this consistent
+
 Om tog bort getPath från IRoute. Kan vi då göra auto doc?
 
 
