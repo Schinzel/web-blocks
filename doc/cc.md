@@ -9,6 +9,7 @@ modules/logic/db/src/test/kotlin/
 │   └── DatabaseTestBase.kt  # Shared setup
 
 
+Update Mermaid diagrams
 Mermaid diagram, from request to response.
 
 
