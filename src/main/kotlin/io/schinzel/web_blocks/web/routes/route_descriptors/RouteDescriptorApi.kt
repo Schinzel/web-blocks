@@ -13,7 +13,7 @@ class RouteDescriptorApi(
     private val endpointPackage: String,
 ) : IRouteDescriptor<IRoute> {
     override val pathPrefix: String = "api"
-    override val suffixesToRemove: List<String> = listOf("ApiRoute", "Api", "API", "Route")
+    override val suffixesToRemove: List<String> = listOf("JsonRoute", "Api", "API", "Route")
     override val returnType = ReturnTypeEnum.JSON
     override val annotation: KClass<out Annotation> = Api::class
 

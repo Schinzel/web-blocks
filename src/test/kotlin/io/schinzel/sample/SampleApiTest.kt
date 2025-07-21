@@ -82,7 +82,7 @@ class SampleApiTest {
     }
 
     @Test
-    fun getResponse_apiRouteThatThrowsError_returns200Status() {
+    fun getResponse_jsonRouteThatThrowsError_returns200Status() {
         val response =
             Jsoup
                 .connect("$baseUrl/api/api-route-that-throws-error")

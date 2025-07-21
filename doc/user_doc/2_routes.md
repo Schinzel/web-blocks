@@ -11,7 +11,7 @@ There are 3 types of routes:
 | Attribute  | Description                    |
 |------------|--------------------------------|
 | Annotation | `@Api`                         |
-| Interface  | `IApiRoute`                    |
+| Interface  | `IJsonRoute`                   |
 | Returns    | `IJsonResponse`                |
 | Location   | Located in the `api` directory |
 
@@ -20,13 +20,13 @@ There are 3 types of routes:
 | Path             | The path is decided by the directory structure and the Class name           |
 | Case             | Directory names are converted from snake_case to kebab-case                 |
 | Case             | Class names are converted from PascalCase to kebab-case                     |
-| Suffixes removed | Suffixes `ApiRoute`, `Route`, `API` and `Api` are removed                   |
+| Suffixes removed | Suffixes `JsonRoute`, `Route`, `API` and `Api` are removed                  |
 | Prefix           | Api paths are prefixed with `api`                                           |
 | Example          | `/api/my_dir/MyPersonRoute.kt` will receive the path `api/my-dir/my-person` |
 
 ```kotlin
 @WebBlockApi
-class UserPets : IApiRoute {
+class UserPets : IJsonRoute {
   override suspend fun getResponse(): IJsonResponse = json(listOf("cat", "dog"))
 }
 ```
@@ -87,7 +87,7 @@ Used by blocks typically for CRUD operations.
 | Attribute  | Description                      |
 |------------|----------------------------------|
 | Annotation | `@PageBlockApi`                  |
-| Interface  | `IApiRoute`                      |
+| Interface  | `IJsonRoute`                     |
 | Returns    | `IJsonResponse`                  |
 | Location   | Located in the `pages` directory |
 
@@ -102,7 +102,7 @@ Used by blocks typically for CRUD operations.
 
 ```kotlin
 @PageBlockApi
-class ThePageBlockApi : IApiRoute {
+class ThePageBlockApi : IJsonRoute {
   override suspend fun getResponse(): IJsonResponse = json(listOf("cat", "dog"))
 }
 ```

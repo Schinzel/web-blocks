@@ -4,8 +4,8 @@ import io.schinzel.web_blocks.web.response.HtmlContentResponse
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
-import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
+import io.schinzel.web_blocks.web.routes.IJsonRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 import io.schinzel.web_blocks.web.routes.annotations.Api
@@ -41,9 +41,9 @@ class FindRoutesTest {
 
             // Verify descriptors are registered by checking we can get them
             val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
-            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
+            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestJsonRoute::class)
             val pageBlockDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockRoute::class)
-            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockApiRoute::class)
+            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockJsonRoute::class)
 
             assertThat(pageDescriptor).isNotNull
             assertThat(pageDescriptor.getTypeName()).isEqualTo("PageRoute")
@@ -121,10 +121,10 @@ class FindRoutesTest {
             val routeMappings = findRoutes("io.schinzel.web_blocks.web.set_up_routes")
 
             assertThat(routeMappings).isNotEmpty
-            assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestApiRoute::class.simpleName }
+            assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestJsonRoute::class.simpleName }
             assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageRoute::class.simpleName }
             assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageBlockRoute::class.simpleName }
-            assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageBlockApiRoute::class.simpleName }
+            assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageBlockJsonRoute::class.simpleName }
         }
 
         @Test
@@ -133,9 +133,9 @@ class FindRoutesTest {
 
             // Verify descriptors are registered
             val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
-            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
+            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestJsonRoute::class)
             val pageBlockDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockRoute::class)
-            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockApiRoute::class)
+            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockJsonRoute::class)
 
             assertThat(pageDescriptor).isNotNull
             assertThat(apiDescriptor).isNotNull
@@ -152,7 +152,7 @@ class FindRoutesTest {
     }
 
     @Api
-    private class TestApiRoute : IApiRoute {
+    private class TestJsonRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test api")
     }
 
@@ -162,7 +162,7 @@ class FindRoutesTest {
     }
 
     @PageBlockApi
-    private class TestPageBlockApiRoute : IApiRoute {
+    private class TestPageBlockJsonRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test page block api")
     }
 }

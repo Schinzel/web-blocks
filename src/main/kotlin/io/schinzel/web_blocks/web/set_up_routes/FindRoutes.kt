@@ -1,8 +1,8 @@
 package io.schinzel.web_blocks.web.set_up_routes
 
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
-import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
+import io.schinzel.web_blocks.web.routes.IJsonRoute
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
@@ -74,22 +74,22 @@ class FindRoutes(
                     when {
                         route.hasAnnotation<Page>() && !route.isSubclassOf(IHtmlRoute::class) ->
                             throw IllegalStateException(
-                                "@Page annotated class ${route.simpleName} must implement IHtmlRoute",
+                                "@Page annotated class ${route.simpleName} must implement ${IHtmlRoute::class.simpleName}",
                             )
 
-                        route.hasAnnotation<Api>() && !route.isSubclassOf(IApiRoute::class) ->
+                        route.hasAnnotation<Api>() && !route.isSubclassOf(IJsonRoute::class) ->
                             throw IllegalStateException(
-                                "@Api annotated class ${route.simpleName} must implement IApiRoute",
+                                "@Api annotated class ${route.simpleName} must implement ${IJsonRoute::class.simpleName}"
                             )
 
                         route.hasAnnotation<PageBlock>() && !route.isSubclassOf(IHtmlRoute::class) ->
                             throw IllegalStateException(
-                                "@PageBlock annotated class ${route.simpleName} must implement IHtmlRoute",
+                                "@PageBlock annotated class ${route.simpleName} must implement ${IHtmlRoute::class.simpleName}\"",
                             )
 
-                        route.hasAnnotation<PageBlockApi>() && !route.isSubclassOf(IApiRoute::class) ->
+                        route.hasAnnotation<PageBlockApi>() && !route.isSubclassOf(IJsonRoute::class) ->
                             throw IllegalStateException(
-                                "@PageBlockApi annotated class ${route.simpleName} must implement IApiRoute",
+                                "@PageBlockApi annotated class ${route.simpleName} must implement ${IJsonRoute::class.simpleName}",
                             )
                     }
                 }

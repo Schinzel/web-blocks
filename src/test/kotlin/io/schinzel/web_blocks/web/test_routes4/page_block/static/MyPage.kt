@@ -1,4 +1,4 @@
-package io.schinzel.web_blocks.web.test_routes4.page_api.static
+package io.schinzel.web_blocks.web.test_routes4.page_block.static
 
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html

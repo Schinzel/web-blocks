@@ -4,8 +4,8 @@ import io.schinzel.web_blocks.web.response.HtmlContentResponse
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.IJsonResponse
 import io.schinzel.web_blocks.web.response.JsonSuccessResponse
-import io.schinzel.web_blocks.web.routes.IApiRoute
 import io.schinzel.web_blocks.web.routes.IHtmlRoute
+import io.schinzel.web_blocks.web.routes.IJsonRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 import io.schinzel.web_blocks.web.routes.annotations.Page
 import io.schinzel.web_blocks.web.routes.annotations.PageBlockApi
@@ -51,17 +51,17 @@ class AnnotationRoutingIntegrationTest {
 
             assertThat(routes).hasSize(3)
             assertThat(routes).anyMatch { it.simpleName == "TestPageRoute" }
-            assertThat(routes).anyMatch { it.simpleName == "TestApiRoute" }
+            assertThat(routes).anyMatch { it.simpleName == "TestJsonRoute" }
             assertThat(routes).anyMatch { it.simpleName == "TestPageApiRoute" }
         }
 
         @Test
         fun `route path generation _ works for all route types`() {
             val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
-            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestApiRoute::class)
+            val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestJsonRoute::class)
 
             val pagePath = pageDescriptor.getRoutePath(TestPageRoute::class)
-            val apiPath = apiDescriptor.getRoutePath(TestApiRoute::class)
+            val apiPath = apiDescriptor.getRoutePath(TestJsonRoute::class)
 
             // The exact path format depends on the package structure
             // We just verify that paths can be generated without errors
@@ -77,12 +77,12 @@ class AnnotationRoutingIntegrationTest {
     }
 
     @Api
-    private class TestApiRoute : IApiRoute {
+    private class TestJsonRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test api")
     }
 
     @PageBlockApi
-    private class TestPageApiRoute : IApiRoute {
+    private class TestPageJsonRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test page api")
     }
 }

@@ -74,22 +74,22 @@ class RouteDescriptorPageBlockApiTest {
 
     // Test classes for descriptor testing
     @PageBlockApi
-    private class TestSimplePageApi : IApiRoute {
+    private class TestSimplePageJson : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
     @PageBlockApi
-    private class TestPageApiRoute : IApiRoute {
+    private class TestPageJsonRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
     @PageBlockApi
-    private class TestSubdirPageApi : IApiRoute {
+    private class TestSubdirPageJson : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 
     @Api
-    private class TestWrongAnnotation : IApiRoute {
+    private class TestWrongAnnotation : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test")
     }
 

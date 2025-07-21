@@ -114,7 +114,7 @@ class SamplePageTest {
     }
 
     @Nested
-    inner class PageWithBlocksAndPageApiRoute {
+    inner class PageWithBlocksAndPageJsonRoute {
         @Test
         fun containsWelcomeContent() {
             val response = Jsoup.connect("$baseUrl/page-with-blocks-and-page-api-route?user-id=123222").execute()

@@ -23,11 +23,13 @@ interface IWebBlockRoute<T : IWebBlockResponse> : IRoute {
 }
 
 /**
- * The purpose of this interface is to define the contract for HTML routes
+ * The purpose of this interface is to define the contract for HTML routes,
+ * i.e. routes that return HTML.
  */
 interface IHtmlRoute : IWebBlockRoute<IHtmlResponse>
 
 /**
- * The purpose of this interface is to define the contract for API routes
+ * The purpose of this interface is to define the contract for JSON routes,
+ * i.e. routes that return JSON.
  */
-interface IApiRoute : IWebBlockRoute<IJsonResponse>
+interface IJsonRoute : IWebBlockRoute<IJsonResponse>

@@ -1,5 +1,6 @@
 package io.schinzel.web_blocks.web
 
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.test_routes2.MyWebApp2
 import io.schinzel.web_blocks.web.test_routes3.MyWebApp3
 import io.schinzel.web_blocks.web.test_routes4.MyWebApp4
@@ -35,7 +36,7 @@ class InitWebAppTest2 {
         }
 
         @Test
-        fun `page named page-api _ throws error`() {
+        fun `page named page-block _ throws error`() {
             val app = MyWebApp4()
             try {
                 assertThrows<Exception> {

@@ -6,6 +6,7 @@ import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web_blocks.web.request_handler.log.ConsoleLogger
 import io.schinzel.web_blocks.web.request_handler.log.ILogger
 import io.schinzel.web_blocks.web.request_handler.setUpErrorHandling
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistryInit
 import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
 import java.io.IOException
@@ -51,6 +52,7 @@ abstract class AbstractWebApp {
     fun stop() {
         javalin?.stop()
         javalin = null
+        RouteDescriptorRegistry.clear()
     }
 
     private fun isPortAvailable(port: Int): Boolean =
