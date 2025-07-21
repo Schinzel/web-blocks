@@ -17,4 +17,3 @@ class ConsoleLogger(
             .println()
     }
 }
-

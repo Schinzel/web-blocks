@@ -20,7 +20,6 @@ data class LogEntry(
     val responseLog: ResponseLog = ResponseLog(),
     var errorLog: ErrorLog? = null,
 ) {
-
     private object TimeProvider {
         fun nowUtc(): String = now("UTC")
 

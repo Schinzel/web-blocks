@@ -6,9 +6,15 @@ import io.schinzel.web_blocks.web.request_handler.log.NoLogger
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
-class MyWebAppPageTest(testPort: Int) : AbstractWebApp() {
+class MyWebAppPageTest(
+    testPort: Int,
+) : AbstractWebApp() {
     override val logger = NoLogger()
     override val port: Int = testPort
 }
