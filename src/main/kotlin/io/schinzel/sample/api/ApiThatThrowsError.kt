@@ -5,6 +5,6 @@ import io.schinzel.web_blocks.web.routes.IJsonRoute
 import io.schinzel.web_blocks.web.routes.annotations.Api
 
 @Api
-class JsonRouteThatThrowsError : IJsonRoute {
+class ApiThatThrowsError : IJsonRoute {
     override suspend fun getResponse(): IJsonResponse = throw RuntimeException("Something went wrong!!")
 }
