@@ -12,22 +12,37 @@ class InitWebAppTest2 {
     inner class Start {
         @Test
         fun `page named api _ throws error`() {
-            assertThrows<Exception> {
-                MyWebApp2().start()
+            val app = MyWebApp2()
+            try {
+                assertThrows<Exception> {
+                    app.start()
+                }
+            } finally {
+                app.stop()
             }
         }
 
         @Test
         fun `page named static _ throws error`() {
-            assertThrows<Exception> {
-                MyWebApp3().start()
+            val app = MyWebApp3()
+            try {
+                assertThrows<Exception> {
+                    app.start()
+                }
+            } finally {
+                app.stop()
             }
         }
 
         @Test
         fun `page named page-api _ throws error`() {
-            assertThrows<Exception> {
-                MyWebApp4().start()
+            val app = MyWebApp4()
+            try {
+                assertThrows<Exception> {
+                    app.start()
+                }
+            } finally {
+                app.stop()
             }
         }
     }

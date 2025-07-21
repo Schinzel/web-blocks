@@ -4,22 +4,28 @@ import io.schinzel.web_blocks.web.test_routes.MyWebApp1
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class InitWebAppTest {
-    companion object {
-        var randomPort = -1
+    private lateinit var myWebApp: MyWebApp1
+    private var randomPort = -1
 
-        @JvmStatic
-        @BeforeAll
-        fun beforeAll() {
-            val myWebApp = MyWebApp1()
-            randomPort = myWebApp.port
-            myWebApp.start()
-        }
+    @BeforeAll
+    fun beforeAll() {
+        myWebApp = MyWebApp1()
+        randomPort = myWebApp.port
+        myWebApp.start()
+    }
+
+    @AfterAll
+    fun afterAll() {
+        myWebApp.stop()
     }
 
     @Nested

@@ -2,6 +2,7 @@ package io.schinzel.sample
 
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Jsoup
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -27,6 +28,11 @@ class SamplePageTest {
             app.start()
         }.start()
         Thread.sleep(2000) // Wait for server to start
+    }
+
+    @AfterAll
+    fun stopApplication() {
+        app.stop()
     }
 
     @Nested
