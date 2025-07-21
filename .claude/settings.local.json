@@ -32,7 +32,8 @@
       "Bash(./mvnw test)",
       "mcp__zen__analyze",
       "Bash(java:*)",
-      "Bash(kotlinc:*)"
+      "Bash(kotlinc:*)",
+      "mcp__zen__debug"
     ],
     "deny": []
   }

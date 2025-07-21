@@ -1,12 +1,17 @@
 package io.schinzel.sample
 
+import io.schinzel.web_blocks.test_utils.PortUtil
+import io.schinzel.web_blocks.web.AbstractWebApp
+import io.schinzel.web_blocks.web.request_handler.log.NoLogger
+import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.*
+
+class MyWebAppApiTest(testPort: Int) : AbstractWebApp() {
+    override val logger = NoLogger()
+    override val port: Int = testPort
+}
 
 /**
  * The purpose of this class is to test all sample API routes and content
@@ -17,13 +22,15 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SampleApiTest {
     companion object {
-        private const val BASE_URL = "http://127.0.0.1:5555"
-        private lateinit var app: MyWebApp
+        private lateinit var baseUrl: String
+        private lateinit var app: MyWebAppApiTest
     }
 
     @BeforeAll
     fun startApplication() {
-        app = MyWebApp()
+        val port = PortUtil.findAvailablePort()
+        baseUrl = "http://127.0.0.1:$port"
+        app = MyWebAppApiTest(port)
         Thread {
             app.start()
         }.start()
@@ -33,20 +40,21 @@ class SampleApiTest {
     @AfterAll
     fun stopApplication() {
         app.stop()
+        RouteDescriptorRegistry.clear()
     }
 
     @Nested
     inner class UserPetsApi {
         @Test
         fun returnsPetsList() {
-            val response = Jsoup.connect("$BASE_URL/api/user-pets").ignoreContentType(true).execute()
+            val response = Jsoup.connect("$baseUrl/api/user-pets").ignoreContentType(true).execute()
             val expectedContent = "Fluffy"
             assertThat(response.body()).contains(expectedContent)
         }
 
         @Test
         fun returns200Status() {
-            val response = Jsoup.connect("$BASE_URL/api/user-pets").ignoreContentType(true).execute()
+            val response = Jsoup.connect("$baseUrl/api/user-pets").ignoreContentType(true).execute()
             assertThat(response.statusCode()).isEqualTo(200)
         }
     }
@@ -55,14 +63,14 @@ class SampleApiTest {
     inner class UserInformationApi {
         @Test
         fun returnsUserData() {
-            val response = Jsoup.connect("$BASE_URL/api/user-information-endpoint?user-id=123").ignoreContentType(true).execute()
+            val response = Jsoup.connect("$baseUrl/api/user-information-endpoint?user-id=123").ignoreContentType(true).execute()
             val expectedContent = "123"
             assertThat(response.body()).contains(expectedContent)
         }
 
         @Test
         fun returns200Status() {
-            val response = Jsoup.connect("$BASE_URL/api/user-information-endpoint?user-id=123").ignoreContentType(true).execute()
+            val response = Jsoup.connect("$baseUrl/api/user-information-endpoint?user-id=123").ignoreContentType(true).execute()
             assertThat(response.statusCode()).isEqualTo(200)
         }
     }
@@ -71,7 +79,7 @@ class SampleApiTest {
     fun getResponse_apiRouteThatThrowsError_returns200Status() {
         val response =
             Jsoup
-                .connect("$BASE_URL/api/api-route-that-throws-error")
+                .connect("$baseUrl/api/api-route-that-throws-error")
                 .ignoreContentType(true)
                 .ignoreHttpErrors(true)
                 .execute()
@@ -82,13 +90,13 @@ class SampleApiTest {
     inner class UserApiWithHeaders {
         @Test
         fun containsCustomHeaders() {
-            val response = Jsoup.connect("$BASE_URL/api/user-api-with-headers?user-id=123").ignoreContentType(true).execute()
+            val response = Jsoup.connect("$baseUrl/api/user-api-with-headers?user-id=123").ignoreContentType(true).execute()
             assertThat(response.header("X-Total-Count")).isNotNull()
         }
 
         @Test
         fun returnsJsonResponse() {
-            val response = Jsoup.connect("$BASE_URL/api/user-api-with-headers?user-id=123").ignoreContentType(true).execute()
+            val response = Jsoup.connect("$baseUrl/api/user-api-with-headers?user-id=123").ignoreContentType(true).execute()
             val expectedContent = "123"
             assertThat(response.body()).contains(expectedContent)
         }

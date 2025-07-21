@@ -29,4 +29,11 @@ object RouteDescriptorRegistry {
         routeDescriptors.find { descriptor ->
             clazz.annotations.any { it.annotationClass == descriptor.annotation }
         } ?: throw RuntimeException("No route descriptor found for $clazz")
+
+    /**
+     * Clear all registered route descriptors (primarily for test cleanup)
+     */
+    fun clear() {
+        routeDescriptors.clear()
+    }
 }

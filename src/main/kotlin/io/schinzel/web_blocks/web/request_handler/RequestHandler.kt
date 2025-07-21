@@ -2,7 +2,7 @@ package io.schinzel.web_blocks.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.web_blocks.web.WebAppConfig
-import io.schinzel.web_blocks.web.request_handler.log.LogEntry
+import io.schinzel.web_blocks.web.request_handler.log_entry.LogEntry
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
 import io.schinzel.web_blocks.web.routes.IRoute
 import kotlinx.coroutines.runBlocking

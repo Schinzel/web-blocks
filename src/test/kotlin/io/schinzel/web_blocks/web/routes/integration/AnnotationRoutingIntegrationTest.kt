@@ -13,6 +13,7 @@ import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegist
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistryInit
 import io.schinzel.web_blocks.web.set_up_routes.FindRoutes
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -30,6 +31,12 @@ class AnnotationRoutingIntegrationTest {
     fun setUp() {
         // Register route descriptors for integration tests
         RouteDescriptorRegistryInit(endpointPackage)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        // Clear route descriptors to prevent test contamination
+        RouteDescriptorRegistry.clear()
     }
 
     @Nested
