@@ -31,7 +31,7 @@ class RouteDescriptorApiTest {
 
         @Test
         fun `api class with Api suffix _ removes suffix`() {
-            val path = descriptor.getRoutePathFromRelativePath("api", "UserApiRoute")
+            val path = descriptor.getRoutePathFromRelativePath("api", "UserApi")
             assertThat(path).isEqualTo("/api/user")
         }
 
@@ -43,7 +43,7 @@ class RouteDescriptorApiTest {
 
         @Test
         fun `api class with ApiRoute suffix _ removes suffix`() {
-            val path = descriptor.getRoutePathFromRelativePath("api", "UserApiRoute")
+            val path = descriptor.getRoutePathFromRelativePath("api", "UserApi")
             assertThat(path).isEqualTo("/api/user")
         }
 

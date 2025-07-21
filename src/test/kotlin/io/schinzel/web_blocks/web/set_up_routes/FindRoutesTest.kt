@@ -43,7 +43,7 @@ class FindRoutesTest {
             val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
             val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestJsonRoute::class)
             val pageBlockDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockRoute::class)
-            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockJsonRoute::class)
+            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockApiRoute::class)
 
             assertThat(pageDescriptor).isNotNull
             assertThat(pageDescriptor.getTypeName()).isEqualTo("PageRoute")
@@ -124,7 +124,7 @@ class FindRoutesTest {
             assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestJsonRoute::class.simpleName }
             assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageRoute::class.simpleName }
             assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageBlockRoute::class.simpleName }
-            assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageBlockJsonRoute::class.simpleName }
+            assertThat(routeMappings).anyMatch { it.routeClass.simpleName == TestPageBlockApiRoute::class.simpleName }
         }
 
         @Test
@@ -135,7 +135,7 @@ class FindRoutesTest {
             val pageDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageRoute::class)
             val apiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestJsonRoute::class)
             val pageBlockDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockRoute::class)
-            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockJsonRoute::class)
+            val pageBlockApiDescriptor = RouteDescriptorRegistry.getRouteDescriptor(TestPageBlockApiRoute::class)
 
             assertThat(pageDescriptor).isNotNull
             assertThat(apiDescriptor).isNotNull
@@ -162,7 +162,7 @@ class FindRoutesTest {
     }
 
     @PageBlockApi
-    private class TestPageBlockJsonRoute : IJsonRoute {
+    private class TestPageBlockApiRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test page block api")
     }
 }
