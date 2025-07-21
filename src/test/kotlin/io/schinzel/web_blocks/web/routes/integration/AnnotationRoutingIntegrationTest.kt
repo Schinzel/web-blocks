@@ -50,9 +50,9 @@ class AnnotationRoutingIntegrationTest {
             val routes = findRoutes.getAnnotationBasedRoutes()
 
             assertThat(routes).hasSize(3)
-            assertThat(routes).anyMatch { it.simpleName == "TestPageRoute" }
-            assertThat(routes).anyMatch { it.simpleName == "TestJsonRoute" }
-            assertThat(routes).anyMatch { it.simpleName == "TestPageApiRoute" }
+            assertThat(routes).anyMatch { it.simpleName == TestPageRoute::class.simpleName }
+            assertThat(routes).anyMatch { it.simpleName == TestJsonRoute::class.simpleName }
+            assertThat(routes).anyMatch { it.simpleName == TestPageApiRoute::class.simpleName }
         }
 
         @Test
@@ -82,7 +82,7 @@ class AnnotationRoutingIntegrationTest {
     }
 
     @PageBlockApi
-    private class TestPageJsonRoute : IJsonRoute {
+    private class TestPageApiRoute : IJsonRoute {
         override suspend fun getResponse(): IJsonResponse = JsonSuccessResponse("test page api")
     }
 }

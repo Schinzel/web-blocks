@@ -79,7 +79,7 @@ class FindRoutes(
 
                         route.hasAnnotation<Api>() && !route.isSubclassOf(IJsonRoute::class) ->
                             throw IllegalStateException(
-                                "@Api annotated class ${route.simpleName} must implement ${IJsonRoute::class.simpleName}"
+                                "@Api annotated class ${route.simpleName} must implement ${IJsonRoute::class.simpleName}",
                             )
 
                         route.hasAnnotation<PageBlock>() && !route.isSubclassOf(IHtmlRoute::class) ->

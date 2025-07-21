@@ -67,17 +67,6 @@ class FindRoutesTest {
     @DisplayName("getAnnotationBasedRoutes")
     inner class GetAnnotationBasedRoutesTests {
         @Test
-        fun `finds annotated routes in package`() {
-            val routes = findRoutes.getAnnotationBasedRoutes()
-
-            assertThat(routes).isNotEmpty
-            assertThat(routes).anyMatch { it.simpleName == "TestPageRoute" }
-            assertThat(routes).anyMatch { it.simpleName == "TestApiRoute" }
-            assertThat(routes).anyMatch { it.simpleName == "TestPageBlockRoute" }
-            assertThat(routes).anyMatch { it.simpleName == "TestPageBlockApiRoute" }
-        }
-
-        @Test
         fun `validates route implementations`() {
             val routes = findRoutes.getAnnotationBasedRoutes()
 

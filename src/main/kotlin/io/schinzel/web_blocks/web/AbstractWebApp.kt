@@ -39,6 +39,7 @@ abstract class AbstractWebApp {
             .throwIfFalse(isPortAvailable(port))
             .message("Port $port is not available")
 
+        RouteDescriptorRegistry.clear()
         RouteDescriptorRegistryInit(webAppConfig.webRootPackage)
         javalin = setUpRoutes(webAppConfig)
         javalin?.setUpErrorHandling(webAppConfig)

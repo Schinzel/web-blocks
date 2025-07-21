@@ -1,6 +1,5 @@
 package io.schinzel.web_blocks.web
 
-import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.test_routes2.MyWebApp2
 import io.schinzel.web_blocks.web.test_routes3.MyWebApp3
 import io.schinzel.web_blocks.web.test_routes4.MyWebApp4
