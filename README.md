@@ -8,14 +8,14 @@ It is easy to get started with simple pages while supporting complex web applica
 The problems this project aims to solve are the following.
 
 **Web pages can easily become very large and hard to read and maintain**
-This is solved by a component framework that encourages breaking up a web page into small standalone blocks.
+This is solved by a component framework that encourages breaking up web pages into small standalone blocks.
 
 **Finding api endpoints and web pages in a large project can be a hassle**
 This is solved by file system based routing.
 
 **Low threshold to get started**
 There are sample applications that you can copy and base you project on, so that your do not have
-to read a line of instruction to get started.
+to read a line of instructions to get started.
 
 **Finding resource files that belong to a web page, such as HTML template pages can be unintuitive and in location far away from the web page**
 This is solved by file by reading resources from the source folder of classes when in development
@@ -28,8 +28,7 @@ This is solved by reading HTML and JavaScript files from the source folder of cl
 **Writing HTML in Kotlin code is cumbersome.**
 This is solved by a template engine that reads HTML files and replaces placeholders with values.
 
-**In some cases a change in one part of a page by a user should update other parts of the page.
-One want to do this without reloading the whole page. **
+**In some cases a change in one part of a page by a user should update other parts of the page. One want to do this without reloading the whole page.**
 This is solved by:
 1. Blocks have the ability to update themselves.
 2. An observer system where a block can notify its observing blocks that they should update themselves.

@@ -1,14 +1,5 @@
 
 
-
-modules/logic/db/src/test/kotlin/
-├── unit/                    # Mocked repository tests
-│   └── WorkflowServiceTest.kt
-├── integration/             # Real database tests
-│   ├── WorkflowDaoTest.kt
-│   └── DatabaseTestBase.kt  # Shared setup
-
-
 Update Mermaid diagrams
 Mermaid diagram, from request to response.
 

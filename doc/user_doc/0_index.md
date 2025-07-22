@@ -1,5 +1,5 @@
 - [Getting Started](1_getting_started.md)
-- [Code Routes](2_routes.md)
+- [Routes](2_routes.md)
 - [Page Builder](3_page_builder.md)
 - [Template Engine](4_template_engine.md)
 - [Error Pages](5_error_pages.md)

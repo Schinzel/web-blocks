@@ -2,9 +2,10 @@
 
 There are 3 types of routes:
 
-- API route - a standalone route that returns JSON
-- Page route - an HTML-page which returns HTML
-- Page API route - an route that belongs to an HTML-page and returns JSON
+- API route - a standalone route that returns JSON.
+- Page route - an HTML-page which returns HTML.
+- Page Block route - a block (i.e. component) that is a part of a page that returns HTML.
+- Page Block Api route - a route that typically is used for CRUD operation by a Page block. Returns JSON.
 
 ## API route
 
@@ -116,10 +117,34 @@ Arguments to pages, api endpoints and page endpoints can be passed as:
 - These are stated a constructor arguments that are declared as `val` and non-private (public)
 - Parameters are converted from camelCase to kebab-case
 
+## Example
+Below is an example of a page with two page blocks.
+```
+com.mycompany/
+├── MyWebApp.kt
+└── pages/
+    └── simple_page/
+        ├── ThePage.kt
+        └── blocks/
+            │
+            ├── my_first_block/
+            │   ├── MyFirstBlock.kt
+            │   ├── TheTemplate.html
+            │   ├── TheDto.kt
+            │   └── TheDao.kt
+            │
+            └── my_second_block/
+                ├── MySecondBlock.kt
+                ├── MyTemplate.html
+                ├── MyDto.kt
+                ├── MyDao.kt
+                └── SomeOtherCode.kt
+```
+
 ## Status Code Control
 
 The framework and implementing classes share responsibility for HTTP status codes. When a route successfully executes
-and returns a WebBlockResponse, the implementing class has final authority over the status code.
+and returns a response, the implementing class has final authority over the status code.
 
 | Scenario                    | Who Controls           | Status Code | Example                            |
 |-----------------------------|------------------------|-------------|------------------------------------|

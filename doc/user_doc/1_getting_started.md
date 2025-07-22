@@ -29,7 +29,10 @@ In your new package, create the package `pages`.
 All pages will reside in this package.
 
 Create a package for you first page, `simple_page`.
-In this package create a class that extends `IPageResponseHandler`.
+In this package create a class
+- with the annotation `@Page`
+- that extends `IHtmlRoute`
+- and a function `getResponse` that returns `IHtmlResponse`
 The class can have any name.
 
 Your project structure should now look like:
@@ -43,9 +46,9 @@ com.mycompany/
 
 For example:
 ```kotlin
-@WebBlockPage
-class ThePage : WebBlockRoute {
-    override fun getResponse(): WebBlockResponse {
+@Page
+class ThePage : IHtmlRoute {
+    override fun getResponse(): IHtmlResponse {
         return html("""
            |<!DOCTYPE html>
            |<html lang="en">
@@ -75,6 +78,6 @@ Project started on port 5555
 ******************************
 ```
 
-In a browser request `http://127.0.0.1:5555/simple-page` which should return "Hello world"
+In a browser do the request `http://127.0.0.1:5555/simple-page` which should return "Hello world"
 
 **Note**: The URL path `/simple-page` is automatically generated from your package name `simple_page` (snake_case is converted to kebab-case).
