@@ -28,7 +28,7 @@ reference for both human developers and AI assistants working on the codebase.
 - **JavaScript ES6+**
 
 ### UI Libraries
-- **Bootstrap 5.1 ** - CSS framework (bundled with framework)
+- **Bootstrap 5.1** - CSS framework (bundled with framework)
 - **jQuery 3.5** - JavaScript library (minified version included)
 - **Custom ServerCaller.js** - AJAX utility library with Promise support
 
