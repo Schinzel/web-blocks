@@ -25,11 +25,11 @@ reference for both human developers and AI assistants working on the codebase.
 - **SLF4J Simple** - Logging framework
 
 ## Frontend
+- **JavaScript ES6+**
 
 ### UI Libraries
-
-- **Bootstrap** - CSS framework (bundled with framework)
-- **jQuery** - JavaScript library (minified version included)
+- **Bootstrap 5.1 ** - CSS framework (bundled with framework)
+- **jQuery 3.5** - JavaScript library (minified version included)
 - **Custom ServerCaller.js** - AJAX utility library with Promise support
 
 ## Build Tools
