@@ -1,4 +1,4 @@
-package io.schinzel.web_blocks.component.page
+package io.schinzel.web_blocks.component.page_builder
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases
 import io.schinzel.basicutils.RandomUtil

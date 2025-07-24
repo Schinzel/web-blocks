@@ -1,4 +1,4 @@
-package io.schinzel.web_blocks.component.page
+package io.schinzel.web_blocks.component.page_builder
 
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
 import kotlinx.coroutines.async

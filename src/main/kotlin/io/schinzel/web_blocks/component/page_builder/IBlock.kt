@@ -1,4 +1,4 @@
-package io.schinzel.web_blocks.component.page
+package io.schinzel.web_blocks.component.page_builder
 
 /**
  * The purpose of this interface is to represent a block.

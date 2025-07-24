@@ -6,7 +6,7 @@ Start the main file [MyWebApp.kt](MyWebApp.kt).
 ## Page Routes
 
 A simple HTML page.
-- [pages/simple_page/ThePage.kt](../../src/main/kotlin/io/schinzel/sample/pages/simple_page/ThePage.kt )
+- [pages/simple_page/Page.kt](../../src/main/kotlin/io/schinzel/sample/pages/simple_page/Page.kt)
 - http://127.0.0.1:5555/simple-page
 
 Landing page. Returns the page in the directory `landing`.

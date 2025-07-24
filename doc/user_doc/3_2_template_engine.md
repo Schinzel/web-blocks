@@ -4,7 +4,7 @@
 - Template files can include other template files. The syntax for this is `{{include:fileName.html}}`.
     - Include files can contain include files. There is a maximum depth of 10 levels of include files, as to avoid infinite loops.
 
-Example
+## Example
 
 ```kotlin
 TemplateProcessor(this)
@@ -25,6 +25,20 @@ Below is `GreetingPe.html`
         <h1>Hi {{firstName}}!</h1>
 </body>
 </html>
+```
+
+## Syntax
+Add data
+```html
+<h1>Hi {{firstName}}!</h1>
+```
+
+Include files
+{{include: html/block-observer.html}}
+```html
+<body>
+    {{include: my-include-file.html}}
+</body>
 ```
 
 ## Template Engine File Reader

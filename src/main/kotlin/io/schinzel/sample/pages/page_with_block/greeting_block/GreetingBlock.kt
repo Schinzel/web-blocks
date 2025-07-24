@@ -1,6 +1,6 @@
 package io.schinzel.sample.pages.page_with_block.greeting_block
 
-import io.schinzel.web_blocks.component.page.WebBlock
+import io.schinzel.web_blocks.component.page_builder.WebBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html

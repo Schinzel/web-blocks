@@ -1,4 +1,4 @@
-package io.schinzel.web_blocks.component.page
+package io.schinzel.web_blocks.component.page_builder
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

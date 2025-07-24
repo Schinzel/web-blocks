@@ -7,7 +7,7 @@ import io.schinzel.web_blocks.web.routes.annotations.Page
 
 @Page
 @Suppress("unused")
-class ThePage : IHtmlRoute {
+class Page : IHtmlRoute {
     override suspend fun getResponse(): IHtmlResponse =
         html(
             """
