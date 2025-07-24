@@ -6,7 +6,7 @@ This sets the root of the routing.
 
 For example:
 ```kotlin
-class MyWebApp() : AbstractWebApp() {
+class MyWebApp() : WebBlocksApp() {
     override val port: Int = 5555
 }
 ```

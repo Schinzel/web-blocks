@@ -12,7 +12,7 @@ import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
 
-abstract class AbstractWebApp {
+abstract class WebBlocksApp {
     // Optional configuration with defaults
     open val port: Int = 5555
     open val logger: ILogger = ConsoleLogger(prettyPrint = true)

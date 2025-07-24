@@ -1,7 +1,7 @@
 package io.schinzel.sample
 
 import io.schinzel.web_blocks.test_utils.PortUtil
-import io.schinzel.web_blocks.web.AbstractWebApp
+import io.schinzel.web_blocks.web.WebBlocksApp
 import io.schinzel.web_blocks.web.request_handler.log.NoLogger
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.TestInstance
 
 class MyWebAppPageTest(
     testPort: Int,
-) : AbstractWebApp() {
+) : WebBlocksApp() {
     override val logger = NoLogger()
     override val port: Int = testPort
 }
@@ -131,9 +131,9 @@ class SamplePageTest {
         @Nested
         inner class UpdateNamePageBlock {
             @Test
-            fun returnsFormContent() {
+            fun returnsArticleContent() {
                 val response = Jsoup.connect("$baseUrl/page-block/page-with-blocks-and-page-api-route/blocks/update-name-block/update-name?user-id=123222").execute()
-                val expectedContent = "form"
+                val expectedContent = "article"
                 assertThat(response.body().lowercase()).contains(expectedContent)
             }
 

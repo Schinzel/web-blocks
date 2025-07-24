@@ -1,7 +1,7 @@
 package io.schinzel.sample
 
 import io.schinzel.web_blocks.test_utils.PortUtil
-import io.schinzel.web_blocks.web.AbstractWebApp
+import io.schinzel.web_blocks.web.WebBlocksApp
 import io.schinzel.web_blocks.web.request_handler.log.NoLogger
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.TestInstance
 
 class MyWebAppApiTest(
     testPort: Int,
-) : AbstractWebApp() {
+) : WebBlocksApp() {
     override val logger = NoLogger()
     override val port: Int = testPort
 }

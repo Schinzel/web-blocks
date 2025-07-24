@@ -1,8 +1,8 @@
 package io.schinzel.sample
 
-import io.schinzel.web_blocks.web.AbstractWebApp
+import io.schinzel.web_blocks.web.WebBlocksApp
 
-class MyWebApp : AbstractWebApp() {
+class MyWebApp : WebBlocksApp() {
     override val port: Int = 5555
 }
 
