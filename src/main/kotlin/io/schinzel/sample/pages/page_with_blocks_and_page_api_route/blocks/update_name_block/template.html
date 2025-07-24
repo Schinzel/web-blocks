@@ -38,7 +38,7 @@
                 // Find the id of the closest block
                 const containerId = $(this).closest("[data-block]").attr("id")
                 console.log(`Updated first name to ${firstName}`)
-                // Notify its' observers that there has been a change
+                // Notify its observers that there has been a change
                 window.observer.notify(containerId)
                 console.log(`Notified container ${containerId} of update`)
             }
