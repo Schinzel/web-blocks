@@ -1,3 +1,10 @@
+# Att fixa -1
+Funkar JAR läsning för multimodule project
+
+
+# Att fixa 0
+Testa den bygda JAR:en så att paths funkar
+
 # Att fixa 1
 class BlockOne : WebBlock() {
 override suspend fun getResponse(): IHtmlResponse = html("<p>Hello world from Block One!</p>")
