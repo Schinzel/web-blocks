@@ -3,13 +3,24 @@
   In the file variables to be replaced with values have the syntax `{{variableName}}`.
 - Template files can include other template files. The syntax for this is `{{include:fileName.html}}`.
     - Include files can contain include files. There is a maximum depth of 10 levels of include files, as to avoid infinite loops.
+- Lists can be iterated over using loops. The syntax is `{{for item in items}}...{{/for}}`.
+    - Loops can be nested. The depth is limited by the data structure.
 
 ## Example
 
 ```kotlin
+data class User(val name: String, val email: String)
+
 TemplateProcessor(this)
     // Set that variable firstName is Pelle
     .addData("firstName", "Pelle")
+    // Add simple list
+    .addData("colors", listOf("red", "green", "blue"))
+    // Add list of users
+    .addData("users", listOf(
+        User("Anna", "anna@example.com"),
+        User("Bob", "bob@example.com")
+    ))
     // Read the file template file and return HTML
     .processTemplate("GreetingPe.html")
 ```
@@ -22,7 +33,13 @@ Below is `GreetingPe.html`
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-        <h1>Hi {{firstName}}!</h1>
+    <h1>Hi {{firstName}}!</h1>
+    <h2>Users:</h2>
+    <ul>
+    {{for user in users}}
+        <li>{{user.name}} - {{user.email}}</li>
+    {{/for}}
+    </ul>
 </body>
 </html>
 ```
@@ -34,11 +51,34 @@ Add data
 ```
 
 Include files
-{{include: html/block-observer.html}}
 ```html
 <body>
     {{include: my-include-file.html}}
 </body>
+```
+
+Simple lists
+```html
+{{for color in colors}}
+    <span class="{{color}}">{{color}}</span>
+{{/for}}
+```
+
+Loops
+```html
+{{for item in items}}
+    <p>{{item.name}}</p>
+{{/for}}
+```
+
+Nested loops
+```html
+{{for order in orders}}
+    <h3>Order #{{order.id}}</h3>
+    {{for product in order.products}}
+        <p>{{product.name}} - {{product.price}}</p>
+    {{/for}}
+{{/for}}
 ```
 
 ## Template Engine File Reader
