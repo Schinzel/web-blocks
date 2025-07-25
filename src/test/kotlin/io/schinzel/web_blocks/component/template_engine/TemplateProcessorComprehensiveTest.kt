@@ -27,7 +27,6 @@ class TemplateProcessorComprehensiveTest {
         private const val MAX_DEPTH_ERROR = "Max include depth (10) exceeded. Possible circular dependency."
         private const val PATH_TRAVERSAL_ERROR = "Path traversal not allowed in include filenames"
         private const val BLANK_FILENAME_ERROR = "Include filename cannot be blank"
-        private const val PROGRESS_ERROR = "Loop processing failed to make progress. Template may be malformed."
         private const val MAX_ITERATIONS_ERROR = "Loop processing exceeded maximum iterations. Template may contain infinite loop."
         private const val INVALID_LOOP_ERROR = "Invalid loop syntax"
     }
@@ -135,6 +134,7 @@ class TemplateProcessorComprehensiveTest {
 
         @Test
         fun processTemplate_objectWithPrivateProperty_privatePropertyIsNotRendered() {
+            @Suppress("unused")
             class TestUser(
                 val publicName: String,
                 private val privateId: String,
@@ -326,7 +326,7 @@ class TemplateProcessorComprehensiveTest {
 
             val result = processor.processTemplate("products.html")
 
-            assertThat(result).isEqualTo("Laptop: \$999 (true)Phone: \$599 (false)")
+            assertThat(result).isEqualTo("Laptop: $999 (true)Phone: $599 (false)")
         }
 
         @Test

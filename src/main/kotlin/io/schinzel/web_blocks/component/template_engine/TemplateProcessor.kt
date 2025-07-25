@@ -65,7 +65,10 @@ class TemplateProcessor private constructor(
         when (value) {
             is String -> withStringData(key, value)
             is Int -> withStringData(key, value.toString())
-            is List<*> -> withListData(key, value as List<Any>)
+            is List<*> -> {
+                @Suppress("UNCHECKED_CAST")
+                withListData(key, value as List<Any>)
+            }
             else -> throw IllegalArgumentException("Unsupported data type: ${value::class}")
         }
 

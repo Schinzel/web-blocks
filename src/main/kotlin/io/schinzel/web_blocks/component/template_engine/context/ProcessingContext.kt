@@ -62,12 +62,6 @@ class ProcessingContext(
     }
 
     /**
-     * The purpose of this function is to create a new context layer
-     * with multiple data entries for bulk updates.
-     */
-    fun withAll(newData: Map<String, Any>): ProcessingContext = ProcessingContext(newData, parent = this)
-
-    /**
      * The purpose of this function is to resolve property paths like
      * "user.name" or "item.properties.value" using reflection safely.
      */
@@ -118,7 +112,7 @@ class ProcessingContext(
                 // Property doesn't exist or isn't accessible
                 PROPERTY_NOT_FOUND
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Graceful degradation if reflection fails
             PROPERTY_NOT_FOUND
         }

@@ -80,7 +80,7 @@ class ForLoopEvaluator : NodeEvaluator<ForLoopNode> {
                     }
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Graceful degradation if reflection fails
         }
 
