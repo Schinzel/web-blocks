@@ -54,6 +54,7 @@ Support nested loops with proper scoping:
 
 ## Files to Modify
 - `/Users/schinzel/code/web-blocks/src/main/kotlin/io/schinzel/web_blocks/component/template_engine/TemplateProcessor.kt`
+Break into multiple classes if required.
 
 ## Documentation
 - Updated: `/Users/schinzel/code/web-blocks/doc/user_doc/3_2_template_engine.md`
