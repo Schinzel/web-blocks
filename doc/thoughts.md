@@ -1,3 +1,18 @@
+# Att fixa 1
+class BlockOne : WebBlock() {
+override suspend fun getResponse(): IHtmlResponse = html("<p>Hello world from Block One!</p>")
+}
+
+Skall det vara WebBlock or PageBlock. Antagligen PageBlock
+
+# Att fixa 2
+Verifiera att documentationen är korrekt
+/Users/schinzel/code/web-blocks/doc/user_doc/2_routes.md
+
+
+# Att fixa 3
+Förklara när det går från att @PageBlock skall implementera PageBlock och IHtmlRoute
+
 
 # File, paths and packages needed
 - Expand hard coded error page

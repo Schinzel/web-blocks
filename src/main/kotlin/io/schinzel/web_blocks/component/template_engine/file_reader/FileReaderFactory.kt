@@ -15,16 +15,16 @@ object FileReaderFactory {
      */
     fun create(caller: Any): IFileReader =
         when {
-            isRunningFromJar() -> JarFileReader(caller)
+            isRunningFromJar(caller) -> JarFileReader(caller)
             else -> SourceFileReader(caller)
         }
 
     /**
      * @return True if the caller is running from a jar file.
      */
-    private fun isRunningFromJar(): Boolean {
+    private fun isRunningFromJar(caller: Any): Boolean {
         val location =
-            this::class.java.protectionDomain.codeSource.location
+            caller::class.java.protectionDomain.codeSource.location
                 .toString()
         return location.endsWith(".jar")
     }
