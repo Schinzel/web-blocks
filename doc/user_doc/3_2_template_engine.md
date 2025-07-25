@@ -13,11 +13,11 @@ data class User(val name: String, val email: String)
 
 TemplateProcessor(this)
     // Set that variable firstName is Pelle
-    .addData("firstName", "Pelle")
+    .withData("firstName", "Pelle")
     // Add simple list
-    .addData("colors", listOf("red", "green", "blue"))
+    .withData("colors", listOf("red", "green", "blue"))
     // Add list of users
-    .addData("users", listOf(
+    .withData("users", listOf(
         User("Anna", "anna@example.com"),
         User("Bob", "bob@example.com")
     ))

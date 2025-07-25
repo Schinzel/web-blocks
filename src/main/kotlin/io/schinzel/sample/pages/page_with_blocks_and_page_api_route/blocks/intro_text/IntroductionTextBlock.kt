@@ -16,7 +16,7 @@ class IntroductionTextBlock(
     override suspend fun getResponse(): IHtmlResponse =
         html(
             TemplateProcessor(this)
-                .addData("firstName", firstName)
+                .withData("firstName", firstName)
                 .processTemplate("template.html"),
         )
 }

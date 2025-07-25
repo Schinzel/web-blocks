@@ -78,8 +78,8 @@ class PageBuilder {
                     .joinToString("\n")
 
             return@supervisorScope TemplateProcessor(this@PageBuilder)
-                .addData("title", title)
-                .addData("content", rowsHtml)
+                .withData("title", title)
+                .withData("content", rowsHtml)
                 .processTemplate("html/page-template.html")
         }
 }

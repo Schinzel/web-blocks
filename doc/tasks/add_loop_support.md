@@ -68,15 +68,31 @@ Break into multiple classes if required.
   - Includes with included that have nested loops
 
 ### AI Review Delegation
-- Launch one sub agent to analyze compliance against the code standards section of the markdown
-  - [code standards add](../code_standards/code_standards_all.md)
-  - [code standards AIs](../code_standards/code_standards_ais.md)
-- Launch another sub agent to analyze adherence to the testing standards section.
-  - [testing standards](../code_standards/testing_standards.md)
-- Launch another sub agent to analyze adherence to in code documentation
-  - [code standards add](../code_standards/code_standards_all.md)
-- Launch another sub agent to analyze adherence elegant code, DRY principles and so on
-  - [code standards add](../code_standards/code_standards_all.md)
+Launch 4 subagents in parallel by making multiple Task tool calls in a single message:
+
+<invoke name="Task">
+<parameter name="description">Code standards compliance review</parameter>
+<parameter name="prompt">Review TemplateProcessor implementation against /doc/code_standards/code_standards_all.md and /doc/code_standards/code_standards_ais.md for compliance with class size limits, naming conventions, documentation requirements, immutability principles, defensive programming, interface usage, and JVM language compatibility</parameter>
+<parameter name="subagent_type">general-purpose</parameter>
+</invoke>
+
+<invoke name="Task">
+<parameter name="description">Testing standards adherence review</parameter>
+<parameter name="prompt">Analyze the SimpleTemplateProcessorTest test suite against /doc/code_standards/testing_standards.md for adherence to testing principles, naming conventions, AssertJ usage, and test organization</parameter>
+<parameter name="subagent_type">general-purpose</parameter>
+</invoke>
+
+<invoke name="Task">
+<parameter name="description">In-code documentation review</parameter>
+<parameter name="prompt">Evaluate in-code documentation quality in TemplateProcessor against /doc/code_standards/code_standards_all.md focusing on class/function documentation, comment density, and WHY vs WHAT explanations</parameter>
+<parameter name="subagent_type">general-purpose</parameter>
+</invoke>
+
+<invoke name="Task">
+<parameter name="description">Code elegance and DRY review</parameter>
+<parameter name="prompt">Assess TemplateProcessor code for elegance, DRY principles, clean code practices, avoiding cleverness, and maintaining readability while ensuring enterprise production readiness</parameter>
+<parameter name="subagent_type">general-purpose</parameter>
+</invoke>
 
 ### Standard Acceptance Criteria
 - Go through [code standards](../code_standards/_index.md) and verify that the code and the tests added follow the standards

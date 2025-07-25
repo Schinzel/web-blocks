@@ -31,20 +31,27 @@ class ErrorPage(
             getFileName(webRootClass, environment, errorCode)
                 // If no error page is found, return default error page
                 ?: return getDefaultErrorPage(errorCode)
-        return TemplateProcessor(webRootClass)
-            .addDataSet(data)
-            .addData("errorCode", errorCode)
+        var processor = TemplateProcessor(webRootClass)
+        data.forEach { (key, value) ->
+            processor = processor.withData(key, value)
+        }
+        return processor
+            .withData("errorCode", errorCode)
             .processTemplate(fileName)
     }
 
     /**
      * @return The default error page.
      */
-    private fun getDefaultErrorPage(errorCode: Int): String =
-        TemplateProcessor(this)
-            .addDataSet(data)
-            .addData("errorCode", errorCode)
+    private fun getDefaultErrorPage(errorCode: Int): String {
+        var processor = TemplateProcessor(this)
+        data.forEach { (key, value) ->
+            processor = processor.withData(key, value)
+        }
+        return processor
+            .withData("errorCode", errorCode)
             .processTemplate("default_error_page.html")
+    }
 
     companion object {
         /**

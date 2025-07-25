@@ -16,8 +16,8 @@ class UpdateNamePageBlock(
     override suspend fun getResponse(): IHtmlResponse =
         html(
             TemplateProcessor(this)
-                .addData("firstName", firstName)
-                .addData("userId", userId)
+                .withData("firstName", firstName)
+                .withData("userId", userId)
                 .processTemplate("template.html"),
         )
 }

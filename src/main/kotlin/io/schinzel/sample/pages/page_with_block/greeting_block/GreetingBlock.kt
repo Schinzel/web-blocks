@@ -12,7 +12,7 @@ class GreetingBlock : WebBlock() {
         html(
             TemplateProcessor(this)
                 // Set that variable firstName is Pelle
-                .addData("firstName", "Pelle")
+                .withData("firstName", "Pelle")
                 // Read the file template file and return HTML
                 .processTemplate("GreetingBlock.html"),
         )
