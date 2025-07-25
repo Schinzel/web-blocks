@@ -15,6 +15,9 @@ Current monolithic string-replacement approach has limitations:
 - Performance issues with multiple string scans
 - Difficult to extend with new features
 
+## Required reading
+- Must read [code standard](../code_standards/_index.md)
+
 ## Architecture: AST-Based Template Engine
 
 ### Core Components
@@ -29,22 +32,23 @@ data class IncludeNode(val fileName: String) : TemplateNode()
 ```
 
 #### 2. Tokenizer
-Converts template string into tokens:
+Converts template string into tokens with position tracking for error reporting:
 ```kotlin
 sealed class Token
-data class TextToken(val text: String) : Token()
-data class TagToken(val content: String) : Token()  // Everything inside {{ }}
+data class TextToken(val text: String, val line: Int, val column: Int) : Token()
+data class TagToken(val content: String, val line: Int, val column: Int) : Token()  // Everything inside {{ }}
 ```
 
 #### 3. Parser System
 ```kotlin
 interface NodeParser {
     fun canParse(tagContent: String): Boolean
-    fun parse(tagContent: String, tokenStream: TokenStream): TemplateNode
+    fun parse(tagContent: String, tokenStream: TokenStream, mainParser: TemplateParser): TemplateNode
 }
 
 class ForLoopParser : NodeParser {
     // Parses "for user in users" syntax
+    // Calls mainParser.parseUntil("/for") to get body nodes
 }
 
 class VariableParser : NodeParser {
@@ -53,6 +57,13 @@ class VariableParser : NodeParser {
 
 class IncludeParser : NodeParser {
     // Parses "include: filename.html"
+}
+
+// Main parser needs method for block parsers
+class TemplateParser {
+    fun parseUntil(stopTag: String): List<TemplateNode> {
+        // Parse nodes until encountering stopTag
+    }
 }
 ```
 
@@ -88,6 +99,32 @@ class TemplateProcessor(
         val ast = parse(tokens)
         return evaluate(ast, ProcessingContext(stringData, listData))
     }
+    
+    private fun evaluate(node: TemplateNode, context: ProcessingContext): String {
+        val evaluator = evaluators[node::class] 
+            ?: throw IllegalStateException("No evaluator for ${node::class.simpleName}")
+        
+        @Suppress("UNCHECKED_CAST")
+        return (evaluator as NodeEvaluator<TemplateNode>).evaluate(node, context, this)
+    }
+}
+```
+
+#### 6. Context Management
+Immutable, layered context for proper variable scoping:
+```kotlin
+class ProcessingContext(
+    private val data: Map<String, Any>, 
+    private val parent: ProcessingContext? = null
+) {
+    fun lookup(name: String): Any? {
+        return data[name] ?: parent?.lookup(name)
+    }
+    
+    fun with(key: String, value: Any): ProcessingContext {
+        // Creates new context for deeper scope
+        return ProcessingContext(mapOf(key to value), parent = this)
+    }
 }
 ```
 
@@ -111,10 +148,11 @@ Support nested loops with proper scoping
 
 ## Implementation Benefits
 - **Extensible**: Easy to add if-then, unless, filters, etc.
-- **Performance**: Single parse pass, efficient evaluation
+- **Performance**: Single parse pass, efficient evaluation with AST caching
 - **Maintainable**: Each component has single responsibility
 - **Testable**: Can test parsers and evaluators independently
 - **No ordering issues**: Tree structure handles all nesting naturally
+- **Superior error reporting**: "Undefined variable 'user.emai' at template.html (line 15, column 10)"
 
 ## Implementation Steps
 1. Create node type hierarchy (immutable data classes)
@@ -127,17 +165,19 @@ Support nested loops with proper scoping
 8. **Keep existing test suite** - comprehensive tests already exist including edge cases
 
 ## Files to Create
-- `/src/.../template_engine/ast/TemplateNode.kt` - Node types
-- `/src/.../template_engine/ast/Token.kt` - Token types
-- `/src/.../template_engine/ast/Tokenizer.kt` - Tokenization logic
+- `/src/.../template_engine/ast/TemplateNode.kt` - Node types (with position info)
+- `/src/.../template_engine/ast/Token.kt` - Token types with line/column
+- `/src/.../template_engine/ast/Tokenizer.kt` - Tokenization logic with position tracking
 - `/src/.../template_engine/parser/NodeParser.kt` - Parser interface
+- `/src/.../template_engine/parser/TemplateParser.kt` - Main parser with parseUntil method
 - `/src/.../template_engine/parser/ForLoopParser.kt` - Loop parser
 - `/src/.../template_engine/parser/VariableParser.kt` - Variable parser
 - `/src/.../template_engine/parser/IncludeParser.kt` - Include parser
 - `/src/.../template_engine/evaluator/NodeEvaluator.kt` - Evaluator interface
-- `/src/.../template_engine/evaluator/ForLoopEvaluator.kt` - Loop evaluator
+- `/src/.../template_engine/evaluator/ForLoopEvaluator.kt` - Loop evaluator with scoping
 - `/src/.../template_engine/evaluator/VariableEvaluator.kt` - Variable evaluator
-- `/src/.../template_engine/evaluator/IncludeEvaluator.kt` - Include evaluator
+- `/src/.../template_engine/evaluator/IncludeEvaluator.kt` - Include evaluator with caching
+- `/src/.../template_engine/context/ProcessingContext.kt` - Immutable layered context
 - `/src/.../template_engine/TemplateProcessor.kt` - Main processor (refactored)
 
 ## Documentation
