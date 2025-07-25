@@ -33,7 +33,8 @@
       "mcp__zen__analyze",
       "Bash(java:*)",
       "Bash(kotlinc:*)",
-      "mcp__zen__debug"
+      "mcp__zen__debug",
+      "mcp__zen__testgen"
     ],
     "deny": []
   }

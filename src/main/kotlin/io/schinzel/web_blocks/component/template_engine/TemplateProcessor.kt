@@ -175,7 +175,7 @@ class TemplateProcessor private constructor(
      * The purpose of this function is to process all loops in template content
      * using inside-out processing to handle nested loops correctly.
      */
-    private fun processLoops(template: String): String {
+    fun processLoops(template: String): String {
         var processedTemplate = template
         var iterationCount = 0
         val maxIterations = 100 // Prevent infinite loops with malformed templates
@@ -210,13 +210,12 @@ class TemplateProcessor private constructor(
         template.contains(LOOP_START_PATTERN) && template.contains(LOOP_END_PATTERN)
 
     /**
-     * The purpose of this function is to find and process the innermost loop
-     * to ensure proper nested loop variable scoping.
+     * The purpose of this function is to find and process the next processable loop
+     * ensuring nested loops are processed at the correct scope level.
      */
     private fun processNextLoop(template: String): String {
-        // Find innermost loop by starting from the last loop start marker
-        // This ensures nested loops are processed inside-out correctly
-        val loopBounds = findInnermostLoop(template)
+        // Find a loop that can be processed (doesn't reference undefined variables)
+        val loopBounds = findProcessableLoop(template)
         if (!loopBounds.isValid()) return template
 
         val loopInfo = parseLoopDeclaration(template, loopBounds)
@@ -226,18 +225,55 @@ class TemplateProcessor private constructor(
     }
 
     /**
-     * The purpose of this function is to locate the boundaries of the innermost loop
-     * for correct processing order in nested structures.
+     * The purpose of this function is to locate the boundaries of a processable loop
+     * ensuring nested loops are processed at the correct scope level.
      */
-    private fun findInnermostLoop(template: String): LoopBounds {
-        val lastLoopStart = template.lastIndexOf(LOOP_START_PATTERN)
-        if (lastLoopStart == -1) return LoopBounds.invalid()
+    private fun findProcessableLoop(template: String): LoopBounds {
+        // Find all loops and check which ones can be processed
+        var searchStart = 0
+        while (true) {
+            val loopStart = template.indexOf(LOOP_START_PATTERN, searchStart)
+            if (loopStart == -1) break
 
-        val loopEndStart = template.indexOf(LOOP_END_PATTERN, lastLoopStart)
-        if (loopEndStart == -1) return LoopBounds.invalid()
+            val loopStartEnd = template.indexOf("}}", loopStart)
+            if (loopStartEnd == -1) break
 
-        val loopStartEnd = template.indexOf("}}", lastLoopStart)
-        return LoopBounds(lastLoopStart, loopStartEnd, loopEndStart)
+            val loopEndStart = template.indexOf(LOOP_END_PATTERN, loopStartEnd)
+            if (loopEndStart == -1) break
+
+            val bounds = LoopBounds(loopStart, loopStartEnd, loopEndStart)
+
+            // Check if this loop can be processed (its data source exists)
+            if (canProcessLoop(template, bounds)) {
+                return bounds
+            }
+
+            searchStart = loopStartEnd + 1
+        }
+
+        return LoopBounds.invalid()
+    }
+
+    /**
+     * The purpose of this function is to check if a loop can be processed
+     * by verifying its data source exists in current scope.
+     */
+    private fun canProcessLoop(
+        template: String,
+        bounds: LoopBounds,
+    ): Boolean {
+        try {
+            val loopDeclaration = template.substring(bounds.start + LOOP_START_PATTERN.length, bounds.startEnd)
+            val parts = loopDeclaration.split(" in ")
+            if (parts.size != 2) return false
+
+            val listName = parts[1].trim()
+
+            // Check if the list data exists (not a property reference like "item.property")
+            return listData.containsKey(listName) && !listName.contains(".")
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     /**
@@ -292,6 +328,17 @@ class TemplateProcessor private constructor(
             processedContent = processObjectProperties(processedContent, itemName, item)
         }
 
+        // For nested loops, we need to replace item.property references in loops with direct property references
+        // Then create a new processor with access to object properties as lists
+        if (shouldProcessProperties(item) && containsLoop(processedContent)) {
+            // Replace references like "team.users" in nested loops with just "users"
+            processedContent = replaceNestedLoopReferences(processedContent, itemName)
+            val nestedProcessor = createNestedProcessor(item)
+            // Process loops first, then apply any remaining string substitutions
+            processedContent = nestedProcessor.processLoops(processedContent)
+            processedContent = nestedProcessor.applyStringData(processedContent)
+        }
+
         return processedContent
     }
 
@@ -300,6 +347,52 @@ class TemplateProcessor private constructor(
      * its properties processed based on type safety criteria.
      */
     private fun shouldProcessProperties(item: Any): Boolean = item !is String && item !is Number && item !is Boolean
+
+    /**
+     * The purpose of this function is to replace nested loop references like "item.property"
+     * with just "property" so the nested processor can find the data.
+     */
+    private fun replaceNestedLoopReferences(
+        content: String,
+        itemName: String,
+    ): String {
+        // Replace patterns like "{{for x in item.property}}" with "{{for x in property}}"
+        val pattern = "\\{\\{for\\s+(\\w+)\\s+in\\s+$itemName\\.(\\w+)\\}\\}".toRegex()
+        return pattern.replace(content) { matchResult ->
+            val loopVar = matchResult.groupValues[1]
+            val property = matchResult.groupValues[2]
+            "{{for $loopVar in $property}}"
+        }
+    }
+
+    /**
+     * The purpose of this function is to create a nested processor with access to object properties
+     * for processing nested loops within loop iterations.
+     */
+    private fun createNestedProcessor(item: Any): TemplateProcessor {
+        // Start with current context (stringData and listData) to maintain variable scope
+        var nestedProcessor = TemplateProcessor(fileReader, stringData, listData)
+
+        try {
+            val properties = item::class.memberProperties
+            for (property in properties) {
+                if (property.visibility == null || property.visibility.toString() == "PUBLIC") {
+                    val propertyValue = property.getter.call(item)
+                    if (propertyValue is List<*>) {
+                        nestedProcessor = nestedProcessor.withListData(property.name, propertyValue as List<Any>)
+                        // Debug: Print what we're adding
+                        println(
+                            "DEBUG: Adding list property '${property.name}' with ${(propertyValue as List<*>).size} items",
+                        )
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            // Graceful degradation if reflection fails
+        }
+
+        return nestedProcessor
+    }
 
     /**
      * The purpose of this function is to safely process object properties using
@@ -335,7 +428,7 @@ class TemplateProcessor private constructor(
      * The purpose of this function is to replace string placeholders using
      * efficient map-based substitution with the immutable string data.
      */
-    private fun applyStringData(template: String): String =
+    fun applyStringData(template: String): String =
         stringData.entries.fold(template) { content, (key, value) ->
             content.replace("{{$key}}", value)
         }
