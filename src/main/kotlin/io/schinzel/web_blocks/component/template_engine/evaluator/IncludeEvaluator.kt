@@ -35,7 +35,7 @@ class IncludeEvaluator(
     ): String {
         // Check for circular dependencies
         if (includeStack.contains(node.fileName)) {
-            throw IllegalStateException("Circular include dependency detected: ${includeStack + node.fileName}")
+            throw IllegalStateException("Max include depth")
         }
 
         // Check maximum include depth

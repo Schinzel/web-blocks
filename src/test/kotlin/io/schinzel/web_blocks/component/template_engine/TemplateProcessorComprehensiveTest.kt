@@ -572,7 +572,7 @@ class TemplateProcessorComprehensiveTest {
 
             val result = processor.processTemplate("large.html")
 
-            val expected = largeList.joinToString(",") { "$it," }
+            val expected = largeList.joinToString("") { "$it," }
             assertThat(result).isEqualTo(expected)
         }
 

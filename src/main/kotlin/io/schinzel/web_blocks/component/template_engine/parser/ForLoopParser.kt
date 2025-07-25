@@ -3,6 +3,7 @@ package io.schinzel.web_blocks.component.template_engine.parser
 import io.schinzel.web_blocks.component.template_engine.ast.ForLoopNode
 import io.schinzel.web_blocks.component.template_engine.ast.TagToken
 import io.schinzel.web_blocks.component.template_engine.ast.TemplateNode
+import io.schinzel.web_blocks.component.template_engine.ast.TextNode
 
 /**
  * The purpose of this class is to parse for-loop constructs with
@@ -22,16 +23,21 @@ class ForLoopParser : NodeParser {
      * represents a for-loop declaration and validate syntax.
      */
     override fun canParse(tagContent: String): Boolean {
-        if (!tagContent.startsWith(FOR_PREFIX)) {
-            return false
+        // Check if it's any variation of "for" syntax, including malformed ones
+        if (tagContent.startsWith("for")) {
+            // If it starts with "for " but doesn't match the pattern, it's invalid syntax
+            if (tagContent.startsWith(FOR_PREFIX) && !FOR_PATTERN.matches(tagContent)) {
+                throw IllegalArgumentException("Invalid loop syntax: $tagContent")
+            }
+            // If it's just "for" without space, also invalid
+            if (tagContent == "for") {
+                throw IllegalArgumentException("Invalid loop syntax: $tagContent")
+            }
+            // If it starts with "for " it's our responsibility to handle
+            return tagContent.startsWith(FOR_PREFIX)
         }
 
-        // If it starts with "for " but doesn't match the pattern, it's invalid syntax
-        if (!FOR_PATTERN.matches(tagContent)) {
-            throw IllegalArgumentException("Invalid loop syntax: $tagContent")
-        }
-
-        return true
+        return false
     }
 
     /**
@@ -51,13 +57,26 @@ class ForLoopParser : NodeParser {
         val list = matchResult.groupValues[2]
 
         // Parse the loop body until we find the closing tag
-        val bodyNodes = mainParser.parseUntil(tokenStream, FOR_END_TAG)
+        val parseResult = mainParser.parseUntil(tokenStream, FOR_END_TAG)
+
+        // If no closing tag was found, treat the entire construct as text
+        if (!parseResult.stopTagFound) {
+            // Reconstruct the original text by combining the tag with following content
+            val bodyText =
+                parseResult.nodes.joinToString("") { node ->
+                    when (node) {
+                        is TextNode -> node.text
+                        else -> ""
+                    }
+                }
+            return TextNode("{{$tagContent}}$bodyText", 0, 0)
+        }
 
         // Get position from current token stream state for error reporting
         val currentToken = tokenStream.peek()
         val line = if (currentToken is TagToken) currentToken.line else 0
         val column = if (currentToken is TagToken) currentToken.column else 0
 
-        return ForLoopNode(variable, list, bodyNodes, line, column)
+        return ForLoopNode(variable, list, parseResult.nodes, line, column)
     }
 }

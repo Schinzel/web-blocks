@@ -19,6 +19,9 @@ class ForLoopEvaluator : NodeEvaluator<ForLoopNode> {
         context: ProcessingContext,
         evaluator: TemplateEvaluator,
     ): String {
+        // Check for excessive loop operations before processing
+        evaluator.checkLoopOperationLimit()
+
         val collection = context.lookup(node.list)
 
         if (collection !is List<*>) {
@@ -38,8 +41,9 @@ class ForLoopEvaluator : NodeEvaluator<ForLoopNode> {
                     loopContext
                 }
 
-            // Evaluate loop body with the enriched context
-            evaluator.evaluateAll(node.body, contextWithProperties)
+            // Evaluate loop body with the enriched context and trim whitespace
+            val bodyResult = evaluator.evaluateAll(node.body, contextWithProperties)
+            trimLoopBodyWhitespace(bodyResult)
         }
     }
 
@@ -81,5 +85,15 @@ class ForLoopEvaluator : NodeEvaluator<ForLoopNode> {
         }
 
         return enrichedContext
+    }
+
+    /**
+     * The purpose of this function is to trim leading and trailing
+     * whitespace from loop body content to avoid formatting issues.
+     */
+    private fun trimLoopBodyWhitespace(content: String): String {
+        // Remove leading whitespace (spaces, tabs, newlines) at the start
+        // and trailing whitespace at the end, but preserve internal whitespace
+        return content.trim()
     }
 }

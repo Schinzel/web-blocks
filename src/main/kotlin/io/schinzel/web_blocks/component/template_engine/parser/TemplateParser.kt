@@ -43,14 +43,16 @@ class TemplateParser(
     fun parseUntil(
         tokenStream: TokenStream,
         stopTag: String,
-    ): List<TemplateNode> {
+    ): ParseUntilResult {
         val nodes = mutableListOf<TemplateNode>()
+        var stopTagFound = false
 
         while (tokenStream.hasNext()) {
             val token = tokenStream.peek()
             if (token is TagToken && token.content == stopTag) {
                 // Consume the stop tag but don't include it in results
                 tokenStream.next()
+                stopTagFound = true
                 break
             }
 
@@ -63,8 +65,13 @@ class TemplateParser(
             nodes.add(node)
         }
 
-        return nodes
+        return ParseUntilResult(nodes, stopTagFound)
     }
+
+    data class ParseUntilResult(
+        val nodes: List<TemplateNode>,
+        val stopTagFound: Boolean,
+    )
 
     /**
      * The purpose of this function is to delegate tag parsing to
