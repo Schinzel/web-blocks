@@ -3,6 +3,12 @@
 ## Goal
 Refactor template engine to use AST-based approach and add loop functionality to iterate over lists and collections.
 
+## Current State
+Previous implementation attempted string-replacement approach with nested loop support.
+Basic loops work, but nested loops fail due to architectural limitations.
+Comprehensive test suite exists with 5 failing tests.
+Current implementation uses immutable design patterns - **maintain immutability in AST version**.
+
 ## Motivation
 Current monolithic string-replacement approach has limitations:
 - Feature interactions (if-then + loops) create unsolvable ordering problems
@@ -97,7 +103,7 @@ class TemplateProcessor(
 ### 1. Simple Lists
 Support iteration over simple lists (strings, numbers)
 
-### 2. Object Lists  
+### 2. Object Lists
 Support iteration over DTOs/objects with property access
 
 ### 3. Nested Loops
@@ -111,13 +117,14 @@ Support nested loops with proper scoping
 - **No ordering issues**: Tree structure handles all nesting naturally
 
 ## Implementation Steps
-1. Create node type hierarchy
+1. Create node type hierarchy (immutable data classes)
 2. Implement tokenizer
 3. Create parser framework and individual parsers
 4. Create evaluator framework and individual evaluators
-5. Wire together in new TemplateProcessor
+5. Wire together in new TemplateProcessor (immutable design)
 6. Migrate existing functionality (includes, variables) to new system
 7. Add loop support
+8. **Keep existing test suite** - comprehensive tests already exist including edge cases
 
 ## Files to Create
 - `/src/.../template_engine/ast/TemplateNode.kt` - Node types
