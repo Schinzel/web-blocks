@@ -38,7 +38,6 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
     javalin.get("ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())
     }
-    javalin.start(webAppConfig.port)
     return javalin
 }
 

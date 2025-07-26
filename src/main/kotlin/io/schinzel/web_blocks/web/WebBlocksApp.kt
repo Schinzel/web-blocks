@@ -11,6 +11,8 @@ import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegist
 import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
 import java.io.IOException
 import java.net.ServerSocket
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
 
 abstract class WebBlocksApp {
     // Optional configuration with defaults
@@ -43,10 +45,44 @@ abstract class WebBlocksApp {
         RouteDescriptorRegistryInit(webAppConfig.webRootPackage)
         javalin = setUpRoutes(webAppConfig)
         javalin?.setUpErrorHandling(webAppConfig)
-        if (printStartupMessages) {
-            "*".repeat(30).println()
-            "Project started on port $port".println()
-            "*".repeat(30).println()
+
+        // Create a future to wait for server startup completion
+        val serverReadyFuture = CompletableFuture<Unit>()
+
+        // Add event listeners for server lifecycle events
+        javalin?.events { eventConfig ->
+            // Signal successful server startup when Javalin fires SERVER_STARTED event
+            eventConfig.serverStarted {
+                // Complete the future to unblock the waiting thread
+                serverReadyFuture.complete(Unit)
+            }
+            // Signal startup failure when Javalin fires SERVER_START_FAILED event
+            eventConfig.serverStartFailed {
+                // Complete the future with exception to unblock and signal failure
+                serverReadyFuture.completeExceptionally(
+                    RuntimeException("Server failed to start"),
+                )
+            }
+        }
+
+        // Start the server and wait for it to be ready
+        try {
+            // Actually start the Javalin server
+            javalin?.start(port)
+            // Wait for server to be ready with 5-second timeout
+            serverReadyFuture.get(5, TimeUnit.SECONDS)
+
+            // If is to print a start up message
+            if (printStartupMessages) {
+                // Print start up message
+                "*".repeat(30).println()
+                "Project started on port $port".println()
+                "*".repeat(30).println()
+            }
+        } catch (e: Exception) {
+            javalin?.stop()
+            javalin = null
+            throw RuntimeException("Server failed to start within 5 seconds", e)
         }
     }
 
