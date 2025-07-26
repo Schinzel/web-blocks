@@ -29,13 +29,18 @@ class RequestHandler(
 
                 val startTime = System.currentTimeMillis()
                 logEntry.requestLog.path = routeMapping.routePath
-                logEntry.requestLog.requestBody = ctx.body()
+
+                // Only read body for non-multipart requests to avoid "body already consumed" errors
+                val contentType = ctx.contentType() ?: ""
+                val isMultipart = contentType.contains("multipart/form-data")
+                val requestBody = if (isMultipart) "" else ctx.body()
+                logEntry.requestLog.requestBody = requestBody
 
                 val hasNoArguments = routeMapping.parameters.isEmpty()
                 val route: IRoute =
                     when {
                         hasNoArguments -> routeMapping.routeClass.createInstance()
-                        else -> createRoute(routeMapping, ctx, logEntry)
+                        else -> createRoute(routeMapping, ctx, logEntry, requestBody, isMultipart)
                     }
 
                 // Now this is a suspend call within the coroutine

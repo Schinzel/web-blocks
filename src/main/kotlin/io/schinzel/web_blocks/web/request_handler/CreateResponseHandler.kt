@@ -9,9 +9,11 @@ fun createRoute(
     routeMapping: RouteMapping,
     ctx: Context,
     logEntry: LogEntry,
+    requestBody: String,
+    isMultipart: Boolean,
 ): IRoute {
-    // Get arguments from from the request
-    val arguments: Map<String, Any?> = getArguments(routeMapping.parameters, ctx)
+    // Get arguments from the request
+    val arguments: Map<String, Any?> = getArguments(routeMapping.parameters, ctx, requestBody, isMultipart)
     // Log the arguments
     logEntry.requestLog.arguments = arguments
     val constructor = routeMapping.getPrimaryConstructor()
