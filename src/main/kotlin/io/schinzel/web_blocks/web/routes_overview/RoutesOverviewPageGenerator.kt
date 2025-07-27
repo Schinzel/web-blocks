@@ -77,7 +77,7 @@ class RoutesOverviewPageGenerator {
                 }
                 
                 .route-header, .block-header, .api-header { 
-                    padding: 20px; 
+                    padding: 12px 16px; 
                     cursor: pointer;
                     display: flex;
                     justify-content: space-between;
@@ -107,7 +107,7 @@ class RoutesOverviewPageGenerator {
                 .route-path { 
                     font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
                     font-weight: 600;
-                    font-size: 1.1rem;
+                    font-size: 0.95rem;
                     color: #2d3748;
                 }
                 
@@ -126,7 +126,7 @@ class RoutesOverviewPageGenerator {
                 .route-details.expanded { display: block; }
                 
                 .details-content {
-                    padding: 20px;
+                    padding: 12px 16px;
                 }
                 
                 .info-table {
@@ -141,7 +141,7 @@ class RoutesOverviewPageGenerator {
                 
                 .info-table th {
                     background: #f7fafc;
-                    padding: 12px 16px;
+                    padding: 8px 12px;
                     text-align: left;
                     font-weight: 600;
                     color: #4a5568;
@@ -150,7 +150,7 @@ class RoutesOverviewPageGenerator {
                 }
                 
                 .info-table td {
-                    padding: 12px 16px;
+                    padding: 8px 12px;
                     border-bottom: 1px solid #f1f5f9;
                     font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
                     font-size: 0.875rem;
@@ -169,7 +169,7 @@ class RoutesOverviewPageGenerator {
                 
                 .params-table th {
                     background: #f7fafc;
-                    padding: 12px 16px;
+                    padding: 8px 12px;
                     text-align: left;
                     font-weight: 600;
                     color: #4a5568;
@@ -178,7 +178,7 @@ class RoutesOverviewPageGenerator {
                 }
                 
                 .params-table td {
-                    padding: 12px 16px;
+                    padding: 8px 12px;
                     border-bottom: 1px solid #f1f5f9;
                     font-size: 0.875rem;
                 }
@@ -199,10 +199,10 @@ class RoutesOverviewPageGenerator {
                 }
                 
                 .blocks-label, .apis-label { 
-                    margin: 20px 0 12px 0;
+                    margin: 16px 0 8px 0;
                     font-weight: 600; 
                     color: #4a5568;
-                    font-size: 1.1rem;
+                    font-size: 1rem;
                 }
                 
                 .nested-blocks, .nested-apis {
