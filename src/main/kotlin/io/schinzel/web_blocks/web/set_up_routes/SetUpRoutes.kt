@@ -6,6 +6,7 @@ import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_blocks.web.WebAppConfig
 import io.schinzel.web_blocks.web.request_handler.RequestHandler
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
+import io.schinzel.web_blocks.web.routes_overview.RoutesJsonGenerator
 import io.schinzel.web_blocks.web.routes_overview.RoutesOverviewPageGenerator
 import java.time.Instant
 import java.time.ZoneId
@@ -30,6 +31,12 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
     javalin.get("/web-blocks/routes") { ctx ->
         val html = routesOverviewGenerator.generateHtml(routeMappings)
         ctx.html(html)
+    }
+
+    // JSON version for AI/tooling
+    javalin.get("/web-blocks/routes-json") { ctx ->
+        val json = RoutesJsonGenerator(routeMappings).generateJson()
+        ctx.json(json)
     }
 
     // Register user routes
