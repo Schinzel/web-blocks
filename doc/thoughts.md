@@ -5,6 +5,10 @@ I need to add a user doc for these API (ping routes)
 - http://127.0.0.1:5555/web-blocks/routes
 - http://127.0.0.1:5555/web-blocks/routes-json
 
+
+# Att fixa -3
+HTML escaping
+
 # Att fixa -2
 Does 404s appear in the logs?
 

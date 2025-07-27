@@ -1,6 +1,7 @@
 package io.schinzel.web_blocks.web.routes_overview
 
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
+import org.jsoup.nodes.Entities
 
 /**
  * The purpose of this class is to generate an HTML page displaying all registered
@@ -295,7 +296,7 @@ class RoutesOverviewPageGenerator {
 
         html.append("<div class=\"route-container\">\n")
         html.append("  <div class=\"route-header\" onclick=\"toggleExpand(this)\">\n")
-        html.append("    <span class=\"route-path\">${page.routePath}</span>\n")
+        html.append("    <span class=\"route-path\">${escapeHtml(page.routePath)}</span>\n")
         html.append("    <span class=\"expand-icon\">&gt;</span>\n")
         html.append("  </div>\n")
         html.append("  <div class=\"route-details\">\n")
@@ -313,11 +314,11 @@ class RoutesOverviewPageGenerator {
         html.append("        <tbody>\n")
         html.append("          <tr>\n")
         html.append("            <td>Class</td>\n")
-        html.append("            <td>${page.routeClass.simpleName}</td>\n")
+        html.append("            <td>${escapeHtml(page.routeClass.simpleName)}</td>\n")
         html.append("          </tr>\n")
         html.append("          <tr>\n")
         html.append("            <td>File</td>\n")
-        html.append("            <td>$filePath</td>\n")
+        html.append("            <td>${escapeHtml(filePath)}</td>\n")
         html.append("          </tr>\n")
         html.append("        </tbody>\n")
         html.append("      </table>\n")
@@ -339,8 +340,8 @@ class RoutesOverviewPageGenerator {
                         .substringAfterLast('.')
                         .substringBefore('?')
                 html.append("          <tr>\n")
-                html.append("            <td><span class=\"param-name\">${param.name}</span></td>\n")
-                html.append("            <td><span class=\"param-type\">$typeName</span></td>\n")
+                html.append("            <td><span class=\"param-name\">${escapeHtml(param.name)}</span></td>\n")
+                html.append("            <td><span class=\"param-type\">${escapeHtml(typeName)}</span></td>\n")
                 html.append("          </tr>\n")
             }
             html.append("        </tbody>\n")
@@ -378,7 +379,7 @@ class RoutesOverviewPageGenerator {
 
         html.append("<div class=\"block-container\"$styleAttr>\n")
         html.append("  <div class=\"block-header\" onclick=\"toggleExpand(this)\">\n")
-        html.append("    <span class=\"route-path\">${block.routePath}</span>\n")
+        html.append("    <span class=\"route-path\">${escapeHtml(block.routePath)}</span>\n")
         html.append("    <span class=\"expand-icon\">&gt;</span>\n")
         html.append("  </div>\n")
         html.append("  <div class=\"route-details\">\n")
@@ -396,11 +397,11 @@ class RoutesOverviewPageGenerator {
         html.append("        <tbody>\n")
         html.append("          <tr>\n")
         html.append("            <td>Class</td>\n")
-        html.append("            <td>${block.routeClass.simpleName}</td>\n")
+        html.append("            <td>${escapeHtml(block.routeClass.simpleName)}</td>\n")
         html.append("          </tr>\n")
         html.append("          <tr>\n")
         html.append("            <td>File</td>\n")
-        html.append("            <td>$filePath</td>\n")
+        html.append("            <td>${escapeHtml(filePath)}</td>\n")
         html.append("          </tr>\n")
         html.append("        </tbody>\n")
         html.append("      </table>\n")
@@ -422,8 +423,8 @@ class RoutesOverviewPageGenerator {
                         .substringAfterLast('.')
                         .substringBefore('?')
                 html.append("          <tr>\n")
-                html.append("            <td><span class=\"param-name\">${param.name}</span></td>\n")
-                html.append("            <td><span class=\"param-type\">$typeName</span></td>\n")
+                html.append("            <td><span class=\"param-name\">${escapeHtml(param.name)}</span></td>\n")
+                html.append("            <td><span class=\"param-type\">${escapeHtml(typeName)}</span></td>\n")
                 html.append("          </tr>\n")
             }
             html.append("        </tbody>\n")
@@ -464,11 +465,11 @@ class RoutesOverviewPageGenerator {
         val containerId = "route-${route.routePath.replace(
             "/",
             "-",
-        ).replace("{", "").replace("}", "")}-${route.routeClass.simpleName}"
+        ).replace("{", "").replace("}", "")}-${escapeHtml(route.routeClass.simpleName)}"
 
         html.append("<div class=\"$containerType-container\"$styleAttr>\n")
         html.append("  <div class=\"$containerType-header\" onclick=\"toggleExpand(this)\">\n")
-        html.append("    <span class=\"route-path\">${route.routePath}</span>\n")
+        html.append("    <span class=\"route-path\">${escapeHtml(route.routePath)}</span>\n")
         html.append("    <span class=\"expand-icon\">&gt;</span>\n")
         html.append("  </div>\n")
         html.append("  <div class=\"route-details\">\n")
@@ -486,11 +487,11 @@ class RoutesOverviewPageGenerator {
         html.append("        <tbody>\n")
         html.append("          <tr>\n")
         html.append("            <td>Class</td>\n")
-        html.append("            <td>${route.routeClass.simpleName}</td>\n")
+        html.append("            <td>${escapeHtml(route.routeClass.simpleName)}</td>\n")
         html.append("          </tr>\n")
         html.append("          <tr>\n")
         html.append("            <td>File</td>\n")
-        html.append("            <td>$filePath</td>\n")
+        html.append("            <td>${escapeHtml(filePath)}</td>\n")
         html.append("          </tr>\n")
         html.append("        </tbody>\n")
         html.append("      </table>\n")
@@ -512,8 +513,8 @@ class RoutesOverviewPageGenerator {
                         .substringAfterLast('.')
                         .substringBefore('?')
                 html.append("          <tr>\n")
-                html.append("            <td><span class=\"param-name\">${param.name}</span></td>\n")
-                html.append("            <td><span class=\"param-type\">$typeName</span></td>\n")
+                html.append("            <td><span class=\"param-name\">${escapeHtml(param.name)}</span></td>\n")
+                html.append("            <td><span class=\"param-type\">${escapeHtml(typeName)}</span></td>\n")
                 html.append("          </tr>\n")
             }
             html.append("        </tbody>\n")
@@ -595,4 +596,11 @@ class RoutesOverviewPageGenerator {
         val className = kClass.simpleName ?: "Unknown"
         return "src/main/kotlin/$packagePath/$className.kt"
     }
+
+    /**
+     * Escapes HTML characters to prevent XSS vulnerabilities
+     * @param text The text to escape, can be null
+     * @return HTML-escaped text or empty string if input was null
+     */
+    private fun escapeHtml(text: String?): String = if (text != null) Entities.escape(text) else ""
 }
