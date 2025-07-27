@@ -59,12 +59,11 @@ class RoutesOverviewPageGeneratorTest {
 
         // Then
         assertThat(html).contains("<style>")
-        assertThat(html).contains("font-family: monospace")
-        assertThat(html).contains(".route")
+        assertThat(html).contains("\"SF Mono\", Monaco")
+        assertThat(html).contains(".route-container")
         assertThat(html).contains(".route-path")
-        assertThat(html).contains(".route-class")
-        assertThat(html).contains(".route-file")
-        assertThat(html).contains(".route-params")
+        assertThat(html).contains(".info-table")
+        assertThat(html).contains(".params-table")
         assertThat(html).contains("</style>")
     }
 
@@ -103,8 +102,8 @@ class RoutesOverviewPageGeneratorTest {
                 .substringBefore("</body>")
 
         // Should not contain any route divs
-        assertThat(pagesSection).doesNotContain("<div class=\"route\"")
-        assertThat(apiSection).doesNotContain("<div class=\"route\"")
+        assertThat(pagesSection).doesNotContain("<div class=\"route-container\"")
+        assertThat(apiSection).doesNotContain("<div class=\"route-container\"")
     }
 
     @Test

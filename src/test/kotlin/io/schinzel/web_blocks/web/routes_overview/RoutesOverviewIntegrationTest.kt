@@ -104,7 +104,7 @@ class RoutesOverviewIntegrationTest {
 
         // Then
         // Should show parameters for routes that have them
-        assertThat(html).contains("Parameters:")
+        assertThat(html).contains("Parameter")
         assertThat(html).contains("user-id")
 
         // Should show page-block-api routes

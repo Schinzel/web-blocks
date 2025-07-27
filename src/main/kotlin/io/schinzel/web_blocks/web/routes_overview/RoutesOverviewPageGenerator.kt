@@ -42,69 +42,175 @@ class RoutesOverviewPageGenerator {
         <head>
             <title>WebBlocks Routes Overview</title>
             <style>
-                body { font-family: monospace; margin: 20px; }
-                h1, h2 { color: #333; }
-                .route-container { margin: 5px 0; border: 1px solid #dee2e6; border-radius: 4px; }
-                .route-header { 
-                    padding: 10px; 
-                    background: #f8f9fa; 
-                    cursor: pointer; 
-                    border-left: 3px solid #007bff;
+                body { 
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                    background-color: #f5f7fa;
+                    margin: 0;
+                    padding: 30px;
+                    line-height: 1.6;
+                    color: #2d3748;
+                }
+                
+                h1 { 
+                    color: #2d3748; 
+                    font-size: 2.5rem;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                
+                h2 { 
+                    color: #4a5568; 
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    margin: 40px 0 20px 0;
+                    border-bottom: 2px solid #e2e8f0;
+                    padding-bottom: 10px;
+                }
+                
+                .route-container, .block-container, .api-container { 
+                    background: white;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    margin-bottom: 16px;
+                    border: 1px solid #e2e8f0;
+                    overflow: hidden;
+                }
+                
+                .route-header, .block-header, .api-header { 
+                    padding: 20px; 
+                    cursor: pointer;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    transition: background-color 0.2s ease;
+                    border-bottom: 1px solid #e2e8f0;
                 }
-                .route-header:hover { background: #e9ecef; }
-                .route-path { font-weight: bold; color: #007bff; }
+                
+                .route-header { 
+                    background: #f8fafc;
+                    border-left: 4px solid #3182ce;
+                }
+                .route-header:hover { background: #edf2f7; }
+                
+                .block-header { 
+                    background: #fffbf0;
+                    border-left: 4px solid #ed8936;
+                }
+                .block-header:hover { background: #fef5e7; }
+                
+                .api-header { 
+                    background: #f0fff4;
+                    border-left: 4px solid #38a169;
+                }
+                .api-header:hover { background: #e6fffa; }
+                
+                .route-path { 
+                    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    color: #2d3748;
+                }
+                
+                .expand-icon { 
+                    font-size: 1.2rem;
+                    transition: transform 0.2s ease;
+                    color: #718096;
+                }
+                .expand-icon.expanded { transform: rotate(90deg); }
+                
                 .route-details { 
-                    padding: 10px; 
-                    background: #ffffff; 
-                    border-top: 1px solid #dee2e6;
+                    padding: 0;
+                    background: #ffffff;
                     display: none;
                 }
                 .route-details.expanded { display: block; }
-                .route-class { color: #6c757d; margin: 5px 0; }
-                .route-file { color: #495057; margin: 5px 0; font-size: 0.9em; }
-                .route-params { color: #28a745; margin: 5px 0; }
-                .expand-icon { 
-                    font-family: monospace; 
-                    font-weight: bold; 
-                    transition: transform 0.2s;
+                
+                .details-content {
+                    padding: 20px;
                 }
-                .expand-icon.expanded { transform: rotate(90deg); }
-                .nested { margin-left: 20px; }
-                .block-container { 
-                    margin: 5px 0; 
-                    border: 1px solid #ffc107; 
-                    border-radius: 4px; 
+                
+                .info-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 16px 0;
+                    background: white;
+                    border-radius: 6px;
+                    overflow: hidden;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
                 }
-                .block-header { 
-                    padding: 8px; 
-                    background: #fff3cd; 
-                    cursor: pointer;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
+                
+                .info-table th {
+                    background: #f7fafc;
+                    padding: 12px 16px;
+                    text-align: left;
+                    font-weight: 600;
+                    color: #4a5568;
+                    border-bottom: 1px solid #e2e8f0;
+                    font-size: 0.875rem;
                 }
-                .block-header:hover { background: #ffeaa7; }
-                .api-container { 
-                    margin: 5px 0; 
-                    border: 1px solid #dc3545; 
-                    border-radius: 4px; 
+                
+                .info-table td {
+                    padding: 12px 16px;
+                    border-bottom: 1px solid #f1f5f9;
+                    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+                    font-size: 0.875rem;
+                    color: #2d3748;
                 }
-                .api-header { 
-                    padding: 8px; 
-                    background: #f8d7da; 
-                    cursor: pointer;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
+                
+                .params-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 16px 0;
+                    background: white;
+                    border-radius: 6px;
+                    overflow: hidden;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
                 }
-                .api-header:hover { background: #f1b0b7; }
+                
+                .params-table th {
+                    background: #f7fafc;
+                    padding: 12px 16px;
+                    text-align: left;
+                    font-weight: 600;
+                    color: #4a5568;
+                    border-bottom: 1px solid #e2e8f0;
+                    font-size: 0.875rem;
+                }
+                
+                .params-table td {
+                    padding: 12px 16px;
+                    border-bottom: 1px solid #f1f5f9;
+                    font-size: 0.875rem;
+                }
+                
+                .param-name {
+                    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+                    font-weight: 600;
+                    color: #2d3748;
+                }
+                
+                .param-type {
+                    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+                    color: #805ad5;
+                    background: #faf5ff;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-size: 0.75rem;
+                }
+                
                 .blocks-label, .apis-label { 
-                    margin: 10px 0 5px 20px; 
-                    font-weight: bold; 
-                    color: #495057; 
+                    margin: 20px 0 12px 0;
+                    font-weight: 600; 
+                    color: #4a5568;
+                    font-size: 1.1rem;
+                }
+                
+                .nested-blocks, .nested-apis {
+                    margin-left: 0;
+                }
+                
+                .page-bottom {
+                    margin-bottom: 40px;
                 }
             </style>
             <script>
@@ -131,6 +237,7 @@ class RoutesOverviewPageGenerator {
      */
     private fun generateHtmlFooter(): String =
         """
+        <div class="page-bottom"></div>
         </body>
         </html>
         """.trimIndent()
@@ -192,34 +299,66 @@ class RoutesOverviewPageGenerator {
         html.append("    <span class=\"expand-icon\">&gt;</span>\n")
         html.append("  </div>\n")
         html.append("  <div class=\"route-details\">\n")
+        html.append("    <div class=\"details-content\">\n")
 
+        // Class and File table
         val filePath = getRelativeFilePath(page.routeClass)
-        html.append("    <div class=\"route-class\">Class: ${page.routeClass.simpleName}</div>\n")
-        html.append("    <div class=\"route-file\">File: $filePath</div>\n")
+        html.append("      <table class=\"info-table\">\n")
+        html.append("        <thead>\n")
+        html.append("          <tr>\n")
+        html.append("            <th>Property</th>\n")
+        html.append("            <th>Value</th>\n")
+        html.append("          </tr>\n")
+        html.append("        </thead>\n")
+        html.append("        <tbody>\n")
+        html.append("          <tr>\n")
+        html.append("            <td>Class</td>\n")
+        html.append("            <td>${page.routeClass.simpleName}</td>\n")
+        html.append("          </tr>\n")
+        html.append("          <tr>\n")
+        html.append("            <td>File</td>\n")
+        html.append("            <td>$filePath</td>\n")
+        html.append("          </tr>\n")
+        html.append("        </tbody>\n")
+        html.append("      </table>\n")
 
-        // Add parameters if they exist
+        // Parameters table if they exist
         if (page.parameters.isNotEmpty()) {
-            val paramsList =
-                page.parameters.joinToString(", ") { param ->
-                    val typeName =
-                        param.type
-                            .toString()
-                            .substringAfterLast('.')
-                            .substringBefore('?')
-                    "${param.name} ($typeName)"
-                }
-            html.append("    <div class=\"route-params\">Parameters: $paramsList</div>\n")
+            html.append("      <table class=\"params-table\">\n")
+            html.append("        <thead>\n")
+            html.append("          <tr>\n")
+            html.append("            <th>Parameter</th>\n")
+            html.append("            <th>Type</th>\n")
+            html.append("          </tr>\n")
+            html.append("        </thead>\n")
+            html.append("        <tbody>\n")
+            for (param in page.parameters) {
+                val typeName =
+                    param.type
+                        .toString()
+                        .substringAfterLast('.')
+                        .substringBefore('?')
+                html.append("          <tr>\n")
+                html.append("            <td><span class=\"param-name\">${param.name}</span></td>\n")
+                html.append("            <td><span class=\"param-type\">$typeName</span></td>\n")
+                html.append("          </tr>\n")
+            }
+            html.append("        </tbody>\n")
+            html.append("      </table>\n")
         }
 
         // Add blocks if they exist
         if (blocks.isNotEmpty()) {
-            html.append("    <div class=\"blocks-label\">Blocks:</div>\n")
+            html.append("      <div class=\"blocks-label\">Blocks:</div>\n")
+            html.append("      <div class=\"nested-blocks\">\n")
             for (block in blocks) {
-                html.append("    ")
-                html.append(generateExpandableBlockWithApis(block, pageBlockApiRoutes, "margin-left: 20px;"))
+                html.append("        ")
+                html.append(generateExpandableBlockWithApis(block, pageBlockApiRoutes))
             }
+            html.append("      </div>\n")
         }
 
+        html.append("    </div>\n") // Close details-content
         html.append("  </div>\n")
         html.append("</div>\n")
 
@@ -243,34 +382,67 @@ class RoutesOverviewPageGenerator {
         html.append("    <span class=\"expand-icon\">&gt;</span>\n")
         html.append("  </div>\n")
         html.append("  <div class=\"route-details\">\n")
+        html.append("    <div class=\"details-content\">\n")
 
+        // Class and File table
         val filePath = getRelativeFilePath(block.routeClass)
-        html.append("    <div class=\"route-class\">Class: ${block.routeClass.simpleName}</div>\n")
-        html.append("    <div class=\"route-file\">File: $filePath</div>\n")
+        html.append("      <table class=\"info-table\">\n")
+        html.append("        <thead>\n")
+        html.append("          <tr>\n")
+        html.append("            <th>Property</th>\n")
+        html.append("            <th>Value</th>\n")
+        html.append("          </tr>\n")
+        html.append("        </thead>\n")
+        html.append("        <tbody>\n")
+        html.append("          <tr>\n")
+        html.append("            <td>Class</td>\n")
+        html.append("            <td>${block.routeClass.simpleName}</td>\n")
+        html.append("          </tr>\n")
+        html.append("          <tr>\n")
+        html.append("            <td>File</td>\n")
+        html.append("            <td>$filePath</td>\n")
+        html.append("          </tr>\n")
+        html.append("        </tbody>\n")
+        html.append("      </table>\n")
 
-        // Add parameters if they exist
+        // Parameters table if they exist
         if (block.parameters.isNotEmpty()) {
-            val paramsList =
-                block.parameters.joinToString(", ") { param ->
-                    val typeName =
-                        param.type
-                            .toString()
-                            .substringAfterLast('.')
-                            .substringBefore('?')
-                    "${param.name} ($typeName)"
-                }
-            html.append("    <div class=\"route-params\">Parameters: $paramsList</div>\n")
+            html.append("      <table class=\"params-table\">\n")
+            html.append("        <thead>\n")
+            html.append("          <tr>\n")
+            html.append("            <th>Parameter</th>\n")
+            html.append("            <th>Type</th>\n")
+            html.append("          </tr>\n")
+            html.append("        </thead>\n")
+            html.append("        <tbody>\n")
+            for (param in block.parameters) {
+                val typeName =
+                    param.type
+                        .toString()
+                        .substringAfterLast('.')
+                        .substringBefore('?')
+                html.append("          <tr>\n")
+                html.append("            <td><span class=\"param-name\">${param.name}</span></td>\n")
+                html.append("            <td><span class=\"param-type\">$typeName</span></td>\n")
+                html.append("          </tr>\n")
+            }
+            html.append("        </tbody>\n")
+            html.append("      </table>\n")
         }
 
         // Find associated APIs for this block
         val associatedApis = findAssociatedBlockApis(block, pageBlockApiRoutes)
         if (associatedApis.isNotEmpty()) {
-            html.append("    <div class=\"apis-label\">Block APIs:</div>\n")
+            html.append("      <div class=\"apis-label\">Block APIs:</div>\n")
+            html.append("      <div class=\"nested-apis\">\n")
             for (api in associatedApis) {
-                html.append("    ")
-                html.append(generateExpandableRouteHtml(api, "api", "api", "margin-left: 20px;"))
+                html.append("        ")
+                html.append(generateExpandableRouteHtml(api, "api", "api"))
             }
+            html.append("      </div>\n")
         }
+
+        html.append("    </div>\n") // Close details-content
 
         html.append("  </div>\n")
         html.append("</div>\n")
@@ -300,25 +472,55 @@ class RoutesOverviewPageGenerator {
         html.append("    <span class=\"expand-icon\">&gt;</span>\n")
         html.append("  </div>\n")
         html.append("  <div class=\"route-details\">\n")
+        html.append("    <div class=\"details-content\">\n")
 
+        // Class and File table
         val filePath = getRelativeFilePath(route.routeClass)
-        html.append("    <div class=\"route-class\">Class: ${route.routeClass.simpleName}</div>\n")
-        html.append("    <div class=\"route-file\">File: $filePath</div>\n")
+        html.append("      <table class=\"info-table\">\n")
+        html.append("        <thead>\n")
+        html.append("          <tr>\n")
+        html.append("            <th>Property</th>\n")
+        html.append("            <th>Value</th>\n")
+        html.append("          </tr>\n")
+        html.append("        </thead>\n")
+        html.append("        <tbody>\n")
+        html.append("          <tr>\n")
+        html.append("            <td>Class</td>\n")
+        html.append("            <td>${route.routeClass.simpleName}</td>\n")
+        html.append("          </tr>\n")
+        html.append("          <tr>\n")
+        html.append("            <td>File</td>\n")
+        html.append("            <td>$filePath</td>\n")
+        html.append("          </tr>\n")
+        html.append("        </tbody>\n")
+        html.append("      </table>\n")
 
-        // Add parameters if they exist
+        // Parameters table if they exist
         if (route.parameters.isNotEmpty()) {
-            val paramsList =
-                route.parameters.joinToString(", ") { param ->
-                    val typeName =
-                        param.type
-                            .toString()
-                            .substringAfterLast('.')
-                            .substringBefore('?')
-                    "${param.name} ($typeName)"
-                }
-            html.append("    <div class=\"route-params\">Parameters: $paramsList</div>\n")
+            html.append("      <table class=\"params-table\">\n")
+            html.append("        <thead>\n")
+            html.append("          <tr>\n")
+            html.append("            <th>Parameter</th>\n")
+            html.append("            <th>Type</th>\n")
+            html.append("          </tr>\n")
+            html.append("        </thead>\n")
+            html.append("        <tbody>\n")
+            for (param in route.parameters) {
+                val typeName =
+                    param.type
+                        .toString()
+                        .substringAfterLast('.')
+                        .substringBefore('?')
+                html.append("          <tr>\n")
+                html.append("            <td><span class=\"param-name\">${param.name}</span></td>\n")
+                html.append("            <td><span class=\"param-type\">$typeName</span></td>\n")
+                html.append("          </tr>\n")
+            }
+            html.append("        </tbody>\n")
+            html.append("      </table>\n")
         }
 
+        html.append("    </div>\n") // Close details-content
         html.append("  </div>\n")
         html.append("</div>\n")
 
