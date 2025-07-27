@@ -1,3 +1,9 @@
+# Route doc task
+Only the path to the page or api is visible /java-style-page
+To see the rest of the section you click to expand as it works on OpenAPI
+
+I need to add a user doc for these API (ping routes)
+
 # Att fixa -2
 Does 404s appear in the logs?
 
@@ -23,6 +29,8 @@ Verifiera att documentationen är korrekt
 # Att fixa 3
 Förklara när det går från att @PageBlock skall implementera PageBlock och IHtmlRoute
 
+
+RouteDescriptorRegistry är object. Alltid pain i rumpan med test. Kan man sicka in istället?
 
 # File, paths and packages needed
 - Expand hard coded error page

@@ -6,6 +6,7 @@ import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_blocks.web.WebAppConfig
 import io.schinzel.web_blocks.web.request_handler.RequestHandler
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
+import io.schinzel.web_blocks.web.routes_overview.RoutesOverviewPageGenerator
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -21,28 +22,37 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
                 it.hostedPath = "/static"
             }
         }
-    // Find all routes and add them Javalin
-    findRoutes(webAppConfig.webRootPackage)
-        .forEach { routeMapping: RouteMapping ->
-            if (webAppConfig.printStartupMessages) {
-                // Print the route
-                routeMapping.println()
-            }
-            // Create request handler
-            val requestHandler =
-                RequestHandler(routeMapping, webAppConfig)
-                    .getHandler()
-            // Register both GET and POST handlers for the same path
-            javalin.getAndPost(routeMapping.routePath, requestHandler)
+    // Find all routes and capture them for both registration and overview page
+    val routeMappings = findRoutes(webAppConfig.webRootPackage)
+
+    // Register framework routes before user routes to ensure precedence
+    val routesOverviewGenerator = RoutesOverviewPageGenerator()
+    javalin.get("/web-blocks/routes") { ctx ->
+        val html = routesOverviewGenerator.generateHtml(routeMappings)
+        ctx.html(html)
+    }
+
+    // Register user routes
+    routeMappings.forEach { routeMapping: RouteMapping ->
+        if (webAppConfig.printStartupMessages) {
+            // Print the route
+            routeMapping.println()
         }
-    javalin.get("ping") { ctx ->
+        // Create request handler
+        val requestHandler =
+            RequestHandler(routeMapping, webAppConfig)
+                .getHandler()
+        // Register both GET and POST handlers for the same path
+        javalin.getAndPost(routeMapping.routePath, requestHandler)
+    }
+    javalin.get("/web-blocks/ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())
     }
     return javalin
 }
 
 private fun Instant.toIsoString(): String? {
-    val zonedDateTime = ZonedDateTime.ofInstant(this, ZoneId.of("Europe/Stockholm"))
+    val zonedDateTime = ZonedDateTime.ofInstant(this, ZoneId.of("UTC"))
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     return zonedDateTime.format(formatter)
 }

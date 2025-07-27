@@ -34,7 +34,7 @@ class InitWebAppTest {
         fun `get request _ returns pong`() {
             val actual =
                 Jsoup
-                    .connect("http://localhost:$randomPort/ping")
+                    .connect("http://localhost:$randomPort/web-blocks/ping")
                     .ignoreContentType(true)
                     .execute()
             assertThat(actual.body()).contains("pong")
