@@ -44,15 +44,83 @@ class RoutesOverviewPageGenerator {
             <style>
                 body { font-family: monospace; margin: 20px; }
                 h1, h2 { color: #333; }
-                .route { margin: 10px 0; padding: 10px; border-left: 3px solid #007bff; background: #f8f9fa; }
+                .route-container { margin: 5px 0; border: 1px solid #dee2e6; border-radius: 4px; }
+                .route-header { 
+                    padding: 10px; 
+                    background: #f8f9fa; 
+                    cursor: pointer; 
+                    border-left: 3px solid #007bff;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .route-header:hover { background: #e9ecef; }
                 .route-path { font-weight: bold; color: #007bff; }
-                .route-class { color: #6c757d; margin-left: 20px; }
-                .route-file { color: #495057; margin-left: 20px; font-size: 0.9em; }
-                .route-params { color: #28a745; margin-left: 20px; }
-                .nested { margin-left: 40px; }
-                .block { margin-left: 20px; border-left: 2px solid #ffc107; background: #fff3cd; padding: 5px; }
-                .api { margin-left: 20px; border-left: 2px solid #dc3545; background: #f8d7da; padding: 5px; }
+                .route-details { 
+                    padding: 10px; 
+                    background: #ffffff; 
+                    border-top: 1px solid #dee2e6;
+                    display: none;
+                }
+                .route-details.expanded { display: block; }
+                .route-class { color: #6c757d; margin: 5px 0; }
+                .route-file { color: #495057; margin: 5px 0; font-size: 0.9em; }
+                .route-params { color: #28a745; margin: 5px 0; }
+                .expand-icon { 
+                    font-family: monospace; 
+                    font-weight: bold; 
+                    transition: transform 0.2s;
+                }
+                .expand-icon.expanded { transform: rotate(90deg); }
+                .nested { margin-left: 20px; }
+                .block-container { 
+                    margin: 5px 0; 
+                    border: 1px solid #ffc107; 
+                    border-radius: 4px; 
+                }
+                .block-header { 
+                    padding: 8px; 
+                    background: #fff3cd; 
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .block-header:hover { background: #ffeaa7; }
+                .api-container { 
+                    margin: 5px 0; 
+                    border: 1px solid #dc3545; 
+                    border-radius: 4px; 
+                }
+                .api-header { 
+                    padding: 8px; 
+                    background: #f8d7da; 
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .api-header:hover { background: #f1b0b7; }
+                .blocks-label, .apis-label { 
+                    margin: 10px 0 5px 20px; 
+                    font-weight: bold; 
+                    color: #495057; 
+                }
             </style>
+            <script>
+                function toggleExpand(element) {
+                    const details = element.nextElementSibling;
+                    const icon = element.querySelector('.expand-icon');
+                    
+                    if (details.classList.contains('expanded')) {
+                        details.classList.remove('expanded');
+                        icon.classList.remove('expanded');
+                    } else {
+                        details.classList.add('expanded');
+                        icon.classList.add('expanded');
+                    }
+                }
+            </script>
         </head>
         <body>
             <h1>WebBlocks Routes Overview</h1>
@@ -82,25 +150,10 @@ class RoutesOverviewPageGenerator {
         val sortedPages = pageRoutes.sortedBy { it.routePath }
 
         for (page in sortedPages) {
-            html.append(generateRouteHtml(page, "route"))
-
             // Find associated blocks for this page
             val associatedBlocks = findAssociatedBlocks(page, pageBlockRoutes)
-            if (associatedBlocks.isNotEmpty()) {
-                html.append("<div class=\"nested\">Blocks:</div>\n")
-                for (block in associatedBlocks) {
-                    html.append(generateRouteHtml(block, "block nested"))
 
-                    // Find associated APIs for this block
-                    val associatedApis = findAssociatedBlockApis(block, pageBlockApiRoutes)
-                    if (associatedApis.isNotEmpty()) {
-                        html.append("<div class=\"nested\" style=\"margin-left: 60px;\">Block APIs:</div>\n")
-                        for (api in associatedApis) {
-                            html.append(generateRouteHtml(api, "api nested", "margin-left: 80px;"))
-                        }
-                    }
-                }
-            }
+            html.append(generateExpandablePageWithBlocks(page, associatedBlocks, pageBlockApiRoutes))
         }
 
         return html.toString()
@@ -117,28 +170,140 @@ class RoutesOverviewPageGenerator {
         val sortedApis = apiRoutes.sortedBy { it.routePath }
 
         for (api in sortedApis) {
-            html.append(generateRouteHtml(api, "route"))
+            html.append(generateExpandableRouteHtml(api, "route"))
         }
 
         return html.toString()
     }
 
     /**
-     * Generates HTML for a single route
+     * Generates HTML for a page with its nested blocks
      */
-    private fun generateRouteHtml(
-        route: RouteMapping,
-        cssClass: String,
+    private fun generateExpandablePageWithBlocks(
+        page: RouteMapping,
+        blocks: List<RouteMapping>,
+        pageBlockApiRoutes: List<RouteMapping>,
+    ): String {
+        val html = StringBuilder()
+
+        html.append("<div class=\"route-container\">\n")
+        html.append("  <div class=\"route-header\" onclick=\"toggleExpand(this)\">\n")
+        html.append("    <span class=\"route-path\">${page.routePath}</span>\n")
+        html.append("    <span class=\"expand-icon\">&gt;</span>\n")
+        html.append("  </div>\n")
+        html.append("  <div class=\"route-details\">\n")
+
+        val filePath = getRelativeFilePath(page.routeClass)
+        html.append("    <div class=\"route-class\">Class: ${page.routeClass.simpleName}</div>\n")
+        html.append("    <div class=\"route-file\">File: $filePath</div>\n")
+
+        // Add parameters if they exist
+        if (page.parameters.isNotEmpty()) {
+            val paramsList =
+                page.parameters.joinToString(", ") { param ->
+                    val typeName =
+                        param.type
+                            .toString()
+                            .substringAfterLast('.')
+                            .substringBefore('?')
+                    "${param.name} ($typeName)"
+                }
+            html.append("    <div class=\"route-params\">Parameters: $paramsList</div>\n")
+        }
+
+        // Add blocks if they exist
+        if (blocks.isNotEmpty()) {
+            html.append("    <div class=\"blocks-label\">Blocks:</div>\n")
+            for (block in blocks) {
+                html.append("    ")
+                html.append(generateExpandableBlockWithApis(block, pageBlockApiRoutes, "margin-left: 20px;"))
+            }
+        }
+
+        html.append("  </div>\n")
+        html.append("</div>\n")
+
+        return html.toString()
+    }
+
+    /**
+     * Generates HTML for a block with its nested APIs
+     */
+    private fun generateExpandableBlockWithApis(
+        block: RouteMapping,
+        pageBlockApiRoutes: List<RouteMapping>,
         additionalStyle: String = "",
     ): String {
         val styleAttr = if (additionalStyle.isNotEmpty()) " style=\"$additionalStyle\"" else ""
         val html = StringBuilder()
 
-        html.append("<div class=\"$cssClass\"$styleAttr>\n")
-        html.append("  <div class=\"route-path\">${route.routePath}</div>\n")
+        html.append("<div class=\"block-container\"$styleAttr>\n")
+        html.append("  <div class=\"block-header\" onclick=\"toggleExpand(this)\">\n")
+        html.append("    <span class=\"route-path\">${block.routePath}</span>\n")
+        html.append("    <span class=\"expand-icon\">&gt;</span>\n")
+        html.append("  </div>\n")
+        html.append("  <div class=\"route-details\">\n")
+
+        val filePath = getRelativeFilePath(block.routeClass)
+        html.append("    <div class=\"route-class\">Class: ${block.routeClass.simpleName}</div>\n")
+        html.append("    <div class=\"route-file\">File: $filePath</div>\n")
+
+        // Add parameters if they exist
+        if (block.parameters.isNotEmpty()) {
+            val paramsList =
+                block.parameters.joinToString(", ") { param ->
+                    val typeName =
+                        param.type
+                            .toString()
+                            .substringAfterLast('.')
+                            .substringBefore('?')
+                    "${param.name} ($typeName)"
+                }
+            html.append("    <div class=\"route-params\">Parameters: $paramsList</div>\n")
+        }
+
+        // Find associated APIs for this block
+        val associatedApis = findAssociatedBlockApis(block, pageBlockApiRoutes)
+        if (associatedApis.isNotEmpty()) {
+            html.append("    <div class=\"apis-label\">Block APIs:</div>\n")
+            for (api in associatedApis) {
+                html.append("    ")
+                html.append(generateExpandableRouteHtml(api, "api", "api", "margin-left: 20px;"))
+            }
+        }
+
+        html.append("  </div>\n")
+        html.append("</div>\n")
+
+        return html.toString()
+    }
+
+    /**
+     * Generates HTML for a single expandable route
+     */
+    private fun generateExpandableRouteHtml(
+        route: RouteMapping,
+        routeType: String,
+        containerType: String = "route",
+        additionalStyle: String = "",
+    ): String {
+        val styleAttr = if (additionalStyle.isNotEmpty()) " style=\"$additionalStyle\"" else ""
+        val html = StringBuilder()
+        val containerId = "route-${route.routePath.replace(
+            "/",
+            "-",
+        ).replace("{", "").replace("}", "")}-${route.routeClass.simpleName}"
+
+        html.append("<div class=\"$containerType-container\"$styleAttr>\n")
+        html.append("  <div class=\"$containerType-header\" onclick=\"toggleExpand(this)\">\n")
+        html.append("    <span class=\"route-path\">${route.routePath}</span>\n")
+        html.append("    <span class=\"expand-icon\">&gt;</span>\n")
+        html.append("  </div>\n")
+        html.append("  <div class=\"route-details\">\n")
+
         val filePath = getRelativeFilePath(route.routeClass)
-        html.append("  <div class=\"route-class\">Class: ${route.routeClass.simpleName}</div>\n")
-        html.append("  <div class=\"route-file\">File: $filePath</div>\n")
+        html.append("    <div class=\"route-class\">Class: ${route.routeClass.simpleName}</div>\n")
+        html.append("    <div class=\"route-file\">File: $filePath</div>\n")
 
         // Add parameters if they exist
         if (route.parameters.isNotEmpty()) {
@@ -151,9 +316,10 @@ class RoutesOverviewPageGenerator {
                             .substringBefore('?')
                     "${param.name} ($typeName)"
                 }
-            html.append("  <div class=\"route-params\">Parameters: $paramsList</div>\n")
+            html.append("    <div class=\"route-params\">Parameters: $paramsList</div>\n")
         }
 
+        html.append("  </div>\n")
         html.append("</div>\n")
 
         return html.toString()
