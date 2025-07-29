@@ -9,6 +9,7 @@
 - [Error Pages](3_4_error_pages.md)
 - [Custom HTML gneration](3_5_custom_html_generation.md)
 --
+- [WebBlocks Routes](4_web_block_routes.md)
 - [Building a JAR](6_building_a_jar.md)
 - [Sample](8_sample.md)
 
