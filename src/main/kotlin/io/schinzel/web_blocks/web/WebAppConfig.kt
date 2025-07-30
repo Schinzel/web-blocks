@@ -20,7 +20,7 @@ data class WebAppConfig(
     val logger: ILogger = ConsoleLogger(prettyPrint = true),
     val localTimezone: String = "Europe/Stockholm",
     val prettyFormatHtml: Boolean = true,
-    val printStartupMessages: Boolean = true,
+    val printStartupMessages: Boolean = false,
     val environment: Environment = Environment.DEVELOPMENT,
 ) {
     val webRootPackage: String = webRootClass::class.java.packageName

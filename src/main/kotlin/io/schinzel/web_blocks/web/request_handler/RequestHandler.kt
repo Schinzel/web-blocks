@@ -23,7 +23,9 @@ class RequestHandler(
                 val returnType = routeMapping.returnType
 
                 // Retrieve LogEntry from context (created by before handler)
-                val logEntry = ctx.attribute<LogEntry>("logEntry")!!
+                val logEntry =
+                    ctx.attribute<LogEntry>("logEntry")
+                        ?: throw IllegalStateException("LogEntry not found in Javalin context")
 
                 // Update logEntry with route-specific information
                 logEntry.routeType = routeMapping.type

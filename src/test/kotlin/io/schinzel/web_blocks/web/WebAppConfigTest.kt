@@ -10,14 +10,20 @@ class WebAppConfigTest {
     inner class Constructor {
         @Test
         fun `existing package _ no error`() {
-            assertDoesNotThrow { WebAppConfig(this@WebAppConfigTest) }
+            assertDoesNotThrow {
+                WebAppConfig(
+                    webRootClass = this@WebAppConfigTest,
+                )
+            }
         }
 
         @Test
         fun `non existing package _ throws error`() {
             val endpointPackage = "io.schinzel.web_blocks.non_existing_package"
             assertThrows<Exception> {
-                WebAppConfig(endpointPackage)
+                WebAppConfig(
+                    webRootClass = endpointPackage,
+                )
             }
         }
 

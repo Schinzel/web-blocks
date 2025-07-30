@@ -82,14 +82,14 @@ class SampleApiTest {
     }
 
     @Test
-    fun getResponse_apiThatThrowsError_returns200Status() {
+    fun getResponse_apiThatThrowsError_returns500Status() {
         val response =
             Jsoup
                 .connect("$baseUrl/api/api-that-throws-error")
                 .ignoreContentType(true)
                 .ignoreHttpErrors(true)
                 .execute()
-        assertThat(response.statusCode()).isEqualTo(200)
+        assertThat(response.statusCode()).isEqualTo(500)
     }
 
     @Nested
