@@ -15,10 +15,6 @@ import java.time.format.DateTimeFormatter
  *
  * Written by Claude Sonnet 4
  */
-
-/**
- * Sets up the web-blocks framework internal routes
- */
 fun Javalin.setupFrameworkRoutes(routeMappings: List<RouteMapping>): Javalin {
     this.get("/web-blocks/routes") { ctx ->
         val html = RoutesOverviewPageGenerator().generateHtml(routeMappings)

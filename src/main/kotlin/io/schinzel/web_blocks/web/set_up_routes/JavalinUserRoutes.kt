@@ -12,10 +12,6 @@ import io.schinzel.web_blocks.web.route_mapping.RouteMapping
  *
  * Written by Claude Sonnet 4
  */
-
-/**
- * Sets up user-defined routes discovered from the application
- */
 fun Javalin.setupUserRoutes(
     webAppConfig: WebAppConfig,
     routeMappings: List<RouteMapping>,

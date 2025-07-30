@@ -13,10 +13,6 @@ import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
  *
  * Written by Claude Sonnet 4
  */
-
-/**
- * Handles error responses for any HTTP status code
- */
 fun handleExceptionResponse(
     e: Exception,
     ctx: Context,
