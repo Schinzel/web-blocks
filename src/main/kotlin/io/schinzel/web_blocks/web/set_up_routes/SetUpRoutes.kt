@@ -39,6 +39,11 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
         ctx.json(json)
     }
 
+    // A simple endpoint to check if is up and running
+    javalin.get("/web-blocks/ping") { ctx ->
+        ctx.result("pong " + Instant.now().toIsoString())
+    }
+
     // Register user routes
     routeMappings.forEach { routeMapping: RouteMapping ->
         if (webAppConfig.printStartupMessages) {
@@ -51,9 +56,6 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
                 .getHandler()
         // Register both GET and POST handlers for the same path
         javalin.getAndPost(routeMapping.routePath, requestHandler)
-    }
-    javalin.get("/web-blocks/ping") { ctx ->
-        ctx.result("pong " + Instant.now().toIsoString())
     }
     return javalin
 }

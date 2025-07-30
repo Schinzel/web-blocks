@@ -61,8 +61,8 @@ fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
 }
 
 private fun getReturnType(path: String): ReturnTypeEnum {
-    // If the path starts with /api or /page-api, return JSON
-    if (path.startsWith("/api") || path.startsWith("/page-api")) {
+    // If the path starts with /api or /page-block-api, return JSON
+    if (path.startsWith("/api") || path.startsWith("/page-block-api")) {
         return ReturnTypeEnum.JSON
     }
     return ReturnTypeEnum.HTML

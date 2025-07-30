@@ -1,23 +1,14 @@
 # Route doc task
 
-I need to add a user doc for these API (ping routes)
-- http://127.0.0.1:5555/web-blocks/ping
-- http://127.0.0.1:5555/web-blocks/routes
-- http://127.0.0.1:5555/web-blocks/routes-json
+
+# Att fixa
+- Does 404s appear in the logs?
+- Otional parameters
+- HTML escaping
+- Funkar JAR läsning för multimodule project
+- Testa den bygda JAR:en så att paths funkar
 
 
-# Att fixa -3
-HTML escaping
-
-# Att fixa -2
-Does 404s appear in the logs?
-
-# Att fixa -1
-Funkar JAR läsning för multimodule project
-
-
-# Att fixa 0
-Testa den bygda JAR:en så att paths funkar
 
 # Att fixa 1
 class BlockOne : WebBlock() {
@@ -34,6 +25,11 @@ Verifiera att documentationen är korrekt
 # Att fixa 3
 Förklara när det går från att @PageBlock skall implementera PageBlock och IHtmlRoute
 
+
+# Att fixa
+page-block-api  och de andra prefixen är hårdkodade strängar på många ställen.
+Borde vara på ett
+Men vilket är det centrala stället som definierar APIerna
 
 RouteDescriptorRegistry är object. Alltid pain i rumpan med test. Kan man sicka in istället?
 
