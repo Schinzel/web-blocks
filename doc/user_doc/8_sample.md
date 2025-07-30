@@ -47,8 +47,8 @@ An API route with one parameter.
 - http://127.0.0.1:5555/api/user-information-endpoint?user-id=123
 
 An API route that throws an error.
-- [api/ApiRouteThatThrowsError.kt](../../src/main/kotlin/io/schinzel/sample/api/ApiThatThrowsError.kt)
-- http://127.0.0.1:5555/api/api-route-that-throws-error
+- [api/ApiThatThrowsError.kt](../../src/main/kotlin/io/schinzel/sample/api/ApiThatThrowsError.kt)
+- http://127.0.0.1:5555/api/api-that-throws-error
 
 An API route with custom headers using JsonResponseBuilder. It sets the headers X-Total-Count, X-Rate-Limit-Remaining and X-User-Type
 - [api/UserApiWithHeaders.kt](../../src/main/kotlin/io/schinzel/sample/api/UserApiWithHeaders.kt)
