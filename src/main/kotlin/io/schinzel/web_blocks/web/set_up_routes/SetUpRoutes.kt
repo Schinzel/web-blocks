@@ -5,6 +5,10 @@ import io.javalin.http.staticfiles.Location
 import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_blocks.web.WebAppConfig
 import io.schinzel.web_blocks.web.request_handler.RequestHandler
+import io.schinzel.web_blocks.web.request_handler.getErrorMessageForStatus
+import io.schinzel.web_blocks.web.request_handler.handleExceptionResponse
+import io.schinzel.web_blocks.web.request_handler.log_entry.ErrorLog
+import io.schinzel.web_blocks.web.request_handler.log_entry.LogEntry
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
 import io.schinzel.web_blocks.web.routes_overview.RoutesJsonGenerator
 import io.schinzel.web_blocks.web.routes_overview.RoutesOverviewPageGenerator
@@ -42,6 +46,51 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
     // A simple endpoint to check if is up and running
     javalin.get("/web-blocks/ping") { ctx ->
         ctx.result("pong " + Instant.now().toIsoString())
+    }
+
+    // Global before handler - create LogEntry for ALL requests
+    javalin.before { ctx ->
+        val logEntry =
+            LogEntry(
+                localTimeZone = webAppConfig.localTimezone,
+                routeType = "Unknown", // Will be updated by RequestHandler if route exists
+                httpMethod = ctx.method().toString(),
+            )
+        logEntry.requestLog.path = ctx.path()
+        logEntry.httpMethod = ctx.method().toString()
+
+        // Set log entry and start time as javalin attributes so they can be used
+        // in the RequestHandler and in the javalin.after
+        ctx.attribute("logEntry", logEntry)
+        ctx.attribute("startTime", System.currentTimeMillis())
+    }
+
+    // Global after handler - complete logging for ALL requests
+    javalin.after { ctx ->
+        // Get the log entry that was set in javalin.before and modified in the RequestHandler
+        val logEntry = ctx.attribute<LogEntry>("logEntry")!!
+        val startTime = ctx.attribute<Long>("startTime")!!
+
+        // If no errorLog was set but status indicates error (404, 405, etc.)
+        if (logEntry.errorLog == null && ctx.statusCode() >= 400) {
+            val statusCode = ctx.statusCode()
+            val errorMessage = getErrorMessageForStatus(statusCode, ctx.path())
+            logEntry.errorLog = ErrorLog(RuntimeException(errorMessage))
+
+            // Send appropriate error response for unhandled errors
+            handleExceptionResponse(
+                RuntimeException(errorMessage),
+                ctx,
+                webAppConfig,
+                logEntry,
+                statusCode,
+            )
+        }
+
+        // Always complete logging
+        logEntry.responseLog.statusCode = ctx.statusCode()
+        logEntry.executionTimeInMs = System.currentTimeMillis() - startTime
+        webAppConfig.logger.log(logEntry)
     }
 
     // Register user routes

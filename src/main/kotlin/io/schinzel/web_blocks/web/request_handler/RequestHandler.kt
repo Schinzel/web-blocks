@@ -2,6 +2,7 @@ package io.schinzel.web_blocks.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.web_blocks.web.WebAppConfig
+import io.schinzel.web_blocks.web.request_handler.log_entry.ErrorLog
 import io.schinzel.web_blocks.web.request_handler.log_entry.LogEntry
 import io.schinzel.web_blocks.web.route_mapping.RouteMapping
 import io.schinzel.web_blocks.web.routes.IRoute
@@ -20,14 +21,12 @@ class RequestHandler(
             // Use runBlocking to handle suspend functions at the top level
             runBlocking {
                 val returnType = routeMapping.returnType
-                val logEntry =
-                    LogEntry(
-                        localTimeZone = webAppConfig.localTimezone,
-                        routeType = routeMapping.type,
-                        httpMethod = ctx.method().toString(),
-                    )
 
-                val startTime = System.currentTimeMillis()
+                // Retrieve LogEntry from context (created by before handler)
+                val logEntry = ctx.attribute<LogEntry>("logEntry")!!
+
+                // Update logEntry with route-specific information
+                logEntry.routeType = routeMapping.type
                 logEntry.requestLog.path = routeMapping.routePath
 
                 // Only read body for non-multipart requests to avoid "body already consumed" errors
@@ -36,19 +35,22 @@ class RequestHandler(
                 val requestBody = if (isMultipart) "" else ctx.body()
                 logEntry.requestLog.requestBody = requestBody
 
-                val hasNoArguments = routeMapping.parameters.isEmpty()
-                val route: IRoute =
-                    when {
-                        hasNoArguments -> routeMapping.routeClass.createInstance()
-                        else -> createRoute(routeMapping, ctx, logEntry, requestBody, isMultipart)
-                    }
+                try {
+                    val hasNoArguments = routeMapping.parameters.isEmpty()
+                    val route: IRoute =
+                        when {
+                            hasNoArguments -> routeMapping.routeClass.createInstance()
+                            else -> createRoute(routeMapping, ctx, logEntry, requestBody, isMultipart)
+                        }
 
-                // Now this is a suspend call within the coroutine
-                sendResponse(ctx, route, logEntry, returnType, webAppConfig.prettyFormatHtml)
-
-                logEntry.responseLog.statusCode = ctx.statusCode()
-                logEntry.executionTimeInMs = System.currentTimeMillis() - startTime
-                webAppConfig.logger.log(logEntry)
+                    // Now this is a suspend call within the coroutine
+                    sendResponse(ctx, route, logEntry, returnType, webAppConfig.prettyFormatHtml)
+                } catch (e: Exception) {
+                    logEntry.errorLog = ErrorLog(e)
+                    // Call error response function directly
+                    handleExceptionResponse(e, ctx, webAppConfig, logEntry)
+                }
+                // No finally block - logging is now handled by global after handler
             }
         }
 }

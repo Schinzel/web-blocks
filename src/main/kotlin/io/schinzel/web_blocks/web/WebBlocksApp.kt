@@ -5,7 +5,6 @@ import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.basicutils.thrower.Thrower
 import io.schinzel.web_blocks.web.request_handler.log.ConsoleLogger
 import io.schinzel.web_blocks.web.request_handler.log.ILogger
-import io.schinzel.web_blocks.web.request_handler.setUpErrorHandling
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistry
 import io.schinzel.web_blocks.web.routes.route_descriptors.RouteDescriptorRegistryInit
 import io.schinzel.web_blocks.web.set_up_routes.setUpRoutes
@@ -44,7 +43,6 @@ abstract class WebBlocksApp {
         RouteDescriptorRegistry.clear()
         RouteDescriptorRegistryInit(webAppConfig.webRootPackage)
         javalin = setUpRoutes(webAppConfig)
-        javalin?.setUpErrorHandling(webAppConfig)
 
         // Create a future to wait for server startup completion
         val serverReadyFuture = CompletableFuture<Unit>()

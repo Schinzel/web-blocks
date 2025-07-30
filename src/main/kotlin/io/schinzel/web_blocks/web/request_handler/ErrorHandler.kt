@@ -1,64 +1,86 @@
 package io.schinzel.web_blocks.web.request_handler
 
-import io.javalin.Javalin
-import io.schinzel.basicutils.RandomUtil
+import io.javalin.http.Context
 import io.schinzel.web_blocks.web.WebAppConfig
 import io.schinzel.web_blocks.web.errors.ErrorPage
+import io.schinzel.web_blocks.web.request_handler.log_entry.ErrorLog
+import io.schinzel.web_blocks.web.request_handler.log_entry.LogEntry
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
 
 /**
- * TO DO:
- * - Add logging
- *    - Want that unique id that is displayed in the response to the client also in the log
+ * The purpose of this class is to provide pure error response functions without logging.
+ * Logging is handled by RequestHandler to avoid code duplication.
+ *
+ * Written by Claude Sonnet 4
  */
 
-fun Javalin.setUpErrorHandling(webAppConfig: WebAppConfig): Javalin {
-    this
-        .exception(Exception::class.java) { e, ctx ->
-            val errorId: String = RandomUtil.getRandomString(12)
-            when (getReturnType(ctx.path())) {
-                ReturnTypeEnum.JSON -> {
-                    val response =
-                        ApiResponse.Error(
-                            message = e.message ?: "Internal server error",
-                            errorId = errorId,
-                        )
-                    ctx.json(response)
-                }
+/**
+ * Handles error responses for any HTTP status code
+ */
+fun handleExceptionResponse(
+    e: Exception,
+    ctx: Context,
+    webAppConfig: WebAppConfig,
+    logEntry: LogEntry,
+    statusCode: Int = 500,
+) {
+    ctx.status(statusCode)
 
-                ReturnTypeEnum.HTML -> {
-                    val errorPageHtml =
-                        ErrorPage(webAppConfig.webRootClass, webAppConfig.environment)
-                            .addData("errorMessage", e.message ?: "Unknown error")
-                            .addData("errorId", errorId)
-                            .getErrorPage(500)
-                    ctx.html(errorPageHtml)
-                }
-            }
-        }.error(404) { ctx ->
-            val errorId: String = RandomUtil.getRandomString(12)
-            when (getReturnType(ctx.path())) {
-                ReturnTypeEnum.JSON -> {
-                    val response =
-                        ApiResponse.Error(
-                            message = "API or Page API route not found: '${ctx.path()}'",
-                            errorId = errorId,
-                        )
-                    ctx.json(response)
-                }
+    // Ensure errorLog exists and get consistent errorId
+    if (logEntry.errorLog == null) {
+        logEntry.errorLog = ErrorLog(e)
+    }
+    val errorId = logEntry.errorLog!!.errorId
 
-                ReturnTypeEnum.HTML -> {
-                    val errorPageHtml =
-                        ErrorPage(webAppConfig.webRootClass, webAppConfig.environment)
-                            .addData("errorMessage", "Page route not found: '${ctx.path()}'")
-                            .addData("errorId", errorId)
-                            .getErrorPage(404)
-                    ctx.html(errorPageHtml)
-                }
-            }
+    when (getReturnType(ctx.path())) {
+        ReturnTypeEnum.JSON -> {
+            val response =
+                ApiResponse.Error(
+                    message = e.message ?: getDefaultErrorMessage(statusCode),
+                    errorId = errorId,
+                )
+            ctx.json(response)
         }
-    return this
+
+        ReturnTypeEnum.HTML -> {
+            val errorPageHtml =
+                ErrorPage(webAppConfig.webRootClass, webAppConfig.environment)
+                    .addData("errorMessage", e.message ?: getDefaultErrorMessage(statusCode))
+                    .addData("errorId", errorId)
+                    .getErrorPage(statusCode)
+            ctx.html(errorPageHtml)
+        }
+    }
 }
+
+private fun getDefaultErrorMessage(statusCode: Int): String =
+    when (statusCode) {
+        404 -> "Page not found"
+        500 -> "Internal server error"
+        else -> "Error occurred"
+    }
+
+/**
+ * Generate error message for HTTP status codes
+ */
+fun getErrorMessageForStatus(
+    statusCode: Int,
+    path: String,
+): String =
+    when (statusCode) {
+        400 -> "Bad Request: $path"
+        401 -> "Unauthorized: $path"
+        403 -> "Forbidden: $path"
+        404 -> "Not Found: $path"
+        405 -> "Method Not Allowed: $path"
+        413 -> "Payload Too Large: $path"
+        415 -> "Unsupported Media Type: $path"
+        429 -> "Too Many Requests: $path"
+        500 -> "Internal Server Error: $path"
+        502 -> "Bad Gateway: $path"
+        503 -> "Service Unavailable: $path"
+        else -> "HTTP $statusCode Error: $path"
+    }
 
 private fun getReturnType(path: String): ReturnTypeEnum {
     // If the path starts with /api or /page-block-api, return JSON
