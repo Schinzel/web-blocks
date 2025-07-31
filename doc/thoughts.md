@@ -11,7 +11,7 @@
       - html
       - JS
 - Sätta upp en route
--
+- Sätt upp js
 
 # Att fixa
 - Otional parameters
