@@ -1,8 +1,19 @@
 # Route doc task
 
+# Data savers
+- Vem äger vad?
+  - components känner till web!
+  - är det så
+    - att web har ett generellt system för data savers, dvs
+      - en data saver registry
+      - en route
+    - components har kopplar in på detta system genom att implementera
+      - html
+      - JS
+- Sätta upp en route
+-
 
 # Att fixa
-- Does 404s appear in the logs?
 - Otional parameters
 - HTML escaping
 - Funkar JAR läsning för multimodule project
