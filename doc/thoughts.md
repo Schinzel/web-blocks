@@ -1,7 +1,6 @@
 # Route doc task
 
 # Data savers
-- Success fail as an enum instead of true / false??
 - Vem äger vad?
   - components känner till web!
   - är det så
