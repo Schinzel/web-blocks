@@ -25,7 +25,7 @@ interface IDataSaverResponse {
 
 data class DataSaverResponse(
     override val success: Boolean,
-    override val errorMessages: List<String>
+    override val errorMessages: List<String> = emptyList()
 ) : IDataSaverResponse
 
 
@@ -35,6 +35,18 @@ class DataSaverRegistry {
     fun <T> registerDataSaver(dataSaverName: String, dataSaver: IDataSaver<T>) {
         val previous = dataSavers.putIfAbsent(dataSaverName, dataSaver)
         require(previous == null) { "'$dataSaverName' already registered" }
+    }
+
+    fun <T> registerDataSaver(
+        name: String,
+        saveFunc: (T) -> IDataSaverResponse,
+        validateFunc: (T) -> IDataSaverResponse = { DataSaverResponse(true, emptyList()) }
+    ) {
+        val lambdaDataSaver = object : IDataSaver<T> {
+            override fun save(data: T) = saveFunc(data)
+            override fun validate(data: T) = validateFunc(data)
+        }
+        registerDataSaver(name, lambdaDataSaver)
     }
 
 
