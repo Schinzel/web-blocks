@@ -9,7 +9,7 @@ import io.schinzel.web_blocks.component.value_handler.ValueHandlerResponse
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerStatus
 
 /**
- * Set up an endpoint for value handlers
+ * The purpose ot this function is to set up an endpoint for value handlers
  */
 fun Javalin.setUpFrameworkRouteValueHandler(): Javalin {
     this.getAndPost("/web-blocks/value-handler") { ctx ->
