@@ -13,11 +13,9 @@
 - Låt endpoint returnera HTML a la HTMX
 - Lägg till HTMX bibliotek i PageBuilder
 - Script som spanar efter value-handler-id och hanterar det
-- Sätt upp js
-- Make a samle
+- Make a sample
 - Dokumentera
-  - Route till här web
-  - HTML o JS och Kotlinkod tillhör components
+  - HTML HTMX
   - link to sample (from here or from the sample page)
 
 ```JavaScript
