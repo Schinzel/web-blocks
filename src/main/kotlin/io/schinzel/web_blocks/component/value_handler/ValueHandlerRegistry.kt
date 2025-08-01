@@ -11,16 +11,16 @@ class ValueHandlerRegistry {
     /**
      * Register a value handler with the registry
      */
-    fun <T> register(valueHandlerName: String, valueHandler: IValueHandler<T>) {
-        val previous = valueHandlers.putIfAbsent(valueHandlerName, valueHandler)
-        require(previous == null) { "'$valueHandlerName' already registered" }
+    fun <T> register(valueHandlerId: String, valueHandler: IValueHandler<T>) {
+        val previous = valueHandlers.putIfAbsent(valueHandlerId, valueHandler)
+        require(previous == null) { "'$valueHandlerId' already registered" }
     }
 
     /**
      * Register a data saver value handler
      */
     fun <T> registerSavingHandler(
-        name: String,
+        valueHandlerId: String,
         saveFunc: (T) -> IValueHandlerResponse,
         validateFunc: (T) -> IValueHandlerResponse = { ValueHandlerResponse(ValueHandlerStatus.SUCCESS, emptyList()) }
     ) {
@@ -38,13 +38,13 @@ class ValueHandlerRegistry {
             }
         }
         // Register using the main register method
-        register(name, handler)
+        register(valueHandlerId, handler)
     }
 
 
-    fun <T> get(valueHandlerName: String): IValueHandler<T> {
-        val handler = valueHandlers[valueHandlerName]
-            ?: throw ValueHandlerNotFoundException("ValueHandlerRegistry has no value handler named '$valueHandlerName'.")
+    fun <T> get(valueHandlerId: String): IValueHandler<T> {
+        val handler = valueHandlers[valueHandlerId]
+            ?: throw ValueHandlerNotFoundException("ValueHandlerRegistry has no value handler with id '$valueHandlerId'.")
 
         @Suppress("UNCHECKED_CAST")
         return handler as IValueHandler<T>

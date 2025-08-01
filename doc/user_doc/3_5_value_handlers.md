@@ -21,11 +21,11 @@ To facilitate this one can implement
 the [ISavingValueHandler](../../src/main/kotlin/io/schinzel/web_blocks/component/value_handler/ISavingValueHandler.kt) interface.
 
 ### Value Handler Registry
-The value handlers are registered with the Value Handler Registry with a unique name
+The value handlers are registered with the Value Handler Registry with a unique id
 
 ```kotlin
 ValueHandlerRegistry.instance
-  .register("My_Unique_Value_Handler_Name", MyValueHandler())
+  .register("My_Unique_Value_Handler_Id", MyValueHandler())
 ```
 
 As the most common action is to validate and persist data, this convince function exists
@@ -54,8 +54,8 @@ ValueHandlerRegistry.instance.registerSavingHandler("password",
 
 
 ### Endpoint
-All value handler data sent from the client is sent to the same endpoint with the unique name
-user to register the value handler.
+All value handler data sent from the client is sent to the same endpoint with the unique id
+used to register the value handler.
 The value handler is found using the Value Handler Registry and the data is sent to the
 value handler for processing.
 

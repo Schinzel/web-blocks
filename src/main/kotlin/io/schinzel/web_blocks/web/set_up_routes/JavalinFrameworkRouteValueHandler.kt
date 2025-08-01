@@ -26,7 +26,7 @@ fun Javalin.setUpFrameworkRouteValueHandler(): Javalin {
  * The purpose of the class is to represent a value handler request
  */
 private data class ValueHandlerRequest(
-    val name: String,
+    val id: String,
     val value: Any
 )
 
@@ -34,11 +34,11 @@ private data class ValueHandlerRequest(
 // Get the value handler request
 private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().name) {
     "GET" -> {
-        val name = ctx.queryParam("name")
-            ?: throw IllegalArgumentException("Missing 'name' parameter")
+        val id = ctx.queryParam("id")
+            ?: throw IllegalArgumentException("Missing 'id' parameter")
         val value = ctx.queryParam("value")
             ?: throw IllegalArgumentException("Missing 'value' parameter")
-        ValueHandlerRequest(name, value)
+        ValueHandlerRequest(id, value)
     }
 
     "POST" -> {
@@ -51,7 +51,7 @@ private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().n
 // Handle the value handler request
 private fun handleRequest(ctx: Context, valueHandlerRequest: ValueHandlerRequest) {
     try {
-        val handler = ValueHandlerRegistry.instance.get<Any>(valueHandlerRequest.name)
+        val handler = ValueHandlerRegistry.instance.get<Any>(valueHandlerRequest.id)
         val valueHandlerResponse = handler.handle(valueHandlerRequest.value)
         // return the value handler response
         ctx.json(valueHandlerResponse)
@@ -59,14 +59,14 @@ private fun handleRequest(ctx: Context, valueHandlerRequest: ValueHandlerRequest
         ctx.status(404).json(
             ValueHandlerResponse(
                 status = ValueHandlerStatus.SERVER_ERROR,
-                errorMessages = listOf("Value handler '${valueHandlerRequest.name}' not found")
+                errorMessages = listOf("Value handler '${valueHandlerRequest.id}' not found")
             )
         )
     } catch (_: ClassCastException) {
         ctx.status(400).json(
             ValueHandlerResponse(
                 status = ValueHandlerStatus.VALIDATION_ERROR,
-                errorMessages = listOf("Invalid data type for value handler '${valueHandlerRequest.name}'")
+                errorMessages = listOf("Invalid data type for value handler '${valueHandlerRequest.id}'")
             )
         )
     } catch (e: Exception) {
