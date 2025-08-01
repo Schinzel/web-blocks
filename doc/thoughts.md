@@ -1,4 +1,4 @@
-# Thourhs
+# My Thoughts
 
 # Data savers
 - Vem äger vad?
@@ -10,7 +10,9 @@
     - components har kopplar in på detta system genom att implementera
       - html
       - JS
-- Sätta upp en route
+- Låt endpoint returnera HTML a la HTMX
+- Lägg till HTMX bibliotek i PageBuilder
+- Script som spanar efter value-handler-id och hanterar det
 - Sätt upp js
 - Make a samle
 - Dokumentera
@@ -18,8 +20,29 @@
   - HTML o JS och Kotlinkod tillhör components
   - link to sample (from here or from the sample page)
 
+```JavaScript
+document.querySelectorAll('[data-value-handler]').forEach(el => {
+const handler = el.dataset.valueHandler;
+const trigger = el.dataset.trigger || 'blur';
 
+el.setAttribute('hx-post', '/web-blocks/value-handler');
+el.setAttribute('hx-vals', JSON.stringify({name: handler}));
+el.setAttribute('hx-trigger', trigger);
+el.setAttribute('hx-target', el.dataset.target || 'next .feedback');
+});
 
+// Process with HTMX
+htmx.process(document.body);
+```
+
+```html
+<!-- Clean WebBlocks syntax -->
+<input data-value-handler="save-email">
+
+<!-- Expands to HTMX automatically -->
+```
+
+```kotlin
 class FirstNameValueHandler : AbstractSavingValueHandler<String>() {
 
     override fun validate(data: String): IValueHandlerResponse {
@@ -30,6 +53,7 @@ class FirstNameValueHandler : AbstractSavingValueHandler<String>() {
         return ValueHandlerResponse(ValueHandlerStatus.SERVER_ERROR, listOf("HARDCODED ERROR"))
     }
 }
+```
 
 # ??
 The framework route should be set up as
