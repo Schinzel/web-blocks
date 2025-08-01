@@ -7,7 +7,7 @@
 - [Template Engine](3_2_template_engine.md)
 - [Page Builder](3_3_page_builder.md)
 - [Error Pages](3_4_error_pages.md)
-- [Custom HTML gneration](3_5_custom_html_generation.md)
+- [Value Handlers](3_5_value_handlers.md)
 --
 - [WebBlocks Routes](4_web_block_routes.md)
 - [Building a JAR](6_building_a_jar.md)

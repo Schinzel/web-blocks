@@ -1,4 +1,4 @@
-# Route doc task
+# Thourhs
 
 # Data savers
 - Vem äger vad?
@@ -12,6 +12,24 @@
       - JS
 - Sätta upp en route
 - Sätt upp js
+- Make a samle
+- Dokumentera
+  - Route till här web
+  - HTML o JS och Kotlinkod tillhör components
+  - link to sample (from here or from the sample page)
+
+
+
+class FirstNameValueHandler : AbstractSavingValueHandler<String>() {
+
+    override fun validate(data: String): IValueHandlerResponse {
+        return ValueHandlerResponse(ValueHandlerStatus.VALIDATION_ERROR, listOf("HARDCODED ERROR"))
+    }
+
+    override fun persist(data: String): IValueHandlerResponse {
+        return ValueHandlerResponse(ValueHandlerStatus.SERVER_ERROR, listOf("HARDCODED ERROR"))
+    }
+}
 
 # Att fixa
 - Otional parameters
