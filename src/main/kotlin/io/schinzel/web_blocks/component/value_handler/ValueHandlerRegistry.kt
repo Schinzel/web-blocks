@@ -17,7 +17,7 @@ class ValueHandlerRegistry {
     }
 
     /**
-     * Register a dat
+     * Register a data saver value handler
      */
     fun <T> registerSavingHandler(
         name: String,
@@ -42,20 +42,14 @@ class ValueHandlerRegistry {
     }
 
 
-    fun <T> handle(valueHandlerName: String, dataToHandle: T): IValueHandlerResponse {
-        return try {
-            @Suppress("UNCHECKED_CAST")
-            val valueHandler = valueHandlers[valueHandlerName] as? IValueHandler<T>
-                ?: throw Exception("Value handler for name '$valueHandlerName' is not registered.")
+    fun <T> get(valueHandlerName: String): IValueHandler<T> {
+        val handler = valueHandlers[valueHandlerName]
+            ?: throw ValueHandlerNotFoundException("ValueHandlerRegistry has no value handler named '$valueHandlerName'.")
 
-            valueHandler.handle(dataToHandle)
-        } catch (ex: Exception) {
-            ValueHandlerResponse(
-                ValueHandlerStatus.SERVER_ERROR,
-                listOf("Error when trying to save $dataToHandle with data saver $valueHandlerName: ${ex.message}")
-            )
-        }
+        @Suppress("UNCHECKED_CAST")
+        return handler as IValueHandler<T>
     }
+
 
     companion object {
         // Singleton instance
@@ -63,3 +57,6 @@ class ValueHandlerRegistry {
         val instance = ValueHandlerRegistry()
     }
 }
+
+
+class ValueHandlerNotFoundException(override val message: String) : RuntimeException(message)

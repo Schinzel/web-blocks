@@ -32,10 +32,3 @@ fun Javalin.setupUserRoutes(
     return this
 }
 
-private fun Javalin.getAndPost(
-    path: String,
-    handler: (ctx: io.javalin.http.Context) -> Unit,
-) {
-    this.get(path, handler)
-    this.post(path, handler)
-}

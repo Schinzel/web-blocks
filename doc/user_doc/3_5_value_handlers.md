@@ -25,7 +25,7 @@ The value handlers are registered with the Value Handler Registry with a unique 
 
 ```kotlin
 ValueHandlerRegistry.instance
-  .register("My_Unique_Value_Handler_Name", MyValueHandler::class.java)
+  .register("My_Unique_Value_Handler_Name", MyValueHandler())
 ```
 
 As the most common action is to validate and persist data, this convince function exists

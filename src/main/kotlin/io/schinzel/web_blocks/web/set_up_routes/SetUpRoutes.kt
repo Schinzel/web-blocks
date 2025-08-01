@@ -24,5 +24,6 @@ fun setUpRoutes(webAppConfig: WebAppConfig): Javalin {
         }.setupBeforeHandler(webAppConfig)
         .setupAfterHandler(webAppConfig)
         .setupFrameworkRoutes(routeMappings)
+        .setUpFrameworkRouteValueHandler()
         .setupUserRoutes(webAppConfig, routeMappings)
 }

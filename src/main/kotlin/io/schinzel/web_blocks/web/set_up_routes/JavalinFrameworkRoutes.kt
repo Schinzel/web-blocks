@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter
  * Written by Claude Sonnet 4
  */
 fun Javalin.setupFrameworkRoutes(routeMappings: List<RouteMapping>): Javalin {
+
     this.get("/web-blocks/routes") { ctx ->
         val html = RoutesOverviewPageGenerator().generateHtml(routeMappings)
         ctx.html(html)
@@ -29,14 +30,15 @@ fun Javalin.setupFrameworkRoutes(routeMappings: List<RouteMapping>): Javalin {
 
     // A simple endpoint to check if is up and running
     this.get("/web-blocks/ping") { ctx ->
+        fun Instant.toIsoString(): String? {
+            val zonedDateTime = ZonedDateTime.ofInstant(this, ZoneId.of("UTC"))
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            return zonedDateTime.format(formatter)
+        }
+
         ctx.result("pong " + Instant.now().toIsoString())
     }
 
+    // return this for chaining
     return this
-}
-
-private fun Instant.toIsoString(): String? {
-    val zonedDateTime = ZonedDateTime.ofInstant(this, ZoneId.of("UTC"))
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-    return zonedDateTime.format(formatter)
 }

@@ -31,6 +31,11 @@ class FirstNameValueHandler : AbstractSavingValueHandler<String>() {
     }
 }
 
+# ??
+The framework route should be set up as
+the other user routes as to get logging
+and html & json documentation
+
 # Att fixa
 - Otional parameters
 - HTML escaping
