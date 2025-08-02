@@ -1,3 +1,52 @@
+<-- Global notifications area - displays HTMX responses -->
+<div id="global-notifications" role="status" aria-live="polite"></div>
+
+<style>
+/* Notification container styles */
+#global-notifications {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    width: auto;
+    max-width: calc(100% - 2rem);
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 576px) {
+    #global-notifications {
+        left: 1rem;
+    }
+    .notification {
+        width: 100%;
+    }
+}
+
+/* Notification styles using Pico variables */
+.notification {
+    padding: var(--pico-spacing);
+    border-radius: var(--pico-border-radius);
+    margin-bottom: var(--pico-spacing);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: fit-content;
+    max-width: 100%;
+}
+
+.notification.success {
+    background-color: var(--pico-primary-background);
+    color: var(--pico-primary-inverse);
+}
+
+.notification.error {
+    background-color: var(--pico-del-color);
+    color: var(--pico-background-color);
+}
+</style>
+
 <script>
 /**
  * Auto-configures HTMX for value handlers.
@@ -25,10 +74,10 @@ class ValueHandlerSetup {
 
             // Set the path to which data is posted (if not already set)
             this.setAttributeIfNotSet(element, 'hx-post', '/web-blocks/value-handler')
-            
+
             // Set the id of the value-handler and the data to send to server (if not already set)
             this.setAttributeIfNotSet(element, 'hx-vals', `{"valueHandlerId": "${valueHandlerId}", "value": "this.value"}`)
-            
+
             // Set the target of the html that will be returned to be the global notifications area (if not already set)
             this.setAttributeIfNotSet(element, 'hx-target', '#global-notifications')
 
