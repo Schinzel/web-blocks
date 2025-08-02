@@ -1,0 +1,44 @@
+<script>
+/**
+ * Auto-configures HTMX for value handlers.
+ * Finds elements with data-value-handler-id and sets up HTMX attributes
+ */
+class ValueHandlerSetup {
+    constructor() {
+        this.setupValueHandlers()
+    }
+
+    /**
+     * Sets an attribute only if it hasn't been set already
+     */
+    setAttributeIfNotSet(element, attributeName, value) {
+        if (!element.hasAttribute(attributeName)) {
+            element.setAttribute(attributeName, value)
+        }
+    }
+
+    setupValueHandlers() {
+        // Find all elements with data-value-handler-id
+        document.querySelectorAll('[data-value-handler-id]').forEach(element => {
+            // Get the id of the value-handler
+            const valueHandlerId = element.getAttribute('data-value-handler-id')
+
+            // Set the path to which data is posted (if not already set)
+            this.setAttributeIfNotSet(element, 'hx-post', '/web-blocks/value-handler')
+            
+            // Set the id of the value-handler and the data to send to server (if not already set)
+            this.setAttributeIfNotSet(element, 'hx-vals', `{"valueHandlerId": "${valueHandlerId}", "value": "this.value"}`)
+            
+            // Set the target of the html that will be returned to be the global notifications area (if not already set)
+            this.setAttributeIfNotSet(element, 'hx-target', '#global-notifications')
+
+            console.log(`Setup value handler: ${valueHandlerId}`)
+        })
+    }
+}
+
+// When the content of this page has loaded
+document.addEventListener("DOMContentLoaded", () => {
+    new ValueHandlerSetup()
+})
+</script>
