@@ -21,18 +21,16 @@ class ValueHandlerRegistry {
      */
     fun <T> registerSavingHandler(
         valueHandlerId: String,
-        saveFunc: (T) -> IValueHandlerResponse,
-        validateFunc: (T) -> IValueHandlerResponse = { ValueHandlerResponse(ValueHandlerStatus.SUCCESS, emptyList()) }
+        saveFunc: suspend (T) -> IValueHandlerResponse,
+        validateFunc: suspend (T) -> IValueHandlerResponse = { ValueHandlerResponse(ValueHandlerStatus.SUCCESS, emptyList()) }
     ) {
         // Create an anonymous IValueHandler that combines validate and save
         val handler = object : IValueHandler<T> {
-            override fun handle(data: T): IValueHandlerResponse {
+            override suspend fun handle(data: T): IValueHandlerResponse {
                 // First validate
                 val validationResponse = validateFunc(data)
                 // If validation fails, return immediately
-                if (validationResponse.failed) {
-                    return validationResponse
-                }
+                if (validationResponse.failed) return validationResponse
                 // Validation passed, proceed with save
                 return saveFunc(data)
             }
@@ -42,6 +40,10 @@ class ValueHandlerRegistry {
     }
 
 
+    /**
+     * @throws ClassCastException at runtime if handler called with wrong data type
+     * Caller responsible for ensuring type consistency
+     */
     fun <T> get(valueHandlerId: String): IValueHandler<T> {
         val handler = valueHandlers[valueHandlerId]
             ?: throw ValueHandlerNotFoundException("ValueHandlerRegistry has no value handler with id '$valueHandlerId'.")

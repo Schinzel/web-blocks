@@ -7,16 +7,21 @@ import io.schinzel.web_blocks.component.value_handler.ValueHandlerNotFoundExcept
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerRegistry
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerResponse
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.runBlocking
 
 /**
  * The purpose ot this function is to set up an endpoint for value handlers
  */
 fun Javalin.setUpFrameworkRouteValueHandler(): Javalin {
     this.getAndPost("/web-blocks/value-handler") { ctx ->
-        // Get the request data
-        val valueHandlerRequest = getRequest(ctx)
-        // Handle the request
-        handleRequest(ctx, valueHandlerRequest)
+        runBlocking(Dispatchers.IO) {
+            // Get the request data
+            val valueHandlerRequest = getRequest(ctx)
+            // Handle the request
+            handleRequest(ctx, valueHandlerRequest)
+        }
     }
     // return this for chaining
     return this
@@ -49,7 +54,7 @@ private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().n
 }
 
 // Handle the value handler request
-private fun handleRequest(ctx: Context, valueHandlerRequest: ValueHandlerRequest) {
+private suspend fun handleRequest(ctx: Context, valueHandlerRequest: ValueHandlerRequest) {
     try {
         val handler = ValueHandlerRegistry.instance.get<Any>(valueHandlerRequest.id)
         val valueHandlerResponse = handler.handle(valueHandlerRequest.value)

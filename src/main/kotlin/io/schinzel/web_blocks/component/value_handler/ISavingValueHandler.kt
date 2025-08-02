@@ -9,14 +9,11 @@ package io.schinzel.web_blocks.component.value_handler
  * 2 - persist the data
  */
 interface ISavingValueHandler<T> : IValueHandler<T> {
-    override fun handle(data: T): IValueHandlerResponse {
+    override suspend fun handle(data: T): IValueHandlerResponse {
         // Validate the data to persist
         val validationResponse = validate(data)
-        // If the validation failed
-        if (validationResponse.failed) {
-            // Return the validation response
-            return validationResponse
-        }
+        // If the validation failed, return the validation response
+        if (validationResponse.failed) return validationResponse
         // Persist and return the persist response
         return persist(data)
     }
@@ -30,6 +27,6 @@ interface ISavingValueHandler<T> : IValueHandler<T> {
      * b) and each validation error is a separate element in the list as to
      * facilitate a better presentation client side.
      */
-    fun validate(data: T): IValueHandlerResponse
-    fun persist(data: T): IValueHandlerResponse
+    suspend fun validate(data: T): IValueHandlerResponse
+    suspend fun persist(data: T): IValueHandlerResponse
 }
