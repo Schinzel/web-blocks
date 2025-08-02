@@ -1,5 +1,7 @@
 package io.schinzel.web_blocks.component.value_handler
 
+import io.schinzel.web_blocks.web.response.HtmlContentResponse
+import io.schinzel.web_blocks.web.response.html
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -21,9 +23,9 @@ class ValueHandlerRegistry {
      */
     fun <T> registerSavingHandler(
         valueHandlerId: String,
-        saveFunc: suspend (T) -> IValueHandlerResponse,
-        validateFunc: suspend (T) -> IValueHandlerResponse = {
-            ValueHandlerResponse(ValueHandlerStatus.SUCCESS, emptyList())
+        saveFunc: suspend (T) -> HtmlContentResponse,
+        validateFunc: suspend (T) -> HtmlContentResponse = {
+            html("<div class='success-message'>✅ Success</div>")
         }
     ) {
         // Create an anonymous ISavingValueHandler that uses the validate and save
@@ -55,5 +57,3 @@ class ValueHandlerRegistry {
     }
 }
 
-
-class ValueHandlerNotFoundException(override val message: String) : RuntimeException(message)

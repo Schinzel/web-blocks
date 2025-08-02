@@ -55,9 +55,9 @@ class FirstNameValueHandler : AbstractSavingValueHandler<String>() {
 
 # ??
 The framework route should be set up as
-the other user routes as to get logging
-and html & json documentation
-
+- the other user routes as to get logging-
+- and html & json documentation
+- the send response stuff with setting headers, and pretty format of html
 # Att fixa
 - Otional parameters
 - HTML escaping
