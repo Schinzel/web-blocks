@@ -2,20 +2,20 @@ package io.schinzel.web_blocks.component.value_handler
 
 /**
  * The purpose of this interface is to be a shorthand for the most common
- * value handler situation, persisting data sent from the client. Persisting
- * data sent from the client - such as persisting a first name of a person -
+ * value handler situation, saving data sent from the client. Saving
+ * data sent from the client - such as saving a first name of a person -
  * typically has two steps:
- * 1 - validate the data being persisted
- * 2 - persist the data
+ * 1 - validate the data being saved
+ * 2 - save the data
  */
 interface ISavingValueHandler<T> : IValueHandler<T> {
     override suspend fun handle(data: T): IValueHandlerResponse {
-        // Validate the data to persist
+        // Validate the data to save
         val validationResponse = validate(data)
         // If the validation failed, return the validation response
         if (validationResponse.failed) return validationResponse
-        // Persist and return the persist response
-        return persist(data)
+        // Save and return the save response
+        return save(data)
     }
 
     /**
@@ -28,5 +28,5 @@ interface ISavingValueHandler<T> : IValueHandler<T> {
      * facilitate a better presentation client side.
      */
     suspend fun validate(data: T): IValueHandlerResponse
-    suspend fun persist(data: T): IValueHandlerResponse
+    suspend fun save(data: T): IValueHandlerResponse
 }

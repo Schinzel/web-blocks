@@ -26,10 +26,10 @@ class ValueHandlerRegistry {
             ValueHandlerResponse(ValueHandlerStatus.SUCCESS, emptyList())
         }
     ) {
-        // Create an anonymous ISavingValueHandler that uses the validate and persist
+        // Create an anonymous ISavingValueHandler that uses the validate and save
         val handler = object : ISavingValueHandler<T> {
             override suspend fun validate(data: T) = validateFunc(data)
-            override suspend fun persist(data: T) = saveFunc(data)
+            override suspend fun save(data: T) = saveFunc(data)
         }
         // Register using the main register method
         register(valueHandlerId, handler)
