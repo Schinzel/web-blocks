@@ -38,11 +38,11 @@ private data class ValueHandlerRequest(
 // Get the value handler request
 private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().name) {
     "GET" -> {
-        val id = ctx.queryParam("id")
-            ?: throw IllegalArgumentException("Missing 'id' parameter")
+        val valueHandlerId = ctx.queryParam("id")
+            ?: throw IllegalArgumentException("Missing 'valueHandlerId' parameter")
         val value = ctx.queryParam("value")
             ?: throw IllegalArgumentException("Missing 'value' parameter")
-        ValueHandlerRequest(id, value)
+        ValueHandlerRequest(valueHandlerId, value)
     }
 
     "POST" -> {

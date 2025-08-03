@@ -7,5 +7,5 @@ import io.schinzel.web_blocks.web.response.HtmlContentResponse
  * The purpose of a value handler is handle data sent to the server from the client in a value
  */
 interface IValueHandler<T> {
-    suspend fun handle(data: T): HtmlContentResponse
+    suspend fun handle(value: T): HtmlContentResponse
 }

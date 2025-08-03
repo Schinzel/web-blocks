@@ -65,6 +65,9 @@ The framework route should be set up as
 - Testa den bygda JAR:en så att paths funkar
 
 
+# Behövs jQuery??
+Många selectors finns idag i JS.
+a
 
 # Att fixa 1
 class BlockOne : WebBlock() {
