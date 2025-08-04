@@ -11,13 +11,14 @@
     </form>
 </article>
 
+
 <!-- Script for sending changes in user name to the server -->
 <script>
     $("#first_name").on("change", async function () {
         // Get the user id and the new name of the user
         const userId = $(this).data("userId")
         const firstName = $(this).val()
-
+        const valueHandlerId = "{{valueHandlerId}}"
         try {
             // Send user id and new name to server
             const response = await $.ajax({
@@ -25,8 +26,9 @@
 
                 method: "POST",
                 data: JSON.stringify({
-                    "valueHandlerId": "value_handler_id_123",
-                    "value": firstName
+                    "valueHandlerId": valueHandlerId,
+                    "value": firstName,
+                    "context": { "userId": userId }
                 }),
                 contentType: "application/json"
             })

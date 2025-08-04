@@ -10,16 +10,18 @@ import io.schinzel.web_blocks.web.response.HtmlContentResponse
  * 1 - validate the data being saved
  * 2 - save the data
  */
-interface ISavingValueHandler<T> : IValueHandler<T> {
-    override suspend fun handle(value: T): HtmlContentResponse {
+interface ISavingValueHandler<TValue, TContext> : IValueHandler<TValue, TContext> {
+    override suspend fun handle(value: TValue, context: TContext): HtmlContentResponse {
         // Validate the data to save
         val validationResponse = validate(value)
         // If the validation failed, return the validation response
         if (validationResponse.status != 200) return validationResponse
         // Save and return the save response
-        return save(value)
+        return save(value, context)
     }
 
-    suspend fun validate(data: T): HtmlContentResponse
-    suspend fun save(data: T): HtmlContentResponse
+    suspend fun validate(data: TValue): HtmlContentResponse
+    suspend fun save(data: TValue, context: TContext): HtmlContentResponse
 }
+
+

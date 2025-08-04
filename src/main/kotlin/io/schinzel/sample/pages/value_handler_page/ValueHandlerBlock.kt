@@ -10,27 +10,36 @@ import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 
+typealias FirstName = String
+
 @PageBlock
 class ValueHandlerBlock : WebBlock() {
     private val userId = 123
-    private val firstName = "John Doe" // Simplified for now
+    private val firstName = "John Doe"
 
-    init {
-        val valueHandler = object : IValueHandler<String> {
-            override suspend fun handle(value: String): HtmlContentResponse {
-                "Got the value of $firstName".println()
-                return html("<h1>$firstName</h1>")
+    companion object {
+        private const val VALUE_HANDLER_ID = "value_handler_id_123"
+
+        init {
+            data class UserContext(val userId: String)
+
+            val valueHandler = object : IValueHandler<FirstName, UserContext> {
+                override suspend fun handle(value: String, context: UserContext): HtmlContentResponse {
+                    "Got the value of $value with the context user-id $context".println()
+                    return html("<h1>First name: $value. User id: $context</h1>")
+                }
             }
+            ValueHandlerRegistry.instance.register(VALUE_HANDLER_ID, valueHandler)
+
         }
-        ValueHandlerRegistry.instance
-            .register("value_handler_id_123", valueHandler)
     }
 
     override suspend fun getResponse(): IHtmlResponse {
         val html = TemplateProcessor(this)
             .withData("firstName", firstName)
             .withData("userId", userId)
-            .processTemplate("value_handler_block_template.html")
+            .withData("valueHandlerId", VALUE_HANDLER_ID)
+            .processTemplate("value_handler_block_template_v2.html")
         return html(html)
     }
 }

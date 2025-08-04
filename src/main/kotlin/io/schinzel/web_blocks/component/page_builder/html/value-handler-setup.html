@@ -1,6 +1,7 @@
-<!-- Global notifications area - displays HTMX responses -->
+<!-- Value handler - Global notifications area - displays HTMX responses -->
 <div id="global-notifications" role="status" aria-live="polite"></div>
 
+<!-- Value handler - Global notifications area - CSS -->
 <style>
 /* Notification container styles */
 #global-notifications {
@@ -47,6 +48,7 @@
 }
 </style>
 
+<!-- Value handler - HTMX Set up -->
 <script>
 /**
  * Auto-configures HTMX for value handlers.
@@ -75,14 +77,45 @@ class ValueHandlerSetup {
             // Set the path to which data is posted (if not already set)
             this.setAttributeIfNotSet(element, 'hx-post', '/web-blocks/value-handler')
 
-            // Set the id of the value-handler and the data to send to server (if not already set)
-            this.setAttributeIfNotSet(element, 'hx-vals', `{"valueHandlerId": "${valueHandlerId}", "value": "this.value"}`)
+            // Handle hx-vals merging - combine existing context with required values
+            this.setupHxVals(element, valueHandlerId)
 
             // Set the target of the html that will be returned to be the global notifications area (if not already set)
             this.setAttributeIfNotSet(element, 'hx-target', '#global-notifications')
 
+            // Tell HTMX to process this element after we've set up the attributes
+            htmx.process(element)
+
             console.log(`Setup value handler: ${valueHandlerId}`)
         })
+    }
+
+    /**
+     * Sets up hx-vals by merging existing values (like context) with required values
+     */
+    setupHxVals(element, valueHandlerId) {
+        let existingVals = {}
+        
+        // Parse existing hx-vals if present
+        const existingHxVals = element.getAttribute('hx-vals')
+        if (existingHxVals) {
+            try {
+                existingVals = JSON.parse(existingHxVals)
+            } catch (e) {
+                console.warn(`Failed to parse existing hx-vals for ${valueHandlerId}:`, existingHxVals)
+            }
+        }
+
+        // Merge with required values (these take precedence)
+        const mergedVals = {
+            ...existingVals,
+            valueHandlerId: valueHandlerId,
+            value: "this.value"  // Remove quotes so HTMX evaluates as JS
+        }
+
+        // Set the merged values - need to handle this.value specially
+        const valsString = JSON.stringify(mergedVals).replace('"this.value"', 'this.value')
+        element.setAttribute('hx-vals', valsString)
     }
 }
 

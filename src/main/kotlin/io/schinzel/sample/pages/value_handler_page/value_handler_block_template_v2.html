@@ -1,0 +1,16 @@
+<!-- Display the name of the user-->
+<article>
+    <form>
+        <label for="first_name">First Name V2
+            <input type="text"
+                   id="first_name"
+                   placeholder="Enter your first name"
+                   value="{{firstName}}"
+                   data-value-handler-id="{{valueHandlerId}}"
+                   hx-trigger="change"
+                   hx-vals='{"context": {"userId": "{{userId}}"}}'
+                   hx-indicator="#loading">
+        </label>
+        <div id="loading" class="htmx-indicator">Saving...</div>
+    </form>
+</article>
