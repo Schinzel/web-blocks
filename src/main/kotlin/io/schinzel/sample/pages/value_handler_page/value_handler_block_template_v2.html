@@ -7,8 +7,8 @@
                    placeholder="Enter your first name"
                    value="{{firstName}}"
                    data-value-handler-id="{{valueHandlerId}}"
+                   data-user-id="{{userId}}"
                    hx-trigger="change"
-                   hx-vals='{"context": {"userId": "{{userId}}"}}'
                    hx-indicator="#loading">
         </label>
         <div id="loading" class="htmx-indicator">Saving...</div>

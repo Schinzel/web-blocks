@@ -74,6 +74,9 @@ class ValueHandlerSetup {
             // Get the id of the value-handler
             const valueHandlerId = element.getAttribute('data-value-handler-id')
 
+            // Auto-inject name="value" (overrides any existing name attribute)
+            element.setAttribute('name', 'value')
+
             // Set the path to which data is posted (if not already set)
             this.setAttributeIfNotSet(element, 'hx-post', '/web-blocks/value-handler')
 

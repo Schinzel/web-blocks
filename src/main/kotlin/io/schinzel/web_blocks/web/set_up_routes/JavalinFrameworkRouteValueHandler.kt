@@ -43,7 +43,7 @@ private data class ValueHandlerRequest(
 // Get the value handler request
 private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().name) {
     "GET" -> {
-        val valueHandlerId = ctx.queryParam("id")
+        val valueHandlerId = ctx.queryParam("valueHandlerId")
             ?: throw IllegalArgumentException("Missing 'valueHandlerId' parameter")
         val value = ctx.queryParam("value")
             ?: throw IllegalArgumentException("Missing 'value' parameter")
@@ -55,7 +55,7 @@ private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().n
     "POST" -> {
         // Check content type to determine how to parse
         val contentType = ctx.contentType()
-        
+
         if (contentType?.contains("application/x-www-form-urlencoded") == true) {
             // HTMX sends form-encoded data
             val valueHandlerId = ctx.formParam("valueHandlerId")
@@ -64,7 +64,7 @@ private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().n
                 ?: throw IllegalArgumentException("Missing 'value' parameter")
             val contextJson = ctx.formParam("context")
                 ?: throw IllegalArgumentException("Missing 'context' parameter")
-            
+
             ValueHandlerRequest(valueHandlerId, value, contextJson)
         } else {
             // JSON body
