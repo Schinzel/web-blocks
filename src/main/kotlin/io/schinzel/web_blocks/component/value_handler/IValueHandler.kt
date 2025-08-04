@@ -5,10 +5,10 @@ import io.schinzel.web_blocks.web.response.HtmlContentResponse
 /**
  * The purpose of a value handler is handle data sent to the server from the client in a value
  */
-interface IValueHandler<TValue, TContext> {
+interface IValueHandler {
     /**
      * @param value The value to handle. For example: first name.
-     * @param context The context of the value. For example: the user id of the value to save.
+     * @param parameters Additional parameters from form data. For example: user id, validation flags, etc.
      */
-    suspend fun handle(value: TValue, context: TContext): HtmlContentResponse
+    suspend fun handle(value: String, parameters: Map<String, String>): HtmlContentResponse
 }

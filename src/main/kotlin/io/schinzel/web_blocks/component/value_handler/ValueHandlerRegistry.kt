@@ -8,12 +8,12 @@ import java.util.concurrent.ConcurrentHashMap
  * The purpose of this class it to hold a set of value handlers.
  */
 class ValueHandlerRegistry {
-    private val valueHandlers = ConcurrentHashMap<String, IValueHandler<*, *>>()
+    private val valueHandlers = ConcurrentHashMap<String, IValueHandler>()
 
     /**
      * Register a value handler with the registry
      */
-    fun <TValue, TContext> register(valueHandlerId: String, valueHandler: IValueHandler<TValue, TContext>) {
+    fun register(valueHandlerId: String, valueHandler: IValueHandler) {
         val previous = valueHandlers.putIfAbsent(valueHandlerId, valueHandler)
         require(previous == null) { "'$valueHandlerId' already registered" }
     }
@@ -21,34 +21,29 @@ class ValueHandlerRegistry {
     /**
      * Register a data saver value handler
      */
-    fun <TValue, TContext> registerSavingHandler(
+    fun registerSavingHandler(
         valueHandlerId: String,
-        saveFunc: suspend (TValue, TContext) -> HtmlContentResponse,
-        validateFunc: suspend (TValue) -> HtmlContentResponse = {
+        saveFunc: suspend (String, Map<String, String>) -> HtmlContentResponse,
+        validateFunc: suspend (String) -> HtmlContentResponse = {
             html("<div class='success-message'>✅ Success</div>")
         }
     ) {
         // Create an anonymous ISavingValueHandler that uses the validate and save
-        val handler = object : ISavingValueHandler<TValue, TContext> {
-            override suspend fun validate(data: TValue) = validateFunc(data)
-            override suspend fun save(data: TValue, context: TContext) = saveFunc(data, context)
+        val handler = object : ISavingValueHandler {
+            override suspend fun validate(data: String) = validateFunc(data)
+            override suspend fun save(data: String, parameters: Map<String, String>) = saveFunc(data, parameters)
         }
         // Register using the main register method
         register(valueHandlerId, handler)
     }
 
-
     /**
-     * @throws ClassCastException at runtime if handler called with wrong data type
-     * Caller responsible for ensuring type consistency
+     * Get a value handler by id
      */
-    fun <TValue, TContext> get(valueHandlerId: String): IValueHandler<TValue, TContext> {
-        val handler = valueHandlers[valueHandlerId]
+    fun get(valueHandlerId: String): IValueHandler {
+        return valueHandlers[valueHandlerId]
             ?: throw ValueHandlerNotFoundException("ValueHandlerRegistry has no value handler with id '$valueHandlerId'.")
-
-        @Suppress("UNCHECKED_CAST") return handler as IValueHandler<TValue, TContext>
     }
-
 
     companion object {
         // Singleton instance
