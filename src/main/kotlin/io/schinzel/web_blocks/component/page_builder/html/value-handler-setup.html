@@ -77,45 +77,25 @@ class ValueHandlerSetup {
             // Set the path to which data is posted (if not already set)
             this.setAttributeIfNotSet(element, 'hx-post', '/web-blocks/value-handler')
 
-            // Handle hx-vals merging - combine existing context with required values
-            this.setupHxVals(element, valueHandlerId)
-
             // Set the target of the html that will be returned to be the global notifications area (if not already set)
             this.setAttributeIfNotSet(element, 'hx-target', '#global-notifications')
+
+            // Use built-in dataset API to extract all data attributes
+            // Dataset converts kebab-case to camelCase automatically
+            // Example: data-user-id="123" becomes userId: "123"
+            //          data-document-id="456" becomes documentId: "456"
+            const vals = {
+                ...element.dataset
+            }
+
+            const valsString = JSON.stringify(vals)
+            element.setAttribute('hx-vals', valsString)
 
             // Tell HTMX to process this element after we've set up the attributes
             htmx.process(element)
 
             console.log(`Setup value handler: ${valueHandlerId}`)
         })
-    }
-
-    /**
-     * Sets up hx-vals by merging existing values (like context) with required values
-     */
-    setupHxVals(element, valueHandlerId) {
-        let existingVals = {}
-        
-        // Parse existing hx-vals if present
-        const existingHxVals = element.getAttribute('hx-vals')
-        if (existingHxVals) {
-            try {
-                existingVals = JSON.parse(existingHxVals)
-            } catch (e) {
-                console.warn(`Failed to parse existing hx-vals for ${valueHandlerId}:`, existingHxVals)
-            }
-        }
-
-        // Merge with required values (these take precedence)
-        const mergedVals = {
-            ...existingVals,
-            valueHandlerId: valueHandlerId,
-            value: "this.value"  // Remove quotes so HTMX evaluates as JS
-        }
-
-        // Set the merged values - need to handle this.value specially
-        const valsString = JSON.stringify(mergedVals).replace('"this.value"', 'this.value')
-        element.setAttribute('hx-vals', valsString)
     }
 }
 
