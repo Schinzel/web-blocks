@@ -1,6 +1,9 @@
 <!-- Value handler - Global notifications area - displays HTMX responses -->
 <div id="global-notifications" role="status" aria-live="polite"></div>
 
+<!-- Notyf CSS for toast notifications -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
 <!-- Value handler - Global notifications area - CSS -->
 <style>
 /* Notification container styles */
@@ -48,6 +51,9 @@
 }
 </style>
 
+<!-- Notyf JavaScript for toast notifications -->
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
 <!-- Value handler - HTMX Set up -->
 <script>
 /**
@@ -57,6 +63,33 @@
 class ValueHandlerSetup {
     constructor() {
         this.setupValueHandlers()
+        this.setupNotyf()
+    }
+
+    /**
+     * Initialize Notyf for toast notifications
+     */
+    setupNotyf() {
+        // Create global Notyf instance
+        window.notyf = new Notyf({
+            duration: 5000,
+            position: {
+                x: 'right',
+                y: 'top'
+            },
+            types: [
+                {
+                    type: 'success',
+                    background: 'var(--pico-primary-background)',
+                    icon: '✅'
+                },
+                {
+                    type: 'error', 
+                    background: 'var(--pico-del-color)',
+                    icon: '❌'
+                }
+            ]
+        })
     }
 
     /**
@@ -80,19 +113,20 @@ class ValueHandlerSetup {
             // Set the path to which data is posted (if not already set)
             this.setAttributeIfNotSet(element, 'hx-post', '/web-blocks/value-handler')
 
-            // Set the target of the html that will be returned to be the global notifications area (if not already set)
-            this.setAttributeIfNotSet(element, 'hx-target', '#global-notifications')
-
             // Use built-in dataset API to extract all data attributes
-            // Dataset converts kebab-case to camelCase automatically
+            // IMPORTANT: dataset converts kebab-case to camelCase automatically
             // Example: data-user-id="123" becomes userId: "123"
             //          data-document-id="456" becomes documentId: "456"
+            // Server must expect camelCase parameter names (userId, not user-id)
             const vals = {
                 ...element.dataset
             }
-
+            
             const valsString = JSON.stringify(vals)
             element.setAttribute('hx-vals', valsString)
+
+            // Remove the old global-notifications target - we'll use Notyf instead
+            // this.setAttributeIfNotSet(element, 'hx-target', '#global-notifications')
 
             // Tell HTMX to process this element after we've set up the attributes
             htmx.process(element)
@@ -105,5 +139,23 @@ class ValueHandlerSetup {
 // When the content of this page has loaded
 document.addEventListener("DOMContentLoaded", () => {
     new ValueHandlerSetup()
+})
+
+// Handle HTMX responses and show Notyf notifications
+document.addEventListener('htmx:afterRequest', function(evt) {
+    if (evt.detail.xhr.responseURL && evt.detail.xhr.responseURL.includes('/web-blocks/value-handler')) {
+        const response = evt.detail.xhr.responseText
+        
+        // Check for success/error based on status code
+        if (evt.detail.xhr.status === 200) {
+            // Parse response to extract message, or use default
+            const message = response.replace(/<[^>]*>/g, '').trim() || 'Success!'
+            window.notyf.success(message)
+        } else {
+            // Parse error response to extract message
+            const message = response.replace(/<[^>]*>/g, '').trim() || 'An error occurred'
+            window.notyf.error(message)
+        }
+    }
 })
 </script>
