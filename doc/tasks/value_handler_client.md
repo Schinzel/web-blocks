@@ -4,6 +4,8 @@ The purpose of this document is to describe how we build our
 initial value handler client.
 
 # Strategy
+The aim is to send code to the server and handle the response using just HTML.
+We might offer options to build out or override default behaviour with JavaScript.
 
 The overall strategy is build a client system that allows us to start with
 some basic cases, but is thought out to extendable to allow build out to handle
@@ -12,6 +14,18 @@ more and mor cases. Examples of future support are
 - New data time pickers
 - Forms
 - New triggers
+
+## HTMX
+HTMX is a big inspiration.
+
+We did an attempt to use HTMX as a client, but that did not pan out.
+The reasons it did not pan out:
+- HTMX sent data as a flat form format
+- HTMX did not support data attributes so we had to add custom code
+- Even though CC knows that HTMX returns HTML is added a notifications library that supports text and not html
+- HTMX as intended is verbose and has a lot of boiler plate code to pass context data
+- We had to rewrite the server a lot to accommodate HTMX way
+
 
 # Data to send to server
 
