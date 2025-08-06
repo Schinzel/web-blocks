@@ -15,15 +15,12 @@ import kotlinx.coroutines.runBlocking
 import java.lang.reflect.ParameterizedType
 
 /**
- * The purpose ot this function is to set up an endpoint for value handlers
+ * The purpose of this function is to set up an endpoint for value handlers
  */
 fun Javalin.setUpFrameworkRouteValueHandler(): Javalin {
-    this.getAndPost("/web-blocks/value-handler") { ctx ->
+    this.post("/web-blocks/value-handler") { ctx ->
         runBlocking(Dispatchers.IO) {
-            // Get the request data
-            val valueHandlerRequest = getRequest(ctx)
-            // Handle the request
-            handleRequest(ctx, valueHandlerRequest)
+            handleRequest(ctx)
         }
     }
     // return this for chaining
@@ -36,51 +33,27 @@ fun Javalin.setUpFrameworkRouteValueHandler(): Javalin {
 private data class ValueHandlerRequest(
     val valueHandlerId: String,
     val value: Any,
-    val contextJson: String, // Context as JSON string from form data
+    val contextJson: String,
 )
 
-
-// Get the value handler request
-private fun getRequest(ctx: Context): ValueHandlerRequest = when (ctx.method().name) {
-    "GET" -> {
-        val valueHandlerId = ctx.queryParam("id")
-            ?: throw IllegalArgumentException("Missing 'valueHandlerId' parameter")
-        val value = ctx.queryParam("value")
-            ?: throw IllegalArgumentException("Missing 'value' parameter")
-        val context = ctx.queryParam("context")
-            ?: throw IllegalArgumentException("Missing 'context' parameter")
-        ValueHandlerRequest(valueHandlerId, value, context)
-    }
-
-    "POST" -> {
-        // Check content type to determine how to parse
-        val contentType = ctx.contentType()
-        
-        if (contentType?.contains("application/x-www-form-urlencoded") == true) {
-            // HTMX sends form-encoded data
-            val valueHandlerId = ctx.formParam("valueHandlerId")
-                ?: throw IllegalArgumentException("Missing 'valueHandlerId' parameter")
-            val value = ctx.formParam("value")
-                ?: throw IllegalArgumentException("Missing 'value' parameter")
-            val contextJson = ctx.formParam("context")
-                ?: throw IllegalArgumentException("Missing 'context' parameter")
-            
-            ValueHandlerRequest(valueHandlerId, value, contextJson)
-        } else {
-            // JSON body
-            ctx.bodyAsClass<ValueHandlerRequest>()
-        }
-    }
-
-    else -> throw IllegalStateException("Unexpected method: ${ctx.method()}")
-}
 
 private val objectMapper = ObjectMapper()
     .registerModule(KotlinModule.Builder().build())
 
 
 // Handle the value handler request
-private suspend fun handleRequest(ctx: Context, valueHandlerRequest: ValueHandlerRequest) {
+private suspend fun handleRequest(ctx: Context) {
+    // Parse the request data with early return on error
+    val valueHandlerRequest = try {
+        ctx.bodyAsClass<ValueHandlerRequest>()
+    } catch (_: Exception) {
+        ctx.status(400).json(buildMap {
+            put("status", "error")
+            put("message", "Invalid JSON request")
+        })
+        return
+    }
+
     try {
         // Get value-handler from registry
         val valueHandler = ValueHandlerRegistry.instance
@@ -92,23 +65,29 @@ private suspend fun handleRequest(ctx: Context, valueHandlerRequest: ValueHandle
         // Let the value-handler handle the data sent to the server
         val valueHandlerResponse: HtmlContentResponse = valueHandler
             .handle(valueHandlerRequest.value, context)
-        // Set status code
-        ctx.status(valueHandlerResponse.status)
-        // Set custom headers if provided
-        valueHandlerResponse.headers.forEach { (key, value) ->
-            ctx.header(key, value)
-        }
-        // return the value handler response
-        ctx.html(valueHandlerResponse.content)
+        // return hardcoded JSON response for now
+        ctx.status(200).json(buildMap {
+            put("status", "success")
+            put("message", "Value processed successfully")
+            put("receivedValue", valueHandlerRequest.value)
+            put("receivedContext", valueHandlerRequest.contextJson)
+        })
     } catch (_: ValueHandlerNotFoundException) {
-        ctx.status(404)
-            .html("<div class='error-message'>Value handler '${valueHandlerRequest.valueHandlerId}' not found</div>")
+        ctx.status(404).json(buildMap {
+            put("status", "error")
+            put("message", "Value handler '${valueHandlerRequest.valueHandlerId}' not found")
+        })
     } catch (_: ClassCastException) {
-        ctx.status(400)
-            .html("<div class='error-message'>Invalid data type for value handler '${valueHandlerRequest.valueHandlerId}'</div>")
+        ctx.status(400).json(buildMap {
+            put("status", "error")
+            put("message", "Invalid data type for value handler '${valueHandlerRequest.valueHandlerId}'")
+        })
     } catch (e: Exception) {
         val errorMessage = e.message ?: "An unexpected error occurred"
-        ctx.status(500).html("<div class='error-message'>An error occurred: '$errorMessage'</div>")
+        ctx.status(500).json(buildMap {
+            put("status", "error")
+            put("message", "An error occurred: '$errorMessage'")
+        })
     }
 }
 
