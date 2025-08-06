@@ -40,7 +40,7 @@ class ValueHandlerBlock : WebBlock() {
             .withData("firstName", firstName)
             .withData("userId", userId)
             .withData("valueHandlerId", VALUE_HANDLER_ID)
-            .processTemplate("value_handler_block_template_v2.html")
+            .processTemplate("value_handler_block.html")
         return html(html)
     }
 }
