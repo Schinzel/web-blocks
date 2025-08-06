@@ -6,6 +6,7 @@ import io.schinzel.web_blocks.web.errors.ErrorPage
 import io.schinzel.web_blocks.web.request_handler.log_entry.ErrorLog
 import io.schinzel.web_blocks.web.request_handler.log_entry.LogEntry
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
+import io.schinzel.web_blocks.web.set_up_routes.isPreserveResponseEnabled
 
 /**
  * The purpose of this class is to provide pure error response functions without logging.
@@ -28,6 +29,9 @@ fun handleExceptionResponse(
     }
     val errorId = logEntry.errorLog!!.errorId
 
+    if (ctx.isPreserveResponseEnabled()) {
+        return
+    }
     when (getReturnType(ctx.path())) {
         ReturnTypeEnum.JSON -> {
             val response =

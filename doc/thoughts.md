@@ -64,9 +64,12 @@ The framework route should be set up as
 - Funkar JAR läsning för multimodule project
 - Testa den bygda JAR:en så att paths funkar
 
+# Routes sida
+Länka pages och öppna page url:er i en ny tabb
+
+
 # A JS Logger
 Does not print in production
-
 
 
 # Att fixa 1

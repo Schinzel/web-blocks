@@ -28,8 +28,8 @@ class ValueHandlerBlock : WebBlock() {
             val valueHandler = object : IValueHandler<FirstName, UserId> {
                 override suspend fun handle(value: FirstName, context: UserId): NotificationResponse {
                     "Got the value of $value with the context user-id $context".println()
-                    return NotificationResponseEnum.SUCCESS
-                        .create("First name: $value. User id: $context")
+                    return NotificationResponseEnum.WARNING
+                        .create("Saved first name", listOf("Too short", "Too funky"))
                 }
             }
             ValueHandlerRegistry.instance.register(VALUE_HANDLER_ID, valueHandler)

@@ -65,12 +65,14 @@ private suspend fun handleRequest(ctx: Context) {
         // Let the value-handler handle the data sent to the server
         val valueHandlerResponse: NotificationResponse = valueHandler
             .handle(valueHandlerRequest.value, context)
-        // return hardcoded JSON response for now
+        // return response from value handler
         ctx.status(valueHandlerResponse.status).json(buildMap {
             put("type", valueHandlerResponse.type)
             put("message", valueHandlerResponse.message)
             put("details", valueHandlerResponse.details)
         })
+        // This sets that web blocks should not try an alter the error on the way
+        ctx.enablePreserveResponse()
     } catch (_: ValueHandlerNotFoundException) {
         ctx.status(404).json(buildMap {
             put("status", "error")

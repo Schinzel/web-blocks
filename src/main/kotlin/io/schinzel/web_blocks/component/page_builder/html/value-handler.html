@@ -1,4 +1,5 @@
 <!-- Value handler  -->
+{{include: html/value-handler-notifications.html}}
 {{include: html/value-handler-context.html}}
 {{include: html/value-handler-element-support.html}}
 
@@ -71,11 +72,23 @@
                 data: JSON.stringify(requestData),
                 success: (response) => {
                     console.log('Server response:', response);
-                    // TODO: Handle response
+                    WebBlocksNotifications.show(
+                        response.type.toLowerCase(),
+                        response.message,
+                        response.details || []
+                    );
                 },
                 error: (xhr, status, error) => {
-                    console.error('Request failed:', status, error);
-                    console.error('Response:', xhr.responseText);
+                    if (xhr.responseJSON) {
+                        WebBlocksNotifications.show(
+                            xhr.responseJSON.type.toLowerCase(),
+                            xhr.responseJSON.message,
+                            xhr.responseJSON.details || []
+                        );
+                    } else {
+                        // This line ONLY runs when AJAX actually fails
+                        WebBlocksNotifications.show('error', 'Connection failed', ['Please try again later']);
+                    }
                 }
             });
         }

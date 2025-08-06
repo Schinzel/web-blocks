@@ -1,0 +1,166 @@
+<style>
+    .web-blocks-notification {
+        background: var(--pico-background-color);
+        border-radius: var(--pico-border-radius);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        border-left: 4px solid;
+        animation: slideInRight 0.3s ease-out;
+    }
+
+    .web-blocks-success {
+        border-left-color: #28a745;
+        background: #f8fff8;
+    }
+
+    .web-blocks-warning {
+        border-left-color: #ffc107;
+        background: #fffbf0;
+    }
+
+    .web-blocks-error {
+        border-left-color: #dc3545;
+        background: #fff5f5;
+    }
+
+    .notification-content {
+        flex: 1;
+    }
+
+    .notification-message {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .notification-details {
+        margin: 0.5rem 0 0 0;
+        padding-left: 1.25rem;
+    }
+
+    .notification-details li {
+        margin-bottom: 0.25rem;
+        font-size: 0.9rem;
+    }
+
+    .notification-close {
+        background: none;
+        border: none;
+        font-size: 1.25rem;
+        cursor: pointer;
+        opacity: 0.5;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+    }
+
+    .notification-close:hover {
+        opacity: 1;
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+
+<!-- Notification Container - always in DOM, hidden by default -->
+<div id="web-blocks-notification-container"
+     style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
+
+    <!-- Success Notification Template -->
+    <div id="web-blocks-success-template" class="web-blocks-notification web-blocks-success" style="display: none;">
+        <div class="notification-content">
+            <div class="notification-message"></div>
+        </div>
+        <button class="notification-close" onclick="WebBlocksNotifications.hide()">&times;</button>
+    </div>
+
+    <!-- Warning Notification Template -->
+    <div id="web-blocks-warning-template" class="web-blocks-notification web-blocks-warning" style="display: none;">
+        <div class="notification-content">
+            <div class="notification-message"></div>
+            <ul class="notification-details" style="display: none;"></ul>
+        </div>
+        <button class="notification-close" onclick="WebBlocksNotifications.hide()">&times;</button>
+    </div>
+
+    <!-- Error Notification Template -->
+    <div id="web-blocks-error-template" class="web-blocks-notification web-blocks-error" style="display: none;">
+        <div class="notification-content">
+            <div class="notification-message"></div>
+            <ul class="notification-details" style="display: none;"></ul>
+        </div>
+        <button class="notification-close" onclick="WebBlocksNotifications.hide()">&times;</button>
+    </div>
+
+</div>
+
+
+<script>
+    class WebBlocksNotifications {
+        static show(type, message, details = []) {
+            // Hide any existing notification
+            this.hide();
+
+            // Get the appropriate template
+            const template = document.getElementById(`web-blocks-${type}-template`);
+            const container = document.getElementById('web-blocks-notification-container');
+
+            if (!template || !container) {
+                console.error('Notification template or container not found');
+                return;
+            }
+
+            // Populate message
+            template.querySelector('.notification-message').textContent = message;
+
+            // Populate details if provided
+            const detailsList = template.querySelector('.notification-details');
+            if (details && details.length > 0) {
+                detailsList.innerHTML = '';
+                details.forEach(detail => {
+                    const li = document.createElement('li');
+                    li.textContent = detail;
+                    detailsList.appendChild(li);
+                });
+                detailsList.style.display = 'block';
+            } else if (detailsList) {
+                detailsList.style.display = 'none';
+            }
+
+            // Show container and template
+            container.style.display = 'block';
+            template.style.display = 'flex';
+
+            // Auto-hide success notifications after 3 seconds
+            if (type === 'success') {
+                setTimeout(() => this.hide(), 3000);
+            }
+        }
+
+        static hide() {
+            const container = document.getElementById('web-blocks-notification-container');
+            if (!container) return;
+
+            const templates = container.querySelectorAll('.web-blocks-notification');
+            templates.forEach(template => {
+                template.style.display = 'none';
+            });
+            container.style.display = 'none';
+        }
+    }
+
+    // Make it globally accessible
+    window.WebBlocksNotifications = WebBlocksNotifications;
+</script>
