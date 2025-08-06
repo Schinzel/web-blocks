@@ -23,7 +23,7 @@ class ValueHandlerRegistry {
      */
     fun <TValue, TContext> registerSavingHandler(
         valueHandlerId: String,
-        saveFunc: suspend (TValue, TContext) -> HtmlContentResponse,
+        saveFunc: suspend (TValue, TContext) -> NotificationResponse,
         validateFunc: suspend (TValue) -> HtmlContentResponse = {
             html("<div class='success-message'>✅ Success</div>")
         }

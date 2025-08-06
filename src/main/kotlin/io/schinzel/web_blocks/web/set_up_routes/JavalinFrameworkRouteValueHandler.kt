@@ -6,9 +6,9 @@ import io.javalin.Javalin
 import io.javalin.http.Context
 import io.javalin.http.bodyAsClass
 import io.schinzel.web_blocks.component.value_handler.IValueHandler
+import io.schinzel.web_blocks.component.value_handler.NotificationResponse
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerNotFoundException
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerRegistry
-import io.schinzel.web_blocks.web.response.HtmlContentResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.runBlocking
@@ -63,14 +63,13 @@ private suspend fun handleRequest(ctx: Context) {
         // Deserialize with the extracted type
         val context = objectMapper.readValue(valueHandlerRequest.contextJson, contextType)
         // Let the value-handler handle the data sent to the server
-        val valueHandlerResponse: HtmlContentResponse = valueHandler
+        val valueHandlerResponse: NotificationResponse = valueHandler
             .handle(valueHandlerRequest.value, context)
         // return hardcoded JSON response for now
-        ctx.status(200).json(buildMap {
-            put("status", "success")
-            put("message", "Value processed successfully")
-            put("receivedValue", valueHandlerRequest.value)
-            put("receivedContext", valueHandlerRequest.contextJson)
+        ctx.status(valueHandlerResponse.status).json(buildMap {
+            put("type", valueHandlerResponse.type)
+            put("message", valueHandlerResponse.message)
+            put("details", valueHandlerResponse.details)
         })
     } catch (_: ValueHandlerNotFoundException) {
         ctx.status(404).json(buildMap {

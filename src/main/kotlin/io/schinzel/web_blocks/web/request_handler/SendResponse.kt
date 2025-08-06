@@ -2,12 +2,7 @@ package io.schinzel.web_blocks.web.request_handler
 
 import io.javalin.http.Context
 import io.schinzel.web_blocks.web.request_handler.log_entry.LogEntry
-import io.schinzel.web_blocks.web.response.HtmlContentResponse
-import io.schinzel.web_blocks.web.response.HtmlErrorResponse
-import io.schinzel.web_blocks.web.response.HtmlRedirectResponse
-import io.schinzel.web_blocks.web.response.IWebBlockResponse
-import io.schinzel.web_blocks.web.response.JsonErrorResponse
-import io.schinzel.web_blocks.web.response.JsonSuccessResponse
+import io.schinzel.web_blocks.web.response.*
 import io.schinzel.web_blocks.web.routes.IRoute
 import io.schinzel.web_blocks.web.routes.IWebBlockRoute
 import io.schinzel.web_blocks.web.routes.ReturnTypeEnum
@@ -82,6 +77,8 @@ suspend fun sendResponse(
             ctx.json(responseObject)
             logEntry.responseLog.response = responseObject
         }
+
+        else -> throw Exception("Unhandled response type ${response?.javaClass?.name}")
     }
 }
 

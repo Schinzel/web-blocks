@@ -4,8 +4,9 @@ import io.schinzel.basic_utils_kotlin.println
 import io.schinzel.web_blocks.component.page_builder.WebBlock
 import io.schinzel.web_blocks.component.template_engine.TemplateProcessor
 import io.schinzel.web_blocks.component.value_handler.IValueHandler
+import io.schinzel.web_blocks.component.value_handler.NotificationResponse
+import io.schinzel.web_blocks.component.value_handler.NotificationResponseEnum
 import io.schinzel.web_blocks.component.value_handler.ValueHandlerRegistry
-import io.schinzel.web_blocks.web.response.HtmlContentResponse
 import io.schinzel.web_blocks.web.response.IHtmlResponse
 import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.annotations.PageBlock
@@ -25,9 +26,10 @@ class ValueHandlerBlock : WebBlock() {
 
 
             val valueHandler = object : IValueHandler<FirstName, UserId> {
-                override suspend fun handle(value: FirstName, context: UserId): HtmlContentResponse {
+                override suspend fun handle(value: FirstName, context: UserId): NotificationResponse {
                     "Got the value of $value with the context user-id $context".println()
-                    return html("<h1>First name: $value. User id: $context</h1>")
+                    return NotificationResponseEnum.SUCCESS
+                        .create("First name: $value. User id: $context")
                 }
             }
             ValueHandlerRegistry.instance.register(VALUE_HANDLER_ID, valueHandler)

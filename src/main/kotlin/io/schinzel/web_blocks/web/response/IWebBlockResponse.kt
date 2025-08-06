@@ -54,7 +54,7 @@ data class HtmlErrorResponse(
 /**
  * The purpose of this interface is to group all JSON-related responses
  */
-sealed interface IJsonResponse : IWebBlockResponse
+interface IJsonResponse : IWebBlockResponse
 
 /**
  * The purpose of this class is to represent JSON responses from API routes,
