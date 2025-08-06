@@ -7,6 +7,8 @@ initial value handler client.
 The aim is to send code to the server and handle the response using just HTML.
 We might offer options to build out or override default behaviour with JavaScript.
 
+- Convention over Configuration
+
 The overall strategy is build a client system that allows us to start with
 some basic cases, but is thought out to extendable to allow build out to handle
 more and mor cases. Examples of future support are

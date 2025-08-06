@@ -1,0 +1,39 @@
+<script>
+    /**
+     * Handles context data extraction from elements
+     */
+    class Context {
+        /**
+         * Extract context data from element
+         */
+        static extract(element, valueHandlerId) {
+            const $element = $(element);
+            const simpleContext = $element.attr('data-context');
+
+            // Find all data-context-* attributes
+            const contextAttrs = {};
+            Array.from(element.attributes).forEach(attr => {
+                if (attr.name.startsWith('data-context-')) {
+                    const key = attr.name.replace('data-context-', '');
+                    contextAttrs[key] = attr.value;
+                }
+            });
+
+            const hasMultiContext = Object.keys(contextAttrs).length > 0;
+
+            // Check for conflicting context types
+            if (simpleContext && hasMultiContext) {
+                throw new Error(`Value handler '${valueHandlerId}' has both data-context and data-context-* attributes. Use only one approach.`);
+            }
+
+            // Return appropriate context
+            if (simpleContext) {
+                return simpleContext;
+            } else if (hasMultiContext) {
+                return contextAttrs;
+            } else {
+                return null;
+            }
+        }
+    }
+</script>

@@ -1,0 +1,29 @@
+<script>
+    /**
+     * Handles element support validation for value handlers
+     */
+    class ElementSupport {
+        /**
+         * Check if element is supported for value handlers
+         */
+        static isNotSupported(element) {
+            // Only support input elements
+            if (element.tagName.toLowerCase() !== 'input') {
+                return false;
+            }
+
+            // Supported input types
+            const supportedTypes = [
+                'text', 'email', 'password', 'number', 'url',
+                'tel', 'search', 'date', 'time', 'range',
+                'hidden', 'color'
+            ];
+
+            // Get input type (defaults to 'text' if not specified)
+            const inputType = element.type || 'text';
+
+            // Check if type is in supported list
+            return !supportedTypes.includes(inputType);
+        }
+    }
+</script>

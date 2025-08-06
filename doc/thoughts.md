@@ -64,10 +64,10 @@ The framework route should be set up as
 - Funkar JAR läsning för multimodule project
 - Testa den bygda JAR:en så att paths funkar
 
+# A JS Logger
+Does not print in production
 
-# Behövs jQuery??
-Många selectors finns idag i JS.
-a
+
 
 # Att fixa 1
 class BlockOne : WebBlock() {

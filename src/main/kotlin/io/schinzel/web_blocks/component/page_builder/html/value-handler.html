@@ -1,0 +1,55 @@
+<<!-- Value handler  -->
+{{include: html/value-handler-context.html.html}}
+{{include: html/value-handler-element-support.html}}
+
+
+<script>
+    /**
+     * Auto-configures HTMX for value handlers.
+     * Finds elements with data-value-handler-id and sets up HTMX attributes
+     */
+    class ValueHandlerSetup {
+        constructor() {
+            this.setupValueHandlers()
+        }
+
+        setupValueHandlers() {
+            // Find all elements with data-value-handler-id
+            document.querySelectorAll('[data-value-handler-id]').forEach(element => {
+                // Get the id of the value-handler
+                const valueHandlerId = element.getAttribute('data-value-handler-id')
+
+                // Check if element type is supported
+                if (ElementSupport.isNotSupported(element)) {
+                    console.warn(`Unsupported element for value handler '${valueHandlerId}':`, element);
+                    return;
+                }
+
+                // Set up change event handler
+                $(element).on('change', () => {
+                    this.handleValueChange(element, valueHandlerId);
+                });
+
+                console.log(`Setup value handler: ${valueHandlerId}`)
+            })
+        }
+
+        /**
+         * Handle value change event
+         */
+        handleValueChange(element, valueHandlerId) {
+            // Get the value from the element
+            const value = $(element).val();
+
+            // Get context data
+            const context = Context.extract(element, valueHandlerId);
+
+            console.log(`Value changed for handler '${valueHandlerId}': ${value}`);
+        }
+    }
+
+    // When the content of this page has loaded
+    document.addEventListener("DOMContentLoaded", () => {
+        new ValueHandlerSetup()
+    })
+</script>
