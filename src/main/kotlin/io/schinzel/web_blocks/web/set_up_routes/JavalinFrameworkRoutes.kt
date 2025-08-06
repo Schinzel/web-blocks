@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter
  * Written by Claude Sonnet 4
  */
 fun Javalin.setupFrameworkRoutes(routeMappings: List<RouteMapping>): Javalin {
-
     this.get("/web-blocks/routes") { ctx ->
         val html = RoutesOverviewPageGenerator().generateHtml(routeMappings)
         ctx.html(html)

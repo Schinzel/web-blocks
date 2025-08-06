@@ -7,10 +7,13 @@ package io.schinzel.web_blocks.component.value_handler
  *
  * Written by Claude Sonnet 4
  */
-enum class NotificationResponseEnum(val statusCode: Int) {
+enum class NotificationResponseEnum(
+    val statusCode: Int,
+) {
     SUCCESS(200),
     WARNING(422),
-    ERROR(500);
+    ERROR(500),
+    ;
 
     /**
      * Creates a NotificationResponse with this notification type
@@ -18,7 +21,8 @@ enum class NotificationResponseEnum(val statusCode: Int) {
      * @param details Optional list of detailed messages (e.g., validation errors)
      * @return NotificationResponse with correct status code for this type
      */
-    fun create(message: String, details: List<String> = emptyList()): NotificationResponse {
-        return NotificationResponse(this, message, details, statusCode)
-    }
+    fun create(
+        message: String,
+        details: List<String> = emptyList(),
+    ): NotificationResponse = NotificationResponse(this, message, details, statusCode)
 }

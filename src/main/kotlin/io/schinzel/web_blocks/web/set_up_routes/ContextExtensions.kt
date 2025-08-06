@@ -19,6 +19,4 @@ fun Context.enablePreserveResponse() {
 /**
  * Checks if response preservation is enabled for this context
  */
-fun Context.isPreserveResponseEnabled(): Boolean {
-    return this.attribute<Boolean>("preserveResponse") == true
-}
+fun Context.isPreserveResponseEnabled(): Boolean = this.attribute<Boolean>("preserveResponse") == true

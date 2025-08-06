@@ -24,25 +24,28 @@ class ValueHandlerBlock : WebBlock() {
 
         init {
 
-
-            val valueHandler = object : IValueHandler<FirstName, UserId> {
-                override suspend fun handle(value: FirstName, context: UserId): NotificationResponse {
-                    "Got the value of $value with the context user-id $context".println()
-                    return NotificationResponseEnum.WARNING
-                        .create("Saved first name", listOf("Too short", "Too funky"))
+            val valueHandler =
+                object : IValueHandler<FirstName, UserId> {
+                    override suspend fun handle(
+                        value: FirstName,
+                        context: UserId,
+                    ): NotificationResponse {
+                        "Got the value of $value with the context user-id $context".println()
+                        return NotificationResponseEnum.WARNING
+                            .create("Saved first name", listOf("Too short", "Too funky"))
+                    }
                 }
-            }
             ValueHandlerRegistry.instance.register(VALUE_HANDLER_ID, valueHandler)
-
         }
     }
 
     override suspend fun getResponse(): IHtmlResponse {
-        val html = TemplateProcessor(this)
-            .withData("firstName", firstName)
-            .withData("userId", userId)
-            .withData("valueHandlerId", VALUE_HANDLER_ID)
-            .processTemplate("value_handler_block.html")
+        val html =
+            TemplateProcessor(this)
+                .withData("firstName", firstName)
+                .withData("userId", userId)
+                .withData("valueHandlerId", VALUE_HANDLER_ID)
+                .processTemplate("value_handler_block.html")
         return html(html)
     }
 }

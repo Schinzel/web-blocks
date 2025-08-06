@@ -13,5 +13,5 @@ data class NotificationResponse(
     val type: NotificationResponseEnum,
     val message: String,
     val details: List<String>,
-    override val status: Int
+    override val status: Int,
 ) : IJsonResponse

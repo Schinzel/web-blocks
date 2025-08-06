@@ -10,12 +10,13 @@ import io.schinzel.web_blocks.web.routes.annotations.Page
 @Suppress("unused")
 class Page : IHtmlRoute {
     override suspend fun getResponse(): IHtmlResponse {
-        val html = PageBuilder()
-            .setTitle("Value Handle Sample Page")
-            .addRow()
-            .addColumn(12)
-            .addBlock(ValueHandlerBlock())
-            .getHtml()
+        val html =
+            PageBuilder()
+                .setTitle("Value Handle Sample Page")
+                .addRow()
+                .addColumn(12)
+                .addBlock(ValueHandlerBlock())
+                .getHtml()
         return html(html)
     }
 }

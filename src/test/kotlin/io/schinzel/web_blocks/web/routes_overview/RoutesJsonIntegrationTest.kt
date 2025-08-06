@@ -29,7 +29,7 @@ class RoutesJsonIntegrationTest {
         // Use the sample app configuration to test with real routes
         val webAppConfig =
             WebAppConfig(
-                webRootClass = io.schinzel.sample.MyWebApp(),
+                webRootClass = io.schinzel.sample.SampleWebApp(),
             )
 
         javalin = setUpRoutes(webAppConfig)
