@@ -11,6 +11,7 @@ import io.schinzel.web_blocks.web.response.html
 import io.schinzel.web_blocks.web.routes.annotations.PageBlock
 
 typealias FirstName = String
+typealias UserId = String
 
 @PageBlock
 class ValueHandlerBlock : WebBlock() {
@@ -21,10 +22,10 @@ class ValueHandlerBlock : WebBlock() {
         private const val VALUE_HANDLER_ID = "value_handler_id_123"
 
         init {
-            data class UserContext(val userId: String)
 
-            val valueHandler = object : IValueHandler<FirstName, UserContext> {
-                override suspend fun handle(value: String, context: UserContext): HtmlContentResponse {
+
+            val valueHandler = object : IValueHandler<FirstName, UserId> {
+                override suspend fun handle(value: FirstName, context: UserId): HtmlContentResponse {
                     "Got the value of $value with the context user-id $context".println()
                     return html("<h1>First name: $value. User id: $context</h1>")
                 }

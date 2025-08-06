@@ -1,5 +1,5 @@
-<<!-- Value handler  -->
-{{include: html/value-handler-context.html.html}}
+<!-- Value handler  -->
+{{include: html/value-handler-context.html}}
 {{include: html/value-handler-element-support.html}}
 
 
@@ -34,6 +34,7 @@
             })
         }
 
+
         /**
          * Handle value change event
          */
@@ -45,6 +46,38 @@
             const context = Context.extract(element, valueHandlerId);
 
             console.log(`Value changed for handler '${valueHandlerId}': ${value}`);
+
+            // Send to server
+            this.sendToServer(valueHandlerId, value, context);
+        }
+
+
+        /**
+         * Send data to server
+         */
+        sendToServer(valueHandlerId, value, context) {
+            // Prepare the request payload
+            const requestData = {
+                valueHandlerId: valueHandlerId,
+                value: value,
+                contextJson: JSON.stringify(context)
+            };
+
+            // Send POST request to server
+            $.ajax({
+                url: '/web-blocks/value-handler',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: (response) => {
+                    console.log('Server response:', response);
+                    // TODO: Handle response
+                },
+                error: (xhr, status, error) => {
+                    console.error('Request failed:', status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
         }
     }
 

@@ -7,7 +7,9 @@
          * Extract context data from element
          */
         static extract(element, valueHandlerId) {
+            // Create jQuery object
             const $element = $(element);
+            // Get the data-context value (if any)
             const simpleContext = $element.attr('data-context');
 
             // Find all data-context-* attributes
@@ -15,7 +17,8 @@
             Array.from(element.attributes).forEach(attr => {
                 if (attr.name.startsWith('data-context-')) {
                     const key = attr.name.replace('data-context-', '');
-                    contextAttrs[key] = attr.value;
+                    // Parse the value - try to convert to proper type
+                    contextAttrs[key] = Context.parseValue(attr.value);
                 }
             });
 
@@ -28,12 +31,32 @@
 
             // Return appropriate context
             if (simpleContext) {
-                return simpleContext;
+                return Context.parseValue(simpleContext);
             } else if (hasMultiContext) {
                 return contextAttrs;
             } else {
                 return null;
             }
+        }
+
+        /**
+         * Parse a string value to its proper type
+         */
+        static parseValue(value) {
+            // Try to parse as number
+            if (!isNaN(value) && !isNaN(parseFloat(value))) {
+                return parseFloat(value);
+            }
+
+            // Try to parse as boolean
+            if (value === 'true') return true;
+            if (value === 'false') return false;
+
+            // Try to parse as null
+            if (value === 'null') return null;
+
+            // Return as string if no other type matches
+            return value;
         }
     }
 </script>
