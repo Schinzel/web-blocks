@@ -7,9 +7,7 @@ import io.javalin.http.Context
  * for Javalin request/response handling within the framework setup.
  *
  * Written by Claude Sonnet 4
- */
-
-/**
+ *
  * Enables response preservation to prevent after-handler overrides
  */
 fun Context.enablePreserveResponse() {
